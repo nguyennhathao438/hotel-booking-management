@@ -19,3 +19,20 @@ CREATE TABLE USERS (
     role_id BIGINT,
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
+-- Insert Permission
+INSERT INTO permission (name, description) VALUES
+('READ_DATA', 'Xem dữ liệu'),
+('UPDATE_DATA', 'Cập nhật dữ liệu'),
+('CREATE_DATA', 'Tạo dữ liệu');
+
+-- Insert Role
+INSERT INTO role (name, description) VALUES
+('ADMIN', 'Quyền quản trị toàn bộ'),
+('USER', 'Quyền user bình thường');
+
+-- Gán Permission cho Role
+INSERT INTO role_permissions (role_name, permissions_name) VALUES
+('ADMIN', 'READ_DATA'),
+('ADMIN', 'CREATE_DATA'),
+('ADMIN', 'UPDATE_DATA'),
+('USER', 'READ_USER');
