@@ -60,6 +60,7 @@ public class UserSevice {
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         return mapToUserResponse(user);
     }
+    @PostAuthorize("returnObject.email == authentication.name || hasRole('ADMIN')")
     public UserResponse updateUser(UserUpdateRequest request,int userId){
         System.out.println("alo") ;
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
@@ -75,11 +76,23 @@ public class UserSevice {
         userRepository.save(user);
         return mapToUserResponse(user);
     }
+    @PostAuthorize("returnObject.email == authentication.name ")
     public UserResponse getMyInfo(){
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
         User user = userRepository.findByEmail(name).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         return mapToUserResponse(user);
+    }
+    @PostAuthorize("hasRole('ADMIN')")
+    public void deleteUser(int userID){
+        User user = userRepository.findById(userID).orElseThrow(() -> new AppException(ErrorCode.EMAIL_EXISTED));
+
+        user.setStatus(1);
+         userRepository.save(user);
+    }
+    public List<User> searchUser(String key){
+        List<User> userList = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(key,key,key,key);
+        return userList;
     }
     private UserResponse mapToUserResponse(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());

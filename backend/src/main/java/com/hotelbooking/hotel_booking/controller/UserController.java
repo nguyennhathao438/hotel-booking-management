@@ -67,4 +67,20 @@ public class UserController {
                         .result(userResponse)
                 .build());
     }
+    @PutMapping("/delete/{userId}")
+    ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                        .message("Success")
+                .build());
+    }
+    @GetMapping("/search")
+    ResponseEntity<ApiResponse<List<User>>> searchUser(@RequestParam String key){
+        List<User> userList = userService.searchUser(key);
+        return ResponseEntity.ok(
+                ApiResponse.<List<User>>builder()
+                        .message("Success")
+                        .result(userList)
+                        .build());
+    }
 }
