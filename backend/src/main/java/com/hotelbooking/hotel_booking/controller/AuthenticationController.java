@@ -34,6 +34,12 @@ public class AuthenticationController {
                 .result(result)
         .build();
     }
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
+                .build();
+    }
     //-------------------------
     //--Kiem tra thu token
     //-------------------------

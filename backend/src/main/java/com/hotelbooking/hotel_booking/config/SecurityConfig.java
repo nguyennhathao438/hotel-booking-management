@@ -1,5 +1,9 @@
 package com.hotelbooking.hotel_booking.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
+import com.hotelbooking.hotel_booking.exception.ErrorCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,35 +26,56 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final String[] PUBLIC_ENDPOINTS ={"/api/users/register","/api/auth/login","/api/auth/introspect"};
-    @Value("${jwt.signerKey}")
-    private String signerKey;
+    private final String[] PUBLIC_ENDPOINTS ={"/api/users/register","/api/auth/login","/api/auth/introspect","/api/auth/logout"};
     //-------------------------
     //--Cau hinh Spring Security
     //-------------------------
+    @Autowired
+    private CustomJwtDecoder customJwtDecoder;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/user").hasAnyAuthority("ROLE_ADMIN")
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                .exceptionHandling(ex -> ex
+                .authenticationEntryPoint((request, response, authException) -> {
+                    ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
+                    response.setStatus(401);
+                    response.setContentType("application/json;charset=UTF-8");
+
+                    ApiResponse<Object> apiResponse = new ApiResponse<>(
+                            errorCode.getCode(),
+                            errorCode.getMessage(),
+                            null
+                    );
+
+                    ObjectMapper mapper = new ObjectMapper();
+                    response.getWriter().write(mapper.writeValueAsString(apiResponse));
+                })
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+                    response.setStatus(403);
+                    response.setContentType("application/json;charset=UTF-8");
+
+                    ApiResponse<Object> apiResponse = new ApiResponse<>(
+                            errorCode.getCode(),
+                            errorCode.getMessage(),
+                            null
+                    );
+
+                    ObjectMapper mapper = new ObjectMapper();
+                    response.getWriter().write(mapper.writeValueAsString(apiResponse));
+                })
+        );
         //Đăng ký Authentication provider để decode JWT
         httpSecurity.oauth2ResourceServer(oauth2 ->
-                oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
+                oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(customJwtDecoder)
                         .jwtAuthenticationConverter(jwtAuthenticationConverter())));
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
                 return httpSecurity.build();
     }
-    //-------------------------
-    //--Decoder Token
-    //-------------------------
-    @Bean
-    JwtDecoder jwtDecoder(){
-        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(),"HS512");
-        return NimbusJwtDecoder.withSecretKey(secretKeySpec)
-                .macAlgorithm(MacAlgorithm.HS512)
-                .build();
-    }
+
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(10);

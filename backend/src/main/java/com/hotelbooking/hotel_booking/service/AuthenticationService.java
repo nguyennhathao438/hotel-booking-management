@@ -4,9 +4,11 @@ import com.hotelbooking.hotel_booking.dto.request.AuthenticationRequest;
 import com.hotelbooking.hotel_booking.dto.request.IntrospectRequest;
 import com.hotelbooking.hotel_booking.dto.response.AuthenticationResponse;
 import com.hotelbooking.hotel_booking.dto.response.IntrospectResponse;
+import com.hotelbooking.hotel_booking.entity.InvalidateToken;
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
+import com.hotelbooking.hotel_booking.repository.InvalidatedTokenRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -30,6 +32,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -38,18 +41,21 @@ import java.util.StringJoiner;
 public class AuthenticationService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    InvalidatedTokenRepository invalidatedTokenRepository;
     @NonFinal
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY ;
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
-        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
-
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
-        var verified = signedJWT.verify(verifier);
+        boolean isValid = true;
+        try {
+            verifyToken(token);
+        }catch (AppException e){
+            isValid = false;
+        }
         return IntrospectResponse.builder()
-                .valid(verified && expiryTime.after(new Date()))
+                .valid(isValid)
                 .build();
     }
     public AuthenticationResponse authenticate(AuthenticationRequest request){
@@ -66,6 +72,29 @@ public class AuthenticationService {
                         .build();
 
     }
+    public void logout(IntrospectRequest request) throws ParseException, JOSEException {
+        var signToken = verifyToken(request.getToken());
+        String jid = signToken.getJWTClaimsSet().getJWTID();
+        Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
+        InvalidateToken invalidateToken = InvalidateToken.builder()
+                .id(jid)
+                .expiryTime(expiryTime)
+                .build();
+        invalidatedTokenRepository.save(invalidateToken);
+    }
+    private SignedJWT verifyToken(String token) throws JOSEException, ParseException {
+
+        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        var verified = signedJWT.verify(verifier);
+        if(!(verified && expiryTime.after(new Date())))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        if(invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        return signedJWT;
+    }
     private String generateToken(User user){
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); //Định nghĩa thuật toán trong Header
         JWTClaimsSet jwtClaimSet = new JWTClaimsSet.Builder()
@@ -75,6 +104,7 @@ public class AuthenticationService {
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))//thời gian hết hạn
+                .jwtID(UUID.randomUUID().toString())//id
                 .claim("scope",buildScope(user))//custom scope quyền user
                 .build();
         Payload payload = new Payload(jwtClaimSet.toJSONObject());//Đóng gói payload vào jwsobject
