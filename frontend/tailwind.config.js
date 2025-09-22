@@ -1,11 +1,15 @@
-/** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", // quét tất cả file React
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+    ],
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ["Roboto", "sans-serif"], // font mặc định
+                hotel: ["Playfair Display", "serif"], // font cho chữ Hotel
+            },
+        },
+    },
+    plugins: [],
 };
