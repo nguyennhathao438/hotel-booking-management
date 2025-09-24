@@ -79,7 +79,8 @@ export default function Register() {
                     </form>
                     <p className="mt-4 text-sm text-center text-gray-700 ">
                         Quay lại trang
-                        <a href="/register" className="font-semibold text-blue-600 hover:underline ml-1">
+
+                        <a href="/login" className="font-semibold text-blue-600 hover:underline ml-1">
                             Đăng nhập
                         </a>
                     </p>
