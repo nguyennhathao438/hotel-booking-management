@@ -32,7 +32,10 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.StringJoiner;
+<<<<<<< HEAD
 import java.util.UUID;
+=======
+>>>>>>> origin/huynh
 
 @Slf4j
 @Service
@@ -41,13 +44,17 @@ import java.util.UUID;
 public class AuthenticationService {
     @Autowired
     UserRepository userRepository;
+<<<<<<< HEAD
     @Autowired
     InvalidatedTokenRepository invalidatedTokenRepository;
+=======
+>>>>>>> origin/huynh
     @NonFinal
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY ;
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
+<<<<<<< HEAD
         boolean isValid = true;
         try {
             verifyToken(token);
@@ -56,6 +63,15 @@ public class AuthenticationService {
         }
         return IntrospectResponse.builder()
                 .valid(isValid)
+=======
+        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        var verified = signedJWT.verify(verifier);
+        return IntrospectResponse.builder()
+                .valid(verified && expiryTime.after(new Date()))
+>>>>>>> origin/huynh
                 .build();
     }
     public AuthenticationResponse authenticate(AuthenticationRequest request){
@@ -72,6 +88,7 @@ public class AuthenticationService {
                         .build();
 
     }
+<<<<<<< HEAD
     public void logout(IntrospectRequest request) throws ParseException, JOSEException {
         var signToken = verifyToken(request.getToken());
         String jid = signToken.getJWTClaimsSet().getJWTID();
@@ -95,6 +112,8 @@ public class AuthenticationService {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         return signedJWT;
     }
+=======
+>>>>>>> origin/huynh
     private String generateToken(User user){
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); //Định nghĩa thuật toán trong Header
         JWTClaimsSet jwtClaimSet = new JWTClaimsSet.Builder()
@@ -104,7 +123,10 @@ public class AuthenticationService {
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))//thời gian hết hạn
+<<<<<<< HEAD
                 .jwtID(UUID.randomUUID().toString())//id
+=======
+>>>>>>> origin/huynh
                 .claim("scope",buildScope(user))//custom scope quyền user
                 .build();
         Payload payload = new Payload(jwtClaimSet.toJSONObject());//Đóng gói payload vào jwsobject

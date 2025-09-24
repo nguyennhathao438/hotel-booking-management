@@ -1,5 +1,6 @@
 package com.hotelbooking.hotel_booking.controller;
 
+
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
@@ -67,6 +68,7 @@ public class UserController {
                         .result(userResponse)
                 .build());
     }
+
     @PutMapping("/delete/{userId}")
     ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId){
         userService.deleteUser(userId);
@@ -83,4 +85,5 @@ public class UserController {
                         .result(userList)
                         .build());
     }
+
 }

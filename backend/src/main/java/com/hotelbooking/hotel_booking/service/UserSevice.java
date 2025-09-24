@@ -27,13 +27,18 @@ import java.util.stream.Collectors;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserSevice {
-    @Autowired
     UserRepository userRepository;
-    @Autowired
     PasswordEncoder pwdEncoder;
-    @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    public UserSevice(UserRepository userRepository,
+                       PasswordEncoder pwdEncoder,
+                       RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.pwdEncoder = pwdEncoder;
+        this.roleRepository = roleRepository;
+    }
     public UserResponse registerUser(UserRegisterRequest request){
         if(userRepository.existsByEmail(request.getEmail())){
             throw new AppException(ErrorCode.EMAIL_EXISTED);
@@ -94,7 +99,7 @@ public class UserSevice {
         List<User> userList = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(key,key,key,key);
         return userList;
     }
-    private UserResponse mapToUserResponse(User user){
+    public static UserResponse mapToUserResponse(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())
