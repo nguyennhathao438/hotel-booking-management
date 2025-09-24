@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatusCode;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-
+@Getter
 public enum ErrorCode {
     ROOM_EXISTED(1001, "Phòng đã tồn tại", HttpStatus.CONFLICT),
     EMAIL_EXISTED(1002, "Email đã tồn tại", HttpStatus.CONFLICT),
     EMAIL_NOT_EXISTED(1003, "Tài khoản không tồn tại", HttpStatus.NOT_FOUND),
     UNCATEGORED_EXCEPTION(9999, "Uncategorized exception", HttpStatus.INTERNAL_SERVER_ERROR),
-    UNAUTHENTICATED(1004, "Tài khoản hoặc mật khẩu không chính xác", HttpStatus.UNAUTHORIZED),
+    UNAUTHENTICATED(1004, "Yêu cầu chưa được xác thực", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1005, "Không có quyền truy cập", HttpStatus.FORBIDDEN),
     USER_NOT_EXISTED(1007,"Người dùng không tồn tại", HttpStatus.NOT_FOUND),
     HOTEL_EXISTED(1006, "Khách sạn đã tồn tại", HttpStatus.CONFLICT),
