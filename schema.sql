@@ -37,4 +37,5 @@ INSERT INTO role_permissions (role_name, permissions_name) VALUES
                                                                ('ADMIN', 'READ_DATA'),
                                                                ('ADMIN', 'CREATE_DATA'),
                                                                ('ADMIN', 'UPDATE_DATA'),
-                                                               ('USER', 'READ_USER');
+                                                               ('USER', 'READ_DATA');
+                                                               

@@ -33,6 +33,8 @@ public class SecurityConfig {
     //-------------------------
     //--Cau hinh Spring Security
     //-------------------------
+    @Autowired
+    CustomJwtDecoder customJwtDecoder;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request ->
