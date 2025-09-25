@@ -3,8 +3,10 @@ import Hotel from "./pages/Hotel";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RoomManager from "./pages/RoomManager.jsx";
-import "./App.css";
+import store from "./storages/store";
+import { Provider } from "react-redux";
 
+import "./App.css";
 // Trang chủ
 function Home() {
     return (
@@ -18,6 +20,7 @@ function Home() {
 
 function App() {
     return (
+        
         <BrowserRouter>
             {/* Menu điều hướng */}
             <nav className="flex gap-4 p-4 bg-gray-200">
@@ -37,6 +40,7 @@ function App() {
                 <Route path="/rooms" element={<RoomManager />} />
             </Routes>
         </BrowserRouter>
+     
     );
 }
 

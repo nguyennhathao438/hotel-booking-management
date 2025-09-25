@@ -40,6 +40,9 @@ public class UserSevice {
         this.roleRepository = roleRepository;
     }
     public UserResponse registerUser(UserRegisterRequest request){
+        if(!request.getPassword().equals(request.getPassword2())){
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
+        }
         if(userRepository.existsByEmail(request.getEmail())){
             throw new AppException(ErrorCode.EMAIL_EXISTED);
         }

@@ -1,12 +1,38 @@
 import { useState } from "react";
-
+import api from "../api";
+import { login } from "../storages/userSlice";
+import { useDispatch } from 'react-redux';
+import store from "../storages/store";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login with:", { email, password });
+    try {
+      const response = await api.post("/auth/login",{
+        email,
+        password,
+      });
+      console.log(response);
+      localStorage.setItem("token",response.data.result.token);
+      dispatch(login({
+        avatar:response.data.result.avatar,
+        firstName:response.data.result.firstName,
+        lastName:response.data.result.lastName,
+        roles:response.data.result.roles,
+        userId:response.data.result.userId
+      }))
+      console.log(store.getState().user);
+      alert("Đăng nhập thành công");
+    }catch(error){
+        if (error.response && error.response.data) {
+            alert(error.response.data.message);
+        } else {
+            alert("Lỗi kết nối server hoặc request bị chặn");
+        }
+        console.log(error);
+    }
   };
 
   return (

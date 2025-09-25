@@ -64,11 +64,16 @@ public class AuthenticationService {
         PasswordEncoder pwdEncoder = new BCryptPasswordEncoder(10);
         boolean authenticated= pwdEncoder.matches(request.getPassword(), user.getPassword());
         if(!authenticated)
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
         var token = generateToken(user);
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(true)
+                .userId(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .avatar(user.getAvatar())
+                .roles(user.getRoles())
                         .build();
 
     }
