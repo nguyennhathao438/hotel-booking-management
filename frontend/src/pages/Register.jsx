@@ -1,15 +1,32 @@
 import { useState } from "react"
+import api from "../api";
 export default function Register() {
+    
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         email: "",
         password: "",
         password2: "",
-    });
+    }); 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         console.log(formData);
+    }
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        try{
+        const response = await api.post("/users/register",formData);
+        alert("Đăng ký thành công ");
+        console.log(response);
+        }catch(error){ 
+            if (error.response && error.response.data) {
+            alert(error.response.data.message);
+        } else {
+            alert("Lỗi kết nối server ");
+        }
+        }
+
     }
     return (<>
         <div className="flex items-center justify-center min-h-screen">
@@ -23,7 +40,7 @@ export default function Register() {
                 </div>
                 <div className="w-1/2 p-8">
                     <h2 className="font-bold text-2xl mb-8">Member register</h2>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div className="flex">
                             <input type="text"
                                 name="firstName"
@@ -31,6 +48,7 @@ export default function Register() {
                                 value={formData.firstName}
                                 onChange={handleChange}
                                 className="w-1/2 bg-gray-100 rounded-full py-2 px-3 items-center mr-3 focus:outline-none"
+                                required
                             />
                             <input type="text"
                                 name="lastName"
