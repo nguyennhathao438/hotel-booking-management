@@ -10,8 +10,6 @@ function HotelInfor() {
             <h3 className="w-full p-4 font-bold font-sans text-lg md:text-xl">
                 CHỌN CHỖ NGHỈ LÝ TƯỞNG CỦA BẠN
             </h3>
-            <img src="https://via.placeholder.com/150" alt="avatar" className="w-full h-full object-cover" />
-
             <ul className="border cursor-pointer flex flex-row gap-3 overflow-x-auto scrollbar-hide md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-6 md:overflow-visible">
                 {hotels.map((hotel) => (
                     <li key={hotel.hotelId} className="max-w-[220px] md:max-w-none overflow-hidden flex-shrink-0 rounded-xl border shadow hover:shadow-lg transition bg-white">

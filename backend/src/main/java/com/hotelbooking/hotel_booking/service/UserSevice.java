@@ -102,7 +102,7 @@ public class UserSevice {
         List<User> userList = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(key,key,key,key);
         return userList;
     }
-    public static UserResponse mapToUserResponse(User user){
+    static UserResponse mapToUserResponse(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())
