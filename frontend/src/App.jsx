@@ -3,33 +3,36 @@ import Hotel from "./pages/Hotel";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RoomManager from "./pages/RoomManager.jsx";
-import store from "./storages/store";
-import { Provider } from "react-redux";
-
+import Home from "./components/Home.jsx"
 import "./App.css";
-// Trang chủ
-function Home() {
-    return (
-        <div className="p-4">
-            <h1 className="text-4xl font-hotel text-blue-700">Hotel Booking</h1>
-            <h2 className="font-sans">Welcome to our website</h2>
-            <h1 className="text-3xl font-bold text-red-400">Đã cài tailwind</h1>
-        </div>
-    );
-}
-
+import Header from "./components/Header.jsx";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import api from "./api.js";
+import { login } from "./storages/userSlice.js";
 function App() {
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        const fetchUser = async()=>{
+            const token= localStorage.getItem("token");
+            if(token !=null ){
+                 const response =await api.get("/users/myInfo")
+                 dispatch(login({
+                    avatar :response.data.avatar ,
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+                    userId:response.data.userId,
+                    roles: response.data.roles,
+                 }))
+            }
+        }
+        fetchUser();
+    },[dispatch])
     return (
         
         <BrowserRouter>
             {/* Menu điều hướng */}
-            <nav className="flex gap-4 p-4 bg-gray-200">
-                <Link to="/" className="text-blue-500 hover:underline">Trang chủ</Link>
-                <Link to="/hotel" className="text-blue-500 hover:underline">Hotel</Link>
-                <Link to="/login" className="text-blue-500 hover:underline">Đăng nhập</Link>
-                <Link to="/register" className="text-blue-500 hover:underline">Đăng ký</Link>
-                <Link to="/rooms" className="text-blue-500 hover:underline">Quản lý phòng</Link>
-            </nav>
+            <Header></Header>
 
             {/* Chỉ render route */}
             <Routes>
@@ -40,7 +43,6 @@ function App() {
                 <Route path="/rooms" element={<RoomManager />} />
             </Routes>
         </BrowserRouter>
-     
     );
 }
 

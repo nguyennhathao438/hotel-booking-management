@@ -6,10 +6,12 @@ import "./index.css";
 import App from "./App.jsx";
 import store from "./storages/store.js";
 import { Provider } from "react-redux";
-
+import { RoomContextProvide } from "./components/RoomContext.jsx";
 createRoot(document.getElementById("root")).render(
-    <Provider store={store}>
+    <Provider store={store}>  
+    <RoomContextProvide>
         <App />
+        </RoomContextProvide>
     </Provider>
 );
 

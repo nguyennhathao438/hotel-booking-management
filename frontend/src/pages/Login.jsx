@@ -3,10 +3,12 @@ import api from "../api";
 import { login } from "../storages/userSlice";
 import { useDispatch } from 'react-redux';
 import store from "../storages/store";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -24,12 +26,13 @@ export default function Login() {
         userId:response.data.result.userId
       }))
       console.log(store.getState().user);
+      navigate("/")
       alert("Đăng nhập thành công");
     }catch(error){
         if (error.response && error.response.data) {
             alert(error.response.data.message);
         } else {
-            alert("Lỗi kết nối server hoặc request bị chặn");
+            alert("Lỗi kết nối server ");
         }
         console.log(error);
     }
