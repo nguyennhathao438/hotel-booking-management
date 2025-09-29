@@ -4,13 +4,16 @@ import { login } from "../storages/userSlice";
 import { useDispatch } from 'react-redux';
 import store from "../storages/store";
 import { useNavigate } from "react-router-dom";
+import {  toast } from "react-hot-toast";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading,setLoading] =useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await api.post("/auth/login",{
         email,
@@ -27,14 +30,16 @@ export default function Login() {
       }))
       console.log(store.getState().user);
       navigate("/")
-      alert("Đăng nhập thành công");
+      toast.success("Đăng nhập thành công");
     }catch(error){
         if (error.response && error.response.data) {
-            alert(error.response.data.message);
+           toast.error(error.response.data.message);
         } else {
-            alert("Lỗi kết nối server ");
+            toast.error("Lỗi kết nối sever");
         }
-        console.log(error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -79,9 +84,10 @@ export default function Login() {
             {/* Button */}
             <button
               type="submit" 
+              disabled={loading}
               className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
             >
-              Đăng nhập
+              {loading ?  "Đang đăng nhập ..." : "Đăng nhập" }
             </button>
           </form>
           {/* Links */}

@@ -10,12 +10,14 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import api from "./api.js";
 import { login } from "./storages/userSlice.js";
+import { Toaster } from "react-hot-toast";
 function App() {
     const dispatch = useDispatch();
     useEffect(()=>{
         const fetchUser = async()=>{
             const token= localStorage.getItem("token");
-            if(token !=null ){
+            if(token !=null || token != ""){
+                try{
                  const response =await api.get("/users/myInfo")
                  dispatch(login({
                     avatar :response.data.avatar ,
@@ -24,6 +26,9 @@ function App() {
                     userId:response.data.userId,
                     roles: response.data.roles,
                  }))
+                }catch(error){
+                    console.error("Lỗi khi lấy thông tin user:", error);
+                }
             }
         }
         fetchUser();
@@ -42,6 +47,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/rooms" element={<RoomManager />} />
             </Routes>
+            <Toaster position="top-right" />
         </BrowserRouter>
     );
 }

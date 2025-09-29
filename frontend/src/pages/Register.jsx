@@ -1,5 +1,6 @@
 import { useState } from "react"
 import api from "../api";
+import toast from "react-hot-toast";
 export default function Register() {
     
     const [formData, setFormData] = useState({
@@ -17,13 +18,13 @@ export default function Register() {
         e.preventDefault();
         try{
         const response = await api.post("/users/register",formData);
-        alert("Đăng ký thành công ");
+        toast.success("Đăng ký thành công");
         console.log(response);
         }catch(error){ 
             if (error.response && error.response.data) {
-            alert(error.response.data.message);
+            toast.error(error.response.data.message);
         } else {
-            alert("Lỗi kết nối server ");
+            toast.error("Lỗi kết nối server ")
         }
         }
 
