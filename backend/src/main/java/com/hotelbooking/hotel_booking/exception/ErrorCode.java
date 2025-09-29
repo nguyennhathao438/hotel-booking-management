@@ -21,7 +21,8 @@ public enum ErrorCode {
     ROOM_NOT_EXISTED(1009, "Phòng không tồn tại",HttpStatus.NOT_FOUND),
     INVOICE_NOT_EXISTED(1010, "Hóa đơn không tồn tại",HttpStatus.NOT_FOUND),
     INVALID_DATE_RANGE(1011,"Ngày trả phòng không được nhỏ hơn ngày nhận",HttpStatus.BAD_REQUEST),
-    INVALID_PASSWORD(1012,"Mật khẩu không chính xác",HttpStatus.UNAUTHORIZED);
+    INVALID_PASSWORD(1012,"Mật khẩu không chính xác",HttpStatus.UNAUTHORIZED),
+    ROLE_NOT_EXISTED(1010, "Vai trò không tồn tại",HttpStatus.NOT_FOUND);
 
     private final int code;
     private final String message;
