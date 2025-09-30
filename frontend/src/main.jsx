@@ -10,7 +10,7 @@ import router from "./routers.jsx";
 createRoot(document.getElementById("root")).render(
     <Provider store={store}> 
     <RouterProvider router={router}>
-        
+
             <App />
         </RouterProvider>   
     </Provider>

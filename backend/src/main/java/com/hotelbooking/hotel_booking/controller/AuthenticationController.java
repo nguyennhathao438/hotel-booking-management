@@ -27,12 +27,13 @@ public class AuthenticationController {
     //--Dang nhap
     //-------------------------
     @PostMapping("/login")
-    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         var result = authenticationService.authenticate(request);
         return ApiResponse.<AuthenticationResponse>builder()
                 .result(result)
-        .build();
+                .build();
     }
+
     @PostMapping("/logout")
     ApiResponse<Void> logout(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);

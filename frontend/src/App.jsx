@@ -1,9 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Hotel from "./pages/Hotel";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import RoomManager from "./pages/RoomManager.jsx";
-import Home from "./components/Home.jsx"
+
 import "./App.css";
 import Header from "./components/Header.jsx";
 import { useDispatch } from "react-redux";
@@ -24,19 +19,21 @@ function App() {
                     avatar :response.data.avatar ,
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
-                    userId:response.data.userId,
+                    userId: response.data.userId,
                     roles: response.data.roles,
                  }))
                 }catch(error){
                     console.error("Lỗi khi lấy thông tin user:", error);
                 }
+
             }
         }
         fetchUser();
-    },[dispatch])
+    }, [dispatch])
     return (
-        <DefaultLayout/>
+              <DefaultLayout/>
         
+
     );
 }
 

@@ -4,7 +4,7 @@ import banner3 from "../assets/img/banner3.jpg"
 import "react-datepicker/dist/react-datepicker.css"
 import { useState, useEffect } from "react";
 function Banner() {
-    const images = [banner1, banner2,banner3]; // mảng ảnh
+    const images = [banner1, banner2, banner3]; 
     const [current, setCurrent] = useState(0);
 
     // Tự động đổi ảnh sau 3 giây
@@ -16,17 +16,8 @@ function Banner() {
     }, [images.length]);
     return (
         <div className="relative h-[94vh] w-screen">
-            {/* Ảnh nền */}
-            <img
-                className="h-full w-full object-cover"
-                src={images[current]}
-                alt="banner"
-            />
-
-            {/* Lớp phủ tối */}
+            <img className="h-full w-full object-cover" src={images[current]} alt="banner" />
             <div className="absolute inset-0 bg-black/50"></div>
-
-            {/* Nội dung trên ảnh */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
                 <h5 className="text-white text-xl md:text-2xl font-light tracking-[.3em] mb-4 drop-shadow-lg uppercase">
                     Just Enjoy and Relax
