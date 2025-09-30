@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Hotel from "./pages/Hotel";
+import Hotels from "./components/Hotels.jsx";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RoomManager from "./pages/RoomManager.jsx";
@@ -12,24 +12,23 @@ import api from "./api.js";
 import { login } from "./storages/userSlice.js";
 function App() {
     const dispatch = useDispatch();
-    useEffect(()=>{
-        const fetchUser = async()=>{
-            const token= localStorage.getItem("token");
-            if(token !=null ){
-                 const response =await api.get("/users/myInfo")
-                 dispatch(login({
-                    avatar :response.data.avatar ,
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = localStorage.getItem("token");
+            if (token != null) {
+                const response = await api.get("/users/myInfo")
+                dispatch(login({
+                    avatar: response.data.avatar,
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
-                    userId:response.data.userId,
+                    userId: response.data.userId,
                     roles: response.data.roles,
-                 }))
+                }))
             }
         }
         fetchUser();
-    },[dispatch])
+    }, [dispatch])
     return (
-        
         <BrowserRouter>
             {/* Menu điều hướng */}
             <Header></Header>
@@ -37,7 +36,7 @@ function App() {
             {/* Chỉ render route */}
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/hotel" element={<Hotel />} />
+                <Route path="/hotel" element={<Hotels />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/rooms" element={<RoomManager />} />

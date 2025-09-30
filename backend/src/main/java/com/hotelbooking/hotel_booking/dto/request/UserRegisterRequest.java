@@ -21,6 +21,4 @@ public class UserRegisterRequest {
     String firstName;
     @NotBlank(message = "Tên không được để trống")
     String lastName;
-
-
 }

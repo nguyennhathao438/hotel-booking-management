@@ -31,9 +31,7 @@ public class Hotel {
     @UpdateTimestamp
     private LocalDateTime hotelUpdatedAt;
     Integer status;
-@ManyToOne
-@JoinColumn(name = "userID", nullable = true)
-private User user;
-
-
+    @ManyToOne
+    @JoinColumn(name = "userID", nullable = true)
+    private User user;
 }
