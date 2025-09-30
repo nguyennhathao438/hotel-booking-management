@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import api from "./api.js";
 import { login } from "./storages/userSlice.js";
 import { Toaster } from "react-hot-toast";
+import DefaultLayout from "./layout/DefaultLayout.jsx";
 function App() {
     const dispatch = useDispatch();
     useEffect(()=>{
@@ -34,21 +35,8 @@ function App() {
         fetchUser();
     },[dispatch])
     return (
+        <DefaultLayout/>
         
-        <BrowserRouter>
-            {/* Menu điều hướng */}
-            <Header></Header>
-
-            {/* Chỉ render route */}
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/hotel" element={<Hotel />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/rooms" element={<RoomManager />} />
-            </Routes>
-            <Toaster position="top-right" />
-        </BrowserRouter>
     );
 }
 
