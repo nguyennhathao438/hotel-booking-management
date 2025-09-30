@@ -89,12 +89,14 @@ export default function Register() {
                                 className="w-full px-3 py-1 bg-transparent focus:outline-none"
                             />
                         </div>
+                        <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
+                            className="w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
                         >
                             Đăng ký
                         </button>
+                        </div>
                     </form>
                     <p className="mt-4 text-sm text-center text-gray-700 ">
                         Quay lại trang

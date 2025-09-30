@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-
+import api from "../api";
 RoomContextProvide.propTypes = {
   children: PropTypes.node.isRequired,
 };
@@ -14,17 +13,13 @@ function RoomContextProvide({ children }) {
   const [total, setTotal] = useState(0);
   const [hotels, setHotels] = useState([]);
 
-  const token = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJob3RlbC1ib29raW5nLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTc1OTE5NjQwNSwiaWF0IjoxNzU5MTkyODA1LCJqdGkiOiI4YjNkZDZmNi02ZTdlLTRjZWMtYTg0Zi1kN2UxZTQwNDNjMTUiLCJzY29wZSI6IiJ9.zzf3BUD74X1svkK00ZqHowCUYz3Mul19ZRtukT_EfQ-q9BnALlKA1FpyXrK6xrqsvZLC1ZXQftwSaSSKKEkT8w"
   useEffect(()=>{
-    axios.get("http://localhost:8081/hotel_booking/api/hotels/all",{
-      headers : {
-        "Content-Type" : "application/json",
-        "Authorization" : `Bearer ${token}`
-      }
-    }).then(res => {
-      setHotels(res.data.result)
-      console.log(res.data)
-    })
+    const fetchHotel = async() =>{
+          const response = await api.get("/hotels/all")
+          setHotels(response.data.result)
+          console.log(response.data.result)
+    }
+    fetchHotel();
   },[])
 
 

@@ -82,13 +82,15 @@ export default function Login() {
               />
             </div>
             {/* Button */}
+            <div className="flex justify-center">
             <button
               type="submit" 
               disabled={loading}
-              className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
+              className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
             >
               {loading ?  "Đang đăng nhập ..." : "Đăng nhập" }
             </button>
+            </div>
           </form>
           {/* Links */}
           <p className="mt-4 text-sm text-center text-gray-500 cursor-pointer hover:underline">
