@@ -4,7 +4,7 @@ export default class ApiService {
     static BASE_URL = "http://localhost:8080/hotel_booking";
     
     static getHeader() {
-        const token = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJob3RlbC1ib29raW5nLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTc1OTY4OTA1MSwiaWF0IjoxNzU5NjgxODUxLCJqdGkiOiJmY2U1MWU5Yy04MzJjLTQ1MzgtYWVkMi1hMWUyZjRkN2IxZGYiLCJzY29wZSI6IiJ9.KEJPt64ZSgW6X0Gsqk4Twjyp4882twBo_8KVDZkG1Ye7wu-QO3Rv8hdZutTeQ7ZMXebqi0zdaOys09EMW1StzQ"; 
+        const token = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJob3RlbC1ib29raW5nLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTc1OTcxOTcyMSwiaWF0IjoxNzU5NzEyNTIxLCJqdGkiOiI1MjE1Y2M2Yy0xM2RkLTRlMDctODYzNi05MjgyYjdkNWEwNzAiLCJzY29wZSI6IiJ9.V1_0p39GOBxDP_WzA9OJ6hek_yzakWcdnbvoh_tNB85xYUS-aKvkS5P5fV3Ba2wo8xKjz60mJhE5B1aawkkNCg"; 
         return {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
