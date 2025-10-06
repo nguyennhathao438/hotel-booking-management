@@ -1,9 +1,14 @@
 server:
-  port: 8081
+  port: 8080
   servlet:
     context-path: /hotel_booking
 
+
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
     url: jdbc:mysql://localhost:3306/hotel_booking
     username: root
@@ -18,4 +23,5 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 jwt:
   signerKey: "3ydbhVsDcxS2sU9iunYZeLKkJ5TK5b7z0aRCyA9xcO0nv2grnnHXv5NLRxt7WFdL"
+
 

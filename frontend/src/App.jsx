@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Hotels from "./components/Hotels.jsx";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import RoomManager from "./pages/RoomManager.jsx";
 import Home from "./components/Home.jsx"
 import "./App.css";
 import Header from "./components/Header.jsx";
@@ -10,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import api from "./api.js";
 import { login } from "./storages/userSlice.js";
+import DetailsHotel from "./components/DetailsHotel/DetailsHotel.jsx";
+import AddHotel from "./components/AddHotel.jsx";
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -39,8 +40,9 @@ function App() {
                 <Route path="/hotel" element={<Hotels />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/rooms" element={<RoomManager />} />
+                <Route path="/detailshotel/:hotelId" element={<DetailsHotel />} />
             </Routes>
+            <AddHotel/>
         </BrowserRouter>
     );
 }

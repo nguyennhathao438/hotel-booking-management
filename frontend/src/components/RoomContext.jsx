@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-
+import ApiService from "../service/apiService";
 RoomContextProvide.propTypes = {
   children: PropTypes.node.isRequired,
 };
@@ -13,20 +12,20 @@ function RoomContextProvide({ children }) {
   const [kids, setKids] = useState("1 Kids");
   const [total, setTotal] = useState(0);
   const [hotels, setHotels] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [images, setImages] = useState([]);
 
-  const token = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJob3RlbC1ib29raW5nLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTc1OTE5NjQwNSwiaWF0IjoxNzU5MTkyODA1LCJqdGkiOiI4YjNkZDZmNi02ZTdlLTRjZWMtYTg0Zi1kN2UxZTQwNDNjMTUiLCJzY29wZSI6IiJ9.zzf3BUD74X1svkK00ZqHowCUYz3Mul19ZRtukT_EfQ-q9BnALlKA1FpyXrK6xrqsvZLC1ZXQftwSaSSKKEkT8w"
-  useEffect(()=>{
-    axios.get("http://localhost:8081/hotel_booking/api/hotels/all",{
-      headers : {
-        "Content-Type" : "application/json",
-        "Authorization" : `Bearer ${token}`
+  useEffect(() => {
+    const fetchAllHotel = async () => {
+      try {
+        let data = await ApiService.getAllHotel()
+        setHotels(data.result)
+      } catch (error) {
+        console.error("Error when load data :", error);
       }
-    }).then(res => {
-      setHotels(res.data.result)
-      console.log(res.data)
-    })
+    }
+    fetchAllHotel()
   },[])
-
 
   useEffect(() => {
     setTotal(Number(adults[0]) + Number(kids[0]));
@@ -37,7 +36,7 @@ function RoomContextProvide({ children }) {
   };
 
   return (
-    <Context.Provider value={{ adults, setAdults, kids, setKids, total, hotels, setHotels, handleClick, }}>
+    <Context.Provider value={{ adults, setAdults, kids, setKids, total, hotels, setHotels, rooms, setRooms, images, setImages, handleClick, }}>
       {children}
     </Context.Provider>
   );

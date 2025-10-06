@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 public class RoomRequest {
     private String roomName;
     private String roomType;
-    private Integer roomCapacity;
-    private Integer bedCount;
-    private Double roomPrice;
-    private Integer status;
-    private Integer hotelID;
+    private int roomCapacity;
+    private double roomArea;
+    private int bedRoomCount;
+    private int bedCount;
+    private double roomPrice;
+    private int status;
+    private int hotelID;
 }
 
