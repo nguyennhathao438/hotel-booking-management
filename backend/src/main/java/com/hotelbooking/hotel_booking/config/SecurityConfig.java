@@ -46,10 +46,11 @@ public class SecurityConfig {
         httpSecurity
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request ->
-                        request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                                .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS).permitAll()
-                                .anyRequest().authenticated())
+
+                request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS).permitAll()
+                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) -> {
                             ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
@@ -76,11 +77,13 @@ public class SecurityConfig {
                                     null
                             );
 
-                            ObjectMapper mapper = new ObjectMapper();
-                            response.getWriter().write(mapper.writeValueAsString(apiResponse));
-                        })
 
-                );
+                    ObjectMapper mapper = new ObjectMapper();
+                    response.getWriter().write(mapper.writeValueAsString(apiResponse));
+                })
+
+        );
+
         //Đăng ký Authentication provider để decode JWT
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(customJwtDecoder)

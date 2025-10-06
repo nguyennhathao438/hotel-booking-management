@@ -38,7 +38,7 @@ public class Room {
 
     @UpdateTimestamp
     LocalDateTime roomUpdateAt;
-    Integer status;
+     Integer status;
     @ManyToOne
     @JoinColumn(name = "hotelID", nullable = true)
     Hotel hotel;

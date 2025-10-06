@@ -1,5 +1,6 @@
 @import "tailwindcss";
-/*:root {
+@plugin "daisyui";
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +66,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+.hotel-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
 } */

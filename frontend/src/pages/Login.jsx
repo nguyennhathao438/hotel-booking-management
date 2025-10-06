@@ -1,12 +1,46 @@
 import { useState } from "react";
-
+import api from "../api";
+import { login } from "../storages/userSlice";
+import { useDispatch } from 'react-redux';
+import store from "../storages/store";
+import { useNavigate } from "react-router-dom";
+import {  toast } from "react-hot-toast";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  const [loading,setLoading] =useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login with:", { email, password });
+    setLoading(true);
+    try {
+      const response = await api.post("/auth/login",{
+        email,
+        password,
+      });
+      console.log(response);
+      localStorage.setItem("token",response.data.result.token);
+      dispatch(login({
+        avatar:response.data.result.avatar,
+        firstName:response.data.result.firstName,
+        lastName:response.data.result.lastName,
+        roles:response.data.result.roles,
+        userId:response.data.result.userId
+      }))
+      console.log(store.getState().user);
+      navigate("/")
+      toast.success("Đăng nhập thành công");
+    }catch(error){
+        if (error.response && error.response.data) {
+           toast.error(error.response.data.message);
+        } else {
+            toast.error("Lỗi kết nối sever");
+        }
+    }
+    finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,12 +82,15 @@ export default function Login() {
               />
             </div>
             {/* Button */}
+            <div className="flex justify-center">
             <button
               type="submit" 
-              className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
+              disabled={loading}
+              className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
             >
-              Đăng nhập
+              {loading ?  "Đang đăng nhập ..." : "Đăng nhập" }
             </button>
+            </div>
           </form>
           {/* Links */}
           <p className="mt-4 text-sm text-center text-gray-500 cursor-pointer hover:underline">

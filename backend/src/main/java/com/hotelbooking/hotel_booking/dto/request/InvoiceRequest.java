@@ -11,11 +11,11 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InvoiceRequest {
 
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
-    private Double totalAmount;
-    private Integer payment;
-    private Integer status;
-    private Integer roomId;
-    private Integer userId;
+        private LocalDate checkInDate;
+        private LocalDate checkOutDate;
+        private Double totalAmount;
+        private Integer payment;
+        private Integer status;
+        private Integer roomId;
+        private Integer userId;
 }

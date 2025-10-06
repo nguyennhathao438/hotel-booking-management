@@ -20,21 +20,19 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-     int id;
-     String email;
+    int id;
+    String email;
     String password;
-     String firstName;
-     String lastName;
-     String phone;
-     LocalDate dateOfBirth;
-     String avatar;
+    String firstName;
+    String lastName;
+    String phone;
+    LocalDate dateOfBirth;
+    String avatar;
     @CreationTimestamp
-     LocalDateTime createAt;
+    LocalDateTime createAt;
     @UpdateTimestamp
-     LocalDateTime updateAt;
-     int status;
-     @ManyToMany
-     Set<Role> roles;
-
-
+    LocalDateTime updateAt;
+    int status;
+    @ManyToMany
+    Set<Role> roles;
 }

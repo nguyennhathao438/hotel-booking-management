@@ -1,15 +1,33 @@
 import { useState } from "react"
+import api from "../api";
+import toast from "react-hot-toast";
 export default function Register() {
+    
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         email: "",
         password: "",
         password2: "",
-    });
+    }); 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         console.log(formData);
+    }
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        try{
+        const response = await api.post("/users/register",formData);
+        toast.success("Đăng ký thành công");
+        console.log(response);
+        }catch(error){ 
+            if (error.response && error.response.data) {
+            toast.error(error.response.data.message);
+        } else {
+            toast.error("Lỗi kết nối server ")
+        }
+        }
+
     }
     return (<>
         <div className="flex items-center justify-center min-h-screen">
@@ -23,7 +41,7 @@ export default function Register() {
                 </div>
                 <div className="w-1/2 p-8">
                     <h2 className="font-bold text-2xl mb-8">Member register</h2>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div className="flex">
                             <input type="text"
                                 name="firstName"
@@ -31,6 +49,7 @@ export default function Register() {
                                 value={formData.firstName}
                                 onChange={handleChange}
                                 className="w-1/2 bg-gray-100 rounded-full py-2 px-3 items-center mr-3 focus:outline-none"
+                                required
                             />
                             <input type="text"
                                 name="lastName"
@@ -70,16 +89,19 @@ export default function Register() {
                                 className="w-full px-3 py-1 bg-transparent focus:outline-none"
                             />
                         </div>
+                        <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
+                            className="w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
                         >
                             Đăng ký
                         </button>
+                        </div>
                     </form>
                     <p className="mt-4 text-sm text-center text-gray-700 ">
                         Quay lại trang
-                        <a href="/register" className="font-semibold text-blue-600 hover:underline ml-1">
+
+                        <a href="/login" className="font-semibold text-blue-600 hover:underline ml-1">
                             Đăng nhập
                         </a>
                     </p>
