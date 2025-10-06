@@ -1,5 +1,6 @@
 package com.hotelbooking.hotel_booking.controller;
 
+
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
@@ -24,31 +25,31 @@ public class UserController {
     @Autowired
     private UserSevice userService;
     @PostMapping("/register")
-    ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody @Valid UserRegisterRequest request){
+    ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody @Valid UserRegisterRequest request) {
         UserResponse userResponse = userService.registerUser(request);
         return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
-                        .message("Success")
-                        .result(userResponse)
+                .message("Success")
+                .result(userResponse)
                 .build());
     }
     @GetMapping
-    ResponseEntity<ApiResponse<List<User>>> getAllUser(){
+    ResponseEntity<ApiResponse<List<User>>> getAllUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info("Email :{}",authentication.getName());
+        log.info("Email :{}", authentication.getName());
         authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
         List<User> userList = userService.getAllUser();
         return ResponseEntity.ok(ApiResponse.<List<User>>builder()
-                        .message("Success")
-                        .result(userList)
+                .message("Success")
+                .result(userList)
                 .build());
     }
 
     @GetMapping("/{userId}")
-    ResponseEntity<ApiResponse<UserResponse>> getUser(@PathVariable("userId") int userId){
+    ResponseEntity<ApiResponse<UserResponse>> getUser(@PathVariable int userId) {
         UserResponse userResponse = userService.getUser(userId);
         return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
-                        .message("Success")
-                        .result(userResponse)
+                .message("Success")
+                .result(userResponse)
                 .build());
     }
     @GetMapping("/myInfo")
@@ -59,19 +60,21 @@ public class UserController {
                 .result(userResponse)
                 .build());
     }
+
     @PutMapping("/{userId}")
-    ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody UserUpdateRequest request,@PathVariable int userId){
-        UserResponse userResponse = userService.updateUser(request,userId);
+    ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody UserUpdateRequest request, @PathVariable int userId) {
+        UserResponse userResponse = userService.updateUser(request, userId);
         return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
-                        .message("Success")
-                        .result(userResponse)
+                .message("Success")
+                .result(userResponse)
                 .build());
     }
+
     @PutMapping("/delete/{userId}")
     ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok(ApiResponse.<Void>builder()
-                        .message("Success")
+                .message("Success")
                 .build());
     }
     @GetMapping("/search")
@@ -83,4 +86,5 @@ public class UserController {
                         .result(userList)
                         .build());
     }
+
 }

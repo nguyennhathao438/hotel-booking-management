@@ -1,14 +1,16 @@
-import ItemHeader from "./ItemHeader.jsx";
+// import ItemHeader from "./ItemHeader.jsx";
+import Customers from "../pages/Customers.jsx";
+import RoomAvailable from "../pages/RoomAvailable.jsx";
 import SideBar from "./SideBar.jsx";
-import { BedDoubleIcon, ShoppingCartIcon, BellRingIcon ,MessageCircleQuestionIcon,CircleDollarSignIcon} from "lucide-react";
-import RoomAvailableKid from "./RoomAvailableKid.jsx";
-import { detailbookings, rooms } from "../data.js";
-import ItemRoom from "./ItemRoom.jsx";
+// import { BedDoubleIcon, ShoppingCartIcon, BellRingIcon ,MessageCircleQuestionIcon,CircleDollarSignIcon} from "lucide-react";
+// import RoomAvailableKid from "./RoomAvailableKid.jsx";
+// import { detailbookings, rooms } from "../data.js";
+// import ItemRoom from "./ItemRoom.jsx";
 export default function DashBoard(){
     return(
     <div className="flex">
         <SideBar/>
-        <div className="bg-gray-300 ml-[300px] w-full">
+        {/* <div className="bg-gray-300 ml-[300px] w-full">
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 px-7 py-8 ">
                 <ItemHeader
                     Icon ={BedDoubleIcon}
@@ -75,7 +77,9 @@ export default function DashBoard(){
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
+        {/* <RoomAvailable/> */}
+        <Customers/>
     </div>
     );
 };

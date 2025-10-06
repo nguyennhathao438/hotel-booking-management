@@ -13,7 +13,7 @@ export default function SideBar(){
                 <div className="flex hover:bg-gray-400"> <MegaphoneIcon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Enquiries</p></div>
                 <div className="flex hover:bg-gray-400"> <HandCoinsIcon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Payments</p></div>
                 <div className="flex hover:bg-gray-400"> <FileTextIcon   className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Reports</p></div>
-                <div className="flex hover:bg-gray-400"> <User2Icon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Agents</p></div>
+                <div className="flex hover:bg-gray-400"> <User2Icon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Customers</p></div>
                 <div className="flex hover:bg-gray-400"> <WrenchIcon className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Setting</p></div>
             </div>
         </div>

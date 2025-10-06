@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,62 +21,73 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtBearerTokenAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 import javax.crypto.spec.SecretKeySpec;
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final String[] PUBLIC_ENDPOINTS ={"/api/users/register","/api/auth/login","/api/auth/introspect","/api/auth/logout"};
+
+    private final String[] PUBLIC_ENDPOINTS ={"/api/users/register","/api/auth/login","/api/auth/introspect","/api/hotels/all"};
+    @Value("${jwt.signerKey}")
+    private String signerKey;
     //-------------------------
     //--Cau hinh Spring Security
     //-------------------------
     @Autowired
-    private CustomJwtDecoder customJwtDecoder;
+    CustomJwtDecoder customJwtDecoder;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/user").hasAnyAuthority("ROLE_ADMIN")
-                        .anyRequest().authenticated())
+        httpSecurity
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(request ->
+                        request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS).permitAll()
+                                .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
-                .authenticationEntryPoint((request, response, authException) -> {
-                    ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
-                    response.setStatus(401);
-                    response.setContentType("application/json;charset=UTF-8");
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
+                            response.setStatus(401);
+                            response.setContentType("application/json;charset=UTF-8");
 
-                    ApiResponse<Object> apiResponse = new ApiResponse<>(
-                            errorCode.getCode(),
-                            errorCode.getMessage(),
-                            null
-                    );
+                            ApiResponse<Object> apiResponse = new ApiResponse<>(
+                                    errorCode.getCode(),
+                                    errorCode.getMessage(),
+                                    null
+                            );
 
-                    ObjectMapper mapper = new ObjectMapper();
-                    response.getWriter().write(mapper.writeValueAsString(apiResponse));
-                })
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
-                    response.setStatus(403);
-                    response.setContentType("application/json;charset=UTF-8");
+                            ObjectMapper mapper = new ObjectMapper();
+                            response.getWriter().write(mapper.writeValueAsString(apiResponse));
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+                            response.setStatus(403);
+                            response.setContentType("application/json;charset=UTF-8");
 
-                    ApiResponse<Object> apiResponse = new ApiResponse<>(
-                            errorCode.getCode(),
-                            errorCode.getMessage(),
-                            null
-                    );
+                            ApiResponse<Object> apiResponse = new ApiResponse<>(
+                                    errorCode.getCode(),
+                                    errorCode.getMessage(),
+                                    null
+                            );
 
-                    ObjectMapper mapper = new ObjectMapper();
-                    response.getWriter().write(mapper.writeValueAsString(apiResponse));
-                })
-        );
+                            ObjectMapper mapper = new ObjectMapper();
+                            response.getWriter().write(mapper.writeValueAsString(apiResponse));
+                        })
+
+                );
         //Đăng ký Authentication provider để decode JWT
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(customJwtDecoder)
                         .jwtAuthenticationConverter(jwtAuthenticationConverter())));
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
-                return httpSecurity.build();
+        return httpSecurity.build();
     }
-
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(10);
@@ -91,5 +103,20 @@ public class SecurityConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
 
+    }
+    //-------------------------
+    //--Setup CORS Cho frontend lấy dữ liệu
+    //-------------------------
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

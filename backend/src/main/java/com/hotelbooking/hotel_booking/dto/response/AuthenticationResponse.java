@@ -1,7 +1,11 @@
 package com.hotelbooking.hotel_booking.dto.response;
 
+import com.hotelbooking.hotel_booking.entity.Role;
+import com.hotelbooking.hotel_booking.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -11,4 +15,9 @@ import lombok.experimental.FieldDefaults;
 public class AuthenticationResponse {
     String token;
     boolean authenticated;
+    int userId;
+    String firstName;
+    String lastName;
+    String avatar;
+    Set<Role> roles;
 }
