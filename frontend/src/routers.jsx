@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import AdminLayout from "./layout/AdminLayout";
 import DashBoard from "./componentadmin/DashBoard"
 import PermissionManager from "./pages/PermissionManager";
+import DetailsHotel from "./components/DetailsHotel/DetailsHotel";
+import AddHotel from "./components/AddHotel";
 const router = createBrowserRouter([
         {
             path:"/",
@@ -22,6 +24,15 @@ const router = createBrowserRouter([
                 {
                     path:"/login",
                     element:<Login/>
+                },
+                {
+                    path : "/addhotel",
+                    element :<AddHotel/>
+                },
+                {
+                    path: "/detailshotel/:hotelId",
+                    element: <DetailsHotel/>
+
                 }
             ],
         },

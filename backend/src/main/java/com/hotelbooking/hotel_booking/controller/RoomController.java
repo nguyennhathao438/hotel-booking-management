@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/room")
+@RequestMapping("/api/rooms")
 @RequiredArgsConstructor
 public class RoomController {
     private final RoomService roomService;
@@ -21,13 +21,19 @@ public class RoomController {
     @PostMapping("/create")
     ResponseEntity<ApiResponse<RoomResponse>> createRoom(@RequestBody @Valid RoomRequest request) {
         RoomResponse roomResponse = roomService.createRoom(request);
-
         return ResponseEntity.ok(ApiResponse.<RoomResponse>builder()
                 .message("Tạo phòng thành công")
                 .result(roomResponse)
                 .build());
     }
-
+    @GetMapping("/hotel/{hotelId}")
+    public ResponseEntity<ApiResponse<List<RoomResponse>>> getRoomsByHotelId(@PathVariable int hotelId){
+        List<RoomResponse> roomResponse = roomService.getRoomsByHotelId(hotelId);
+        return ResponseEntity.ok(ApiResponse.<List<RoomResponse>>builder()
+                        .message("Lấy thông tin phòng thành công")
+                        .result(roomResponse)
+                .build());
+    }
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<RoomResponse>>> getAllRooms() {
         List<RoomResponse> rooms = roomService.getAllRooms();
@@ -45,6 +51,7 @@ public class RoomController {
                 .result(roomResponse)
                 .build());
     }
+
     @PutMapping("/{roomID}")
     public ResponseEntity<ApiResponse<RoomResponse>> updateRoom(
             @PathVariable int roomID,

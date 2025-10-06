@@ -138,9 +138,6 @@ export default function PermissionManager() {
             
             {openForm && (<ModelForm title={"Chỉnh sửa"} width="w-auto" onClose={() => handleCloseForm()}>
                 <div className="text-center"><span>Tên quyền : </span>{roleSelected.name}</div>
-
-
-                <div className="text-center mb-4">Danh sách quyền</div>
                 <div className="text-center mb-4"><input type="text" className="px-6 py-1 rounded-full border "placeholder="Tìm kiếm"onChange={(e)=>handleSearch(e.target.value)}/></div>
                 <div className="border rounded-md w-[600px] mb-4">
                     <table className="min-w-full border-collapse table-auto border-gray-500">
