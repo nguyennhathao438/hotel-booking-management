@@ -17,5 +17,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 jwt:
   signerKey: "3ydbhVsDcxS2sU9iunYZeLKkJ5TK5b7z0aRCyA9xcO0nv2grnnHXv5NLRxt7WFdL"
+  refreshKey: "i5n3VDtBHkxy0Bme1F23nQ6Nfxt4dBNVD4WdJ1vZKuwvJhSn7/A2CPe6bpFm7cUE"
 
 

@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 public class RoleService {
     RoleRepository roleRepository;
     PermissionRepository permissionRepository;
+    @PreAuthorize("hasRole('ADMIN')")
     public RoleResponse createRole(RoleRequest request){
 
         var permissions = permissionRepository.findAllById(request.getPermission());
@@ -46,6 +48,7 @@ public class RoleService {
                 .permissions(permissionResponse)
                 .build();
     }
+    @PreAuthorize("hasRole('ADMIN')")
     public List<RoleResponse> getAllRole() {
         var roles = roleRepository.findAll();
         return roles.stream().map(
@@ -60,6 +63,7 @@ public class RoleService {
                         .build()
         ).toList();
     }
+    @PreAuthorize("hasRole('ADMIN')")
     public RoleResponse updateRole(String roleId,RoleRequest request){
         Role role = roleRepository.findById(roleId).orElseThrow(()-> new AppException(ErrorCode.ROLE_NOT_EXISTED));
         var permission = permissionRepository.findAllById(request.getPermission());

@@ -12,7 +12,7 @@ function Header() {
   const dispatch = useDispatch();
   const handleLogout = async () => {
     const token = localStorage.getItem("token")
-    await api.post("/auth/logout", token)
+    await api.post("/auth/logout", {token},{ withCredentials: true })
     localStorage.removeItem("token")
     dispatch(logout());
   }

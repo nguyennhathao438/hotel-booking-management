@@ -17,7 +17,8 @@ function App() {
     useEffect(()=>{
         const fetchUser = async()=>{
             const token= localStorage.getItem("token");
-            if(token !=null || token != ""){
+            console.log(token)
+            if(token != null && token != "" ){
                 try{
                  const response =await api.get("/users/myInfo")
                  dispatch(login({

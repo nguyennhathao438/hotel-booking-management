@@ -19,8 +19,9 @@ export default function Login() {
         email,
         password,
       });
+      
       console.log(response);
-      localStorage.setItem("token",response.data.result.token);
+      localStorage.setItem("token",response.data.result.accessToken);
       dispatch(login({
         avatar:response.data.result.avatar,
         firstName:response.data.result.firstName,
@@ -29,6 +30,7 @@ export default function Login() {
         userId:response.data.result.userId
       }))
       console.log(store.getState().user);
+      console.log(document.cookie)
       navigate("/")
       toast.success("Đăng nhập thành công");
     }catch(error){

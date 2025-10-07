@@ -33,7 +33,7 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS ={"/api/users/register","/api/auth/login","/api/auth/introspect","/api/hotels/all"};
+    private final String[] PUBLIC_ENDPOINTS ={"/api/users/register","/api/auth/login","/api/auth/introspect","/api/hotels/all","/api/auth/refresh"};
     @Value("${jwt.signerKey}")
     private String signerKey;
     //-------------------------
@@ -107,16 +107,16 @@ public class SecurityConfig {
     //-------------------------
     //--Setup CORS Cho frontend lấy dữ liệu
     //-------------------------
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+            configuration.setAllowedMethods(List.of("*"));
+            configuration.setAllowedHeaders(List.of("*"));
+            configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", configuration);
+            return source;
+        }
 }
