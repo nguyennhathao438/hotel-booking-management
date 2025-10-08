@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import ApiService from "../service/apiService";
 import { Context } from "./RoomContext";
 const AddHotel = () => {
-    const token = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJob3RlbC1ib29raW5nLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTc1OTkwNDc3NiwiaWF0IjoxNzU5ODk3NTc2LCJqdGkiOiI1MDEwNDk0NS1iNmIyLTQxMTQtYTFkZi02MGNiMTQ5MmMxYTEiLCJzY29wZSI6IiJ9.BBQdIh9rmO5fGBg2v3Nn_zG41UqI9W0tRZNiu_RWNrr3sopSd3aHNIALKb4KJG0BXnALamNvty8668-sQmxecg";
     const [hotelData, setHotelData] = useState({
         hotelName: "",
         hotelAddress: "",
