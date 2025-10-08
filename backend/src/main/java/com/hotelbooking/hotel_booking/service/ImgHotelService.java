@@ -31,7 +31,7 @@ public class ImgHotelService {
     private Cloudinary cloudinary;
     public List<ImgHotelRespone> uploadImages(MultipartFile[] files, int hotelId) throws IOException {
         Hotel hotel = hotelRepository.findById(hotelId)
-                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+                .orElseThrow(()     -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         List<ImgHotelRespone> responses = new ArrayList<>();
         for (MultipartFile file : files) {
             Map uploadResult = cloudinary.uploader().upload(file.getBytes(),

@@ -34,11 +34,7 @@ public class HotelService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
     }
-
-    public HotelResponse createHotel(HotelRequest request) {
-        if (hotelRepository.existsByHotelName(request.getHotelName())) {
-            throw new AppException(ErrorCode.HOTEL_EXISTED);
-        }
+    public HotelResponse createHotel (HotelRequest request){
         User user = getCurrentUser();
         Hotel hotel = Hotel.builder()
                 .hotelName(request.getHotelName())
@@ -55,23 +51,20 @@ public class HotelService {
         return mapToHotelResponse(hotel);
     }
 
-    public List<HotelResponse> getAllHotels() {
+    public List<HotelResponse> getAllHotels(){
         List<Hotel> hotels = hotelRepository.findAll();
         return hotels.stream()
                 .map(this::mapToHotelResponse)
                 .toList();
     }
 
-    public HotelResponse getHotelById(int id) {
-        Hotel hotel = hotelRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+    public HotelResponse getHotelById(int hotelId){
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(()->new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         return mapToHotelResponse(hotel);
     }
 
-    public HotelResponse updateHotel(int hotelId, HotelRequest request) {
-        Hotel hotel = hotelRepository.findById(hotelId)
-                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-
+    public HotelResponse updateHotel(int hotelId,HotelRequest request){
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(()->new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         if (request.getHotelName() != null && !request.getHotelName().isBlank()) {
             hotel.setHotelName(request.getHotelName());
         }
@@ -100,18 +93,17 @@ public class HotelService {
         return mapToHotelResponse(hotel);
     }
 
-    private HotelResponse mapToHotelResponse(Hotel hotel) {
-        if (hotel == null) return null;
+    public HotelResponse mapToHotelResponse(Hotel hotel){
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())
                 .hotelAddress(hotel.getHotelAddress())
                 .hotelPhone(hotel.getHotelPhone())
                 .hotelRating(hotel.getHotelRating())
-                .hotelTotalRoom(hotel.getHotelTotalRoom())
                 .hotelCost(hotel.getHotelCost())
                 .hotelDescription(hotel.getHotelDescription())
-                .status(hotel.getStatus())
+                .hotelTotalRoom(hotel.getHotelTotalRoom())
+                .status(0)
                 .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
                 .build();
     }

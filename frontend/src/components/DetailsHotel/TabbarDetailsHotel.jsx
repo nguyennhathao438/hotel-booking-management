@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function TopTabBar() {
+export default function TopTabBar({ scrollToRooms,scrollToDetailsHotel }) {
     const tabs = [
         "Tổng quan",
         "Thông tin căn hộ & giá",
@@ -18,7 +18,15 @@ export default function TopTabBar() {
                     {tabs.map((item) => (
                         <button
                             key={item}
-                            onClick={() => setActiveTab(item)}
+                            onClick={() => {
+                                setActiveTab(item);
+                                if (item === "Thông tin căn hộ & giá" && scrollToRooms) {
+                                    scrollToRooms(); // Gọi hàm scroll từ cha
+                                }
+                                if (item === "Tổng quan" && scrollToDetailsHotel) {
+                                    scrollToDetailsHotel();
+                                }
+                            }}
                             className={`relative font-medium transition duration-300 group ${activeTab === item
                                     ? "text-blue-600"
                                     : "text-gray-700 hover:text-blue-600"
@@ -32,6 +40,7 @@ export default function TopTabBar() {
                         </button>
                     ))}
                 </div>
+
                 <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-md">
                     Đặt căn hộ của bạn
                 </button>

@@ -9,8 +9,9 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import api from "./api.js";
 import { login } from "./storages/userSlice.js";
-import DetailsHotel from "./components/DetailsHotel/DetailsHotel.jsx";
+import DetailsHotelView from "./components/DetailsHotel/DetailsHotelView.jsx";
 import AddHotel from "./components/AddHotel.jsx";
+import Leaflet from "./components/leaflet/basic.jsx";
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -40,9 +41,10 @@ function App() {
                 <Route path="/hotel" element={<Hotels />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/detailshotel/:hotelId" element={<DetailsHotel />} />
+                <Route path="/detailshotel/:hotelId" element={<DetailsHotelView />} />
             </Routes>
             <AddHotel/>
+            <Leaflet/>
         </BrowserRouter>
     );
 }
