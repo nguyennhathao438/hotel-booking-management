@@ -1,7 +1,4 @@
 import ItemHeader from "./ItemHeader.jsx";
-import Customers from "../pages/Customers.jsx";
-import RoomAvailable from "../pages/RoomAvailable.jsx";
-import SideBar from "./SideBar.jsx";
 import { BedDoubleIcon, ShoppingCartIcon, BellRingIcon ,MessageCircleQuestionIcon,CircleDollarSignIcon} from "lucide-react";
 import RoomAvailableKid from "./RoomAvailableKid.jsx";
 import { detailbookings, rooms } from "../data.js";

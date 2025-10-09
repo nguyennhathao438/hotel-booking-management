@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import AdminLayout from "./layout/AdminLayout";
 import DashBoard from "./componentadmin/DashBoard"
 import PermissionManager from "./pages/PermissionManager";
-import Customers from "./pages/Customers";
+import Users from "./pages/Users";
 const router = createBrowserRouter([
         {
             path:"/",
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
                 },
                 {
                     path:"user",
-                    element: <Customers/>
+                    element: <Users/>
                 }
             ]
             
