@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,6 +22,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtBearerTokenAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+<<<<<<< HEAD
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -28,6 +30,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.util.List;
+=======
+
+import javax.crypto.spec.SecretKeySpec;
+>>>>>>> 8073ad60180736bb716b2d7ab6ae03f290d4ba37
 
 @Configuration
 @EnableMethodSecurity
@@ -43,11 +49,16 @@ public class SecurityConfig {
     CustomJwtDecoder customJwtDecoder;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+<<<<<<< HEAD
         httpSecurity
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+=======
+        httpSecurity.authorizeHttpRequests(request ->
+                request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
+>>>>>>> 8073ad60180736bb716b2d7ab6ae03f290d4ba37
                         .requestMatchers(HttpMethod.GET,"/api/user").hasAnyAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
@@ -79,7 +90,10 @@ public class SecurityConfig {
                     ObjectMapper mapper = new ObjectMapper();
                     response.getWriter().write(mapper.writeValueAsString(apiResponse));
                 })
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8073ad60180736bb716b2d7ab6ae03f290d4ba37
         );
         //Đăng ký Authentication provider để decode JWT
         httpSecurity.oauth2ResourceServer(oauth2 ->
@@ -104,6 +118,7 @@ public class SecurityConfig {
         return jwtAuthenticationConverter;
 
     }
+<<<<<<< HEAD
     //-------------------------
     //--Setup CORS Cho frontend lấy dữ liệu
     //-------------------------
@@ -119,4 +134,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+=======
+>>>>>>> 8073ad60180736bb716b2d7ab6ae03f290d4ba37
 }

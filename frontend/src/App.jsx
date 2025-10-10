@@ -3,9 +3,12 @@ import Hotel from "./pages/Hotel";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RoomManager from "./pages/RoomManager.jsx";
+<<<<<<< HEAD
 import store from "./storages/store";
 import { Provider } from "react-redux";
 
+=======
+>>>>>>> 8073ad60180736bb716b2d7ab6ae03f290d4ba37
 import "./App.css";
 // Trang chủ
 function Home() {
@@ -17,7 +20,6 @@ function Home() {
         </div>
     );
 }
-
 function App() {
     return (
         
@@ -40,7 +42,6 @@ function App() {
                 <Route path="/rooms" element={<RoomManager />} />
             </Routes>
         </BrowserRouter>
-     
     );
 }
 

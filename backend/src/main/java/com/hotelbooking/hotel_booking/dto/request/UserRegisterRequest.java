@@ -17,6 +17,7 @@ public class UserRegisterRequest {
     @Size(min = 8 , message = "Mật khẩu phải từ 8 ký tự trở lên ")
     String password;
     String password2;
+
     @NotBlank(message = "Họ không được để trống")
     String firstName;
     @NotBlank(message = "Tên không được để trống")
