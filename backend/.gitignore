@@ -32,5 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 ##file khac
-application.yaml
-CloudinaryConfig.java
+.env
