@@ -27,10 +27,7 @@ import java.util.stream.Collectors;
 public class RoleService {
     RoleRepository roleRepository;
     PermissionRepository permissionRepository;
-<<<<<<< HEAD
     @PreAuthorize("hasRole('ADMIN')")
-=======
->>>>>>> origin/thanh
     public RoleResponse createRole(RoleRequest request){
 
         var permissions = permissionRepository.findAllById(request.getPermission());
@@ -51,10 +48,7 @@ public class RoleService {
                 .permissions(permissionResponse)
                 .build();
     }
-<<<<<<< HEAD
     @PreAuthorize("hasRole('ADMIN')")
-=======
->>>>>>> origin/thanh
     public List<RoleResponse> getAllRole() {
         var roles = roleRepository.findAll();
         return roles.stream().map(
@@ -69,10 +63,7 @@ public class RoleService {
                         .build()
         ).toList();
     }
-<<<<<<< HEAD
     @PreAuthorize("hasRole('ADMIN')")
-=======
->>>>>>> origin/thanh
     public RoleResponse updateRole(String roleId,RoleRequest request){
         Role role = roleRepository.findById(roleId).orElseThrow(()-> new AppException(ErrorCode.ROLE_NOT_EXISTED));
         var permission = permissionRepository.findAllById(request.getPermission());

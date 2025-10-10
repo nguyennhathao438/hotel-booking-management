@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Room {
-<<<<<<< HEAD
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int roomId;
@@ -34,32 +33,6 @@ public class Room {
     @UpdateTimestamp
     LocalDateTime roomUpdateAt;
     int status;
-=======
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer roomId;
-
-    @Column(nullable = false)
-    String roomName;
-
-    String roomType;
-
-    Integer roomCapacity;
-
-    @Column(nullable = false)
-    Integer bedCount;
-
-    @Column(nullable = false)
-    Double roomPrice;
-
-    @CreationTimestamp
-    LocalDateTime roomCreateAt;
-
-    @UpdateTimestamp
-    LocalDateTime roomUpdateAt;
-     Integer status;
->>>>>>> origin/thanh
     @ManyToOne
     @JoinColumn(name = "hotelID", nullable = true)
     Hotel hotel;

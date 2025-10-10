@@ -3,11 +3,8 @@ package com.hotelbooking.hotel_booking.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
-<<<<<<< HEAD
 import com.hotelbooking.hotel_booking.service.CustomOAuth2SuccessHandler;
 import com.hotelbooking.hotel_booking.service.CustomOAuth2UserService;
-=======
->>>>>>> origin/thanh
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
