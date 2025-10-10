@@ -96,12 +96,20 @@ public class HotelService {
         if (request.getStatus() != null) {
             hotel.setStatus(request.getStatus());
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/thanh
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
 
     private HotelResponse mapToHotelResponse(Hotel hotel) {
         if (hotel == null) return null;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/thanh
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())

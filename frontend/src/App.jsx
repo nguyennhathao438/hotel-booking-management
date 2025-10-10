@@ -10,7 +10,6 @@ import DefaultLayout from "./layout/DefaultLayout.jsx";
 
 import { RouterProvider } from "react-router-dom";
 import router from "./routers.jsx";
-
 function App() {
 
     const dispatch = useDispatch();
@@ -19,6 +18,7 @@ function App() {
             const token= localStorage.getItem("token");
             console.log(token)
             if(token != null && token != "" ){
+
                 try{
                  const response =await api.get("/users/myInfo")
                  dispatch(login({

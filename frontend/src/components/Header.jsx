@@ -38,6 +38,7 @@ function Header() {
 
       {/* Buttons */}
       {user.isLogin ? (
+
         <>
           <div className="relative">
             <div className="avatar">
@@ -46,6 +47,7 @@ function Header() {
                 onClick={() => setOpenAccount(!openAccount)}
               >
                 <img src={user.avatar ? user.avatar:defaultAvata} alt="" className=" object-cover" />
+
               </button>
             </div>
             {openAccount && (
@@ -53,6 +55,7 @@ function Header() {
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Thông tin cá nhân</li>
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử đặt phòng</li>
                 <Link to="/addhotel" className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
+
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer" onClick={handleLogout}>Đăng xuất</li>
               </ul>
             )}

@@ -17,5 +17,6 @@ public class RoomRequest {
     private double roomPrice;
     private int status;
     private int hotelID;
+
 }
 

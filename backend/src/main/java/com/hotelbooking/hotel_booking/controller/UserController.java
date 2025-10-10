@@ -74,7 +74,11 @@ public class UserController {
     ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok(ApiResponse.<Void>builder()
+<<<<<<< HEAD
                         .message("Success")
+=======
+                .message("Success")
+>>>>>>> origin/thanh
                 .build());
     }
     @GetMapping("/search")

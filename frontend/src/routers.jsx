@@ -54,6 +54,11 @@ const router = createBrowserRouter([
                 {
                     path :"permission",
                     element:<PermissionManager/>
+
+                },
+                {
+                    path:"user",
+                    element: <Users/>
                 }
             ]
             

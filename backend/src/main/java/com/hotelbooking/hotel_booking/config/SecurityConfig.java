@@ -3,8 +3,11 @@ package com.hotelbooking.hotel_booking.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
+<<<<<<< HEAD
 import com.hotelbooking.hotel_booking.service.CustomOAuth2SuccessHandler;
 import com.hotelbooking.hotel_booking.service.CustomOAuth2UserService;
+=======
+>>>>>>> origin/thanh
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,12 +19,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 
 import java.util.List;
@@ -34,6 +40,7 @@ public class SecurityConfig {
     @Autowired
     CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final String[] PUBLIC_ENDPOINTS ={"/api/users/register","/api/auth/login","/api/auth/introspect","/api/hotels/all","/api/auth/refresh","/api/auth/login/google"};
+
     @Value("${jwt.signerKey}")
     private String signerKey;
     //-------------------------
@@ -83,6 +90,7 @@ public class SecurityConfig {
                             null
                     );
 
+
                     ObjectMapper mapper = new ObjectMapper();
                     response.getWriter().write(mapper.writeValueAsString(apiResponse));
                 })
@@ -94,6 +102,7 @@ public class SecurityConfig {
                         .jwtAuthenticationConverter(jwtAuthenticationConverter())));
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
                 return httpSecurity.build();
+
     }
     @Bean
     PasswordEncoder passwordEncoder(){

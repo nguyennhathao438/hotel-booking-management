@@ -1,5 +1,6 @@
 package com.hotelbooking.hotel_booking.service;
 
+<<<<<<< HEAD
 
 import com.hotelbooking.hotel_booking.dto.request.AuthenticationRequest;
 import com.hotelbooking.hotel_booking.dto.request.IntrospectRequest;
@@ -9,11 +10,21 @@ import com.hotelbooking.hotel_booking.dto.response.IntrospectResponse;
 import com.hotelbooking.hotel_booking.entity.InvalidateToken;
 import com.hotelbooking.hotel_booking.entity.Provider;
 import com.hotelbooking.hotel_booking.entity.Role;
+=======
+import com.hotelbooking.hotel_booking.dto.request.AuthenticationRequest;
+import com.hotelbooking.hotel_booking.dto.request.IntrospectRequest;
+import com.hotelbooking.hotel_booking.dto.response.AuthenticationResponse;
+import com.hotelbooking.hotel_booking.dto.response.IntrospectResponse;
+import com.hotelbooking.hotel_booking.entity.InvalidateToken;
+>>>>>>> origin/thanh
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.InvalidatedTokenRepository;
+<<<<<<< HEAD
 import com.hotelbooking.hotel_booking.repository.RoleRepository;
+=======
+>>>>>>> origin/thanh
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -27,6 +38,7 @@ import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+<<<<<<< HEAD
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,13 +53,29 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+=======
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.StringJoiner;
+import java.util.UUID;
+>>>>>>> origin/thanh
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationService {
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/thanh
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -55,14 +83,21 @@ public class AuthenticationService {
     @NonFinal
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY ;
+<<<<<<< HEAD
     @Value("${jwt.refreshKey}")
     protected String REFRESH_KEY ;
 
+=======
+>>>>>>> origin/thanh
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
         boolean isValid = true;
         try {
+<<<<<<< HEAD
             verifyToken(token,false);
+=======
+            verifyToken(token);
+>>>>>>> origin/thanh
         }catch (AppException e){
             isValid = false;
         }
@@ -77,11 +112,17 @@ public class AuthenticationService {
         boolean authenticated= pwdEncoder.matches(request.getPassword(), user.getPassword());
         if(!authenticated)
             throw new AppException(ErrorCode.INVALID_PASSWORD);
+<<<<<<< HEAD
         var accessToken = generateToken(user,false);
         var refreshToken= generateToken(user,true );
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+=======
+        var token = generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(token)
+>>>>>>> origin/thanh
                 .authenticated(true)
                 .userId(user.getId())
                 .firstName(user.getFirstName())
@@ -170,6 +211,7 @@ public class AuthenticationService {
         Date expirationTime = isRefresh
                 ? Date.from(Instant.now().plus(1,ChronoUnit.DAYS))
                 : Date.from(Instant.now().plus(15,ChronoUnit.MINUTES));
+
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); //Định nghĩa thuật toán trong Header
         JWTClaimsSet jwtClaimSet = new JWTClaimsSet.Builder()
                 .subject(user.getEmail())//email người dùng
