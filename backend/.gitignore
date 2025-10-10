@@ -31,13 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-<<<<<<< HEAD
-
-##file khac
-.env
-
-=======
 ##file khac
 application.yaml
 CloudinaryConfig.java
->>>>>>> origin/huynh
