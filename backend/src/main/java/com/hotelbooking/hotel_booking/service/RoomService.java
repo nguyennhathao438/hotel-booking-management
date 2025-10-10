@@ -40,7 +40,6 @@ public class RoomService {
                 .roomCapacity(request.getRoomCapacity())
                 .roomArea(request.getRoomArea())
                 .bedRoomCount(request.getBedRoomCount())
-
                 .bedCount(request.getBedCount())
                 .roomPrice(request.getRoomPrice())
                 .status(0)
@@ -55,7 +54,6 @@ public class RoomService {
                 .map(this::mapToRoomResponse)
                 .toList();
     }
-
     public List<RoomResponse> getRoomsByHotelId(int hotelId){
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
 
@@ -64,6 +62,7 @@ public class RoomService {
                 .map(this::mapToRoomResponse) // giả sử bạn có hàm mapToRoomResponse(Room room)
                 .toList();
     }
+    
 
     public RoomResponse getRoomById(int id) {
         Room room = roomRepository.findById(id)
@@ -74,7 +73,6 @@ public class RoomService {
     public RoomResponse updateRoom(int id, RoomRequest request) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-
         if (request.getRoomName() != null && !request.getRoomName().isBlank()) {
             room.setRoomName(request.getRoomName());
         }
@@ -98,9 +96,7 @@ public class RoomService {
                     .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
             room.setHotel(hotel);
         }
-
         roomRepository.save(room);
-
         return mapToRoomResponse(room);
     }
 
@@ -120,7 +116,6 @@ public class RoomService {
 
                 .roomArea(room.getRoomArea())
                 .bedRoomCount(room.getBedRoomCount())
-
                 .bedCount(room.getBedCount())
                 .roomPrice(room.getRoomPrice())
                 .status(room.getStatus())

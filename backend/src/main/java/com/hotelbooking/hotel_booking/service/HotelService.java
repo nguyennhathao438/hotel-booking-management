@@ -96,7 +96,6 @@ public class HotelService {
         if (request.getStatus() != null) {
             hotel.setStatus(request.getStatus());
         }
-
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }

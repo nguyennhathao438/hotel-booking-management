@@ -176,6 +176,7 @@ public class AuthenticationService {
                 .issuer("hotel-booking.com")//ai phát hành ??
                 .issueTime(new Date())//thời gian phát hành
                 .expirationTime(expirationTime)//thời gian hết hạn
+
                 .jwtID(UUID.randomUUID().toString())//id
                 .claim("scope",buildScope(user))//custom scope quyền user
                 .build();

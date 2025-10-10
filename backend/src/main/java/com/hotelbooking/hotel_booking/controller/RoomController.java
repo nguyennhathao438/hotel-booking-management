@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/rooms")
-
 @RequiredArgsConstructor
 public class RoomController {
     private final RoomService roomService;
@@ -35,7 +34,6 @@ public class RoomController {
                         .result(roomResponse)
                 .build());
     }
-
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<RoomResponse>>> getAllRooms() {
         List<RoomResponse> rooms = roomService.getAllRooms();
@@ -53,6 +51,7 @@ public class RoomController {
                 .result(roomResponse)
                 .build());
     }
+
     @PutMapping("/{roomID}")
     public ResponseEntity<ApiResponse<RoomResponse>> updateRoom(
             @PathVariable int roomID,

@@ -18,7 +18,6 @@ function Hotels() {
             <ul className="flex flex-row gap-3 overflow-x-auto scrollbar-hide md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-6 md:overflow-visible">
                 {hotelsTops.map((hotel) => (
                     <Link to={`/detailshotel/${hotel.hotelId}`} key={hotel.hotelId} className="max-w-[220px] md:max-w-none overflow-hidden flex-shrink-0 rounded-xl border shadow hover:shadow-lg transition bg-white cursor-pointer">
-
                         <div>
                             <img src={testImg} alt={hotel.hotelName} className="w-full hover:scale-105 transition-transform duration-300 h-40 object-cover rounded-t-xl" />
                         </div>
