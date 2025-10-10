@@ -2,20 +2,25 @@ import { useState } from "react";
 import api from "../api";
 import { login } from "../storages/userSlice";
 import { useDispatch } from 'react-redux';
-import store from "../storages/store";
+import { useNavigate } from "react-router-dom";
+import {  toast } from "react-hot-toast";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading,setLoading] =useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await api.post("/auth/login",{
         email,
         password,
       });
+      
       console.log(response);
-      localStorage.setItem("token",response.data.result.token);
+      localStorage.setItem("token",response.data.result.accessToken);
       dispatch(login({
         avatar:response.data.result.avatar,
         firstName:response.data.result.firstName,
@@ -23,18 +28,27 @@ export default function Login() {
         roles:response.data.result.roles,
         userId:response.data.result.userId
       }))
-      console.log(store.getState().user);
-      alert("Đăng nhập thành công");
+      navigate("/")
+      toast.success("Đăng nhập thành công");
     }catch(error){
         if (error.response && error.response.data) {
-            alert(error.response.data.message);
+           toast.error(error.response.data.message);
         } else {
-            alert("Lỗi kết nối server hoặc request bị chặn");
+            toast.error("Lỗi kết nối sever");
         }
-        console.log(error);
+    }
+    finally{
+      setLoading(false);
     }
   };
-
+  const handleLoginGoogle = () => {
+  // URL chuẩn để Spring Security tự xử lý OAuth2 flow
+  window.location.href = "http://localhost:8080/oauth2/authorization/google";
+};
+    const handleLoginFaceBook = () => {
+  // URL chuẩn để Spring Security tự xử lý OAuth2 flow
+  window.location.href = "http://localhost:8080/oauth2/authorization/facebook";
+};
   return (
     <div className="flex items-center justify-center min-h-screen ">
       <div className="bg-white shadow-lg rounded-lg flex w-[800px] max-w-full overflow-hidden">       
@@ -74,12 +88,21 @@ export default function Login() {
               />
             </div>
             {/* Button */}
+            <div className="flex justify-center">
             <button
               type="submit" 
-              className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
+              disabled={loading}
+              className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
             >
-              Đăng nhập
+              {loading ?  "Đang đăng nhập ..." : "Đăng nhập" }
             </button>
+            </div>
+            <div className="flex justify-around gap-4"><button className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white" 
+            type="button"
+            onClick={() => handleLoginGoogle()}>Google</button>
+            <button className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white" 
+            type="button"
+            onClick={()=> handleLoginFaceBook()}>Facebook</button></div>
           </form>
           {/* Links */}
           <p className="mt-4 text-sm text-center text-gray-500 cursor-pointer hover:underline">

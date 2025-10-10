@@ -15,30 +15,24 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Room {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer roomId;
-
+    int roomId;
     @Column(nullable = false)
     String roomName;
-
     String roomType;
-
-    Integer roomCapacity;
-
+    double roomArea;
+    int bedRoomCount;
+    int roomCapacity;
     @Column(nullable = false)
-    Integer bedCount;
-
+    int bedCount;
     @Column(nullable = false)
-    Double roomPrice;
-
+    double roomPrice;
     @CreationTimestamp
     LocalDateTime roomCreateAt;
-
     @UpdateTimestamp
     LocalDateTime roomUpdateAt;
-     Integer status;
+    int status;
     @ManyToOne
     @JoinColumn(name = "hotelID", nullable = true)
     Hotel hotel;

@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class InvoiceRequest {
-
         private LocalDate checkInDate;
         private LocalDate checkOutDate;
         private Double totalAmount;

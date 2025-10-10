@@ -25,7 +25,13 @@ INSERT INTO permission (name, description) VALUES
 
                                                ('READ_DATA', 'Xem dữ liệu'),
                                                ('UPDATE_DATA', 'Cập nhật dữ liệu'),
-                                               ('CREATE_DATA', 'Tạo dữ liệu');
+                                               ('CREATE_DATA', 'Tạo dữ liệu'),
+                                               ('CREATE_ROOM', 'tạo phòng'),
+                                                ('UPDATE_ROOM', 'update phòng'),
+                                                ('DELETE_ROOM', 'delete phòng'),
+                                               ('UPDATE_HOTEL', 'update khách sạn'),
+                                               ('ACCEPT_RESERVATION', 'Chấp nhận đơn hàng'),
+                                               ('VIEW_STATISTIC', 'Xem thống kê');
 
 -- Insert Role
 INSERT INTO role (name, description) VALUES

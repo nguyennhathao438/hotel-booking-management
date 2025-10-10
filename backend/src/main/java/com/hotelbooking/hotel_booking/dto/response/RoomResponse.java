@@ -11,15 +11,17 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoomResponse {
-    private Integer roomId;
+    private int roomId;
     private String roomName;
     private String roomType;
-    private Integer roomCapacity;
-    private Integer bedCount;
-    private Double roomPrice;
+    private int roomCapacity;
+    private double roomArea;
+    private int bedRoomCount;
+    private int bedCount;
+    private double roomPrice;
     private String ownerName;
     private LocalDateTime roomCreateAt;
     private LocalDateTime roomUpdateAt;
-    private Integer status;
+    private int status;
     HotelResponse hotel;
 }

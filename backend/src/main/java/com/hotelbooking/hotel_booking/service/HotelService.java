@@ -23,22 +23,20 @@ import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserRespons
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class HotelService {
+    @Autowired
+    HotelRepository hotelRepository;
+    @Autowired
+    UserRepository userRepository;
 
-private HotelRepository hotelRepository;
-private UserRepository userRepository;
-@Autowired
-    public HotelService(HotelRepository hotelRepository,UserRepository userRepository) {
-    this.hotelRepository = hotelRepository;
-    this.userRepository = userRepository;
-}
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
     }
+
     public HotelResponse createHotel(HotelRequest request) {
-        if(hotelRepository.existsByHotelName(request.getHotelName())) {
+        if (hotelRepository.existsByHotelName(request.getHotelName())) {
             throw new AppException(ErrorCode.HOTEL_EXISTED);
         }
         User user = getCurrentUser();
@@ -53,21 +51,23 @@ private UserRepository userRepository;
                 .status(0)
                 .user(user)
                 .build();
-
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
-public List<HotelResponse> getAllHotels() {
-    List<Hotel> hotels = hotelRepository.findAll();
-    return hotels.stream()
-            .map(this::mapToHotelResponse)
-            .toList();
-}
-public HotelResponse getHotelById(int id) {
-    Hotel hotel = hotelRepository.findById(id)
-            .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-    return mapToHotelResponse(hotel);
-}
+
+    public List<HotelResponse> getAllHotels() {
+        List<Hotel> hotels = hotelRepository.findAll();
+        return hotels.stream()
+                .map(this::mapToHotelResponse)
+                .toList();
+    }
+
+    public HotelResponse getHotelById(int id) {
+        Hotel hotel = hotelRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        return mapToHotelResponse(hotel);
+    }
+
     public HotelResponse updateHotel(int hotelId, HotelRequest request) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -96,14 +96,12 @@ public HotelResponse getHotelById(int id) {
         if (request.getStatus() != null) {
             hotel.setStatus(request.getStatus());
         }
-
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
 
     private HotelResponse mapToHotelResponse(Hotel hotel) {
         if (hotel == null) return null;
-
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())

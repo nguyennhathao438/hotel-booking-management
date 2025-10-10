@@ -1,5 +1,6 @@
 @import "tailwindcss";
-:root {
+@plugin "daisyui";
+/* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -71,4 +72,4 @@ button:focus-visible {
     font-size: 32px;
     font-weight: bold;
     color: #2c3e50;
-}
+} */

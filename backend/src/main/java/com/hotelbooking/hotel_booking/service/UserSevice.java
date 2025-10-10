@@ -11,6 +11,9 @@ import com.hotelbooking.hotel_booking.repository.RoleRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,6 +31,8 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserSevice {
     UserRepository userRepository;
+    @Lazy
+
     PasswordEncoder pwdEncoder;
     RoleRepository roleRepository;
 
@@ -102,7 +107,7 @@ public class UserSevice {
         List<User> userList = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(key,key,key,key);
         return userList;
     }
-    public static UserResponse mapToUserResponse(User user){
+    static UserResponse mapToUserResponse(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())
