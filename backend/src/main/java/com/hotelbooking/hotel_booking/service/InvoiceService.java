@@ -17,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -114,7 +115,14 @@ public class InvoiceService {
                 .roomUpdateAt(room.getRoomUpdateAt())
                 .build();
     }
+    public List<InvoiceResponse> getInvoicesToday() {
+        LocalDate today = LocalDate.now();
 
+        return invoiceRepository.findAll().stream()
+                .filter(invoice -> invoice.getCheckOutDate().isEqual(today))
+                .map(this::mapToInvoiceResponse)
+                .toList();
+    }
     public static UserResponse mapToUserResponse(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()

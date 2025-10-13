@@ -27,7 +27,15 @@ public class HotelController {
                 .build()
         );
     }
-
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<ApiResponse> approveHotel(@PathVariable("id") int id) {
+        HotelResponse response = hotelService.approveHotel(id);
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(1000)
+                .message("Duyệt khách sạn thành công")
+                .result(response)
+                .build());
+    }
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels() {
         List<HotelResponse> hotelList = hotelService.getAllHotels();
@@ -37,8 +45,16 @@ public class HotelController {
                 .build()
         );
     }
-
-    @GetMapping("/{hotelID}")
+    @GetMapping("/getkhong")
+    public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels0() {
+        List<HotelResponse> hotelList = hotelService.getAllHotels0();
+        return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
+                .message("Danh sách khách sạn")
+                .result(hotelList)
+                .build()
+        );
+    }
+    @GetMapping("/see/{hotelID}")
     public ResponseEntity<ApiResponse<HotelResponse>> getHotelById(@PathVariable int hotelID) {
         HotelResponse hotelResponse = hotelService.getHotelById(hotelID);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
