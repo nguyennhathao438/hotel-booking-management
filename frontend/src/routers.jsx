@@ -9,8 +9,6 @@ import PermissionManager from "./pages/PermissionManager";
 import DetailsHotel from "./components/DetailsHotel/DetailsHotel";
 import AddHotel from "./components/AddHotel";
 import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
-import Users from "./pages/Users";
-
 const router = createBrowserRouter([
         {
             path:"/",
@@ -36,8 +34,9 @@ const router = createBrowserRouter([
                     path: "/detailshotel/:hotelId",
                     element: <DetailsHotel/>
 
+                },
+                
 
-                }
             ],
         },
         {
@@ -55,10 +54,6 @@ const router = createBrowserRouter([
                 {
                     path :"permission",
                     element:<PermissionManager/>
-                },
-                {
-                    path:"user",
-                    element: <Users/>
                 }
             ]
             
