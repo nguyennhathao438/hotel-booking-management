@@ -3,26 +3,20 @@ package com.hotelbooking.hotel_booking.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @AllArgsConstructor
-@Builder
 @NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Review {
+public class HotelService {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    private Integer serviceId;
+    private String icon;
+    private String description;
     @ManyToOne
-    User user;
-    @ManyToOne
-    Hotel hotel;
-    String feedback;
-    int star;
-    @CreationTimestamp
-    LocalDateTime createAt;
+    @JoinColumn(name="hotel_id")
+    private Hotel hotel;
 }

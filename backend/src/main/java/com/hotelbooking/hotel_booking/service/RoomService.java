@@ -8,12 +8,14 @@ import com.hotelbooking.hotel_booking.entity.Room;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.HotelRepository;
+import com.hotelbooking.hotel_booking.repository.InvoiceRepository;
 import com.hotelbooking.hotel_booking.repository.RoomRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,8 @@ public class RoomService {
     private RoomRepository roomRepository;
     @Autowired
     private HotelRepository hotelRepository;
-
+@Autowired
+private InvoiceRepository invoiceRepository;
 
     public RoomResponse createRoom(RoomRequest request) {
         if (roomRepository.existsByRoomName(request.getRoomName())) {
@@ -42,7 +45,7 @@ public class RoomService {
                 .bedRoomCount(request.getBedRoomCount())
                 .bedCount(request.getBedCount())
                 .roomPrice(request.getRoomPrice())
-                .status(0)
+                .status(1)
                 .hotel(hotel)
                 .build();
         roomRepository.save(room);
@@ -54,15 +57,18 @@ public class RoomService {
                 .map(this::mapToRoomResponse)
                 .toList();
     }
-    public List<RoomResponse> getRoomsByHotelId(int hotelId){
+    public List<RoomResponse> getRoomsByHotelId(int hotelId) {
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
 
-        // Chuyển từng Room sang RoomResponse
-        return rooms.stream()
-                .map(this::mapToRoomResponse) // giả sử bạn có hàm mapToRoomResponse(Room room)
+        List<Room> availableRooms = rooms.stream()
+                .filter(room -> !invoiceRepository.existsByRoom_RoomId(room.getRoomId()))
+                .toList();
+
+        return availableRooms.stream()
+                .map(this::mapToRoomResponse)
                 .toList();
     }
-    
+
 
     public RoomResponse getRoomById(int id) {
         Room room = roomRepository.findById(id)
@@ -106,24 +112,39 @@ public class RoomService {
         }
         roomRepository.deleteById(id);
     }
+    public List<RoomResponse> getAvailableRooms(LocalDate startDate, LocalDate endDate) {
+        return roomRepository.findAvailableRooms(startDate, endDate)
+                .stream()
+                .map(this::mapToRoomResponse)
+                .collect(Collectors.toList());
+    }
 
+    public long countAvailableRooms(LocalDate startDate, LocalDate endDate) {
+        return roomRepository.countAvailableRooms(startDate, endDate);
+    }
     private RoomResponse mapToRoomResponse(Room room) {
-        return RoomResponse.builder()
+        if (room == null) return null;
+
+        RoomResponse.RoomResponseBuilder builder = RoomResponse.builder()
                 .roomId(room.getRoomId())
                 .roomName(room.getRoomName())
                 .roomType(room.getRoomType())
                 .roomCapacity(room.getRoomCapacity())
-
                 .roomArea(room.getRoomArea())
                 .bedRoomCount(room.getBedRoomCount())
                 .bedCount(room.getBedCount())
                 .roomPrice(room.getRoomPrice())
                 .status(room.getStatus())
-                .hotel(room.getHotel() != null ? mapToHotelResponse(room.getHotel()) : null)
                 .roomCreateAt(room.getRoomCreateAt())
-                .roomUpdateAt(room.getRoomUpdateAt())
-                .build();
+                .roomUpdateAt(room.getRoomUpdateAt());
+
+        if (room.getHotel() != null) {
+            builder.hotel(mapToHotelResponse(room.getHotel()));
+        }
+
+        return builder.build();
     }
+
     private HotelResponse mapToHotelResponse(Hotel hotel) {
         if (hotel == null) return null;
 

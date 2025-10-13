@@ -1,17 +1,17 @@
 package com.hotelbooking.hotel_booking.dto.response;
 
+import com.hotelbooking.hotel_booking.entity.Hotel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.Set;
-
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoleResponse {
-    String name;
+public class ServiceResponse {
+    Integer serviceId;
+    String icon;
     String description;
-    Set<PermissionResponse> permissions;
+    HotelResponse hotel;
 }

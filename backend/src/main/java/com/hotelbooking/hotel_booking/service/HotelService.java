@@ -56,12 +56,20 @@ public class HotelService {
     }
 
     public List<HotelResponse> getAllHotels() {
-        List<Hotel> hotels = hotelRepository.findAll();
+        List<Hotel> hotels = hotelRepository.findByStatus(1);
+
         return hotels.stream()
                 .map(this::mapToHotelResponse)
                 .toList();
     }
-
+    public List<HotelResponse> getAllHotels0() {
+        List<Hotel> hotels = hotelRepository.findByStatus(0);
+        System.out.println(">>> Số lượng hotel status=0: " + (hotels != null ? hotels.size() : "null"));
+        return hotels == null ? List.of() :
+                hotels.stream()
+                        .map(this::mapToHotelResponse)
+                        .toList();
+    }
     public HotelResponse getHotelById(int id) {
         Hotel hotel = hotelRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -97,6 +105,15 @@ public class HotelService {
             hotel.setStatus(request.getStatus());
         }
         hotelRepository.save(hotel);
+        return mapToHotelResponse(hotel);
+    }
+    public HotelResponse approveHotel(int hotelId) {
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+
+        hotel.setStatus(1);
+        hotelRepository.save(hotel);
+
         return mapToHotelResponse(hotel);
     }
 
