@@ -1,6 +1,7 @@
 package com.hotelbooking.hotel_booking.controller;
 
 
+import com.hotelbooking.hotel_booking.dto.request.MyInfoRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -86,5 +89,13 @@ public class UserController {
                         .result(userList)
                         .build());
     }
-
+    @PutMapping("/myInfo/{userId}")
+    ResponseEntity<ApiResponse<UserResponse>> updateMyInfo(@ModelAttribute MyInfoRequest request,
+                                                           @PathVariable int userId) throws IOException {
+        UserResponse userResponse = userService.updateMyInfo(request,userId);
+        return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
+                .message("Success")
+                .result(userResponse)
+                .build());
+    }
 }

@@ -4,23 +4,22 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdateRequest {
+public class MyInfoRequest {
     @NotBlank(message = "Họ không được để trống")
     String firstName;
     @NotBlank(message = "Tên không được để trống")
-     String lastName;
+    String lastName;
     @Pattern(regexp = "0\\d{9,10}", message = "Số điện thoại không hợp lệ")
-     String phone;
+    String phone;
     LocalDate dateOfBirth;
-     String avatar;
-    List<String> roles;
+    MultipartFile file;
 }

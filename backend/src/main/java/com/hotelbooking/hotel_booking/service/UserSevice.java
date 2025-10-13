@@ -1,5 +1,8 @@
 package com.hotelbooking.hotel_booking.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.hotelbooking.hotel_booking.dto.request.MyInfoRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.UserResponse;
@@ -21,9 +24,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,7 +41,8 @@ public class UserSevice {
 
     PasswordEncoder pwdEncoder;
     RoleRepository roleRepository;
-
+    @Autowired
+    Cloudinary cloudinary;
     @Autowired
     public UserSevice(UserRepository userRepository,
                        PasswordEncoder pwdEncoder,
@@ -75,7 +82,6 @@ public class UserSevice {
     }
     @PostAuthorize("returnObject.email == authentication.name || hasRole('ADMIN')")
     public UserResponse updateUser(UserUpdateRequest request,int userId){
-        System.out.println("alo") ;
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         user.setAvatar(request.getAvatar());
         user.setFirstName(request.getFirstName());
@@ -86,6 +92,21 @@ public class UserSevice {
         var roles = roleRepository.findAllById(request.getRoles());
         System.out.println("alo" + roles);
         user.setRoles(new HashSet<>(roles));
+        userRepository.save(user);
+        return mapToUserResponse(user);
+    }
+    public UserResponse updateMyInfo(MyInfoRequest request, int userId) throws IOException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
+        if(request.getFile() != null) {
+            Map uploadResult = cloudinary.uploader().upload(request.getFile().getBytes(),
+                    ObjectUtils.asMap("folder", "avatar"));
+            String imageUrl = uploadResult.get("secure_url").toString();
+            user.setAvatar(imageUrl);
+        }
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setDateOfBirth(request.getDateOfBirth());
+        user.setPhone(request.getPhone());
         userRepository.save(user);
         return mapToUserResponse(user);
     }
