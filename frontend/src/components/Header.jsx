@@ -38,7 +38,6 @@ function Header() {
 
       {/* Buttons */}
       {user.isLogin ? (
-
         <>
           <div className="relative">
             <div className="avatar">
@@ -47,7 +46,6 @@ function Header() {
                 onClick={() => setOpenAccount(!openAccount)}
               >
                 <img src={user.avatar ? user.avatar:defaultAvata} alt="" className=" object-cover" />
-
               </button>
             </div>
             {openAccount && (

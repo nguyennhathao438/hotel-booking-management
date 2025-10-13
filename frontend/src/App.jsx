@@ -1,5 +1,4 @@
 
-
 import "./App.css";
 import Header from "./components/Header.jsx";
 import { useDispatch } from "react-redux";
@@ -20,7 +19,6 @@ function App() {
             const token= localStorage.getItem("token");
             console.log(token)
             if(token != null && token != "" ){
-
                 try{
                  const response =await api.get("/users/myInfo")
                  dispatch(login({
