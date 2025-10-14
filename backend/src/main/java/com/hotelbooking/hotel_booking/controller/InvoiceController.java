@@ -67,4 +67,12 @@ public class InvoiceController {
                 .build());
     }
 
+    @GetMapping("/checkouttoday")
+    public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getCheckoutToday() {
+        List<InvoiceResponse> invoices = invoiceService.getInvoicesToday();
+        return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
+                .message("Lấy danh sách hóa đơn hôm nay thành công")
+                .result(invoices)
+                .build());
+    }
 }

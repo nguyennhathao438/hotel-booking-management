@@ -1,9 +1,7 @@
 import axios from "axios";
 
 // Tạo instance axios
-
 axios.defaults.withCredentials = true;
-
 const api = axios.create({
   baseURL: "http://localhost:8080/api", // URL backend
   headers: {
@@ -19,7 +17,6 @@ api.interceptors.request.use((config) =>{
     return config;
 }, (error) => {
   return Promise.reject(error);})
-
 export default api;
 
 api.interceptors.response.use(
@@ -46,4 +43,3 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
