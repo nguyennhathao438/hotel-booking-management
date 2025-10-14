@@ -4,10 +4,8 @@ import com.hotelbooking.hotel_booking.dto.request.HotelRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.service.HotelService;
-import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,5 +55,4 @@ public class HotelController {
                 .build()
         );
     }
-
 }

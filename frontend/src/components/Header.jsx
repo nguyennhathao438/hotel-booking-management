@@ -1,5 +1,5 @@
 import logo from "../assets/img/logo.jpg"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import defaultAvata from "../assets/img/defaultAvata.jpg"
@@ -51,10 +51,11 @@ function Header() {
               </button>
             </div>
             {openAccount && (
-              <ul className="absolute right-0 bg-white shadow-lg rounded-md mt-2 transition-transform">
+              <ul className="absolute right-0 bg-white shadow-lg rounded-md mt-2 transition-transform h-auto">
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Thông tin cá nhân</li>
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử đặt phòng</li>
-                <Link to="/addhotel" className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
+                <Link to="/addhotel" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
+                <Link to="/invoice" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý đơn hàng</Link>
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer" onClick={handleLogout}>Đăng xuất</li>
               </ul>
             )}

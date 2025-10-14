@@ -3,10 +3,12 @@ package com.hotelbooking.hotel_booking.controller;
 import com.hotelbooking.hotel_booking.dto.request.InvoiceRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
+import com.hotelbooking.hotel_booking.entity.Invoice;
 import com.hotelbooking.hotel_booking.service.InvoiceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,6 +55,15 @@ public class InvoiceController {
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
                 .message("Cập nhật hóa đơn thành công")
                 .result(invoiceResponse)
+                .build());
+    }
+    // InvoiceController
+    @GetMapping("/owner/{userId}")
+    public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getInvoicesByOwner(@PathVariable Integer userId) {
+        List<InvoiceResponse> invoices = invoiceService.getInvoicesByHotelOwner(userId);
+        return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
+                .message("Lấy danh sách hóa đơn của khách sạn thuộc user thành công")
+                .result(invoices)
                 .build());
     }
 

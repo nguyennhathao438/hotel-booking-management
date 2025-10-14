@@ -10,6 +10,8 @@ import DetailsHotel from "./components/DetailsHotel/DetailsHotel";
 import AddHotel from "./components/AddHotel";
 import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
 import Users from "./pages/Users";
+import Invoice from "./pages/Invoice";
+import InvoiceU from "./pages/InvoiceU";
 
 const router = createBrowserRouter([
         {
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
                     element: <DetailsHotel/>
 
 
+                },
+                {
+                    path: "/invoice",
+                    element: <InvoiceU/>
                 }
             ],
         },
@@ -59,6 +65,10 @@ const router = createBrowserRouter([
                 {
                     path:"user",
                     element: <Users/>
+                },
+                {
+                    path:"invoice",
+                    element: <Invoice/>
                 }
             ]
             

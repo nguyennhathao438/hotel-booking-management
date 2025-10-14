@@ -12,8 +12,6 @@ import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.InvoiceRepository;
 import com.hotelbooking.hotel_booking.repository.RoomRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
 
 @Service
 public class InvoiceService {
@@ -67,6 +64,12 @@ public class InvoiceService {
                 .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
         return mapToInvoiceResponse(invoice);
     }
+    // InvoiceService
+    public List<InvoiceResponse> getInvoicesByHotelOwner(Integer userId) {
+        List<Invoice> invoices = invoiceRepository.findByHotelOwnerId(userId);
+        return invoices.stream().map(this::mapToInvoiceResponse).toList();
+    }
+
     public InvoiceResponse updateInvoice(Integer id, InvoiceRequest request) {
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
@@ -75,7 +78,34 @@ public class InvoiceService {
         if (request.getCheckOutDate() != null) invoice.setCheckOutDate(request.getCheckOutDate());
         if (request.getTotalAmount() != null) invoice.setTotalAmount(request.getTotalAmount());
         if (request.getPayment() != null) invoice.setPayment(request.getPayment());
-        if (request.getStatus() != null) invoice.setStatus(request.getStatus());
+        if (request.getStatus() != null) {
+            int oldStatus = invoice.getStatus();
+            int newStatus = request.getStatus();
+
+            // Logic kiểm tra chuyển trạng thái hợp lệ
+            boolean validTransition = false;
+
+            switch (oldStatus) {
+                case 0: // Chờ xác nhận
+                    validTransition = (newStatus == 1 || newStatus == 3);
+                    break;
+                case 1: // Đã xác nhận
+                    validTransition = (newStatus == 2);
+                    break;
+                case 2: // Hoàn thành
+                case 3: // Đã hủy
+                    validTransition = false; // Không thể đổi nữa
+                    break;
+                default:
+                    validTransition = false;
+            }
+
+            if (!validTransition) {
+                throw new AppException(ErrorCode.INVALID_STATUS_TRANSITION);
+            }
+
+            invoice.setStatus(newStatus);
+        };
 
         if (request.getRoomId() != null) {
             Room room = roomRepository.findById(request.getRoomId())

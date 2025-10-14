@@ -12,7 +12,7 @@ export default function SideBar(){
                 <div className="flex hover:bg-gray-400"> <LayersIcon className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Rooms Available</p></div>
                 <div className="flex hover:bg-gray-400"> <BookmarkCheckIcon className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Checkouts</p></div>
                 <div className="flex hover:bg-gray-400"> <MegaphoneIcon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Enquiries</p></div>
-                <div className="flex hover:bg-gray-400"> <HandCoinsIcon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Payments</p></div>
+                <NavLink to="/admin/invoice" className="flex hover:bg-gray-400"> <HandCoinsIcon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Invoice</p></NavLink>
                 <NavLink to="/admin/permission" className="flex hover:bg-gray-400"> <FileTextIcon   className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Reports</p></NavLink>
                 <NavLink to="/admin/user" className="flex hover:bg-gray-400"> <User2Icon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Agents</p></NavLink>
                 <div className="flex hover:bg-gray-400"> <WrenchIcon className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Setting</p></div>

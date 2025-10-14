@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
 
@@ -62,7 +61,6 @@ public class RoomService {
                 .map(this::mapToRoomResponse) // giả sử bạn có hàm mapToRoomResponse(Room room)
                 .toList();
     }
-    
 
     public RoomResponse getRoomById(int id) {
         Room room = roomRepository.findById(id)

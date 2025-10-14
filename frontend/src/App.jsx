@@ -24,11 +24,11 @@ function App() {
                 try{
                  const response =await api.get("/users/myInfo")
                  dispatch(login({
-                    avatar :response.data.avatar ,
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    userId: response.data.userId,
-                    roles: response.data.roles,
+                    avatar :response.data.result.avatar ,
+                    firstName: response.data.result.firstName,
+                    lastName: response.data.result.lastName,
+                    userId: response.data.result.id,
+                    roles: response.data.result.roles,
                  }))
                 }catch(error){
                     console.error("Lỗi khi lấy thông tin user:", error);

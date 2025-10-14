@@ -4,7 +4,6 @@ import ModelForm from "../components/FormModel";
 import api from "../api";
 import toast from "react-hot-toast";
 import UserEdit from "../components/UserEdit";
-import UserBan from "../components/UserBan";
 export default function Users(){
     const [userSelected,setUserSelected] = useState({
         id: "",
@@ -20,46 +19,45 @@ export default function Users(){
     const [userListSearch,setUserListSearch] = useState([]);
     const [roleList,setRoleList] = useState([]);
     const [openFormEdit,setOpenFormEdit] = useState(false);
-    const [openFormBan,setOpenFormBan] = useState(false);
     const [selectUserId,setSelectUserId] = useState(null);
     const handleCloseFormEdit = () => {
         setOpenFormEdit(false);
-        setOpenFormBan(false);
     }
     const handleGetUser = (userEmail) => {
         setOpenFormEdit(true);
         const user = userList.find((users) => users.email == userEmail);
         setUserSelected(user);
     }
-    const handleGetUserBan = () => {
-        const user = userList.find(u => u.id === selectUserId);
-        if (!user) {
-        toast.error("Vui lòng chọn user trước khi ban");
-        return;
-    }
-    setUserSelected(user);
-    setOpenFormBan(true);
-    }
+    
     const handleBanUser = async () => {
-        setOpenFormBan(false);
+        setOpenFormEdit(false);
         try {
-            await api.put(`/users/delete/${userSelected.id}`,
-                {
-                    status : userSelected.status,
-                }
+            // Đảo trạng thái hiện tại (0 -> 1 hoặc 1 -> 0)
+            const newStatus = userSelected.status === 1 ? 0 : 1;
+
+            // Gửi request cập nhật
+            await api.put(`/users/delete/${userSelected.id}`, { status: newStatus });
+
+            // Cập nhật local UI
+            setUserList((prev) =>
+            prev.map((u) =>
+                u.id === userSelected.id ? { ...u, status: newStatus } : u
             )
-            const response = await api.get("/users");
-            const usersWithFullName = response.data.result.map((userSelected) => ({
-                ...userSelected,
-                fullName: `${userSelected.firstName || ""} ${userSelected.lastName || ""}`.trim(),
-            }));
-            setUserList(usersWithFullName);
-            setUserListSearch(usersWithFullName);
-        toast.success("Cập nhật vai trò thành công")
-        }catch(error){
-            toast.error(error.response?.data?.message || error.message || "Lỗi không xác định")
+            );
+
+            setUserListSearch((prev) =>
+            prev.map((u) =>
+                u.id === userSelected.id ? { ...u, status: newStatus } : u
+            )
+            );
+
+            toast.success(newStatus === 1 ? "Đã ban user" : "Đã gỡ ban user");
+        } catch (error) {
+            toast.error(
+            error.response?.data?.message || error.message || "Lỗi khi cập nhật trạng thái user"
+            );
         }
-    }
+    };
     const handleUpdateUser = async () => {
         setOpenFormEdit(false);
         try{
@@ -94,12 +92,19 @@ export default function Users(){
     }
     const handleSearch = (e) => {
     const searchValue = e.toLowerCase();
-   
+    const getStatusText = (users) => {
+        switch (users) {
+            case 0: return "Active";
+            case 1: return "Banned"
+            default: return ""; 
+        }
+    };
     const list = userList.filter((p) =>
       p.fullName?.toLowerCase().includes(searchValue) ||
       p.email?.toLowerCase().includes(searchValue) ||
       p.phone?.toLowerCase().includes(searchValue) ||
       p.dateOfBirth?.toLowerCase().includes(searchValue) ||
+      getStatusText(p.status)?.toLowerCase().includes(searchValue) ||
       (Array.isArray(p.roles) &&
         p.roles.some((r) =>
           r.name?.toLowerCase().includes(searchValue)
@@ -132,6 +137,7 @@ export default function Users(){
                 ...userSelected,
                 fullName: `${userSelected.firstName || ""} ${userSelected.lastName || ""}`.trim(),
             }));
+            console.log("Dữ liệu user:", response.data.result);
             setUserList(usersWithFullName);
             setUserListSearch(usersWithFullName);
         } catch (error) {
@@ -163,9 +169,6 @@ export default function Users(){
                     <button className="flex text-white bg-blue-400 hover:bg-white hover:text-black w-auto p-2 space-x-2">
                         <CloudDownloadIcon/>
                         <p>Export</p>
-                    </button>
-                    <button className="bg-blue-400 p-2 text-white hover:opacity-90" onClick={() => handleGetUserBan()}>
-                        <Trash2Icon/>
                     </button>
                 </div>
             </div>
@@ -272,16 +275,14 @@ export default function Users(){
                         </tbody>
                     </table>
                 </div>
-                <div className="w-max mx-auto mt-4 bg-blue-400 rounded-md px-1 py-2 hover:opacity-80">
-                    <button onClick={() => handleUpdateUser()}>Xác nhận</button>
+                <div className="flex justify-center px-30 mt-4">
+                    <button className="w-max mx-auto mt-4 bg-blue-400 rounded-md px-1 py-2 hover:opacity-80 space-x-3" onClick={() => handleUpdateUser()}>Xác nhận</button>
+                    <button className="w-[100px] mx-auto mt-4 bg-red-400 rounded-md px-1 py-2 hover:opacity-80" onClick={() => handleBanUser()}>                    
+                        {(userSelected.status === 1) ? "UnBanned" : "Ban"}
+                    </button>
                 </div>
             </ModelForm>}
 
-            {/*BanUser*/}
-
-            {openFormBan && <ModelForm title="Ban user" width = "w-auto" onClose={() => handleCloseFormEdit()}>
-                <UserBan onConfirm = {() => handleBanUser()} onCancel={() => handleCloseFormEdit()}/>
-            </ModelForm>}
     </>       
     );
 }
