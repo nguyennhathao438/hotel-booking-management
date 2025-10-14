@@ -3,6 +3,7 @@ package com.hotelbooking.hotel_booking.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hotelbooking.hotel_booking.dto.request.MyInfoRequest;
+import com.hotelbooking.hotel_booking.dto.request.UpdatePasswordRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.UserResponse;
@@ -109,6 +110,21 @@ public class UserSevice {
         user.setPhone(request.getPhone());
         userRepository.save(user);
         return mapToUserResponse(user);
+    }
+    public void updatePassword(UpdatePasswordRequest request,int userId){
+        System.out.println(request.getPasswordnew1());
+        System.out.println(request.getPasswordnew2());
+        System.out.println(request.getPassword());
+        var user = userRepository.findById(userId).orElseThrow(()->new AppException(ErrorCode.USER_NOT_EXISTED));
+        boolean authenticated= pwdEncoder.matches(request.getPassword(), user.getPassword());
+        if(!authenticated){
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
+        }
+        if(!request.getPasswordnew1().equals(request.getPasswordnew2())){
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
+        }
+        user.setPassword(pwdEncoder.encode(request.getPasswordnew1()));
+        userRepository.save(user);
     }
     @PostAuthorize("returnObject.email == authentication.name ")
     public UserResponse getMyInfo(){

@@ -2,6 +2,7 @@ package com.hotelbooking.hotel_booking.controller;
 
 
 import com.hotelbooking.hotel_booking.dto.request.MyInfoRequest;
+import com.hotelbooking.hotel_booking.dto.request.UpdatePasswordRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
@@ -96,6 +97,14 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
                 .message("Success")
                 .result(userResponse)
+                .build());
+    }
+    @PutMapping("/pwd/{userId}")
+    ResponseEntity<ApiResponse<Void>> updatePassword(@RequestBody @Valid UpdatePasswordRequest request,
+                                                           @PathVariable int userId){
+        userService.updatePassword(request,userId);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .message("Success")
                 .build());
     }
 }

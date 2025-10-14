@@ -2,9 +2,11 @@ import { useState, useEffect } from "react"
 import api from "../api";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import ModelForm from "../components/FormModel";
 export default function MyInfo() {
     const [isEdit, setIsEdit] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [openFormPassword, setOpenFormPassword] = useState(false);
     const user = useSelector((state) => state.user)
     const [userInfo, setUserInfo] = useState({
         email: "",
@@ -14,6 +16,11 @@ export default function MyInfo() {
         dateOfBirth: "",
         avatar: "",
         file: null,
+    });
+    const [formPassword,setFormPassword] = useState({
+        password : "",
+        passwordnew1: "",
+        passwordnew2: ""
     });
     useEffect(() => {
         const fetchMyinfo = async () => {
@@ -32,6 +39,13 @@ export default function MyInfo() {
             [name]: value,
         }));
     };
+    const handleChangeFormPassword = (e) =>{
+        const {name,value} = e.target;
+        setFormPassword({
+    ...formPassword,
+    [name]: value
+  });
+    }
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -73,6 +87,24 @@ export default function MyInfo() {
         } finally {
             setLoading(false)
         }
+    }
+    function handleCloseForm(){
+    setOpenFormPassword(false)
+    }
+    const handleUpdatePassword =async()=>{
+        try{
+        const response = await api.put(`/users/pwd/${user.userId}`,formPassword)
+        toast.success(response.message)
+        }catch(error){
+            const message =
+                error.response?.data?.message ||
+                error.message ||
+                "Đã xảy ra lỗi, vui lòng thử lại!";
+
+            toast.error(message);
+            console.error(error);
+        }
+        setOpenFormPassword(false);
     }
     return (<>
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -154,20 +186,39 @@ export default function MyInfo() {
                         />
                     </div>
                 </div>
+                <div className="grid grid-cols-2 gap-6 mb-4">
 
-                <div className="mb-6">
-                    <label className="block text-sm font-medium mb-1">Ngày sinh</label>
-                    <input
-                        type="date"
-                        name="dateOfBirth"
-                        value={userInfo.dateOfBirth || ""}
-                        onChange={handleChange}
-                        disabled={!isEdit}
-                        className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
+                    <div className="relative">
+                        <label className="block text-sm font-medium mb-1">Mật khẩu</label>
+                        <input
+                            type="password"
+                            name="password"
+                            value="********"
+                            disabled={true}
+                            className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 "
+                        />
+                        <button
+                            type="button"
+                            className="absolute right-4 top-2/3 -translate-y-1/2 text-blue-500 text-sm font-medium hover:underline"
+                            onClick={()=>setOpenFormPassword(true)}
+                        >
+                            Đổi mật khẩu
+                        </button>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Ngày sinh</label>
+                        <input
+                            type="date"
+                            name="dateOfBirth"
+                            value={userInfo.dateOfBirth || ""}
+                            onChange={handleChange}
+                            disabled={!isEdit}
+                            className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                    </div>
+
                 </div>
-
-
 
                 {!isEdit && (
                     <div className="text-center">
@@ -182,11 +233,59 @@ export default function MyInfo() {
                             className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-8 w-34 rounded-full transition-all duration-300 ml-4"
                             onClick={() => handleSubmit()}
                         >
-                            {loading ? "Đang chỉnh sửa": "Xác nhận"}
+                            {loading ? "Đang chỉnh sửa" : "Xác nhận"}
                         </button>
                     </div>)}
 
             </div>
+            
+            {openFormPassword && (<ModelForm title="Đổi mật khẩu" onClose={handleCloseForm}>
+            <div>
+        <label className="block text-sm font-medium mb-1">Mật khẩu cũ</label>
+        <input
+          type="password"
+          name="password"
+          value={formPassword.password}
+          onChange={handleChangeFormPassword}
+          required
+          className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">Mật khẩu mới</label>
+        <input
+          type="password"
+          name="passwordnew1"
+          value={formPassword.passwordnew1}
+          onChange={handleChangeFormPassword}
+          required
+          className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">Xác nhận mật khẩu mới</label>
+        <input
+          type="password"
+          name="passwordnew2"
+          value={formPassword.passwordnew2}
+          onChange={handleChangeFormPassword}
+          required
+          className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+
+      <div className="text-right mt-6">
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-full transition-all"
+            onClick={()=> handleUpdatePassword()}
+        >
+          Lưu
+        </button>
+      </div>
+            </ModelForm>)}
         </div>
     </>)
 }
