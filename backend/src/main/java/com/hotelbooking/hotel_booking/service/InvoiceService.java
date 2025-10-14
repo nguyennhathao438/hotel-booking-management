@@ -14,11 +14,14 @@ import com.hotelbooking.hotel_booking.repository.RoomRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 
+import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
 
 @Service
 public class InvoiceService {
@@ -128,6 +131,15 @@ public class InvoiceService {
                 throw new AppException(ErrorCode.INVALID_DATE_RANGE);
             }
         }
+    }
+
+    public List<InvoiceResponse> getInvoicesToday() {
+        LocalDate today = LocalDate.now();
+
+        return invoiceRepository.findAll().stream()
+                .filter(invoice -> invoice.getCheckOutDate().isEqual(today))
+                .map(this::mapToInvoiceResponse)
+                .toList();
     }
 
     private RoomResponse mapToRoomResponse(Room room) {

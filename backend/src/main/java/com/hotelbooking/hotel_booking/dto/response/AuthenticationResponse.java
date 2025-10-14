@@ -1,16 +1,11 @@
 package com.hotelbooking.hotel_booking.dto.response;
 
-
 import com.hotelbooking.hotel_booking.entity.Role;
 import com.hotelbooking.hotel_booking.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
-
-
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
