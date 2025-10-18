@@ -357,7 +357,10 @@ export default function Invoice(){
         </h3>
         <div className="grid grid-cols-3 text-sm">
           <p><span className="font-medium">Phương thức thanh toán:</span>{getPaymentText(invoiceSelected.payment)}</p>
-          <p className="ml-10"><span className={`font-medium ${getStatusColor(invoiceSelected.status)}`}>Trạng thái:</span> {getStatusText(invoiceSelected.status)}</p>
+          <p className="ml-10">
+          <span>Trạng thái:</span>
+          <span className={`font-medium ${getStatusColor(invoiceSelected.status)}`}>{getStatusText(invoiceSelected.status)}</span>
+          </p>
           <p><span className="font-medium">Ngày thanh toán:</span>{invoiceSelected.createdAt}</p>
         </div>
       </div>

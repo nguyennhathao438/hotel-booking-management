@@ -12,6 +12,8 @@ import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
 import Users from "./pages/Users";
 import Invoice from "./pages/Invoice";
 import InvoiceU from "./pages/InvoiceU";
+import Statistic from "./pages/Statistic";
+import HotelsView from "./pages/HotelsView";
 
 const router = createBrowserRouter([
         {
@@ -37,12 +39,18 @@ const router = createBrowserRouter([
                 {
                     path: "/detailshotel/:hotelId",
                     element: <DetailsHotel/>
-
-
                 },
                 {
                     path: "/invoice",
                     element: <InvoiceU/>
+                },
+                {
+                    path: "/statistic",
+                    element: <Statistic/>
+                },
+                {
+                    path: "/HotelsView",
+                    element: <HotelsView/>
                 }
             ],
         },

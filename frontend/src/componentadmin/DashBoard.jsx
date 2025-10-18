@@ -13,8 +13,10 @@ import {
 import RoomAvailableKid from "./RoomAvailableKid.jsx";
 import api from "../api.js";
 import HotelDetailModal from "../components/HotelDetailModal.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function DashBoard() {
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [availableCount, setAvailableCount] = useState(0);
   const [hotels, setHotels] = useState([]);
@@ -23,13 +25,18 @@ export default function DashBoard() {
   const [showRoomDetails, setShowRoomDetails] = useState(false);
   const [invoice, setInvoicetoday] = useState([]);
   const [showInvoicetoday, setShowInvoicetoday] = useState(false);
+  const [invoiceStatus,setInvoiceStatus] = useState([]);
+  const [userCount,setUserCount] = useState([]);
   useEffect(() => {
     fetchAvailableRooms();
     fetchAvailableCount();
     fetchAllHotel();
     fetchCheckouttoday();
+    fetchInvoiceStatus();
+    fetchUserCount();
   }, []);
-const fetchCheckouttoday = async () => {
+
+  const fetchCheckouttoday = async () => {
   try {
     const rs = await api.get("/invoice/checkouttoday");
     setInvoicetoday(rs.data.result || []); // dùng đúng biến rs
@@ -37,7 +44,7 @@ const fetchCheckouttoday = async () => {
   } catch (error) {
     console.error("Lỗi:", error);
   }
-};
+  };
 
   // === Lấy danh sách khách sạn chưa duyệt (status = 0) ===
   const fetchAllHotel = async () => {
@@ -87,6 +94,26 @@ const fetchCheckouttoday = async () => {
     }
   };
 
+  const fetchInvoiceStatus = async () => {
+    try {
+      const res = await api.get("/invoice/all");
+      const invoices = res.data.result;
+      const invoiceStatus = invoices.filter(i => i.status === 2);
+      console.log(invoiceStatus);
+      setInvoiceStatus(invoiceStatus);
+    } catch (err) {
+      console.error("Lỗi khi lấy invoice status da huy:", err);
+    }
+  }
+
+  const fetchUserCount = async () => {
+    try {
+      const res = await api.get("/users");
+      setUserCount(res.data.result);
+    } catch (err) {
+      console.error("Lỗi khi lấy danh sách người dùng:", err);
+    }
+  }
   // === Hàm duyệt khách sạn ===
   const handleApprove = async (hotelId) => {
     try {
@@ -113,6 +140,13 @@ const fetchCheckouttoday = async () => {
     }
   };
 
+  const handleDetaiClick = (title) => {
+    if(title === "User"){
+      navigate("/admin/user");
+    } else if(title === "Pending Payments") {
+      navigate("/admin/invoice");
+    }
+  };
   return (
     <div className="bg-gray-300 ml-[300px] w-full min-h-screen">
       {/* ==== Thống kê ==== */}
@@ -133,28 +167,24 @@ const fetchCheckouttoday = async () => {
         />
         <ItemHeader
           Icon={BellRingIcon}
-          title="Cancellation"
+          title="User"
+          value={userCount.length}
           detail="VIEW DETAILS"
+          onDetailClick={() => handleDetaiClick("User")}
         />
         <ItemHeader
           Icon={MessageCircleQuestionIcon}
-          title="Enquiries"
+          title="Message"
           value="21"
           detail="VIEW DETAILS"
         />
         <ItemHeader
           Icon={CircleDollarSignIcon}
           title="Pending Payments"
+          value={invoiceStatus.length}
           detail="VIEW DETAILS"
+          onDetailClick={() => handleDetaiClick("Pending Payments")}
         />
-      </div>
-
-      {/* ==== Biểu đồ (placeholder) ==== */}
-      <div className="bg-gray-100 ml-7 mr-10 rounded-lg shadow-sm p-5 mb-8">
-        <h2 className="text-xl font-semibold mb-2">Booking Status</h2>
-        <div className="w-full h-[400px] flex items-center justify-center text-gray-500">
-          (Biểu đồ thống kê đang cập nhật...)
-        </div>
       </div>
 
       {/* ==== Danh sách phòng trống ==== */}
