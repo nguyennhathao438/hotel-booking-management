@@ -19,7 +19,6 @@ public class InvoiceResponse {
     private Double totalAmount;
     private Integer payment;
     private Integer status;
-
    private RoomResponse room;
    private UserResponse user;
 }

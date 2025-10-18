@@ -4,6 +4,7 @@ import com.hotelbooking.hotel_booking.dto.request.ImgHotelRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.dto.response.ImgHotelRespone;
 import com.hotelbooking.hotel_booking.service.ImgHotelService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/images")
+@RequestMapping("/api/images")
 public class ImgHotelController {
     @Autowired
     private ImgHotelService imgHotelService;
@@ -26,6 +27,15 @@ public class ImgHotelController {
         return ResponseEntity.ok(ApiResponse.<List<ImgHotelRespone>>builder()
                 .message("Tạo ảnh khách sạn thành công")
                 .result(responses)
+                .build());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<ImgHotelRespone>>> getAllImageHotels() {
+        List<ImgHotelRespone> imgHotels = imgHotelService.getAllImgHotels();
+        return ResponseEntity.ok(ApiResponse.<List<ImgHotelRespone>>builder()
+                .message("Lấy tất cả ảnh thành công")
+                .result(imgHotels)
                 .build());
     }
 

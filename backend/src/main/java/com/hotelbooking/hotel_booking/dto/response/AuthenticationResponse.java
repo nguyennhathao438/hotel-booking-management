@@ -13,7 +13,8 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationResponse {
-    String token;
+    String accessToken;
+    String refreshToken;
     boolean authenticated;
     int userId;
     String firstName;

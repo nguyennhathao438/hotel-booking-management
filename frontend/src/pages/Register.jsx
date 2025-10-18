@@ -1,5 +1,6 @@
 import { useState } from "react"
 import api from "../api";
+import toast from "react-hot-toast";
 export default function Register() {
     
     const [formData, setFormData] = useState({
@@ -17,13 +18,13 @@ export default function Register() {
         e.preventDefault();
         try{
         const response = await api.post("/users/register",formData);
-        alert("Đăng ký thành công ");
+        toast.success("Đăng ký thành công");
         console.log(response);
         }catch(error){ 
             if (error.response && error.response.data) {
-            alert(error.response.data.message);
+            toast.error(error.response.data.message);
         } else {
-            alert("Lỗi kết nối server ");
+            toast.error("Lỗi kết nối server ")
         }
         }
 
@@ -88,12 +89,14 @@ export default function Register() {
                                 className="w-full px-3 py-1 bg-transparent focus:outline-none"
                             />
                         </div>
+                        <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
+                            className="w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
                         >
                             Đăng ký
                         </button>
+                        </div>
                     </form>
                     <p className="mt-4 text-sm text-center text-gray-700 ">
                         Quay lại trang

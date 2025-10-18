@@ -18,9 +18,9 @@ public class InvoiceController {
 
     private final InvoiceService invoiceService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> createInvoice(@RequestBody @Valid InvoiceRequest request) {
-        InvoiceResponse invoiceResponse = invoiceService.createInvoice(request);
+    @PostMapping("/room/{roomId}/create")
+    public ResponseEntity<ApiResponse<InvoiceResponse>> createInvoice(@PathVariable int roomId,@RequestBody @Valid InvoiceRequest request) {
+        InvoiceResponse invoiceResponse = invoiceService.createInvoice(roomId,request);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
                 .message("Tạo hóa đơn thành công")
                 .result(invoiceResponse)
@@ -37,23 +37,31 @@ public class InvoiceController {
     }
 
     @GetMapping("/{invoiceID}")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable Integer invoiceID) {
+    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable int invoiceID) {
         InvoiceResponse invoiceResponse = invoiceService.getInvoiceById(invoiceID);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
                 .message("Lấy thông tin hóa đơn thành công")
                 .result(invoiceResponse)
                 .build());
     }
-
-    @PutMapping("/{invoiceID}")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> updateInvoice(
-            @PathVariable Integer invoiceID,
-            @RequestBody @Valid InvoiceRequest request) {
-        InvoiceResponse invoiceResponse = invoiceService.updateInvoice(invoiceID, request);
+    @DeleteMapping("/{invoiceId}")
+    public ResponseEntity<ApiResponse<InvoiceResponse>> deleteInvoice(@PathVariable int invoiceId){
+        InvoiceResponse invoiceResponse = invoiceService.cancelInvoice(invoiceId);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
-                .message("Cập nhật hóa đơn thành công")
+                .message("Huỷ hóa đơn thành công")
                 .result(invoiceResponse)
                 .build());
     }
+
+//    @PutMapping("/{invoiceID}")
+//    public ResponseEntity<ApiResponse<InvoiceResponse>> updateInvoice(
+//            @PathVariable Integer invoiceID,
+//            @RequestBody @Valid InvoiceRequest request) {
+//        InvoiceResponse invoiceResponse = invoiceService.updateInvoice(invoiceID, request);
+//        return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
+//                .message("Cập nhật hóa đơn thành công")
+//                .result(invoiceResponse)
+//                .build());
+//    }
 
 }

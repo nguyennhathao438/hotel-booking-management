@@ -4,6 +4,7 @@ import { Bed, DoorOpen, User } from "lucide-react";
 import { FaHome } from "react-icons/fa";
 import { MdWifi } from "react-icons/md";
 import banner2 from "../../assets/img/banner2.jpg";
+import { Link } from "react-router-dom";
 
 export default function RoomCard({ room }) {
     return (
@@ -58,6 +59,13 @@ export default function RoomCard({ room }) {
                             {room.roomPrice} VNĐ
                         </p>
                     </div>
+                </div>
+                <div className="flex justify-center lg:justify-end items-center p-3">
+                    
+                        <button className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300">
+                            Đặt phòng
+                        </button>
+                    
                 </div>
             </div>
         </div>

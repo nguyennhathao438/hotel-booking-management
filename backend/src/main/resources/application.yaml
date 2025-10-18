@@ -1,14 +1,11 @@
-server:
-  port: 8080
-  servlet:
-    context-path: /hotel_booking
-
-
 spring:
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  config:
+    import: optional:file:.env[.properties]
+
   datasource:
     url: jdbc:mysql://localhost:3306/hotel_booking
     username: root
@@ -23,5 +20,17 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 jwt:
   signerKey: "3ydbhVsDcxS2sU9iunYZeLKkJ5TK5b7z0aRCyA9xcO0nv2grnnHXv5NLRxt7WFdL"
+  refreshKey: "i5n3VDtBHkxy0Bme1F23nQ6Nfxt4dBNVD4WdJ1vZKuwvJhSn7/A2CPe6bpFm7cUE"
+
+
+payment:
+  vnPay:
+    url: ${PAY_URL}
+    tmnCode: ${TMN_CODE}
+    secretKey: ${SECRET_KEY}
+    returnUrl: ${RETURN_URL}
+    version: ${VERSION}
+    command: ${COMMAND}
+    orderType: ${ORDER_TYPE}
 
 

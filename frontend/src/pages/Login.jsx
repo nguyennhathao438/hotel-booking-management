@@ -4,20 +4,24 @@ import { login } from "../storages/userSlice";
 import { useDispatch } from 'react-redux';
 import store from "../storages/store";
 import { useNavigate } from "react-router-dom";
+import {  toast } from "react-hot-toast";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading,setLoading] =useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await api.post("/auth/login",{
         email,
         password,
       });
+      
       console.log(response);
-      localStorage.setItem("token",response.data.result.token);
+      localStorage.setItem("token",response.data.result.accessToken);
       dispatch(login({
         avatar:response.data.result.avatar,
         firstName:response.data.result.firstName,
@@ -26,15 +30,18 @@ export default function Login() {
         userId:response.data.result.userId
       }))
       console.log(store.getState().user);
+      console.log(document.cookie)
       navigate("/")
-      alert("Đăng nhập thành công");
+      toast.success("Đăng nhập thành công");
     }catch(error){
         if (error.response && error.response.data) {
-            alert(error.response.data.message);
+           toast.error(error.response.data.message);
         } else {
-            alert("Lỗi kết nối server ");
+            toast.error("Lỗi kết nối sever");
         }
-        console.log(error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -77,12 +84,15 @@ export default function Login() {
               />
             </div>
             {/* Button */}
+            <div className="flex justify-center">
             <button
               type="submit" 
-              className="w-[200px] py-2 font-semibold !bg-green-400  hover:text-white"
+              disabled={loading}
+              className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
             >
-              Đăng nhập
+              {loading ?  "Đang đăng nhập ..." : "Đăng nhập" }
             </button>
+            </div>
           </form>
           {/* Links */}
           <p className="mt-4 text-sm text-center text-gray-500 cursor-pointer hover:underline">

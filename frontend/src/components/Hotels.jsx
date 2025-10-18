@@ -1,11 +1,10 @@
-import { useContext, useRef } from "react";
+import {  useEffect, useRef, useState } from "react";
 import testImg from "../assets/img/banner2.jpg";
-import { Context } from "./RoomContext";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import api from "../api";
 function Hotels() {
-    const { hotels } = useContext(Context)
+    const [hotels, setHotels] = useState([])
     const hotelsSort = [...hotels]
     hotelsSort.sort((a, b) => b.hotelRating - a.hotelRating)
     const hotelsTops = hotelsSort.splice(0, 10)
@@ -20,6 +19,17 @@ function Hotels() {
             });
         }
     };
+    useEffect(() => {
+        const fetchAllHotel = async () => {
+            try {
+                const request = await api.get("/hotels/all")
+                setHotels(request.data.result)
+            } catch (error) {
+                console.error("Error when load data :", error);
+            }
+        }
+        fetchAllHotel()
+    }, [])
     return (
         <div className="p-4">
             <h3 className="w-full p-4 font-bold font-sans text-lg md:text-xl">
@@ -57,5 +67,4 @@ function Hotels() {
         </div>
     );
 }
-
 export default Hotels;

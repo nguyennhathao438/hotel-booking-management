@@ -62,6 +62,13 @@ public class ImgHotelService {
         return mapToImgHotelRespone(imgHotel);
     }
 
+    public List<ImgHotelRespone> getAllImgHotels(){
+        List<ImgHotel> imgHotels = imgHotelRepository.findAll();
+        return imgHotels.stream()
+                .map(this::mapToImgHotelRespone)
+                .toList();
+    }
+
     public ImgHotelRespone mapToImgHotelRespone(ImgHotel imgHotel){
         return ImgHotelRespone.builder()
                 .imgHotelId(imgHotel.getImgHotelId())
@@ -72,13 +79,3 @@ public class ImgHotelService {
 }
 
 
-//@Service
-//public class CloudinaryService {
-//    @Autowired
-//    private Cloudinary cloudinary;
-//    public String uploadFile(MultipartFile file) throws IOException {
-//        Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
-//                ObjectUtils.asMap("folder", "hotel_images"));
-//        return (String) uploadResult.get("secure_url"); // link public của ảnh }
-//    }
-//}
