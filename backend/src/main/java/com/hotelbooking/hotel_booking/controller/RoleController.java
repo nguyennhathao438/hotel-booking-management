@@ -36,4 +36,11 @@ public class RoleController {
                 .result(roleService.getAllRole())
                 .build());
     }
+    @PutMapping("/{roleId}")
+    ResponseEntity<ApiResponse<RoleResponse>> updateRole(@RequestBody RoleRequest request,@PathVariable String roleId){
+        return ResponseEntity.ok(ApiResponse.<RoleResponse>builder()
+                .message("Success")
+                .result(roleService.updateRole(roleId,request))
+                .build());
+    }
 }

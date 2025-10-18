@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -36,4 +38,14 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "hotelID", nullable = true)
     Hotel hotel;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "room")
+    List<Invoice> invoices = new ArrayList<>();
+    public void addInvoice(Invoice invoice){
+        if(invoices==null){
+            invoices=new ArrayList<>();
+        }
+        invoices.add(invoice);
+        invoice.setRoom(this);
+        status=1;
+    }
 }

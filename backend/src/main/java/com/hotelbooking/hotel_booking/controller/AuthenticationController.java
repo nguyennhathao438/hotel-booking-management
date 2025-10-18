@@ -2,20 +2,24 @@ package com.hotelbooking.hotel_booking.controller;
 
 import com.hotelbooking.hotel_booking.dto.request.AuthenticationRequest;
 import com.hotelbooking.hotel_booking.dto.request.IntrospectRequest;
+import com.hotelbooking.hotel_booking.dto.request.LogoutRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.dto.response.AuthenticationResponse;
 import com.hotelbooking.hotel_booking.dto.response.IntrospectResponse;
+import com.hotelbooking.hotel_booking.exception.AppException;
+import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.time.Duration;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -27,16 +31,31 @@ public class AuthenticationController {
     //--Dang nhap
     //-------------------------
     @PostMapping("/login")
-    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest request) {
         var result = authenticationService.authenticate(request);
-        return ApiResponse.<AuthenticationResponse>builder()
-                .result(result)
+        ResponseCookie cookie = ResponseCookie.from("refreshToken",
+                result.getRefreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(7))
+                .sameSite("Strict")
                 .build();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(ApiResponse.<AuthenticationResponse>builder()
+                        .result(result)
+                        .build());
+
     }
 
     @PostMapping("/logout")
-    ApiResponse<Void> logout(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
-        authenticationService.logout(request);
+    ApiResponse<Void> logout(@RequestBody IntrospectRequest request,@CookieValue(value="refreshToken", required = false) String refreshToken) throws ParseException, JOSEException {
+        LogoutRequest req = LogoutRequest.builder()
+                .accessToken(request.getToken())
+                .refreshToken(refreshToken)
+                .build();
+        authenticationService.logout(req);
         return ApiResponse.<Void>builder()
                 .build();
     }
@@ -51,4 +70,35 @@ public class AuthenticationController {
                 .result(result)
                 .build();
     }
+    //-------------------------
+    //--Refresh token
+    //-------------------------
+    @PostMapping("/refresh")
+    ResponseEntity<ApiResponse<AuthenticationResponse>> refreshToken(@CookieValue(value="refreshToken", required = false) String token) throws ParseException, JOSEException {
+        if(token == null ){
+            throw new AppException(ErrorCode.TOKEN_NOT_FOUND);
+        }
+        System.out.println(token);
+        var result = authenticationService.refreshToken(token);
+//        ResponseCookie deleteCookie = ResponseCookie.from("refreshToken", "")
+//                .httpOnly(true)
+//                .path("/")
+//                .maxAge(0)
+//                .build();
+        ResponseCookie cookie = ResponseCookie.from("refreshToken",
+                        result.getRefreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(7))
+                .sameSite("Strict")
+                .build();
+        return ResponseEntity.ok()
+//                .header(HttpHeaders.SET_COOKIE, deleteCookie.toString())
+                .header(HttpHeaders.SET_COOKIE,cookie.toString())
+                .body(ApiResponse.<AuthenticationResponse>builder()
+                        .result(result)
+                        .build());
+    }
+
 }
