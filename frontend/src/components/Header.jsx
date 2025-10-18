@@ -31,7 +31,7 @@ function Header() {
       {/* Menu */}
       <nav className={`${scroll ? "text-[#d2b48c]" : "text-white"} flex gap-8`}>
         <Link to="/" className="font-bold cursor-pointer transition-transform duration-200 hover:text-[#d2b48c] hover:scale-105">HOME</Link>
-        <Link className="font-bold cursor-pointer transition-transform duration-200 hover:text-[#d2b48c] hover:scale-105">ROOMS</Link>
+        <Link to="/HotelsView" className="font-bold cursor-pointer transition-transform duration-200 hover:text-[#d2b48c] hover:scale-105">HOTELS</Link>
         <Link className="font-bold cursor-pointer transition-transform duration-200 hover:text-[#d2b48c] hover:scale-105">SPA</Link>
         <Link className="font-bold cursor-pointer transition-transform duration-200 hover:text-[#d2b48c] hover:scale-105">CONTACTS</Link>
       </nav>
@@ -56,6 +56,7 @@ function Header() {
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử đặt phòng</li>
                 <Link to="/addhotel" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
                 <Link to="/invoice" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý đơn hàng</Link>
+                <Link to="/statistic" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý thống kê</Link>
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer" onClick={handleLogout}>Đăng xuất</li>
               </ul>
             )}

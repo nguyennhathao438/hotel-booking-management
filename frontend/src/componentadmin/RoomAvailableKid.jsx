@@ -1,6 +1,6 @@
 import banner2 from "./../assets/img/banner2.jpg"
 
-export default function RoomAvailableKid({ Img, roomName, roomType, roomPrice }) {
+export default function RoomAvailableKid({ roomName, roomType, roomPrice }) {
     return (
         <div className="bg-gray-50 w-[210px] h-[200px] relative">
             <img src={banner2} className="w-[190px] h-[120px] absolute top-2 left-2.5" alt={roomName} />
