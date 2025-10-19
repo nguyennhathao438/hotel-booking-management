@@ -61,7 +61,7 @@ export default function ConfirmBooking() {
     }, [])
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchImgsHotelByHotelId = async () => {
             try {
                 const imageData = await api.get(`/images/hotel/${hotelId}`);
                 setImages(imageData.data.result);
@@ -69,13 +69,8 @@ export default function ConfirmBooking() {
                 console.error("Error when load data :", error);
             }
         };
-        fetchData();
+        fetchImgsHotelByHotelId();
     }, []);
-    useEffect(() => {
-        if (payment === 3 && urlVnpay) {
-            window.location.href = urlVnpay;
-        }
-    }, [payment, urlVnpay]);
     return (
         <div className="h-auto bg-gray-200">
             <div className="w-[95%] mx-auto bg-white flex">

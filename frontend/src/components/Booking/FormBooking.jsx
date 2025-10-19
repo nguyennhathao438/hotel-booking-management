@@ -23,7 +23,7 @@ export default function FormBooking() {
     console.log(checkInDate.getDate())
     const { checkOutDate } = useContext(Context)
     console.log(checkOutDate.toLocaleDateString())
-    const { selected, setSelected } = useContext(Context);
+    const [selected, setSelected] = useState(0);
     const [phone, setPhone] = useState("");
     const [errorPhone, setErrorPhone] = useState("");
     const navigate = useNavigate();
@@ -110,7 +110,8 @@ export default function FormBooking() {
     // };
 
 
-    const checkValid = () => {
+    const handleNext = async (e, roomId) => {
+        e.preventDefault();
         if (!phone.trim()) {
             setErrorPhone("Vui lòng nhập số điện thoại");
             setModalMessage("Bạn chưa nhập số điện thoại!");
@@ -125,11 +126,6 @@ export default function FormBooking() {
             setShowModal(true);
             return;
         }
-    }
-
-    const handleNext = async (e, roomId) => {
-        e.preventDefault();
-        checkValid()
         setErrorPhone("");
         const newInvoice = {
             checkInDate: formatDate(checkInDate),
@@ -196,7 +192,7 @@ export default function FormBooking() {
         }
         fetchRoomById()
     }, [])
-    
+
     useEffect(() => {
         const fetchImgHotel = async () => {
             try {

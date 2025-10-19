@@ -34,6 +34,14 @@ public class HotelService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
     }
+
+    public List<HotelResponse> findByHotelAddressContainingIgnoreCase(String province){
+        List<Hotel> hotels = hotelRepository.findByHotelAddressContainingIgnoreCase(province);
+        return hotels.stream()
+                .map(this::mapToHotelResponse)
+                .toList();
+    }
+
     public HotelResponse createHotel (HotelRequest request){
         User user = getCurrentUser();
         Hotel hotel = Hotel.builder()

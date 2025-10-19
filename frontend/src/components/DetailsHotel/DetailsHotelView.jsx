@@ -11,35 +11,37 @@ function DetailsHotelView() {
     const [rooms, setRooms] = useState([]);
     const [images, setImages] = useState([]);
     const { hotelId } = useParams();
-    console.log(typeof hotelId)
+    // console.log(typeof hotelId) //string
     const [hotel, setHotel] = useState([]);
 
-    useEffect(() => {
-        const fetchHotelByHotelId = async () => {
-            try {
-                const request = await api.get(`/hotels/${hotelId}`)
-                setHotel(request.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
+    const fetchHotelByHotelId = async () => {
+        try {
+            const request = await api.get(`/hotels/${hotelId}`)
+            setHotel(request.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
         }
+    }
+
+    useEffect(() => {
         fetchHotelByHotelId()
     }, [])
 
 
+    const fetchRoomsByHotelId = async () => {
+        try {
+            const roomData = await api.get(`rooms/hotel/${hotelId}`);
+            setRooms(roomData.data.result)
+            const imageData = await api.get(`/images/hotel/${hotelId}`);
+            setImages(imageData.data.result);
+        } catch (error) {
+            console.error("Error when load data :", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchRoomsByHotelId = async () => {
-            try {
-                const roomData = await api.get(`rooms/hotel/${hotelId}`);
-                setRooms(roomData.data.result)
-                const imageData = await api.get(`/images/hotel/${hotelId}`);
-                setImages(imageData.data.result);
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
-        };
-        fetchRoomsByHotelId();
-    }, [hotelId]);
+        fetchRoomsByHotelId()
+    }, []);
 
     const roomsRef = useRef(null);
     const handleScrollToRooms = () => {
