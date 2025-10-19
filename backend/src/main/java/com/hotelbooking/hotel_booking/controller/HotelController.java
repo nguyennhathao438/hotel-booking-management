@@ -28,6 +28,16 @@ public class HotelController {
         );
     }
 
+    @GetMapping("/search/{province}")
+    public ResponseEntity<ApiResponse<List<HotelResponse>>> findByHotelAddressContainingIgnoreCase(@PathVariable String province) {
+        List<HotelResponse> hotelProvinceList = hotelService.findByHotelAddressContainingIgnoreCase(province);
+        return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
+                .message("Tìm khách sạn theo tỉnh thành công")
+                .result(hotelProvinceList)
+                .build()
+        );
+    }
+
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels() {
         List<HotelResponse> hotelList = hotelService.getAllHotels();

@@ -3,23 +3,23 @@ import api from "../../api";
 import ImageSlider from "../DetailsHotel/ImageSlider";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Phone } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 export default function HotelProvince() {
-    let hotelProvince = []
-    const [hotels, setHotels] = useState([])
+    // let hotelProvince = []
+    // const [hotels, setHotels] = useState([])
+    // console.log("tinh tren link api la luc sau la", province)
     const [images, setImages] = useState([])
     const { province } = useParams();
-    console.log("tinh tren link api la luc sau la", province)
+    const location = useLocation();
+    const hotelProvince = location.state?.hotelProvince;
 
-
-
-    useEffect(() => {
-        const fetchAllHotel = async () => {
-            const respone = await api.get("/hotels/all")
-            setHotels(respone.data.result)
-        }
-        fetchAllHotel()
-    }, [])
+    // useEffect(() => {
+    //     const fetchAllHotel = async () => {
+    //         const respone = await api.get("/hotels/all")
+    //         setHotels(respone.data.result)
+    //     }
+    //     fetchAllHotel()
+    // }, [])
 
     useEffect(() => {
         const fetchAllImgHotel = async () => {
@@ -29,17 +29,17 @@ export default function HotelProvince() {
         fetchAllImgHotel()
     }, [])
 
-    const findHotelByProvince = () => {
-        let proviceTemp = ""
-        if (hotels.length >= 0 && hotels) {
-            for (let hotel of hotels) {
-                proviceTemp = (hotel.hotelAddress).split(",")[2].trim()
-                if (proviceTemp === province)
-                    hotelProvince.push(hotel)
-            }
-        }
-    }
-    findHotelByProvince();
+    // const findHotelByProvince = () => {
+    //     let proviceTemp = ""
+    //     if (hotels.length >= 0 && hotels) {
+    //         for (let hotel of hotels) {
+    //             proviceTemp = (hotel.hotelAddress).split(",")[2].trim()
+    //             if (proviceTemp === province)
+    //                 hotelProvince.push(hotel)
+    //         }
+    //     }
+    // }
+    // findHotelByProvince();
 
     return (
         <div className="h-auto">
