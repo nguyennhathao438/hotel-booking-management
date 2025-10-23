@@ -4,6 +4,7 @@ import ModelForm from "../components/FormModel";
 import api from "../api";
 import toast from "react-hot-toast";
 import UserEdit from "../components/UserEdit";
+import { useSearchParams } from "react-router-dom";
 export default function Users(){
     const [userSelected,setUserSelected] = useState({
         id: "",
@@ -20,12 +21,17 @@ export default function Users(){
     const [roleList,setRoleList] = useState([]);
     const [openFormEdit,setOpenFormEdit] = useState(false);
     const [selectUserId,setSelectUserId] = useState(null);
+    const [searchParams,setSearchParams] = useSearchParams();
+    const [pageNo, setPageNo] = useState(Number(searchParams.get("page")) || 1);
+    const [pageSize] = useState(8);
+    const [totalPages, setTotalPages] = useState(1);
+    const [keyword, setKeyword] = useState(searchParams.get("keyword")|| "");
     const handleCloseFormEdit = () => {
         setOpenFormEdit(false);
     }
     const handleGetUser = (userEmail) => {
         setOpenFormEdit(true);
-        const user = userList.find((users) => users.email == userEmail);
+        const user = userListSearch.find((users) => users.email == userEmail);
         setUserSelected(user);
     }
     
@@ -39,18 +45,13 @@ export default function Users(){
             await api.put(`/users/delete/${userSelected.id}`, { status: newStatus });
 
             // Cập nhật local UI
-            setUserList((prev) =>
-            prev.map((u) =>
-                u.id === userSelected.id ? { ...u, status: newStatus } : u
-            )
-            );
 
             setUserListSearch((prev) =>
             prev.map((u) =>
                 u.id === userSelected.id ? { ...u, status: newStatus } : u
             )
             );
-
+            await fetchUserPage();
             toast.success(newStatus === 1 ? "Đã ban user" : "Đã gỡ ban user");
         } catch (error) {
             toast.error(
@@ -71,12 +72,12 @@ export default function Users(){
                 roles : userSelected.roles.map(r => r.name),
             }
         )
-        const response = await api.get("/users");
-        const usersWithFullName = response.data.result.map((userSelected) => ({
-                ...userSelected,
-                fullName: `${userSelected.firstName || ""} ${userSelected.lastName || ""}`.trim(),
-            }));
-            setUserList(usersWithFullName);
+        const response = await api.get(`/users/get-page?pageNo=${pageNo}&pageSize=${pageSize}&keyword=${keyword}`);
+        const pageData = response.data.result;
+        const usersWithFullName = pageData.content.map((user) => ({
+        ...user, 
+        roles: user.roles.map((r) =>typeof r === "string" ? { name: r } : r),
+        }));
             setUserListSearch(usersWithFullName);
         toast.success("Cập nhật vai trò thành công")
         }catch(error){
@@ -90,28 +91,8 @@ export default function Users(){
             [name]: value
         }));
     }
-    const handleSearch = (e) => {
-    const searchValue = e.toLowerCase();
-    const getStatusText = (users) => {
-        switch (users) {
-            case 0: return "Active";
-            case 1: return "Banned"
-            default: return ""; 
-        }
-    };
-    const list = userList.filter((p) =>
-      p.fullName?.toLowerCase().includes(searchValue) ||
-      p.email?.toLowerCase().includes(searchValue) ||
-      p.phone?.toLowerCase().includes(searchValue) ||
-      p.dateOfBirth?.toLowerCase().includes(searchValue) ||
-      getStatusText(p.status)?.toLowerCase().includes(searchValue) ||
-      (Array.isArray(p.roles) &&
-        p.roles.some((r) =>
-          r.name?.toLowerCase().includes(searchValue)
-        ))
-    );
-        setUserListSearch(list);
-    }
+    
+
                 {/*Lấy dữ liệu của role set vao checkbox nếu có*/}
 
     const handleRoleCheckbox = (roleName) => {
@@ -129,7 +110,21 @@ export default function Users(){
             return{...prev, roles: newRoles};
         });
     };
-    useEffect(() => {
+    const fetchUserPage = async () => {
+    try {
+    const response = await api.get(`/users/get-page?pageNo=${pageNo}&pageSize=${pageSize}&keyword=${keyword}`);
+    const pageData = response.data.result;
+    const usersWithFullName = pageData.content.map((user) => ({
+    ...user, 
+    roles: user.roles.map((r) =>
+    typeof r === "string" ? { name: r } : r), // ✅ chuẩn hóa lại roles
+    }));
+      setUserListSearch(usersWithFullName);
+      setTotalPages(pageData.totalPages);
+    } catch (error) {
+      console.error("Lỗi khi lấy danh sách người dùng:", error);
+    }
+    };
     const fetchUser = async () => {
         try {
             const response = await api.get("/users");
@@ -137,9 +132,7 @@ export default function Users(){
                 ...userSelected,
                 fullName: `${userSelected.firstName || ""} ${userSelected.lastName || ""}`.trim(),
             }));
-            console.log("Dữ liệu user:", response.data.result);
             setUserList(usersWithFullName);
-            setUserListSearch(usersWithFullName);
         } catch (error) {
             console.error("Lỗi khi lấy danh sách người dùng:", error);
         }
@@ -152,10 +145,25 @@ export default function Users(){
             console.error("Lỗi khi lấy danh sách role",error);
         }
     };
+    useEffect(() => {
     fetchRole();
     fetchUser();
-}, []);
+    }, []);
+    useEffect(() => {
+    const params = {};
+    params.page = pageNo
+    if (keyword.trim()) params.keyword = keyword;
+    setSearchParams(params);
+    }, [pageNo, keyword]);
+    useEffect(() => {
+        fetchUserPage();
+    }, [pageNo,keyword]);
 
+    const handleSearch = (e) => setKeyword(e.target.value);
+
+    const handlePageChange = (newPage) => {
+        if(newPage >= 1 && newPage <= totalPages) setPageNo(newPage);
+    };
     return(
         <>
         <div className="bg-gray-300 ml-[300px]">
@@ -178,7 +186,8 @@ export default function Users(){
                     <input
                     type="text"
                     placeholder="Search user..."
-                    onChange={(e) => handleSearch(e.target.value)}
+                    value={keyword}
+                    onChange={handleSearch}
                     className="mt-2 border border-gray-200 rounded-md px-3 py-2 w-96 focus:outline-none focus:ring-2 focus:ring-black"/>
                     <SearchIcon className="mt-4"/>
                 </div>
@@ -205,7 +214,7 @@ export default function Users(){
                             ? "bg-blue-100" // màu nền khi chọn
                             : "hover:bg-gray-100"
                         }`}>
-                        <td className="py-3 px-6">{userList.fullName}</td>
+                        <td className="py-3 px-6">{`${userList.firstName} ${userList.lastName}`}</td>
 
                         <td className="py-3 px-6">{userList.email}</td>
                         <td className="py-3 px-6">{userList.phone}</td>
@@ -234,10 +243,17 @@ export default function Users(){
                     </tbody>
                 </table>
                 <div className="flex justify-center items-center mt-4 space-x-2">
-                    <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Previous</button>
-                    <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">1</button>
-                    <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">2</button>
-                    <button className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</button>
+                    <button onClick={() => handlePageChange(pageNo - 1)} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"> Previous</button>
+                    {[...Array(totalPages)].map((_, index) => (
+                        <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`px-3 py-1 rounded ${
+                            pageNo === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"}`}>
+                        {index + 1}
+                        </button>
+                    ))}
+                    <button onClick={() => handlePageChange(pageNo + 1)} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Next</button>
                 </div> 
             </div>
         </div> 
