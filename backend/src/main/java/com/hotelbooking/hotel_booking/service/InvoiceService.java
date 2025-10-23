@@ -13,9 +13,14 @@ import com.hotelbooking.hotel_booking.repository.InvoiceRepository;
 import com.hotelbooking.hotel_booking.repository.RoomRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -142,6 +147,17 @@ public class InvoiceService {
                 .toList();
     }
 
+    public Page<InvoiceResponse> getAllInvoice(int pageNo,int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Invoice> invoices = invoiceRepository.findAll(pageable);
+        return invoices.map(this::mapToInvoiceResponse);
+    }
+
+    public Page<InvoiceResponse> filterInvoice(Integer status, Integer payment, LocalDate dateFrom, LocalDate dateTo,int pageNo,int pageSize){
+        Pageable pageable = PageRequest.of(pageNo - 1,pageSize);
+        Page<Invoice> invoices = invoiceRepository.filteredInvoice(status, payment, dateFrom, dateTo,pageable);
+        return invoices.map(this::mapToInvoiceResponse);
+    }
     private RoomResponse mapToRoomResponse(Room room) {
         return RoomResponse.builder()
                 .roomId(room.getRoomId())

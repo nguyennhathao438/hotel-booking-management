@@ -2,6 +2,7 @@ import { ShoppingBagIcon,EyeIcon,SearchIcon,HotelIcon,UserIcon,CreditCardIcon,Be
 import { useEffect, useState } from "react";
 import api from "../api";
 import ModelForm from "../components/FormModel";
+import { useSearchParams } from "react-router-dom";
 
 export default function Invoice(){
     const[invoiceSelected,setInvoiceSelected] = useState({
@@ -13,78 +14,75 @@ export default function Invoice(){
         payment: "",
         totalAmount: "",
     });
+    const[invoiceNoPage,setInvoiceNoPage] = useState([]);
     const[invoiceList,setInvoiceList] = useState([]);
     const[invoiceListSearch,setInvoiceListSearch] = useState([]);
     const[statusFilter,setStatusFilter] = useState("");
     const[paymentFilter,setPaymentFilter] = useState("");
     const[dateFrom,setDateFrom] = useState("");
     const[dateTo,setDateTo] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [totalPages, setTotalPages] = useState(0);
+    const currentPage = parseInt(searchParams.get("page")) || 1;
     const[openFormInvoice,setOpenFormInvoice] = useState(false);
 
-    useEffect(() => {
-        const fetchInvoice = async () => {
-            try {
+    const fetchInvoiceNoPage = async() => {
+        try {
                 const response = await api.get("/invoice/all");
-                console.log("Dữ liệu hóa đơn:", response.data.result);
-                setInvoiceList(response.data.result);
-                setInvoiceListSearch(response.data.result);
+                const data = response.data.result;
+                setInvoiceNoPage(data);
+            } catch (error) {
+            console.error("Lỗi khi lấy danh sách người dùng:", error);
+            }
+    }
+    const fetchInvoice = async (page = 1) => {
+            try {
+                setSearchParams({ page });
+                const response = await api.get(`/invoice/all-get-page?pageNo=${page}&pageSize=7`);
+                const data = response.data.result;
+                setInvoiceList(data.content);
+                setInvoiceListSearch(data.content);
+                setTotalPages(data.totalPages);
 
             } catch (error) {
             console.error("Lỗi khi lấy danh sách người dùng:", error);
             }
         }
-        fetchInvoice();
-    }, [])
-    
+    const fetchInvoiceFilter = async (page = 1) => {
+    try {
+    setSearchParams({ page });
+
+    const response = await api.get(`/invoice/filter`, {
+      params: {
+        pageNo: page,
+        pageSize: 7,
+        status: statusFilter || null,
+        payment: paymentFilter || null,
+        dateFrom: dateFrom || null,
+        dateTo: dateTo || null,
+      },
+    });
+
+    const data = response.data.result;
+    setInvoiceList(data.content);
+    setInvoiceListSearch(data.content);
+    setTotalPages(data.totalPages);
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách hóa đơn:", error);
+  }
+};
+
     useEffect(() => {
-    let filtered = invoiceList;
-
-    // Lọc theo trạng thái
-    if (statusFilter) {
-        filtered = filtered.filter(inv => {
-            switch (statusFilter) {
-                case "pending":
-                    return inv.status === 0;
-                case "confirmed":
-                    return inv.status === 1;
-                case "completed":
-                    return inv.status === 2;
-                case "cancelled":
-                    return inv.status === 3;
-                default:
-                    return true;
-            }
-        });
+    if (statusFilter || paymentFilter || dateFrom || dateTo) {
+        fetchInvoiceFilter(currentPage);
+    } else {
+        fetchInvoice(currentPage);
     }
-
-    // 2Lọc theo phương thức thanh toán
-    if (paymentFilter) {
-        filtered = filtered.filter(inv => {
-            switch (paymentFilter) {
-                case "cash":
-                    return inv.payment === 1;
-                case "bank":
-                    return inv.payment === 2;
-                case "card":
-                    return inv.payment === 3;
-                default:
-                    return true;
-            }
-        });
-    }
-
-    // Lọc theo khoảng ngày
-    if (dateFrom && dateTo) {
-        filtered = filtered.filter(inv => {
-            const checkIn = new Date(inv.checkInDate);
-            const from = new Date(dateFrom);
-            const to = new Date(dateTo);
-            return checkIn >= from && checkIn <= to;
-        });
-    }
-
-    setInvoiceListSearch(filtered);
-}, [statusFilter, paymentFilter, dateFrom, dateTo, invoiceList]);
+    fetchInvoiceNoPage();
+}, [currentPage, statusFilter, paymentFilter, dateFrom, dateTo]);
+    useEffect(() => {
+        setSearchParams({page:1});   
+    }, [statusFilter, paymentFilter, dateFrom, dateTo]);
 
     const getPaymentText = (payment) => {
         switch(payment) {
@@ -117,20 +115,6 @@ export default function Invoice(){
         return "bg-gray-100 text-gray-700";
             }
     };
-    const handleSearch = (e) => {
-        const searchValue = e.toLowerCase();
-
-        const list = invoiceList.filter((inv) =>
-            `${inv.user?.firstName || ""} ${inv.user?.lastName || ""}`.toLowerCase().includes(searchValue) ||
-            inv.room.hotel.hotelName?.toLowerCase().includes(searchValue) ||
-            inv.checkInDate?.toLowerCase().includes(searchValue) ||
-            inv.checkOutDate?.toLowerCase().includes(searchValue) ||
-            getPaymentText(inv.payment)?.toLowerCase().includes(searchValue) ||
-            getStatusText(inv.status)?.toLowerCase().includes(searchValue) ||
-            inv.totalAmount?.toString().toLowerCase().includes(searchValue) 
-    );
-    setInvoiceListSearch(list);
-    }
 
     const handleCloseForm = () => {
         setOpenFormInvoice(false);
@@ -146,11 +130,6 @@ export default function Invoice(){
     setOpenFormInvoice(true);
     };
 
-    useEffect (() => {
-        if(invoiceSelected){
-            console.log("co ds invoiceselected" ,invoiceSelected);
-        }
-    }, [invoiceSelected]);
     return(
     <>
     <div className="p-6 bg-gray-100 min-h-screen w-full ml-[300px]">
@@ -163,41 +142,32 @@ export default function Invoice(){
                     <p>Tổng đơn hàng</p>
                     <div className="flex justify-center items-center space-x-1">
                     <ShoppingBagIcon className="text-blue-500"/>
-                    <p className="text-blue-500">{invoiceList.length}</p>
+                    <p className="text-blue-500">{invoiceNoPage.length}</p>
                     </div>
                 </div>      
                 <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
                     <p>Chờ xác nhận</p>
-                    <p className="text-yellow-500">{invoiceList.filter(inv => inv.status === 0).length}</p>
+                    <p className="text-yellow-500">{invoiceNoPage.filter(inv => inv.status === 0).length}</p>
                 </div>      
                 <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
                     <p>Đã xác nhận</p>
-                    <p className="text-blue-500">{invoiceList.filter(inv => inv.status === 1).length}</p>
+                    <p className="text-blue-500">{invoiceNoPage.filter(inv => inv.status === 1).length}</p>
                 </div>
                 <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
                     <p>Hoàn Thành</p>
-                    <p className="text-green-500">{invoiceList.filter(inv => inv.status === 2).length}</p>
+                    <p className="text-green-500">{invoiceNoPage.filter(inv => inv.status === 2).length}</p>
                 </div>      
                 <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
                     <p>Đã hủy</p>
-                    <p className="text-red-600">{invoiceList.filter(inv => inv.status === 3).length}</p>
+                    <p className="text-red-600">{invoiceNoPage.filter(inv => inv.status === 3).length}</p>
                 </div>      
                 <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
                     <p>Doanh thu</p>
-                    <p className="text-green-500">{invoiceList.filter(inv => inv.status === 2).reduce((sum,inv) => sum + inv.totalAmount,0)} đ</p>
+                    <p className="text-green-500">{invoiceNoPage.filter(inv => inv.status === 2).reduce((sum,inv) => sum + inv.totalAmount,0)} đ</p>
                 </div>
             </div>    
 
-        <div className="flex bg-white items-center gap-3 p-3">
-            <div className="flex relative">
-                <input
-                    type="text"
-                    placeholder="Nhập để tìm kiếm"
-                    className="border border-gray-300 w-[450px] p-1 pl-9 rounded-lg"
-                    onChange={(e) => handleSearch(e.target.value)}
-                ></input>
-                <SearchIcon className="absolute top-2 left-2" size={20}/>
-            </div>
+        <div className="flex bg-white justify-center items-center p-3">
             <div className="flex items-end space-x-4 bg-white p-4 rounded-md shadow-md">
       {/* Filter Status */}
             <div className="flex flex-col">
@@ -208,10 +178,10 @@ export default function Invoice(){
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-blue-400"
                 >
                 <option value="">Tất cả</option>
-                <option value="pending">Chờ xác nhận</option>
-                <option value="confirmed">Đã xác nhận</option>
-                <option value="completed">Hoàn thành</option>
-                <option value="cancelled">Đã hủy</option>
+                <option value="0">Chờ xác nhận</option>
+                <option value="1">Đã xác nhận</option>
+                <option value="2">Hoàn thành</option>
+                <option value="3">Đã hủy</option>
                 </select>
             </div>
 
@@ -224,9 +194,9 @@ export default function Invoice(){
                 className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-blue-400"
                 >
                 <option value="">Tất cả</option>
-                <option value="cash">Thanh toán trực tiếp</option>
-                <option value="bank">Chuyển khoản</option>
-                <option value="card">Thẻ</option>
+                <option value="1">Thanh toán trực tiếp</option>
+                <option value="2">Chuyển khoản</option>
+                <option value="3">Thẻ</option>
                 </select>
             </div>
 
@@ -308,6 +278,31 @@ export default function Invoice(){
                     }
                 </tbody>
                 </table>
+                <div className="flex justify-center mt-4 space-x-2">
+                    <button
+                    disabled={currentPage === 1}
+                    onClick={() => (statusFilter || paymentFilter || dateFrom || dateTo) ? fetchInvoiceFilter(currentPage - 1) : fetchInvoice(currentPage - 1)}
+                    className={`px-3 py-1 rounded-md ${currentPage === 1 ? "bg-gray-200 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}> 
+                    Trước 
+                    </button>
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                    key={i}
+                    onClick={() =>
+                        (statusFilter || paymentFilter || dateFrom || dateTo) ? fetchInvoiceFilter(i + 1) : fetchInvoice(i + 1)}
+                    className={`px-3 py-1 rounded-md ${currentPage === i + 1 ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-blue-100"}`}>
+                    {i + 1}
+                    </button>
+                ))}
+
+                <button
+                    disabled={currentPage === totalPages}
+                    onClick={() =>
+                    (statusFilter || paymentFilter || dateFrom || dateTo) ? fetchInvoiceFilter(currentPage + 1): fetchInvoice(currentPage + 1)}
+                    className={`px-3 py-1 rounded-md ${ currentPage === totalPages ? "bg-gray-200 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}>
+                    Sau
+                </button>
+                </div>
             </div>
     </div>
     {openFormInvoice && <ModelForm title="Chi tiết đơn đặt phòng" width="w-auto" onClose={() => handleCloseForm()}>        
@@ -387,7 +382,7 @@ export default function Invoice(){
                     const checkIn = new Date(invoiceSelected.checkInDate);
                     const checkOut = new Date(invoiceSelected.checkOutDate);
 
-                    const diffTime = Math.ceil(checkOut - checkIn);
+                    const diffTime = checkOut - checkIn;
                     return diffTime/(1000 * 60 * 60 * 24); 
                 }) ()}
               </p>
