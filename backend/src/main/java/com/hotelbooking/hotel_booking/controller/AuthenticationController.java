@@ -14,7 +14,6 @@ import com.nimbusds.jose.JOSEException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.time.Duration;
-
 
 @RestController
 @RequestMapping("/api/auth")
@@ -39,7 +37,6 @@ public class AuthenticationController {
     @PostMapping("/login")
     ResponseEntity<ApiResponse<AuthenticationResponse>> authenticate(@RequestBody AuthenticationRequest request) {
         var result = authenticationService.authenticate(request);
-
         ResponseCookie cookie = ResponseCookie.from("refreshToken",
                 result.getRefreshToken())
                 .httpOnly(true)
@@ -138,5 +135,4 @@ public class AuthenticationController {
                         .result(authResponse)
                         .build());
     }
-
 }

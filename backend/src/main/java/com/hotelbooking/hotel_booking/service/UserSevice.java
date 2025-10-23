@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -120,8 +119,11 @@ public class UserSevice {
     @PostAuthorize("hasRole('ADMIN')")
     public void deleteUser(int userID){
         User user = userRepository.findById(userID).orElseThrow(() -> new AppException(ErrorCode.EMAIL_EXISTED));
-
-        user.setStatus(1);
+        if(user.getStatus() == 0){
+            user.setStatus(1);
+        } else {
+            user.setStatus(0);
+        }
          userRepository.save(user);
     }
     public List<User> searchUser(String key){

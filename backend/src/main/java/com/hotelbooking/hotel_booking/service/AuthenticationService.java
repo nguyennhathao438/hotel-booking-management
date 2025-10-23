@@ -42,12 +42,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationService {
+
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -57,6 +57,7 @@ public class AuthenticationService {
     protected String SIGNER_KEY ;
     @Value("${jwt.refreshKey}")
     protected String REFRESH_KEY ;
+
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
         boolean isValid = true;
@@ -76,10 +77,8 @@ public class AuthenticationService {
         boolean authenticated= pwdEncoder.matches(request.getPassword(), user.getPassword());
         if(!authenticated)
             throw new AppException(ErrorCode.INVALID_PASSWORD);
-
         var accessToken = generateToken(user,false);
         var refreshToken= generateToken(user,true );
-
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -171,14 +170,12 @@ public class AuthenticationService {
         Date expirationTime = isRefresh
                 ? Date.from(Instant.now().plus(1,ChronoUnit.DAYS))
                 : Date.from(Instant.now().plus(15,ChronoUnit.MINUTES));
-
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); //Định nghĩa thuật toán trong Header
         JWTClaimsSet jwtClaimSet = new JWTClaimsSet.Builder()
                 .subject(user.getEmail())//email người dùng
                 .issuer("hotel-booking.com")//ai phát hành ??
                 .issueTime(new Date())//thời gian phát hành
                 .expirationTime(expirationTime)//thời gian hết hạn
-
                 .jwtID(UUID.randomUUID().toString())//id
                 .claim("scope",buildScope(user))//custom scope quyền user
                 .build();

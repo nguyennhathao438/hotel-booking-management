@@ -10,6 +10,10 @@ import DetailsHotel from "./components/DetailsHotel/DetailsHotel";
 import AddHotel from "./components/AddHotel";
 import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
 import Users from "./pages/Users";
+import Invoice from "./pages/Invoice";
+import InvoiceU from "./pages/InvoiceU";
+import Statistic from "./pages/Statistic";
+import HotelsView from "./pages/HotelsView";
 import MyInfo from "./pages/MyInfo";
 const router = createBrowserRouter([
         {
@@ -35,11 +39,22 @@ const router = createBrowserRouter([
                 {
                     path: "/detailshotel/:hotelId",
                     element: <DetailsHotel/>
-                },
-                
+                },              
                 {
                     path: "/myinfo",
                     element: <MyInfo/>
+                },
+                {
+                    path: "/invoice",
+                    element: <InvoiceU/>
+                },
+                {
+                    path: "/statistic",
+                    element: <Statistic/>
+                },
+                {
+                    path: "/HotelsView",
+                    element: <HotelsView/>
                 }
                 
 
@@ -64,10 +79,15 @@ const router = createBrowserRouter([
                 {
                     path:"user",
                     element: <Users/>
+                },
+                {
+                    path:"invoice",
+                    element: <Invoice/>
                 }
             ]
             
         }
     
 ]);
+
 export default router;

@@ -2,8 +2,8 @@ import { useContext } from "react";
 import testImg from "../assets/img/banner1.jpg";
 import { Context } from "./RoomContext";
 import { Link } from "react-router-dom";
-import "slick-carousel/slick/slick.css"
-import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function Hotels() {
     const { hotels } = useContext(Context)
