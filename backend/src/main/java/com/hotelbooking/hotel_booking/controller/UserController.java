@@ -2,6 +2,7 @@ package com.hotelbooking.hotel_booking.controller;
 
 
 import com.hotelbooking.hotel_booking.dto.request.MyInfoRequest;
+import com.hotelbooking.hotel_booking.dto.request.UpdatePasswordRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
@@ -99,6 +100,7 @@ public class UserController {
                 .result(userResponse)
                 .build());
     }
+
     @GetMapping("/get-page")
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getAllUserSearch(@RequestParam(defaultValue = "1") int pageNo,
                                                                             @RequestParam(defaultValue = "8") int pageSize,
@@ -107,6 +109,16 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.<Page<UserResponse>>builder()
                 .message("Lấy danh sách người dùng thành công")
                 .result(users)
+                .build());
+    }
+
+
+    @PutMapping("/pwd/{userId}")
+    ResponseEntity<ApiResponse<Void>> updatePassword(@RequestBody @Valid UpdatePasswordRequest request,
+                                                           @PathVariable int userId){
+        userService.updatePassword(request,userId);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .message("Success")
                 .build());
     }
 }
