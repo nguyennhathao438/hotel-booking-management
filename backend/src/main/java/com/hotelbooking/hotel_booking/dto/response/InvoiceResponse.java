@@ -20,6 +20,6 @@ public class InvoiceResponse {
     private Integer payment;
     private Integer status;
 
-   private RoomResponse room;
-   private UserResponse user;
+    private RoomResponse room;
+    private UserResponse user;
 }

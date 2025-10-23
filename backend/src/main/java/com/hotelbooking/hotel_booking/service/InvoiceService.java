@@ -1,6 +1,5 @@
 package com.hotelbooking.hotel_booking.service;
 
-
 import com.hotelbooking.hotel_booking.dto.request.InvoiceRequest;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
@@ -19,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,24 +31,28 @@ import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserRespons
 
 @Service
 public class InvoiceService {
+    @Autowired
     private InvoiceRepository invoiceRepository;
+    @Autowired
     private RoomRepository roomRepository;
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    public InvoiceService(InvoiceRepository invoiceRepository, RoomRepository roomRepository, UserRepository userRepository) {
+    public InvoiceService(InvoiceRepository invoiceRepository, RoomRepository roomRepository,
+            UserRepository userRepository) {
         this.invoiceRepository = invoiceRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
     }
-    public InvoiceResponse createInvoice(InvoiceRequest request) {
 
-        Room room = roomRepository.findById(request.getRoomId())
-                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
-        validateDates(request);
+    public InvoiceResponse createInvoice(int roomId, InvoiceRequest request) {
+        if (request.getCheckOutDate().isBefore(request.getCheckInDate())) {
+            throw new AppException(ErrorCode.INVOICE_FAILED);
+        }
+        Room room = roomRepository.getReferenceById(roomId);
+        List<Invoice> existInvoices = room.getInvoices();
+        User user = getCurrentUser();
         Invoice invoice = Invoice.builder()
                 .checkInDate(request.getCheckInDate())
                 .checkOutDate(request.getCheckOutDate())
@@ -57,21 +62,27 @@ public class InvoiceService {
                 .room(room)
                 .user(user)
                 .build();
-
-        invoiceRepository.save(invoice);
-
+        if (validateDates(request, existInvoices)) {
+            room.addInvoice(invoice);
+            invoiceRepository.save(invoice);
+        } else
+            throw new AppException(ErrorCode.INVOICE_NOT_EXISTED);
         return mapToInvoiceResponse(invoice);
     }
+
     public List<InvoiceResponse> getAllInvoices() {
-        return invoiceRepository.findAll().stream()
+        List<Invoice> invoices = invoiceRepository.findAll();
+        return invoices.stream()
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
-    public InvoiceResponse getInvoiceById(Integer id) {
+
+    public InvoiceResponse getInvoiceById(int id) {
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
         return mapToInvoiceResponse(invoice);
     }
+
     // InvoiceService
     public List<InvoiceResponse> getInvoicesByHotelOwner(Integer userId) {
         List<Invoice> invoices = invoiceRepository.findByHotelOwnerId(userId);
@@ -81,11 +92,15 @@ public class InvoiceService {
     public InvoiceResponse updateInvoice(Integer id, InvoiceRequest request) {
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
-        validateDates(request);
-        if (request.getCheckInDate() != null) invoice.setCheckInDate(request.getCheckInDate());
-        if (request.getCheckOutDate() != null) invoice.setCheckOutDate(request.getCheckOutDate());
-        if (request.getTotalAmount() != null) invoice.setTotalAmount(request.getTotalAmount());
-        if (request.getPayment() != null) invoice.setPayment(request.getPayment());
+        validateDate(request);
+        if (request.getCheckInDate() != null)
+            invoice.setCheckInDate(request.getCheckInDate());
+        if (request.getCheckOutDate() != null)
+            invoice.setCheckOutDate(request.getCheckOutDate());
+        if (request.getTotalAmount() != null)
+            invoice.setTotalAmount(request.getTotalAmount());
+        if (request.getPayment() != null)
+            invoice.setPayment(request.getPayment());
         if (request.getStatus() != null) {
             int oldStatus = invoice.getStatus();
             int newStatus = request.getStatus();
@@ -113,7 +128,8 @@ public class InvoiceService {
             }
 
             invoice.setStatus(newStatus);
-        };
+        }
+        ;
 
         if (request.getRoomId() != null) {
             Room room = roomRepository.findById(request.getRoomId())
@@ -130,12 +146,20 @@ public class InvoiceService {
         invoiceRepository.save(invoice);
         return mapToInvoiceResponse(invoice);
     }
-    private void validateDates(InvoiceRequest request) {
-        if (request.getCheckInDate() != null && request.getCheckOutDate() != null) {
-            if (!request.getCheckOutDate().isAfter(request.getCheckInDate())) {
-                throw new AppException(ErrorCode.INVALID_DATE_RANGE);
-            }
-        }
+
+    public InvoiceResponse cancelInvoice(int id) {
+        Invoice invoice = invoiceRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        invoice.setStatus(3);
+        invoiceRepository.save(invoice);
+        return mapToInvoiceResponse(invoice);
+    }
+
+    public List<InvoiceResponse> getAllInvoiceByRoom_RoomId(int roomId) {
+        List<Invoice> invoices = invoiceRepository.getAllInvoicesByRoom_RoomId(roomId);
+        return invoices.stream()
+                .map(this::mapToInvoiceResponse)
+                .toList();
     }
 
     public List<InvoiceResponse> getInvoicesToday() {
@@ -147,22 +171,41 @@ public class InvoiceService {
                 .toList();
     }
 
-    public Page<InvoiceResponse> getAllInvoice(int pageNo,int pageSize) {
+    public Page<InvoiceResponse> getAllInvoice(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Invoice> invoices = invoiceRepository.findAll(pageable);
         return invoices.map(this::mapToInvoiceResponse);
     }
 
-    public Page<InvoiceResponse> filterInvoice(Integer status, Integer payment, LocalDate dateFrom, LocalDate dateTo,int pageNo,int pageSize){
-        Pageable pageable = PageRequest.of(pageNo - 1,pageSize);
-        Page<Invoice> invoices = invoiceRepository.filteredInvoice(status, payment, dateFrom, dateTo,pageable);
+    public Page<InvoiceResponse> filterInvoice(Integer status, Integer payment, LocalDate dateFrom, LocalDate dateTo,
+            int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Invoice> invoices = invoiceRepository.filteredInvoice(status, payment, dateFrom, dateTo, pageable);
         return invoices.map(this::mapToInvoiceResponse);
     }
+
+    private boolean validateDates(InvoiceRequest request, List<Invoice> exitsInvoices) {
+        return exitsInvoices.stream()
+                .noneMatch(exitsInvoice -> request.getCheckInDate().isBefore(exitsInvoice.getCheckOutDate())
+                        && request.getCheckOutDate().isAfter(exitsInvoice.getCheckInDate()));
+
+    }
+
+    private void validateDate(InvoiceRequest request) {
+        if (request.getCheckInDate() != null && request.getCheckOutDate() != null) {
+            if (!request.getCheckOutDate().isAfter(request.getCheckInDate())) {
+                throw new AppException(ErrorCode.INVALID_DATE_RANGE);
+            }
+        }
+    }
+
     private RoomResponse mapToRoomResponse(Room room) {
         return RoomResponse.builder()
                 .roomId(room.getRoomId())
                 .roomName(room.getRoomName())
                 .roomType(room.getRoomType())
+                .roomArea(room.getRoomArea())
+                .bedRoomCount(room.getBedRoomCount())
                 .roomCapacity(room.getRoomCapacity())
                 .bedCount(room.getBedCount())
                 .roomPrice(room.getRoomPrice())
@@ -173,7 +216,7 @@ public class InvoiceService {
                 .build();
     }
 
-    public static UserResponse mapToUserResponse(User user){
+    public static UserResponse mapToUserResponse(User user) {
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())
@@ -202,9 +245,10 @@ public class InvoiceService {
                 .user(mapToUserResponse(invoice.getUser()))
                 .build();
     }
-    private HotelResponse mapToHotelResponse(Hotel hotel) {
-        if (hotel == null) return null;
 
+    private HotelResponse mapToHotelResponse(Hotel hotel) {
+        if (hotel == null)
+            return null;
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())
@@ -217,6 +261,13 @@ public class InvoiceService {
                 .status(hotel.getStatus())
                 .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
                 .build();
+    }
+
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
     }
 
 }

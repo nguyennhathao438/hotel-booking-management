@@ -25,9 +25,10 @@ public class InvoiceController {
 
     private final InvoiceService invoiceService;
 
-    @PostMapping("/create")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> createInvoice(@RequestBody @Valid InvoiceRequest request) {
-        InvoiceResponse invoiceResponse = invoiceService.createInvoice(request);
+    @PostMapping("/room/{roomId}/create")
+    public ResponseEntity<ApiResponse<InvoiceResponse>> createInvoice(@PathVariable int roomId,
+            @RequestBody @Valid InvoiceRequest request) {
+        InvoiceResponse invoiceResponse = invoiceService.createInvoice(roomId, request);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
                 .message("Tạo hóa đơn thành công")
                 .result(invoiceResponse)
@@ -44,29 +45,34 @@ public class InvoiceController {
     }
 
     @GetMapping("/all-get-page")
-    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getAllInvoice(@RequestParam(defaultValue = "1") Integer pageNo,
-                                                                             @RequestParam(defaultValue = "2") int pageSize) {
-        Page<InvoiceResponse> invoices = invoiceService.getAllInvoice(pageNo,pageSize);
+    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getAllInvoice(
+            @RequestParam(defaultValue = "1") Integer pageNo,
+            @RequestParam(defaultValue = "2") int pageSize) {
+        Page<InvoiceResponse> invoices = invoiceService.getAllInvoice(pageNo, pageSize);
         return ResponseEntity.ok(ApiResponse.<Page<InvoiceResponse>>builder()
                 .message("Lấy danh sách hóa đơn thành công")
                 .result(invoices)
                 .build());
     }
+
     @GetMapping("/filter")
-    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getFilterInvoice(@RequestParam(required = false) Integer status,
-                                                                               @RequestParam(required = false) Integer payment,
-                                                                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                                                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
-                                                                               @RequestParam(defaultValue = "1") int pageNo,
-                                                                               @RequestParam(defaultValue = "7") int pageSize) {
-        Page<InvoiceResponse> invoices = invoiceService.filterInvoice(status, payment, dateFrom, dateTo, pageNo, pageSize);
+    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getFilterInvoice(
+            @RequestParam(required = false) Integer status,
+            @RequestParam(required = false) Integer payment,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(defaultValue = "1") int pageNo,
+            @RequestParam(defaultValue = "7") int pageSize) {
+        Page<InvoiceResponse> invoices = invoiceService.filterInvoice(status, payment, dateFrom, dateTo, pageNo,
+                pageSize);
         return ResponseEntity.ok(ApiResponse.<Page<InvoiceResponse>>builder()
                 .message("Lấy filer danh sách thành công")
                 .result(invoices)
                 .build());
     }
+
     @GetMapping("/{invoiceID}")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable Integer invoiceID) {
+    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable int invoiceID) {
         InvoiceResponse invoiceResponse = invoiceService.getInvoiceById(invoiceID);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
                 .message("Lấy thông tin hóa đơn thành công")
@@ -74,16 +80,15 @@ public class InvoiceController {
                 .build());
     }
 
-    @PutMapping("/{invoiceID}")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> updateInvoice(
-            @PathVariable Integer invoiceID,
-            @RequestBody @Valid InvoiceRequest request) {
-        InvoiceResponse invoiceResponse = invoiceService.updateInvoice(invoiceID, request);
+    @DeleteMapping("/{invoiceId}")
+    public ResponseEntity<ApiResponse<InvoiceResponse>> deleteInvoice(@PathVariable int invoiceId) {
+        InvoiceResponse invoiceResponse = invoiceService.cancelInvoice(invoiceId);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
-                .message("Cập nhật hóa đơn thành công")
+                .message("Huỷ hóa đơn thành công")
                 .result(invoiceResponse)
                 .build());
     }
+
     // InvoiceController
     @GetMapping("/owner/{userId}")
     public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getInvoicesByOwner(@PathVariable Integer userId) {
@@ -102,4 +107,16 @@ public class InvoiceController {
                 .result(invoices)
                 .build());
     }
+
+    @PutMapping("/{invoiceID}")
+    public ResponseEntity<ApiResponse<InvoiceResponse>> updateInvoice(
+            @PathVariable Integer invoiceID,
+            @RequestBody @Valid InvoiceRequest request) {
+        InvoiceResponse invoiceResponse = invoiceService.updateInvoice(invoiceID, request);
+        return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
+                .message("Cập nhật hóa đơn thành công")
+                .result(invoiceResponse)
+                .build());
+    }
+
 }

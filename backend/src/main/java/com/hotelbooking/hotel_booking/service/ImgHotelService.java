@@ -29,6 +29,7 @@ public class ImgHotelService {
     private HotelRepository hotelRepository;
     @Autowired
     private Cloudinary cloudinary;
+
     public List<ImgHotelRespone> uploadImages(MultipartFile[] files, int hotelId) throws IOException {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -57,12 +58,20 @@ public class ImgHotelService {
                 .toList();
     }
 
-    public ImgHotelRespone getImgHotelById(int id){
-        ImgHotel imgHotel=imgHotelRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+    public ImgHotelRespone getImgHotelById(int id) {
+        ImgHotel imgHotel = imgHotelRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
         return mapToImgHotelRespone(imgHotel);
     }
 
-    public ImgHotelRespone mapToImgHotelRespone(ImgHotel imgHotel){
+    public List<ImgHotelRespone> getAllImgHotels() {
+        List<ImgHotel> imgHotels = imgHotelRepository.findAll();
+        return imgHotels.stream()
+                .map(this::mapToImgHotelRespone)
+                .toList();
+    }
+
+    public ImgHotelRespone mapToImgHotelRespone(ImgHotel imgHotel) {
         return ImgHotelRespone.builder()
                 .imgHotelId(imgHotel.getImgHotelId())
                 .imgUrl(imgHotel.getImgUrl())
@@ -70,15 +79,3 @@ public class ImgHotelService {
                 .build();
     }
 }
-
-
-//@Service
-//public class CloudinaryService {
-//    @Autowired
-//    private Cloudinary cloudinary;
-//    public String uploadFile(MultipartFile file) throws IOException {
-//        Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
-//                ObjectUtils.asMap("folder", "hotel_images"));
-//        return (String) uploadResult.get("secure_url"); // link public của ảnh }
-//    }
-//}

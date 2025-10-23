@@ -1,6 +1,5 @@
 package com.hotelbooking.hotel_booking.service;
 
-
 import com.hotelbooking.hotel_booking.dto.request.AuthenticationRequest;
 import com.hotelbooking.hotel_booking.dto.request.IntrospectRequest;
 import com.hotelbooking.hotel_booking.dto.request.LogoutRequest;
@@ -54,31 +53,32 @@ public class AuthenticationService {
     InvalidatedTokenRepository invalidatedTokenRepository;
     @NonFinal
     @Value("${jwt.signerKey}")
-    protected String SIGNER_KEY ;
+    protected String SIGNER_KEY;
     @Value("${jwt.refreshKey}")
-    protected String REFRESH_KEY ;
+    protected String REFRESH_KEY;
 
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
         boolean isValid = true;
         try {
-            verifyToken(token,false);
-        }catch (AppException e){
+            verifyToken(token, false);
+        } catch (AppException e) {
             isValid = false;
         }
         return IntrospectResponse.builder()
                 .valid(isValid)
                 .build();
     }
-    public AuthenticationResponse authenticate(AuthenticationRequest request){
+
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() ->new AppException(ErrorCode.EMAIL_NOT_EXISTED));
+                .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         PasswordEncoder pwdEncoder = new BCryptPasswordEncoder(10);
-        boolean authenticated= pwdEncoder.matches(request.getPassword(), user.getPassword());
-        if(!authenticated)
+        boolean authenticated = pwdEncoder.matches(request.getPassword(), user.getPassword());
+        if (!authenticated)
             throw new AppException(ErrorCode.INVALID_PASSWORD);
-        var accessToken = generateToken(user,false);
-        var refreshToken= generateToken(user,true );
+        var accessToken = generateToken(user, false);
+        var refreshToken = generateToken(user, true);
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -88,12 +88,13 @@ public class AuthenticationService {
                 .lastName(user.getLastName())
                 .avatar(user.getAvatar())
                 .roles(user.getRoles())
-                        .build();
+                .build();
 
     }
+
     public void logout(LogoutRequest request) throws ParseException, JOSEException {
-        //Lưu access token
-        try{
+        // Lưu access token
+        try {
             var signToken = verifyToken(request.getAccessToken(), false);
             String jid = signToken.getJWTClaimsSet().getJWTID();
             Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
@@ -102,11 +103,11 @@ public class AuthenticationService {
                     .expiryTime(expiryTime)
                     .build();
             invalidatedTokenRepository.save(invalidateToken);
-        }catch(AppException e){
+        } catch (AppException e) {
 
         }
 
-        //Lưu refresh token
+        // Lưu refresh token
         try {
             var refreshToken = verifyToken(request.getRefreshToken(), true);
             String jid = refreshToken.getJWTClaimsSet().getJWTID();
@@ -116,31 +117,33 @@ public class AuthenticationService {
                     .expiryTime(expiryTime)
                     .build();
             invalidatedTokenRepository.save(refreshInvalidateToken);
-        }catch(AppException e) {
+        } catch (AppException e) {
 
         }
     }
-    private SignedJWT verifyToken(String token ,boolean isRefresh) throws JOSEException, ParseException {
+
+    private SignedJWT verifyToken(String token, boolean isRefresh) throws JOSEException, ParseException {
 
         JWSVerifier verifier = isRefresh
-         ?  new MACVerifier(REFRESH_KEY.getBytes())
-        : new MACVerifier(SIGNER_KEY.getBytes());
+                ? new MACVerifier(REFRESH_KEY.getBytes())
+                : new MACVerifier(SIGNER_KEY.getBytes());
 
         SignedJWT signedJWT = SignedJWT.parse(token);
         Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         boolean verified = signedJWT.verify(verifier);
-        if(!verified)
+        if (!verified)
             throw new AppException(ErrorCode.UNAUTHENTICATED);
-        if(!expiryTime.after(new Date()))
+        if (!expiryTime.after(new Date()))
             throw new AppException(ErrorCode.TOKEN_NOT_VALID);
-        if(invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
+        if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         return signedJWT;
     }
+
     public AuthenticationResponse refreshToken(String token) throws ParseException, JOSEException {
-        var signedJWT = verifyToken(token,true);
-        var jid =signedJWT.getJWTClaimsSet().getJWTID();
+        var signedJWT = verifyToken(token, true);
+        var jid = signedJWT.getJWTClaimsSet().getJWTID();
         var expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
         InvalidateToken invalidateToken = InvalidateToken.builder()
                 .id(jid)
@@ -148,13 +151,13 @@ public class AuthenticationService {
                 .build();
         try {
             invalidatedTokenRepository.save(invalidateToken);
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
         }
 
         var email = signedJWT.getJWTClaimsSet().getSubject();
-        var user = userRepository.findByEmail(email).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
-        var accessToken = generateToken(user,false);
-        var refreshToken = generateToken(user,true);
+        var user = userRepository.findByEmail(email).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        var accessToken = generateToken(user, false);
+        var refreshToken = generateToken(user, true);
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -166,26 +169,27 @@ public class AuthenticationService {
                 .roles(user.getRoles())
                 .build();
     }
-    public String generateToken(User user,boolean isRefresh){
+
+    public String generateToken(User user, boolean isRefresh) {
         Date expirationTime = isRefresh
-                ? Date.from(Instant.now().plus(1,ChronoUnit.DAYS))
-                : Date.from(Instant.now().plus(15,ChronoUnit.MINUTES));
-        JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); //Định nghĩa thuật toán trong Header
+                ? Date.from(Instant.now().plus(1, ChronoUnit.DAYS))
+                : Date.from(Instant.now().plus(15, ChronoUnit.MINUTES));
+        JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); // Định nghĩa thuật toán trong Header
         JWTClaimsSet jwtClaimSet = new JWTClaimsSet.Builder()
-                .subject(user.getEmail())//email người dùng
-                .issuer("hotel-booking.com")//ai phát hành ??
-                .issueTime(new Date())//thời gian phát hành
-                .expirationTime(expirationTime)//thời gian hết hạn
-                .jwtID(UUID.randomUUID().toString())//id
-                .claim("scope",buildScope(user))//custom scope quyền user
+                .subject(user.getEmail())// email người dùng
+                .issuer("hotel-booking.com")// ai phát hành ??
+                .issueTime(new Date())// thời gian phát hành
+                .expirationTime(expirationTime)// thời gian hết hạn
+                .jwtID(UUID.randomUUID().toString())// id
+                .claim("scope", buildScope(user))// custom scope quyền user
                 .build();
-        Payload payload = new Payload(jwtClaimSet.toJSONObject());//Đóng gói payload vào jwsobject
-        JWSObject jwsObject = new JWSObject(header,payload);
+        Payload payload = new Payload(jwtClaimSet.toJSONObject());// Đóng gói payload vào jwsobject
+        JWSObject jwsObject = new JWSObject(header, payload);
         try {
-            if(isRefresh) {
+            if (isRefresh) {
                 jwsObject.sign(new MACSigner(REFRESH_KEY));
-            }else {
-                jwsObject.sign(new MACSigner(SIGNER_KEY));//Ký JWT bằng khóa bí mật
+            } else {
+                jwsObject.sign(new MACSigner(SIGNER_KEY));// Ký JWT bằng khóa bí mật
             }
             return jwsObject.serialize();
         } catch (JOSEException e) {
@@ -193,28 +197,27 @@ public class AuthenticationService {
             throw new RuntimeException(e);
         }
     }
-    private String buildScope(User user){
+
+    private String buildScope(User user) {
         StringJoiner stringJoiner = new StringJoiner(" ");
-        if(!CollectionUtils.isEmpty(user.getRoles())) {
+        if (!CollectionUtils.isEmpty(user.getRoles())) {
             user.getRoles().forEach(
-                    role ->{
-                        stringJoiner.add("ROLE_"+role.getName());
-                        if(!CollectionUtils.isEmpty(role.getPermissions())) {
+                    role -> {
+                        stringJoiner.add("ROLE_" + role.getName());
+                        if (!CollectionUtils.isEmpty(role.getPermissions())) {
                             role.getPermissions().forEach(
                                     permission -> {
                                         stringJoiner.add(permission.getName());
-                                    }
-                            );
+                                    });
                         }
-                    }
-            );
+                    });
 
         }
-            return stringJoiner.toString();
+        return stringJoiner.toString();
     }
 
     public AuthenticationResponse loginWithGoogle(String token) throws ParseException, JOSEException {
-        var signJWT = verifyToken(token,false);
+        var signJWT = verifyToken(token, false);
         String email = signJWT.getJWTClaimsSet().getSubject();
         System.out.println(email);
         var user = userRepository.findByEmail(email)

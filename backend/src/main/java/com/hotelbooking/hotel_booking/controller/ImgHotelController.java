@@ -42,4 +42,13 @@ public class ImgHotelController {
     public ResponseEntity<ImgHotelRespone> getImage(@PathVariable int id) {
         return ResponseEntity.ok(imgHotelService.getImgHotelById(id));
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<ImgHotelRespone>>> getAllImageHotels() {
+        List<ImgHotelRespone> imgHotels = imgHotelService.getAllImgHotels();
+        return ResponseEntity.ok(ApiResponse.<List<ImgHotelRespone>>builder()
+                .message("Lấy tất cả ảnh thành công")
+                .result(imgHotels)
+                .build());
+    }
 }

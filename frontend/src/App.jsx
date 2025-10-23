@@ -1,12 +1,13 @@
 import "./App.css";
-import Header from "./components/Header.jsx";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import api from "./api.js";
 import { login } from "./storages/userSlice.js";
+import DetailsHotelView from "./components/DetailsHotel/DetailsHotelView.jsx";
+import AddHotel from "./components/AddHotel.jsx";
+import Leaflet from "./components/leaflet/basic.jsx";
 import { Toaster } from "react-hot-toast";
 import DefaultLayout from "./layout/DefaultLayout.jsx";
-
 import { RouterProvider } from "react-router-dom";
 import router from "./routers.jsx";
 function App() {
@@ -39,7 +40,7 @@ function App() {
     
     return (
         <>
-        <RouterProvider router={router}/>
+            <RouterProvider router={router} />
         </>
     );
 }
