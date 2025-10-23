@@ -24,19 +24,6 @@ export default function InvoiceU() {
     const[openFormInvoice,setOpenFormInvoice] = useState(false);
     const[editInvoiceId,setEditInvoiceId] = useState(null);
     useEffect(() => {
-        const fetchInvoice = async () => {
-            try {
-                // Nếu là hotel owner     
-                const resUser = await api.get("/users/myInfo");
-                const userID = resUser.data.result.id;
-                const resInvoices = await api.get(`/invoice/owner/${userID}`);
-
-                setInvoiceList(resInvoices.data.result);
-                setInvoiceListSearch(resInvoices.data.result);               
-            } catch (error) {
-            console.error("Lỗi khi lấy danh sách người dùng:", error);
-            }
-        };
          fetchInvoice();
     }, [])
     
@@ -88,7 +75,19 @@ export default function InvoiceU() {
 
     setInvoiceListSearch(filtered);
 }, [statusFilter, paymentFilter, dateFrom, dateTo, invoiceList]);
+    const fetchInvoice = async () => {
+            try {
+                // Nếu là hotel owner     
+                const resUser = await api.get("/users/myInfo");
+                const userID = resUser.data.result.id;
+                const resInvoices = await api.get(`/invoice/owner/${userID}`);
 
+                setInvoiceList(resInvoices.data.result);
+                setInvoiceListSearch(resInvoices.data.result);               
+            } catch (error) {
+            console.error("Lỗi khi lấy danh sách người dùng:", error);
+            }
+    };
     const getPaymentText = (payment) => {
         switch(payment) {
             case 1: return "Thanh toán trực tiếp";

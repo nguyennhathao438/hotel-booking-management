@@ -18,6 +18,10 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -124,11 +128,39 @@ public class UserSevice {
         } else {
             user.setStatus(0);
         }
-         userRepository.save(user);
+         userRepository.saveAndFlush(user);
     }
     public List<User> searchUser(String key){
         List<User> userList = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(key,key,key,key);
         return userList;
+    }
+    @PostAuthorize("hasRole('ADMIN')")
+    public Page<UserResponse> getUserAllSearch(int pageNo, int pageSize,String keyword){
+        Pageable pageable = PageRequest.of(pageNo - 1,pageSize );
+        Page<User> userPage;
+        if(keyword == null || keyword.trim().isEmpty()){
+            userPage = userRepository.findAll(pageable);
+        } else {
+            userPage = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(
+                    keyword, keyword, keyword, keyword, pageable);
+        }
+        return userPage.map(this::mapToUserResponses);
+    }
+     UserResponse mapToUserResponses(User user){
+        Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .roles(roleNames)
+                .dateOfBirth(user.getDateOfBirth())
+                .avatar(user.getAvatar())
+                .createAt(user.getCreateAt())
+                .updateAt(user.getUpdateAt())
+                .status(user.getStatus())
+                .build();
     }
     static UserResponse mapToUserResponse(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());

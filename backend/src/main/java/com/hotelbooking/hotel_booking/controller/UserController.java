@@ -1,5 +1,7 @@
 package com.hotelbooking.hotel_booking.controller;
 
+
+import com.hotelbooking.hotel_booking.dto.request.MyInfoRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
@@ -10,11 +12,13 @@ import com.hotelbooking.hotel_booking.service.UserSevice;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -23,7 +27,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserSevice userService;
-
     @PostMapping("/register")
     ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody @Valid UserRegisterRequest request) {
         UserResponse userResponse = userService.registerUser(request);
@@ -32,7 +35,6 @@ public class UserController {
                 .result(userResponse)
                 .build());
     }
-
     @GetMapping
     ResponseEntity<ApiResponse<List<User>>> getAllUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -55,7 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/myInfo")
-    ResponseEntity<ApiResponse<UserResponse>> getMyInfo() {
+    ResponseEntity<ApiResponse<UserResponse>> getMyInfo(){
         UserResponse userResponse = userService.getMyInfo();
         return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
                 .message("Success")
@@ -64,8 +66,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody UserUpdateRequest request,
-            @PathVariable int userId) {
+    ResponseEntity<ApiResponse<UserResponse>> updateUser(@RequestBody UserUpdateRequest request, @PathVariable int userId) {
         UserResponse userResponse = userService.updateUser(request, userId);
         return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
                 .message("Success")
@@ -74,15 +75,14 @@ public class UserController {
     }
 
     @PutMapping("/delete/{userId}")
-    ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId) {
+    ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok(ApiResponse.<Void>builder()
-                .message("Success")
+                        .message("Success")
                 .build());
     }
-
     @GetMapping("/search")
-    ResponseEntity<ApiResponse<List<User>>> searchUser(@RequestParam String key) {
+    ResponseEntity<ApiResponse<List<User>>> searchUser(@RequestParam String key){
         List<User> userList = userService.searchUser(key);
         return ResponseEntity.ok(
                 ApiResponse.<List<User>>builder()
@@ -90,5 +90,23 @@ public class UserController {
                         .result(userList)
                         .build());
     }
-
+    @PutMapping("/myInfo/{userId}")
+    ResponseEntity<ApiResponse<UserResponse>> updateMyInfo(@ModelAttribute MyInfoRequest request,
+                                                           @PathVariable int userId) throws IOException {
+        UserResponse userResponse = userService.updateMyInfo(request,userId);
+        return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
+                .message("Success")
+                .result(userResponse)
+                .build());
+    }
+    @GetMapping("/get-page")
+    public ResponseEntity<ApiResponse<Page<UserResponse>>> getAllUserSearch(@RequestParam(defaultValue = "1") int pageNo,
+                                                                            @RequestParam(defaultValue = "8") int pageSize,
+                                                                            @RequestParam(required = false) String keyword) {
+        Page<UserResponse> users = userService.getUserAllSearch(pageNo,pageSize,keyword);
+        return ResponseEntity.ok(ApiResponse.<Page<UserResponse>>builder()
+                .message("Lấy danh sách người dùng thành công")
+                .result(users)
+                .build());
+    }
 }

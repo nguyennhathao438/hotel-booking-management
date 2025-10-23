@@ -1,5 +1,6 @@
 package com.hotelbooking.hotel_booking.controller;
 
+import com.cloudinary.Api;
 import com.hotelbooking.hotel_booking.dto.request.InvoiceRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
@@ -7,10 +8,14 @@ import com.hotelbooking.hotel_booking.entity.Invoice;
 import com.hotelbooking.hotel_booking.service.InvoiceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -38,6 +43,28 @@ public class InvoiceController {
                 .build());
     }
 
+    @GetMapping("/all-get-page")
+    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getAllInvoice(@RequestParam(defaultValue = "1") Integer pageNo,
+                                                                             @RequestParam(defaultValue = "2") int pageSize) {
+        Page<InvoiceResponse> invoices = invoiceService.getAllInvoice(pageNo,pageSize);
+        return ResponseEntity.ok(ApiResponse.<Page<InvoiceResponse>>builder()
+                .message("Lấy danh sách hóa đơn thành công")
+                .result(invoices)
+                .build());
+    }
+    @GetMapping("/filter")
+    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getFilterInvoice(@RequestParam(required = false) Integer status,
+                                                                               @RequestParam(required = false) Integer payment,
+                                                                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                                                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+                                                                               @RequestParam(defaultValue = "1") int pageNo,
+                                                                               @RequestParam(defaultValue = "7") int pageSize) {
+        Page<InvoiceResponse> invoices = invoiceService.filterInvoice(status, payment, dateFrom, dateTo, pageNo, pageSize);
+        return ResponseEntity.ok(ApiResponse.<Page<InvoiceResponse>>builder()
+                .message("Lấy filer danh sách thành công")
+                .result(invoices)
+                .build());
+    }
     @GetMapping("/{invoiceID}")
     public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable Integer invoiceID) {
         InvoiceResponse invoiceResponse = invoiceService.getInvoiceById(invoiceID);
