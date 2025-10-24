@@ -18,15 +18,16 @@ import java.util.List;
 public class HotelController {
     @Autowired
     HotelService hotelService;
+
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<HotelResponse>> createHotel(@RequestBody @Valid HotelRequest request) {
         HotelResponse hotelResponse = hotelService.createHotel(request);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
                 .message("Tạo khách sạn thành công")
                 .result(hotelResponse)
-                .build()
-        );
+                .build());
     }
+
     @PutMapping("/approve/{id}")
     public ResponseEntity<ApiResponse> approveHotel(@PathVariable("id") int id) {
         HotelResponse response = hotelService.approveHotel(id);
@@ -36,14 +37,24 @@ public class HotelController {
                 .result(response)
                 .build());
     }
+
+    @GetMapping("/search/{province}")
+    public ResponseEntity<ApiResponse<List<HotelResponse>>> findByHotelAddressContainingIgnoreCase(
+            @PathVariable String province) {
+        List<HotelResponse> hotelProvinceList = hotelService.findByHotelAddressContainingIgnoreCase(province);
+        return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
+                .message("Tìm khách sạn theo tỉnh thành công")
+                .result(hotelProvinceList)
+                .build());
+    }
+    
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels() {
         List<HotelResponse> hotelList = hotelService.getAllHotels();
         return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
                 .message("Danh sách khách sạn")
                 .result(hotelList)
-                .build()
-        );
+                .build());
     }
     @GetMapping("/getkhong")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels0() {
@@ -51,27 +62,26 @@ public class HotelController {
         return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
                 .message("Danh sách khách sạn")
                 .result(hotelList)
-                .build()
-        );
+                .build());
     }
+
     @GetMapping("/see/{hotelID}")
     public ResponseEntity<ApiResponse<HotelResponse>> getHotelById(@PathVariable int hotelID) {
         HotelResponse hotelResponse = hotelService.getHotelById(hotelID);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
                 .message("Thông tin khách sạn")
                 .result(hotelResponse)
-                .build()
-        );
+                .build());
     }
 
     @PutMapping("/update/{hotelID}")
-    public ResponseEntity<ApiResponse<HotelResponse>> updateHotel(@PathVariable int hotelID, @RequestBody @Valid HotelRequest request) {
+    public ResponseEntity<ApiResponse<HotelResponse>> updateHotel(@PathVariable int hotelID,
+            @RequestBody @Valid HotelRequest request) {
         HotelResponse hotelResponse = hotelService.updateHotel(hotelID, request);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
                 .message("Cập nhật khách sạn thành công")
                 .result(hotelResponse)
-                .build()
-        );
+                .build());
     }
 
 }

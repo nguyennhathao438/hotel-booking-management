@@ -1,10 +1,11 @@
 package com.hotelbooking.hotel_booking.controller;
 
 
+import com.hotelbooking.hotel_booking.dto.request.MyInfoRequest;
+import com.hotelbooking.hotel_booking.dto.request.UpdatePasswordRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
-import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
 import com.hotelbooking.hotel_booking.dto.response.UserResponse;
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.repository.RoleRepository;
@@ -18,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -54,6 +56,7 @@ public class UserController {
                 .result(userResponse)
                 .build());
     }
+
     @GetMapping("/myInfo")
     ResponseEntity<ApiResponse<UserResponse>> getMyInfo(){
         UserResponse userResponse = userService.getMyInfo();
@@ -88,6 +91,16 @@ public class UserController {
                         .result(userList)
                         .build());
     }
+    @PutMapping("/myInfo/{userId}")
+    ResponseEntity<ApiResponse<UserResponse>> updateMyInfo(@ModelAttribute MyInfoRequest request,
+                                                           @PathVariable int userId) throws IOException {
+        UserResponse userResponse = userService.updateMyInfo(request,userId);
+        return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
+                .message("Success")
+                .result(userResponse)
+                .build());
+    }
+
     @GetMapping("/get-page")
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getAllUserSearch(@RequestParam(defaultValue = "1") int pageNo,
                                                                             @RequestParam(defaultValue = "8") int pageSize,
@@ -96,6 +109,16 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.<Page<UserResponse>>builder()
                 .message("Lấy danh sách người dùng thành công")
                 .result(users)
+                .build());
+    }
+
+
+    @PutMapping("/pwd/{userId}")
+    ResponseEntity<ApiResponse<Void>> updatePassword(@RequestBody @Valid UpdatePasswordRequest request,
+                                                           @PathVariable int userId){
+        userService.updatePassword(request,userId);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .message("Success")
                 .build());
     }
 }

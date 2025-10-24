@@ -1,26 +1,26 @@
 import "./App.css";
-import Header from "./components/Header.jsx";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import api from "./api.js";
 import { login } from "./storages/userSlice.js";
+import DetailsHotelView from "./components/DetailsHotel/DetailsHotelView.jsx";
+import AddHotel from "./components/AddHotel.jsx";
+import Leaflet from "./components/leaflet/basic.jsx";
 import { Toaster } from "react-hot-toast";
 import DefaultLayout from "./layout/DefaultLayout.jsx";
-
 import { RouterProvider } from "react-router-dom";
 import router from "./routers.jsx";
-
 function App() {
-
     const dispatch = useDispatch();
     useEffect(()=>{
         const fetchUser = async()=>{
             const token= localStorage.getItem("token");
-            console.log(token)
+            
             if(token != null && token != "" ){
 
                 try{
                  const response =await api.get("/users/myInfo")
+                 console.log(response)
                  dispatch(login({
                     avatar :response.data.result.avatar ,
                     firstName: response.data.result.firstName,
@@ -34,11 +34,13 @@ function App() {
 
             }
         }
+        
         fetchUser();
     }, [dispatch])
+    
     return (
         <>
-        <RouterProvider router={router}/>
+            <RouterProvider router={router} />
         </>
     );
 }

@@ -17,11 +17,11 @@ public class UserUpdateRequest {
     @NotBlank(message = "Họ không được để trống")
     String firstName;
     @NotBlank(message = "Tên không được để trống")
-     String lastName;
+    String lastName;
     @Pattern(regexp = "0\\d{9,10}", message = "Số điện thoại không hợp lệ")
-     String phone;
+    String phone;
     LocalDate dateOfBirth;
-     String avatar;
+    String avatar;
     List<String> roles;
 
 }

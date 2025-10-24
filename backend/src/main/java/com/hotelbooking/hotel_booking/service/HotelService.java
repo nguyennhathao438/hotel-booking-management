@@ -19,7 +19,6 @@ import java.util.List;
 
 import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
 
-
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class HotelService {
@@ -33,6 +32,13 @@ public class HotelService {
         String email = authentication.getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+    }
+
+    public List<HotelResponse> findByHotelAddressContainingIgnoreCase(String province) {
+        List<Hotel> hotels = hotelRepository.findByHotelAddressContainingIgnoreCase(province);
+        return hotels.stream()
+                .map(this::mapToHotelResponse)
+                .toList();
     }
 
     public HotelResponse createHotel(HotelRequest request) {
@@ -62,14 +68,16 @@ public class HotelService {
                 .map(this::mapToHotelResponse)
                 .toList();
     }
+
     public List<HotelResponse> getAllHotels0() {
         List<Hotel> hotels = hotelRepository.findByStatus(0);
         System.out.println(">>> Số lượng hotel status=0: " + (hotels != null ? hotels.size() : "null"));
-        return hotels == null ? List.of() :
-                hotels.stream()
+        return hotels == null ? List.of()
+                : hotels.stream()
                         .map(this::mapToHotelResponse)
                         .toList();
     }
+
     public HotelResponse getHotelById(int id) {
         Hotel hotel = hotelRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -118,7 +126,8 @@ public class HotelService {
     }
 
     private HotelResponse mapToHotelResponse(Hotel hotel) {
-        if (hotel == null) return null;
+        if (hotel == null)
+            return null;
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())

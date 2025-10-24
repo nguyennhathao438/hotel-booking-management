@@ -9,6 +9,10 @@ import java.util.List;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     boolean existsByHotelName(String hotelName);
+
     List<Hotel> findByStatus(Integer status);
+
     List<Hotel> findByHotelId(Integer hotelID);
+
+    List<Hotel> findByHotelAddressContainingIgnoreCase(String province);
 }

@@ -23,61 +23,66 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE ,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RoleService {
-    RoleRepository roleRepository;
-    PermissionRepository permissionRepository;
-    @PreAuthorize("hasRole('ADMIN')")
-    public RoleResponse createRole(RoleRequest request){
+        RoleRepository roleRepository;
+        PermissionRepository permissionRepository;
 
-        var permissions = permissionRepository.findAllById(request.getPermission());
-        Role role = Role.builder()
-                .name(request.getName())
-                .description(request.getDescription())
-                .permissions(new HashSet<>(permissions))
-                .build();
+        @PreAuthorize("hasRole('ADMIN')")
+        public RoleResponse createRole(RoleRequest request) {
 
-        roleRepository.save(role);
-        Set<PermissionResponse> permissionResponse = permissions.stream().map(p -> PermissionResponse.builder()
-                .name(p.getName())
-                .description(p.getDescription())
-                .build()).collect(Collectors.toSet());
-        return RoleResponse.builder()
-                .name(role.getName())
-                .description(role.getDescription())
-                .permissions(permissionResponse)
-                .build();
-    }
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<RoleResponse> getAllRole() {
-        var roles = roleRepository.findAll();
-        return roles.stream().map(
-                role -> RoleResponse.builder()
-                        .name(role.getName())
-                        .description(role.getDescription())
-                        .permissions(role.getPermissions().stream().map(
-                                p -> PermissionResponse.builder()
-                                        .name(p.getName())
-                                        .description(p.getDescription())
-                                        .build()).collect(Collectors.toSet()))
-                        .build()
-        ).toList();
-    }
-    @PreAuthorize("hasRole('ADMIN')")
-    public RoleResponse updateRole(String roleId,RoleRequest request){
-        Role role = roleRepository.findById(roleId).orElseThrow(()-> new AppException(ErrorCode.ROLE_NOT_EXISTED));
-        var permission = permissionRepository.findAllById(request.getPermission());
-        role.setPermissions(new HashSet<>(permission));
-        role.setDescription(request.getDescription());
-        roleRepository.save(role);
-        Set<PermissionResponse> permissionResponse = permission.stream().map(p -> PermissionResponse.builder()
-                .name(p.getName())
-                .description(p.getDescription())
-                .build()).collect(Collectors.toSet());
-        return RoleResponse.builder()
-                .name(role.getName())
-                .description(role.getDescription())
-                .permissions(permissionResponse)
-                .build();
-    }
+                var permissions = permissionRepository.findAllById(request.getPermission());
+                Role role = Role.builder()
+                                .name(request.getName())
+                                .description(request.getDescription())
+                                .permissions(new HashSet<>(permissions))
+                                .build();
+
+                roleRepository.save(role);
+                Set<PermissionResponse> permissionResponse = permissions.stream().map(p -> PermissionResponse.builder()
+                                .name(p.getName())
+                                .description(p.getDescription())
+                                .build()).collect(Collectors.toSet());
+                return RoleResponse.builder()
+                                .name(role.getName())
+                                .description(role.getDescription())
+                                .permissions(permissionResponse)
+                                .build();
+        }
+
+        @PreAuthorize("hasRole('ADMIN')")
+        public List<RoleResponse> getAllRole() {
+                var roles = roleRepository.findAll();
+                return roles.stream().map(
+                                role -> RoleResponse.builder()
+                                                .name(role.getName())
+                                                .description(role.getDescription())
+                                                .permissions(role.getPermissions().stream().map(
+                                                                p -> PermissionResponse.builder()
+                                                                                .name(p.getName())
+                                                                                .description(p.getDescription())
+                                                                                .build())
+                                                                .collect(Collectors.toSet()))
+                                                .build())
+                                .toList();
+        }
+
+        @PreAuthorize("hasRole('ADMIN')")
+        public RoleResponse updateRole(String roleId, RoleRequest request) {
+                Role role = roleRepository.findById(roleId)
+                                .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_EXISTED));
+                var permission = permissionRepository.findAllById(request.getPermission());
+                role.setPermissions(new HashSet<>(permission));
+                role.setDescription(request.getDescription());
+                roleRepository.save(role);
+                Set<PermissionResponse> permissionResponse = permission.stream().map(p -> PermissionResponse.builder()
+                                .name(p.getName())
+                                .description(p.getDescription())
+                                .build()).collect(Collectors.toSet());
+                return RoleResponse.builder()
+                                .name(role.getName())
+                                .description(role.getDescription())
+                                .permissions(permissionResponse)
+                                .build();
+        }
 }

@@ -1,7 +1,7 @@
-import { Menu } from "@headlessui/react";
+import { Menu,MenuButton,MenuItem,MenuItems } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs";
-import { Context } from "./RoomContext";
 import { useContext } from "react";
+import { Context } from "./RoomContext";
 let lis = [
   { name: '1 Adults' },
   { name: '2 Adults' },
@@ -9,26 +9,26 @@ let lis = [
   { name: '4 Adults' }
 ]
 function Adults() {
-  const { adults, setAdults } = useContext(Context)
+  const {adults,setAdults} = useContext(Context)
   return (
     <Menu as='div' className="w-full h-full relative">
       {/* btn */}
-      <Menu.Button className="flex items-center h-full w-full justify-between p-4 cursor-pointer">
+      <MenuButton className="flex items-center h-full w-full justify-between p-4 cursor-pointer">
         {adults}
         <BsChevronDown />
-      </Menu.Button>
-      <Menu.Items as='ul' className="bg-white text-center absolute w-full z-40">
+      </MenuButton>
+      <MenuItems as='ul' className="bg-white text-center absolute w-full z-40">
         {lis.map((item, index) => {
           return (
-            <Menu.Item
+            <MenuItem
               onClick={() => setAdults(item.name)}
               as='li'
               className="border-b p-2 cursor-pointer hover:bg-[#d2b48c]"
               key={index}
             >{item.name}
-            </Menu.Item>);
+            </MenuItem>);
         })}
-      </Menu.Items>
+      </MenuItems>
     </Menu>
   );
 }

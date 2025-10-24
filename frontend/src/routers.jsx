@@ -6,7 +6,6 @@ import Login from "./pages/Login";
 import AdminLayout from "./layout/AdminLayout";
 import DashBoard from "./componentadmin/DashBoard"
 import PermissionManager from "./pages/PermissionManager";
-import DetailsHotel from "./components/DetailsHotel/DetailsHotel";
 import AddHotel from "./components/AddHotel";
 import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
 import Users from "./pages/Users";
@@ -14,7 +13,12 @@ import Invoice from "./pages/Invoice";
 import InvoiceU from "./pages/InvoiceU";
 import Statistic from "./pages/Statistic";
 import HotelsView from "./pages/HotelsView";
-
+import MyInfo from "./pages/MyInfo";
+import FormBooking from "./components/Booking/FormBooking";
+import ConfirmBooking from "./components/Booking/ConfirmBooking";
+import SuccessBooking from "./components/Booking/SuccessBooking";
+import HotelProvince from "./components/BookingSearchResult/HotelProvince";
+import DetailsHotel from "./components/DetailsHotel/DetailsHotelView"
 const router = createBrowserRouter([
         {
             path:"/",
@@ -39,6 +43,10 @@ const router = createBrowserRouter([
                 {
                     path: "/detailshotel/:hotelId",
                     element: <DetailsHotel/>
+                },              
+                {
+                    path: "/myinfo",
+                    element: <MyInfo/>
                 },
                 {
                     path: "/invoice",
@@ -51,7 +59,25 @@ const router = createBrowserRouter([
                 {
                     path: "/HotelsView",
                     element: <HotelsView/>
+                },
+                {
+                    path:"/booking-form/:roomId",
+                    element:<FormBooking/>
                 }
+                ,{
+                    path:"/confirm-booking/:roomId",
+                    element:<ConfirmBooking/>
+                }
+                ,{
+                    path:"/success-booking",
+                    element:<SuccessBooking/>
+                }
+                ,{
+                    path:"/search-result/:province",
+                    element:<HotelProvince/>
+                }
+                
+
             ],
         },
         {
