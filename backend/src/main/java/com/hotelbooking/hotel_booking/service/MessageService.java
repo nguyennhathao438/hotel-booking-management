@@ -24,6 +24,9 @@ public class MessageService {
     public MessageResponse createMessage(MessageRequest request){
         User sender = userRepository.findById(request.getSenderId()).orElseThrow(() ->new AppException(ErrorCode.USER_NOT_EXISTED));
         User receiver = userRepository.findById(request.getReceiverId()).orElseThrow(() ->new AppException(ErrorCode.USER_NOT_EXISTED));
+        if(sender.getEmail().equals(receiver.getEmail())){
+            throw new AppException(ErrorCode.CANNOT_SEND_MESSAGE_TO_SELF);
+        }
         Message message = Message.builder()
                 .sender(sender)
                 .receiver(receiver)
@@ -36,9 +39,10 @@ public class MessageService {
         List<Message> messageList = messageRepository.getConversation(senderId,receiverId);
         return messageList;
     }
-    public List<Message> getAllMessageByUser(int userId){
-        List<Message> messageList = messageRepository.getAllLastMessagesForUser(userId);
-        return messageList;
+    public List<User> getAllMessageByUser(int userId,String keyword){
+        System.out.println(keyword);
+        List<User> userList = messageRepository.getLastSenders(userId,keyword);
+        return userList;
     }
     MessageResponse mapToMessageResponse(Message message){
         return MessageResponse.builder()

@@ -1,44 +1,63 @@
-
-import logo from "../assets/img/logo.jpg"
-import { Link, NavLink } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { useState } from "react"
-import defaultAvata from "../assets/img/defaultAvata.jpg"
-import { useDispatch } from "react-redux"
-import { logout } from "../storages/userSlice"
-import api from "../api"
+import logo from "../assets/img/logo.jpg";
+import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import defaultAvata from "../assets/img/defaultAvata.jpg";
+import { useDispatch } from "react-redux";
+import { logout } from "../storages/userSlice";
+import { useNavigate } from "react-router-dom";
+import api from "../api";
 function Header() {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
   const [openAccount, setOpenAccount] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const handleLogout = async () => {
-    const token = localStorage.getItem("token")
-    await api.post("/auth/logout", {token},{ withCredentials: true })
-    localStorage.removeItem("token")
+    const token = localStorage.getItem("token");
+    await api.post("/auth/logout", { token }, { withCredentials: true });
+    localStorage.removeItem("token");
     dispatch(logout());
+    navigate("/");
   };
 
   return (
     <header className="fixed w-full z-50 bg-white shadow-md py-3 px-10 flex justify-between items-center font-sans ">
       {/* Logo */}
       <Link to="/" className="flex items-center gap-2">
-        <img src={logo} alt="logo"className="w-12 h-12 object-cover rounded-full border border-[#d2b48c]"/>
-        <span className="text-[#4b2e1f] font-bold text-xl tracking-wide">GRAND HOTEL</span>
+        <img
+          src={logo}
+          alt="logo"
+          className="w-12 h-12 object-cover rounded-full border border-[#d2b48c]"
+        />
+        <span className="text-[#4b2e1f] font-bold text-xl tracking-wide">
+          GRAND HOTEL
+        </span>
       </Link>
 
       {/* Menu */}
       <nav className="flex gap-8 text-[#4b2e1f] font-semibold">
-        <Link to="/" className="transition-colors duration-200 hover:text-[#d2b48c]">
+        <Link
+          to="/"
+          className="transition-colors duration-200 hover:text-[#d2b48c]"
+        >
           HOME
         </Link>
-        <Link to="/rooms" className="transition-colors duration-200 hover:text-[#d2b48c]">
+        <Link
+          to="/rooms"
+          className="transition-colors duration-200 hover:text-[#d2b48c]"
+        >
           ROOMS
         </Link>
-        <Link to="/spa" className="transition-colors duration-200 hover:text-[#d2b48c]">
+        <Link
+          to="/spa"
+          className="transition-colors duration-200 hover:text-[#d2b48c]"
+        >
           SPA
         </Link>
-        <Link to="/contact" className="transition-colors duration-200 hover:text-[#d2b48c]">
+        <Link
+          to="/contact"
+          className="transition-colors duration-200 hover:text-[#d2b48c]"
+        >
           CONTACTS
         </Link>
       </nav>
@@ -51,7 +70,7 @@ function Header() {
             className="w-10 h-10 rounded-full border-2 border-[#d2b48c] overflow-hidden hover:scale-105 transition-transform"
           >
             <img
-              src={defaultAvata}
+              src={user?.avatar ? user.avatar : defaultAvata}
               alt="avatar"
               className="w-full h-full object-cover"
             />
@@ -59,13 +78,40 @@ function Header() {
 
           {openAccount && (
             <ul className="absolute right-0 bg-white shadow-lg rounded-md mt-2 transition-transform">
-                <Link to="/myinfo" className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Thông tin cá nhân</Link>
-                <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử đặt phòng</li>
-                <Link to="/addhotel" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
-                <Link to="/invoice" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý đơn hàng</Link>
-                <Link to="/statistic" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý thống kê</Link>
-                <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer" onClick={handleLogout}>Đăng xuất</li>
-              </ul>
+              <Link
+                to="/myinfo"
+                className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
+              >
+                Thông tin cá nhân
+              </Link>
+              <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">
+                Lịch sử đặt phòng
+              </li>
+              <Link
+                to="/addhotel"
+                className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
+              >
+                Đăng ký khách sạn
+              </Link>
+              <Link
+                to="/invoice"
+                className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
+              >
+                Quản lý đơn hàng
+              </Link>
+              <Link
+                to="/statistic"
+                className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
+              >
+                Quản lý thống kê
+              </Link>
+              <li
+                className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Đăng xuất
+              </li>
+            </ul>
           )}
         </div>
       ) : (
@@ -89,7 +135,6 @@ function Header() {
 }
 
 export default Header;
-
 
 // import logo from "../assets/img/logo.jpg"
 // import { Link } from "react-router-dom"

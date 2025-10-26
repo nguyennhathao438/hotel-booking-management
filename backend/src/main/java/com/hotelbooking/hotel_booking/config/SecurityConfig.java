@@ -33,7 +33,9 @@ public class SecurityConfig {
     @Autowired
     CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final String[] PUBLIC_ENDPOINTS = { "/api/users/register", "/api/auth/login", "/api/auth/introspect",
-            "/api/hotels/all", "/api/auth/refresh", "/api/auth/login/google","/api/payment/vn-pay-callback" };
+            "/api/hotels/all", "/api/auth/refresh", "/api/auth/login/google","/api/payment/vn-pay-callback" ,
+            "/ws/info"
+    };
     @Value("${jwt.signerKey}")
     private String signerKey;
     // -------------------------
@@ -49,6 +51,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers("/", "/login", "/oauth2/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/topic/**").permitAll()
+                        .requestMatchers("/app/**").permitAll()
                         .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated())
                 // Kích hoạt xác thực Oath2

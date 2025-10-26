@@ -28,8 +28,8 @@ public enum ErrorCode {
     TOKEN_NOT_FOUND(1011, "Không tìm thấy refresh token trên cookie", HttpStatus.NOT_FOUND),
     TOKEN_NOT_VALID(1012, "Token đã hết hạn", HttpStatus.UNAUTHORIZED),
     BOOKING_NOT_EXISTED(1003, "Không tìm thấy lịch đặt", HttpStatus.NOT_FOUND),
-    INVOICE_FAILED(1015, "Ngày checkIn phải trước ngày checkOut", HttpStatus.UNAUTHORIZED);
-
+    INVOICE_FAILED(1015, "Ngày checkIn phải trước ngày checkOut", HttpStatus.UNAUTHORIZED),
+    CANNOT_SEND_MESSAGE_TO_SELF(1016, "Không th gửi tin nhắn cho bản thân", HttpStatus.BAD_REQUEST);
     private final int code;
     private final String message;
     private final HttpStatusCode statusCode;

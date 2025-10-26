@@ -18,7 +18,8 @@ import FormBooking from "./components/Booking/FormBooking";
 import ConfirmBooking from "./components/Booking/ConfirmBooking";
 import SuccessBooking from "./components/Booking/SuccessBooking";
 import HotelProvince from "./components/BookingSearchResult/HotelProvince";
-import DetailsHotel from "./components/DetailsHotel/DetailsHotelView"
+import DetailsHotel from "./components/DetailsHotel/DetailsHotelView";
+import Chat from "./pages/Chat";
 const router = createBrowserRouter([
         {
             path:"/",
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
                 {
                     path:"invoice",
                     element: <Invoice/>
+                },
+                {
+                    path:"chat",
+                    element: <Chat/>
                 }
             ]
             
