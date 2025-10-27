@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import banner2 from "../../assets/img/banner2.jpg";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import BookingSearch from "../BookingSearch";
-import TopTabBar from "./TabbarDetailsHotel";
-import ImageSlider from "./ImageSlider";
+import TopTabBar from "./Tabbar";
+import ImageSlider from "../Common/ImageSlider";
 import RoomList from "./RoomList";
 import api from "../../api";
 function DetailsHotelView() {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import api from "../api";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import ModelForm from "../components/FormModel";
+import ModelForm from "../components/Common/FormModel";
 export default function MyInfo() {
     const [isEdit, setIsEdit] = useState(false);
     const [loading, setLoading] = useState(false);

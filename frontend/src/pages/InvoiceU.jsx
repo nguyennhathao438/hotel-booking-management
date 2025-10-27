@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ShoppingBagIcon,EyeIcon,SearchIcon,HotelIcon,UserIcon,CreditCardIcon,BedIcon} from "lucide-react";
 import api from "../api";
-import ModelForm from "../components/FormModel";
+import ModelForm from "../components/Common/FormModel";
 import toast from "react-hot-toast";
 // import { useSelector } from "react-redux";
 export default function InvoiceU() {

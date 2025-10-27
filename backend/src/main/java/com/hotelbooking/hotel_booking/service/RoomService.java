@@ -60,11 +60,11 @@ private InvoiceRepository invoiceRepository;
     public List<RoomResponse> getRoomsByHotelId(int hotelId) {
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
 
-        List<Room> availableRooms = rooms.stream()
-                .filter(room -> !invoiceRepository.existsByRoom_RoomId(room.getRoomId()))
-                .toList();
+//        List<Room> availableRooms = rooms.stream()
+//                .filter(room -> !invoiceRepository.existsByRoom_RoomId(room.getRoomId()))
+//                .toList();
 
-        return availableRooms.stream()
+        return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
     }

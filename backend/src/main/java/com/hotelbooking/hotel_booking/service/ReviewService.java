@@ -24,9 +24,9 @@ public class ReviewService {
     ReviewRepository reviewRepository;
     UserRepository userRepository;
     HotelRepository hotelRepository;
-    public ReviewResponse createReview(ReviewRequest request){
-        User user = userRepository.findById(request.getUserId()).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
-        Hotel hotel = hotelRepository.findById(request.getHotelId()).orElseThrow(()-> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+    public ReviewResponse createReview(ReviewRequest request) {
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        Hotel hotel = hotelRepository.findById(request.getHotelId()).orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
 
         Review review = Review.builder()
                 .user(user)
@@ -35,13 +35,18 @@ public class ReviewService {
                 .star(request.getStar())
                 .build();
         reviewRepository.save(review);
+        double avgStar = reviewRepository.findByAvgStarByHotel_hotelId(request.getHotelId());
+        hotel.setHotelRating(avgStar);
+        hotelRepository.save(hotel);
         return mapToReviewResponse(review);
     }
-    public List<Review> getReviewByHotelId(int id){
-        Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-        return reviewRepository.findAllByHotel(hotel);
+    public List<ReviewResponse> findByHotel_hotelId(int hotelId){
+        List<Review> reviews = reviewRepository.findByHotel_hotelId(hotelId);
+        return reviews.stream()
+                .map(this::mapToReviewResponse)
+                .toList();
     }
-    static ReviewResponse mapToReviewResponse(Review review){
+    public ReviewResponse mapToReviewResponse(Review review){
         return ReviewResponse.builder()
                 .userId(review.getUser().getId())
                 .hotelId(review.getHotel().getHotelId())

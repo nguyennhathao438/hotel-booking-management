@@ -1,18 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams, useSearchParams, useNavigate } from "react-router-dom";
-import ImageSlider from "../DetailsHotel/ImageSlider";
+import ImageSlider from "../Common/ImageSlider";
 import api from "../../api";
 import { Context } from "../RoomContext";
 import momo from "../../assets/img/momo.png"
 import vnpay from "../../assets/img/vnpay.png"
 import thanhtoan from "../../assets/img/thanhToan.png"
 import { Mail, Phone } from "lucide-react";
-import NotificationModal from "../Modal";
+import NotificationModal from "../Common/Modal";
 export default function FormBooking() {
     const [searchParams] = useSearchParams();
     const hotelId = searchParams.get("hotelId");
     const { roomId } = useParams();
-    console.log("Id của phòng", roomId)
     const [hotel, setHotel] = useState([])
     const [images, setImages] = useState([]);
     const [room, setRoom] = useState([]);
@@ -29,7 +28,6 @@ export default function FormBooking() {
     const navigate = useNavigate();
     const totalAmount = room.roomPrice * (checkOutDate.getDate() - checkInDate.getDate());
     const [urlVnpay, setUrlVnpay] = useState(null); // eslint-disable-line no-unused-vars
-    console.log("phuong thuc thanh toan o form booking la : ", selected)
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [modalType, setModalType] = useState("warning");
@@ -75,41 +73,6 @@ export default function FormBooking() {
         return d.toISOString().split("T")[0]; // => "2025-10-14"
     };
 
-    // const handleNext = async (e, roomId) => {
-    //     e.preventDefault();
-    //     if (!phone.trim()) {
-    //         setErrorPhone("Vui lòng nhập số điện thoại");
-    //     } else {
-    //         setErrorPhone("");
-    //         const newInvoice = {
-    //             checkInDate: formatDate(checkInDate),
-    //             checkOutDate: formatDate(checkOutDate),
-    //             payment: selected,
-    //             totalAmount: totalAmount,
-    //             status: 0,
-    //             roomId: roomId,
-    //             userId: user.id,
-    //         };
-    //         localStorage.setItem("invoice", JSON.stringify(newInvoice));
-    //         setInvoice(newInvoice);
-    //         if (selected == 1) {
-    //             navigate(`/confirm-booking/${roomId}?hotelId=${hotelId}&payment=${selected}`, {
-    //                 state: { invoice: newInvoice },
-    //             });
-    //         }
-    //         else if (selected == 3) {
-    //             const response = await api.get(`/payment/vn-pay?amount=${totalAmount}`)
-    //             const newVnpayUrl = response.data.result.paymentUrl
-    //             setUrlVnpay(newVnpayUrl)
-    //             console.log("adasdjsia", response.data.result.paymentUrl)
-    //             navigate(`/confirm-booking/${roomId}?hotelId=${hotelId}&payment=${selected}`, {
-    //                 state: { invoice: newInvoice, urlVnpay: newVnpayUrl }
-    //             })
-    //         }
-    //     }
-    // };
-
-
     const handleNext = async (e, roomId) => {
         e.preventDefault();
         if (!phone.trim()) {
@@ -154,54 +117,52 @@ export default function FormBooking() {
         }
     };
 
-
-
-    useEffect(() => {
-        const fetchUserLogin = async () => {
-            try {
-                const userData = await api.get("/users/myInfo")
-                setUser(userData.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
+    const fetchUserLogin = async () => {
+        try {
+            const userData = await api.get("/users/myInfo")
+            setUser(userData.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
         }
+    }
+    useEffect(() => {
         fetchUserLogin();
     }, [])
     console.log(user)
 
-    useEffect(() => {
-        const fetchHotelById = async () => {
-            try {
-                const request = await api.get(`/hotels/${hotelId}`)
-                setHotel(request.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
+    const fetchHotelById = async () => {
+        try {
+            const request = await api.get(`/hotels/${hotelId}`)
+            setHotel(request.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
         }
+    }
+    useEffect(() => {
         fetchHotelById()
     }, [])
 
-    useEffect(() => {
-        const fetchRoomById = async () => {
-            try {
-                const request = await api.get(`/rooms/${roomId}`)
-                setRoom(request.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
+    const fetchRoomById = async () => {
+        try {
+            const request = await api.get(`/rooms/${roomId}`)
+            setRoom(request.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
         }
+    }
+    useEffect(() => {
         fetchRoomById()
     }, [])
 
+    const fetchImgHotel = async () => {
+        try {
+            const imageData = await api.get(`/images/hotel/${hotelId}`);
+            setImages(imageData.data.result);
+        } catch (error) {
+            console.error("Error when load data :", error);
+        }
+    };
     useEffect(() => {
-        const fetchImgHotel = async () => {
-            try {
-                const imageData = await api.get(`/images/hotel/${hotelId}`);
-                setImages(imageData.data.result);
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
-        };
         fetchImgHotel();
     }, []);
 

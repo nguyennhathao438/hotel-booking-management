@@ -77,11 +77,23 @@ public class InvoiceService {
                 .toList();
     }
 
+    public List<InvoiceResponse> getByUser_Id(int user_id){
+        List<Invoice> invoices = invoiceRepository.getByUser_Id(user_id);
+        return invoices.stream()
+                .map(this::mapToInvoiceResponse)
+                .toList();
+    }
+
     public InvoiceResponse getInvoiceById(int id) {
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
         return mapToInvoiceResponse(invoice);
     }
+
+
+
+
+
 
     // InvoiceService
     public List<InvoiceResponse> getInvoicesByHotelOwner(Integer userId) {

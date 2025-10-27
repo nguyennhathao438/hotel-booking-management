@@ -44,6 +44,15 @@ public class InvoiceController {
                 .build());
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getByUser_Id(@PathVariable("userId") int userId) {
+        List<InvoiceResponse> invoices = invoiceService.getByUser_Id(userId);
+        return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
+                .message("Lấy danh sách hóa đơn theo user thành công")
+                .result(invoices)
+                .build());
+    }
+
     @GetMapping("/all-get-page")
     public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getAllInvoice(
             @RequestParam(defaultValue = "1") Integer pageNo,
@@ -72,7 +81,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/{invoiceID}")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable int invoiceID) {
+    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable("invoiceID") int invoiceID) {
         InvoiceResponse invoiceResponse = invoiceService.getInvoiceById(invoiceID);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
                 .message("Lấy thông tin hóa đơn thành công")

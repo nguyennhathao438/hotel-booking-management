@@ -46,4 +46,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
     public List<Invoice> getAllInvoicesByRoom_RoomId(int room_id);
 
     public List<Invoice> getAllInvoicesByUser_Email(String user_email);
+    public List<Invoice> getByUser_Id(int user_id);
 }

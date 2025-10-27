@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from "reac
 import { Context } from "../RoomContext";
 import api from "../../api";
 import monney from "../../assets/img/monney.png"
-import ImageSlider from "../DetailsHotel/ImageSlider";
+import ImageSlider from "../Common/ImageSlider";
 import { FaLock } from "react-icons/fa";
 export default function ConfirmBooking() {
     const navigate = useNavigate()

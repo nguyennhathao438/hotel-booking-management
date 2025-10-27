@@ -2,8 +2,6 @@ package com.hotelbooking.hotel_booking.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.hotelbooking.hotel_booking.dto.request.HotelRequest;
-import com.hotelbooking.hotel_booking.dto.request.ImgHotelRequest;
 import com.hotelbooking.hotel_booking.dto.response.ImgHotelRespone;
 import com.hotelbooking.hotel_booking.entity.Hotel;
 import com.hotelbooking.hotel_booking.entity.ImgHotel;
@@ -19,7 +17,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class ImgHotelService {

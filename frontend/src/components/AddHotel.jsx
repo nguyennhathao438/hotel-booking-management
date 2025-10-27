@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import ApiService from "../service/apiService";
 import axios from "axios";
-import NotificationModal from "./Modal";
+import NotificationModal from "./Common/Modal";
 import api from "../api";
 const AddHotel = () => {
     const [images, setImages] = useState([]);

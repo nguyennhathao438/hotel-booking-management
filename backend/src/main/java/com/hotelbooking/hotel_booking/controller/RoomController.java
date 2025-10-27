@@ -20,9 +20,8 @@ import java.util.List;
 @RequestMapping("/api/rooms")
 @RequiredArgsConstructor
 public class RoomController {
-
     @Autowired
-    private  RoomService roomService;
+    private RoomService roomService;
 
     @PostMapping("/create")
     ResponseEntity<ApiResponse<RoomResponse>> createRoom(@RequestBody @Valid RoomRequest request) {
@@ -32,14 +31,16 @@ public class RoomController {
                 .result(roomResponse)
                 .build());
     }
+
     @GetMapping("/hotel/{hotelId}")
-    public ResponseEntity<ApiResponse<List<RoomResponse>>> getRoomsByHotelId(@PathVariable int hotelId){
+    public ResponseEntity<ApiResponse<List<RoomResponse>>> getRoomsByHotelId(@PathVariable int hotelId) {
         List<RoomResponse> roomResponse = roomService.getRoomsByHotelId(hotelId);
         return ResponseEntity.ok(ApiResponse.<List<RoomResponse>>builder()
                 .message("Lấy thông tin phòng thành công")
                 .result(roomResponse)
                 .build());
     }
+
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<RoomResponse>>> getAllRooms() {
         List<RoomResponse> rooms = roomService.getAllRooms();
@@ -48,6 +49,50 @@ public class RoomController {
                 .result(rooms)
                 .build());
     }
+
+    @GetMapping("/{roomID}")
+    public ResponseEntity<ApiResponse<RoomResponse>> getRoom(@PathVariable int roomID) {
+        RoomResponse roomResponse = roomService.getRoomById(roomID);
+        return ResponseEntity.ok(ApiResponse.<RoomResponse>builder()
+                .message("Lấy thông tin phòng thành công")
+                .result(roomResponse)
+                .build());
+    }
+
+    @PutMapping("/{roomID}")
+    public ResponseEntity<ApiResponse<RoomResponse>> updateRoom(
+            @PathVariable int roomID,
+            @RequestBody @Valid RoomRequest request) {
+        RoomResponse roomResponse = roomService.updateRoom(roomID, request);
+        return ResponseEntity.ok(ApiResponse.<RoomResponse>builder()
+                .message("Cập nhật phòng thành công")
+                .result(roomResponse)
+                .build());
+    }
+
+    @DeleteMapping("/{roomID}")
+    public ResponseEntity<ApiResponse<Void>> deleteRoom(@PathVariable int roomID) {
+        roomService.deleteRoom(roomID);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .message("Xóa phòng thành công")
+                .build());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @GetMapping("/available")
     public ResponseEntity<ApiResponse<List<RoomResponse>>> getAvailableRooms(
             @RequestParam("startDate") String startDateStr,
@@ -81,33 +126,6 @@ public class RoomController {
         return ResponseEntity.ok(ApiResponse.<Long>builder()
                 .message("Số lượng phòng trống")
                 .result(count)
-                .build());
-    }
-
-    @GetMapping("/{roomID}")
-    public ResponseEntity<ApiResponse<RoomResponse>> getRoom(@PathVariable int roomID) {
-        RoomResponse roomResponse = roomService.getRoomById(roomID);
-        return ResponseEntity.ok(ApiResponse.<RoomResponse>builder()
-                .message("Lấy thông tin phòng thành công")
-                .result(roomResponse)
-                .build());
-    }
-
-    @PutMapping("/{roomID}")
-    public ResponseEntity<ApiResponse<RoomResponse>> updateRoom(
-            @PathVariable int roomID,
-            @RequestBody @Valid RoomRequest request) {
-        RoomResponse roomResponse = roomService.updateRoom(roomID, request);
-        return ResponseEntity.ok(ApiResponse.<RoomResponse>builder()
-                .message("Cập nhật phòng thành công")
-                .result(roomResponse)
-                .build());
-    }
-    @DeleteMapping("/{roomID}")
-    public ResponseEntity<ApiResponse<Void>> deleteRoom(@PathVariable int roomID) {
-        roomService.deleteRoom(roomID);
-        return ResponseEntity.ok(ApiResponse.<Void>builder()
-                .message("Xóa phòng thành công")
                 .build());
     }
 }

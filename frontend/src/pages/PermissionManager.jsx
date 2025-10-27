@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import api from "../api";
-import ModelForm from "../components/FormModel";
+import ModelForm from "../components/Common/FormModel";
 import toast from "react-hot-toast";
 export default function PermissionManager() {
     const [roleList, setRoleList] = useState([]);

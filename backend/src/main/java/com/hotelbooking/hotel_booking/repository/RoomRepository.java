@@ -10,8 +10,10 @@ import java.time.LocalDate;
 @Repository
 public interface RoomRepository extends JpaRepository<Room,Integer> {
     boolean existsByRoomName(String roomName);
-
     List<Room> findAllByHotel_HotelId(Integer hotelHotelId);
+
+
+
 
     @Query("""
         SELECT r

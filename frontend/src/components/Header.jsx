@@ -20,7 +20,7 @@ function Header() {
   };
 
   return (
-    <header className="fixed w-full z-50 bg-white shadow-md py-3 px-10 flex justify-between items-center font-sans ">
+    <header className="sticky w-full z-50 bg-white shadow-md py-3 px-10 flex justify-between items-center font-sans ">
       {/* Logo */}
       <Link to="/" className="flex items-center gap-2">
         <img src={logo} alt="logo"className="w-12 h-12 object-cover rounded-full border border-[#d2b48c]"/>
@@ -60,7 +60,7 @@ function Header() {
           {openAccount && (
             <ul className="absolute right-0 bg-white shadow-lg rounded-md mt-2 transition-transform">
                 <Link to="/myinfo" className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Thông tin cá nhân</Link>
-                <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử đặt phòng</li>
+                <Link to="/history"><li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử đặt phòng</li></Link>
                 <Link to="/addhotel" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
                 <Link to="/invoice" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý đơn hàng</Link>
                 <Link to="/statistic" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý thống kê</Link>
