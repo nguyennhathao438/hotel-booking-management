@@ -84,6 +84,14 @@ public class InvoiceService {
                 .toList();
     }
 
+    public InvoiceResponse cancelInvoice(int id) {
+        Invoice invoice = invoiceRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        invoice.setStatus(3);
+        invoiceRepository.save(invoice);
+        return mapToInvoiceResponse(invoice);
+    }
+
     public InvoiceResponse getInvoiceById(int id) {
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
@@ -159,14 +167,6 @@ public class InvoiceService {
         return mapToInvoiceResponse(invoice);
     }
 
-    public InvoiceResponse cancelInvoice(int id) {
-        Invoice invoice = invoiceRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
-        invoice.setStatus(3);
-        invoiceRepository.save(invoice);
-        return mapToInvoiceResponse(invoice);
-    }
-
     public List<InvoiceResponse> getAllInvoiceByRoom_RoomId(int roomId) {
         List<Invoice> invoices = invoiceRepository.getAllInvoicesByRoom_RoomId(roomId);
         return invoices.stream()
@@ -211,7 +211,7 @@ public class InvoiceService {
         }
     }
 
-    private RoomResponse mapToRoomResponse(Room room) {
+    public RoomResponse mapToRoomResponse(Room room) {
         return RoomResponse.builder()
                 .roomId(room.getRoomId())
                 .roomName(room.getRoomName())
@@ -228,7 +228,7 @@ public class InvoiceService {
                 .build();
     }
 
-    public static UserResponse mapToUserResponse(User user) {
+    public UserResponse mapToUserResponse(User user) {
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())
@@ -244,7 +244,7 @@ public class InvoiceService {
                 .build();
     }
 
-    private InvoiceResponse mapToInvoiceResponse(Invoice invoice) {
+    public InvoiceResponse mapToInvoiceResponse(Invoice invoice) {
         return InvoiceResponse.builder()
                 .id(invoice.getId())
                 .checkInDate(invoice.getCheckInDate())
@@ -258,7 +258,7 @@ public class InvoiceService {
                 .build();
     }
 
-    private HotelResponse mapToHotelResponse(Hotel hotel) {
+    public HotelResponse mapToHotelResponse(Hotel hotel) {
         if (hotel == null)
             return null;
         return HotelResponse.builder()
@@ -271,7 +271,7 @@ public class InvoiceService {
                 .hotelCost(hotel.getHotelCost())
                 .hotelDescription(hotel.getHotelDescription())
                 .status(hotel.getStatus())
-                .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
+                .user(mapToUserResponse(hotel.getUser()))
                 .build();
     }
 

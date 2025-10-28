@@ -18,9 +18,14 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
     @ManyToOne
+    @JoinColumn(name = "userId")
     User user;
     @ManyToOne
+    @JoinColumn(name = "hotelId")
     Hotel hotel;
+    @ManyToOne
+    @JoinColumn(name = "invoiceId")
+    Invoice invoice;
     String feedback;
     int star;
     @CreationTimestamp

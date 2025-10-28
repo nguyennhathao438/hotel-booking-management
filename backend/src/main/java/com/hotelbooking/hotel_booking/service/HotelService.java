@@ -127,8 +127,6 @@ public class HotelService {
     }
 
     private HotelResponse mapToHotelResponse(Hotel hotel) {
-        if (hotel == null)
-            return null;
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())

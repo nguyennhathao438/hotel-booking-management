@@ -7,26 +7,31 @@ import TopTabBar from "./Tabbar";
 import ImageSlider from "../Common/ImageSlider";
 import RoomList from "./RoomList";
 import api from "../../api";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 function DetailsHotelView() {
     const [rooms, setRooms] = useState([]);
     const [images, setImages] = useState([]);
     const { hotelId } = useParams();
-    // console.log(typeof hotelId) //string
     const [hotel, setHotel] = useState([]);
-
+    const [feedbacks, setFeedBacks] = useState([])
+    const [user,setUser] = useState([])
     const fetchHotelByHotelId = async () => {
         try {
-            const request = await api.get(`/hotels/${hotelId}`)
-            setHotel(request.data.result)
+            const response = await api.get(`/hotels/${hotelId}`)
+            setHotel(response.data.result)
         } catch (error) {
             console.error("Error when load data :", error);
         }
     }
 
-    useEffect(() => {
-        fetchHotelByHotelId()
-    }, [])
-
+    const fetchFeedBackByHotelId = async () => {
+        try {
+            const response = await api.get(`review/hotel/${hotelId}`)
+            setFeedBacks(response.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
+        }
+    }
 
     const fetchRoomsByHotelId = async () => {
         try {
@@ -39,9 +44,20 @@ function DetailsHotelView() {
         }
     };
 
+    const fetchUserLogin = async () => {
+        try {
+            const userData = await api.get("/users/myInfo")
+            setUser(userData.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
+        }
+    }
     useEffect(() => {
+        fetchHotelByHotelId()
+        fetchFeedBackByHotelId()
         fetchRoomsByHotelId()
-    }, []);
+        fetchUserLogin()
+    }, [])
 
     const roomsRef = useRef(null);
     const handleScrollToRooms = () => {
@@ -53,6 +69,19 @@ function DetailsHotelView() {
         detailsHotelsRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handlePrev = () => {
+        setCurrentIndex((prev) =>
+            prev === 0 ? feedbacks.length - 1 : prev - 1
+        );
+    };
+
+    const handleNext = () => {
+        setCurrentIndex((prev) =>
+            prev === feedbacks.length - 1 ? 0 : prev + 1
+        );
+    };
     return (
         <div>
             {/* Banner */}
@@ -94,7 +123,58 @@ function DetailsHotelView() {
                 </div>
 
                 <div className="flex-1 border-2 border-[#4b2e1f]/20 rounded-xl shadow-inner bg-white/70 backdrop-blur-sm">
-                    {/* Bạn có thể thêm đánh giá, mô tả chi tiết, bản đồ... */}
+                    <div>
+                        <div className="flex justify-end border-b border-gray-300">
+                            <div >{
+                                hotel.hotelRating >= 4 ? (
+                                    <span className="block py-1 px-2 font-bold text-md ">Tuyệt hảo</span>
+                                ) : hotel.hotelRating >= 2 ? (
+                                    <span className="block py-1 px-2 font-bold text-md ">Tạm ổn</span>
+                                ) : (
+                                    <span className="block py-1 px-2 font-bold text-md">Khá tệ</span>
+                                )}
+                                <span className="block pb-1 px-2 font-light text-sm">{feedbacks.length} đánh giá</span>
+                            </div>
+                            <div className=" flex items-center px-2">
+                                <span className="w-12 text-center bg-blue-800 text-white py-3 border rounded-xl ">{hotel.hotelRating && (hotel.hotelRating.toFixed(1))}</span>
+                            </div>
+                        </div>
+                        <div className="mt-3">
+                            <span className="block font-bold text-sm py-1 px-2">
+                                Khách lưu trú ở đây thích điều gì?
+                            </span>
+
+                            <div className="flex items-center justify-between rounded-md p-3 relative">
+                                {/* Nút trái */}
+                                <button onClick={handlePrev} className="text-gray-600 hover:text-black text-xl px-2 absolute left-2"
+                                    disabled={feedbacks.length === 0}
+                                >
+                                    <ChevronLeft size={22} />
+                                </button>
+
+                                {/* Nội dung feedback */}
+                                <div className="flex-1 text-center px-10">
+                                    {feedbacks.length > 0 ? (<p className="text-gray-700 text-sm ">
+                                        “{feedbacks[currentIndex].feedback}”</p>) :
+                                        (<p className="text-gray-500 text-sm italic">Chưa có đánh giá nào.</p>)
+                                    }
+                                </div>
+
+                                {/* Nút phải */}
+                                <button
+                                    onClick={handleNext}
+                                    className="text-gray-600 hover:text-black text-xl px-2 absolute right-2"
+                                    disabled={feedbacks.length === 0}
+                                >
+                                    <ChevronRight size={22} />
+                                </button>
+                            </div>
+                            <span className="py-2 px-4 text-blue-600">Tác giả : {user.firstName}{" "}{user.lastName}</span>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 

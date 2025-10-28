@@ -30,13 +30,31 @@ public class ReviewController {
                         .result(reviewService.createReview(request))
                         .build());
     }
+    @GetMapping("/invoice/{invoiceId}")
+    public ResponseEntity<ApiResponse<ReviewResponse>> findByInvoice_Id(@PathVariable("invoiceId") int invoiceId) {
+        ReviewResponse reviewResponse = reviewService.findByInvoice_Id(invoiceId);
+        return ResponseEntity.ok(ApiResponse.<ReviewResponse>builder()
+                .code(1)
+                .message("Lấy danh sách feedback theo id invoice thành công")
+                .result(reviewResponse)
+                .build());
+    }
 
-    @GetMapping("/hotel/hotelId")
-    public ResponseEntity<ApiResponse<List<ReviewResponse>>> findByHotel_hotelId(int hotelId) {
+    @GetMapping("/hotel/{hotelId}")
+    public ResponseEntity<ApiResponse<List<ReviewResponse>>> findByHotel_hotelId(@PathVariable("hotelId") int hotelId) {
         return ResponseEntity.ok(ApiResponse.<List<ReviewResponse>>builder()
                 .code(1)
                 .message("Lấy danh sách feedback theo id hotel thành công")
                 .result(reviewService.findByHotel_hotelId(hotelId))
+                .build());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<ReviewResponse>>> findAllReviews() {
+        return ResponseEntity.ok(ApiResponse.<List<ReviewResponse>>builder()
+                .code(1)
+                .message("Lấy danh sách feedback thành công")
+                .result(reviewService.findAllReviews())
                 .build());
     }
 }

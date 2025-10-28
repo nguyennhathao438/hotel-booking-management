@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 public class ReviewRequest {
     int hotelId;
     int userId;
+    int invoiceId;
     String feedback;
     @Min(value = 0 , message = "Sao phải ừ 0->5")
     @Max(value = 5 , message = "Sao phải ừ 0->5")
