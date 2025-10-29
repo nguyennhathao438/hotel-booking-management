@@ -11,7 +11,7 @@ const reviewSchema = z.object({
         .string()
         .min(10, "Nhận xét phải có ít nhất 10 ký tự")
         .max(500, "Nhận xét không quá 500 ký tự"),
-    invoiceId: z.string().nonempty("Thiếu hoa don người dùng"),
+    invoiceId: z.string().nonempty("Thiếu thông tin hóa đơn"),
     userId: z.string().nonempty("Thiếu thông tin người dùng"),
     hotelId: z.string().nonempty("Thiếu thông tin khách sạn"),
 });
@@ -65,6 +65,7 @@ export default function HistoryInvoice() {
     useEffect(() => {
         if (invoiceSelect) setValue("invoiceId", String(invoiceSelect));
     }, [invoiceSelect, setValue]);
+
     const onSubmit = async (data) => {
         if (rating < 1) {
             toast.error("Bạn phải chọn ít nhất 1 sao")

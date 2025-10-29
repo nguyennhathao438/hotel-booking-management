@@ -12,7 +12,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ServiceRequest {
-    private Integer serviceId;
+    private int serviceId;
+    private String name;
     private String icon;
     private String description;
     private int hotelID;

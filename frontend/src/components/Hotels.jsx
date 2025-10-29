@@ -10,7 +10,7 @@ function Hotels() {
     const [images, setImages] = useState([])
     const hotelsSort = [...hotels]
     hotelsSort.sort((a, b) => b.hotelRating - a.hotelRating)
-    const hotelsTops = hotelsSort.splice(0, 10)
+    const hotelsTops = hotelsSort.splice(0, 15)
     const scrollRef = useRef(null);
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -22,17 +22,15 @@ function Hotels() {
             });
         }
     };
-    useEffect(() => {
-        const fetchAllHotel = async () => {
-            try {
-                const request = await api.get("/hotels/all")
-                setHotels(request.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
+
+    const fetchAllHotel = async () => {
+        try {
+            const response = await api.get("/hotels/all")
+            setHotels(response.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
         }
-        fetchAllHotel()
-    }, [])
+    }
 
     const fetchImages = async () => {
         try {
@@ -43,8 +41,10 @@ function Hotels() {
         }
     }
     useEffect(() => {
+        fetchAllHotel()
         fetchImages();
     }, [])
+    console.log("DANH SACH TAT CA KHACH SAN",hotels)
     return (
         <div className="p-4">
             <h3 className="w-full p-4 font-bold font-sans text-lg md:text-xl">

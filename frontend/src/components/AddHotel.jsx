@@ -1,9 +1,31 @@
 
 import { useEffect, useState } from "react";
-import ApiService from "../service/apiService";
 import axios from "axios";
-import NotificationModal from "./Common/Modal";
 import api from "../api";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+const hotelSchema = z.object({
+    hotelName: z.string()
+        .min(3, "Tên khách sạn phải có ít nhất 3 ký tự")
+        .max(100, "Tên khách sạn quá dài"),
+    hotelAddress: z.string()
+        .min(5, "Địa chỉ quá ngắn")
+        .max(150, "Địa chỉ quá dài"),
+    hotelTotalRoom: z
+        .number({ invalid_type_error: "Tổng số phòng phải là số" })
+        .positive("Số phòng phải lớn hơn 0"),
+    hotelPhone: z
+        .string()
+        .min(9, "Số điện thoại không hợp lệ")
+        .max(11, "Số điện thoại không hợp lệ")
+        .regex(/^[0-9]+$/, "Số điện thoại chỉ được chứa số"),
+    hotelDescription: z
+        .string()
+        .min(10, "Mô tả khách sạn phải ít nhất 10 ký tự")
+        .max(1000, "Mô tả quá dài"),
+});
 const AddHotel = () => {
     const [images, setImages] = useState([]);
     const [previewUrls, setPreviewUrls] = useState([]);
@@ -11,107 +33,6 @@ const AddHotel = () => {
     const [provinceCode, setProvinceCode] = useState("");
     const [listDistricts, setListDistricts] = useState([]);
     const [district, setDistrict] = useState("");
-    const [showModal, setShowModal] = useState(false)
-    const [modalMessage, setModalMessage] = useState("")
-    const [modalType, setModalType] = useState("warning")
-
-    const [hotelData, setHotelData] = useState({
-        hotelName: "",
-        hotelAddress: "",
-        hotelTotalRoom: "",
-        hotelCost: "",
-        hotelPhone: "",
-        hotelDescription: "",
-    });
-
-    const checkValue = () => {
-        let flag = false
-        if (hotelData.hotelName == null || hotelData.hotelName == "") {
-            flag = true
-            setShowModal(true)
-            setModalMessage("Vui lòng nhập tên khách sạn")
-            setModalType("warning")
-        }
-        else if (hotelData.hotelCost == null || hotelData.hotelCost == "") {
-            flag = true
-            setShowModal(true)
-            setModalMessage("Vui lòng nhập giá khách sạn")
-            setModalType("warning")
-        }
-        else if (hotelData.hotelDescription == null || hotelData.hotelDescription == "") {
-            flag = true
-            setShowModal(true)
-            setModalMessage("Vui lòng nhập giá khách sạn")
-            setModalType("warning")
-        }
-        else if (hotelData.hotelRating == null || hotelData.hotelRating == "") {
-            flag = true
-            setShowModal(true)
-            setModalMessage("Vui lòng nhập số sao khách sạn")
-            setModalType("warning")
-        }
-        else if (hotelData.hotelTotalRoom == null || hotelData.hotelTotalRoom == "") {
-            flag = true
-            setShowModal(true)
-            setModalMessage("Vui lòng nhập tổng số phòng khách sạn")
-            setModalType("warning")
-        }
-        else if (hotelData.hotelPhone == null || hotelData.hotelPhone == "") {
-            flag = true
-            setShowModal(true)
-            setModalMessage("Vui lòng nhập số điện thoại liên hệ khách sạn")
-            setModalType("warning")
-        }
-        else if (images.length == 0) {
-            flag = true
-            setShowModal(true)
-            setModalMessage("Vui lòng thêm hình ảnh khách sạn")
-            setModalType("warning")
-        }
-        return flag;
-    }
-    const handleChange = (e) => {
-        setHotelData({ ...hotelData, [e.target.name]: e.target.value });
-    };
-    const handleImageChange = (e) => {
-        const newFiles = Array.from(e.target.files);
-        setImages(prev => {
-            const updated = [...prev, ...newFiles];
-            return updated;
-        });
-        const newPreviews = newFiles.map(file => URL.createObjectURL(file));
-        setPreviewUrls(prev => [...prev, ...newPreviews]);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (checkValue())
-            return
-        try {
-            let fullAddress = ""
-            if (listProvinces.length > 0 && listProvinces) {
-                const province = listProvinces.find(p => p.code == provinceCode)
-                const provinceName = province.name
-                fullAddress = `${hotelData.hotelAddress}, ${district}, ${provinceName}`;
-            }
-            const respone = await api.post("/hotels/create", {
-                ...hotelData,
-                hotelAddress: fullAddress
-            });
-            const hotelId = respone.data.result.hotelId;
-            const formData = new FormData();
-            images.forEach((file) => formData.append("files", file))
-            formData.append("hotelId", hotelId)
-            const addimg = await api.post("/images/upload", formData, {// eslint-disable-line no-unused-vars
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-            alert("Them khach san thanh cong")
-        } catch (error) {
-            console.error("Chi tiet loi : ", error)
-        }
-    };
-
-
     useEffect(() => {
         const fetchProvince = async () => {
             try {
@@ -142,17 +63,81 @@ const AddHotel = () => {
     }, [provinceCode]);
 
 
+
+
+    const handleImageChange = (e) => {
+        const newFiles = Array.from(e.target.files);
+        setImages(prev => {
+            const updated = [...prev, ...newFiles];
+            return updated;
+        });
+        const newPreviews = newFiles.map(file => URL.createObjectURL(file));
+        setPreviewUrls(prev => [...prev, ...newPreviews]);
+    };
+
+    const { register, handleSubmit } = useForm({
+        resolver: zodResolver(hotelSchema)
+    })
+
+    const onSubmit = async (data) => {
+        if (images.length > 0) {
+            let fullAddress = ""
+            if(!district){
+                toast.error("Vui lòng chọn tỉnh thành")
+                return;
+            }
+            if(listProvinces.length > 0 && listProvinces) {
+                const province = listProvinces.find(p => p.code == provinceCode)
+                const provinceName = province.name
+                fullAddress = `${data.hotelAddress}, ${district}, ${provinceName}`;
+            }
+            const respone = await api.post("/hotels/create", {
+                ...data,
+                hotelAddress: fullAddress,
+                hotelCost: 0.0,
+                hotelRating: 0.0
+            });
+            const hotelId = respone.data.result.hotelId;
+            const formData = new FormData();
+            images.forEach((file) => formData.append("files", file))
+            formData.append("hotelId", hotelId)
+            const addimg = await api.post("/images/upload", formData, {// eslint-disable-line no-unused-vars
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+            toast.success("Thêm khách sạn thành công")
+        }
+        else {
+            toast.error("Vui lòng chọn ảnh khách sạn")
+        }
+    }
+
+    const onError = (err) => {
+        const firstErr = Object.values(err)[0]
+        if (firstErr)
+            toast.error(firstErr.message)
+    }
+
     return (
-        <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg space-y-4">
+        <form
+            onSubmit={handleSubmit(onSubmit, onError)}
+            className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-2xl space-y-5 border border-gray-100 sm:p-8"
+        >
+            {/* Tên khách sạn */}
             <div>
-                <label className="block font-semibold mb-1">Tên khách sạn</label>
-                <input name="hotelName" placeholder="Nhập tên khách sạn" onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <label className="block font-semibold mb-2 text-gray-700">Tên khách sạn</label>
+                <input
+                    placeholder="Nhập tên khách sạn"
+                    {...register("hotelName")}
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
             </div>
+
+            {/* Địa chỉ khách sạn */}
             <div>
-                <label className="block font-semibold mb-1">Chọn địa chỉ khách sạn</label>
-                <div className="flex gap-5">
+                <label className="block font-semibold mb-2 text-gray-700">Chọn địa chỉ khách sạn</label>
+                <div className="flex flex-col sm:flex-row gap-3">
                     <select
-                        className="border flex-1 border-gray-300 rounded-lg p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 shadow-sm"
+                        className="border flex-1 border-gray-300 rounded-xl p-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                         name="province"
                         id="province"
                         value={provinceCode}
@@ -168,11 +153,12 @@ const AddHotel = () => {
                         ))}
                     </select>
 
-                    <select className="border border-gray-300 flex-1 p-2 rounded-lg"
+                    <select
+                        className="border flex-1 border-gray-300 rounded-xl p-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                         value={district}
                         onChange={(e) => setDistrict(e.target.value)}
                     >
-                        <option value="">Chọn quận huyện </option>
+                        <option value="">Chọn quận huyện</option>
                         {listDistricts.map((d) => (
                             <option key={d.code} value={d.name}>
                                 {d.name}
@@ -181,60 +167,78 @@ const AddHotel = () => {
                     </select>
                 </div>
 
-                <label className="block font-semibold mb-1">Nhập tên đường</label>
-                <input name="hotelAddress" placeholder="Nhập địa chỉ khách sạn" onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            </div>
-            <div>
-                <label className="block font-semibold mb-1">Giá (VNĐ)</label>
-                <input name="hotelCost" placeholder="Nhập giá phòng" type="number" onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            </div>
-
-            <div>
-                <label className="block font-semibold mb-1">Tổng số phòng</label>
-                <input name="hotelTotalRoom" placeholder="Nhập tổng số phòng" type="number" onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            </div>
-            <div>
-                <label className="block font-semibold mb-1">Số điện thoại liên hệ</label>
-                <input name="hotelPhone" placeholder="Nhập số điện thoại" type="number" onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            </div>
-            <div>
-                <label className="block font-semibold mb-1">Mô tả khách sạn</label>
-                <textarea name="hotelDescription" placeholder="Nhập mô tả chi tiết khách sạn" onChange={handleChange} rows={4}
-                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <label className="block font-semibold mt-4 mb-2 text-gray-700">Nhập tên đường</label>
+                <input
+                    {...register("hotelAddress")}
+                    placeholder="Nhập địa chỉ khách sạn"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
             </div>
 
+            {/* Tổng số phòng */}
+            <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label className="block font-semibold mb-2 text-gray-700">Tổng số phòng</label>
+                    <input
+                        {...register("hotelTotalRoom", { valueAsNumber: true })}
+                        placeholder="Nhập tổng số phòng"
+                        type="number"
+                        className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    />
+                </div>
+
+                {/* Số điện thoại */}
+                <div>
+                    <label className="block font-semibold mb-2 text-gray-700">Số điện thoại liên hệ</label>
+                    <input
+                        {...register("hotelPhone")}
+                        placeholder="Nhập số điện thoại"
+                        type="number"
+                        className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    />
+                </div>
+            </div>
+
+            {/* Mô tả khách sạn */}
             <div>
-                <label className="block font-semibold mb-1">Ảnh khách sạn</label>
+                <label className="block font-semibold mb-2 text-gray-700">Giới thiệu khách sạn</label>
+                <textarea
+                    {...register("hotelDescription")}
+                    placeholder="Nhập mô tả chi tiết khách sạn"
+                    rows={4}
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                />
+            </div>
+
+            {/* Ảnh khách sạn */}
+            <div>
+                <label className="block font-semibold mb-2 text-gray-700">Ảnh khách sạn</label>
                 <input
                     type="file"
                     multiple
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 />
             </div>
 
-            {/* Hiển thị ảnh preview */}
-            <div className="grid grid-cols-3 gap-2 mt-4">
-                {previewUrls.map((url, idx) => (
-                    <img
-                        key={idx}
-                        src={url}
-                        alt={`preview-${idx}`}
-                        className="w-full h-32 object-cover rounded shadow-sm"
-                    />
-                ))}
-            </div>
-            <button type="submit" className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-all duration-200">
+            {/* Preview ảnh */}
+            {previewUrls.length > 0 && (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
+                    {previewUrls.map((url, idx) => (
+                        <div key={idx} className="relative overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+                            <img src={url} alt={`preview-${idx}`} className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300" />
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {/* Nút submit */}
+            <button type="submit" className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl shadow-md transition-all duration-200 focus:ring-2 focus:ring-blue-400">
                 Thêm khách sạn
             </button>
-            <NotificationModal
-                show={showModal}
-                message={modalMessage}
-                type={modalType}
-                onClose={() => setShowModal(false)}
-            />
         </form>
+
     );
 
 };

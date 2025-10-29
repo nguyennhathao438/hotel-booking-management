@@ -5,7 +5,7 @@ import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.dto.response.ServiceResponse;
 import com.hotelbooking.hotel_booking.dto.response.UserResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
-import com.hotelbooking.hotel_booking.entity.HotelService;
+import com.hotelbooking.hotel_booking.entity.Service;
 import com.hotelbooking.hotel_booking.entity.Role;
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.exception.AppException;
@@ -13,12 +13,11 @@ import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.HotelRepository;
 import com.hotelbooking.hotel_booking.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
+@org.springframework.stereotype.Service
 public class dichvu {
     @Autowired
     private HotelRepository hotelRepository;
@@ -27,7 +26,7 @@ public class dichvu {
     public ServiceResponse createService(ServiceRequest serviceRequest) {
         Hotel hotel = hotelRepository.findById(serviceRequest.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-        HotelService  hotelService = HotelService.builder()
+        Service hotelService = Service.builder()
                 .serviceId(serviceRequest.getServiceId())
                 .icon(serviceRequest.getIcon())
                 .description(serviceRequest.getDescription())
@@ -36,7 +35,7 @@ public class dichvu {
         serviceRepository.save(hotelService);
         return mapToServiceResponse(hotelService);
     }
-    private ServiceResponse mapToServiceResponse(HotelService hotelService) {
+    private ServiceResponse mapToServiceResponse(Service hotelService) {
         return ServiceResponse.builder()
                 .serviceId(hotelService.getServiceId())
                 .icon(hotelService.getIcon())
