@@ -21,10 +21,11 @@ public class Hotel {
     private String hotelName;
     private String hotelAddress;
     private String hotelPhone;
-    private Double hotelRating;
+
+    private Double hotelRating = 0.0;
     @Column(name = "hotel_total", nullable = false)
     private Double hotelTotalRoom;
-    private Double hotelCost;
+    private Double hotelCost = 0.0;
     private String hotelDescription;
     @CreationTimestamp
     private LocalDateTime hotelCreatedAt;

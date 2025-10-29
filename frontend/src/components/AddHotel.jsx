@@ -20,7 +20,6 @@ const AddHotel = () => {
         hotelAddress: "",
         hotelTotalRoom: "",
         hotelCost: "",
-        hotelRating: "",
         hotelPhone: "",
         hotelDescription: "",
     });
@@ -188,10 +187,6 @@ const AddHotel = () => {
             <div>
                 <label className="block font-semibold mb-1">Giá (VNĐ)</label>
                 <input name="hotelCost" placeholder="Nhập giá phòng" type="number" onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-            </div>
-            <div>
-                <label className="block font-semibold mb-1">Số sao (Đánh giá)</label>
-                <input name="hotelRating" placeholder="Nhập số sao (ví dụ: 4.5)" type="number" step="0.1" onChange={handleChange} className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
             </div>
 
             <div>

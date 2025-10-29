@@ -82,7 +82,7 @@ function Hotels() {
                                     <p className="text-sm text-gray-600 line-clamp-1 text-center">{hotel.hotelAddress}</p>
                                     <p className="hidden md:block text-sm text-gray-500 line-clamp-2 text-center">{hotel.hotelDescription}</p>
                                     <div className="flex justify-between items-center mt-2">
-                                        <span className="font-semibold text-blue-600"> ⭐ {hotel.hotelRating}</span>
+                                        <span className="font-semibold text-blue-600"> ⭐ {hotel.hotelRating && (hotel.hotelRating.toFixed(1))}</span>
                                         <span className="font-semibold text-orange-600 text-sm">{hotel.hotelCost.toLocaleString()} VNĐ</span>
                                     </div>
                                 </div>

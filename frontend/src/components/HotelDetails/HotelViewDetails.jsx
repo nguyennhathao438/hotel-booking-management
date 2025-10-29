@@ -14,7 +14,7 @@ function DetailsHotelView() {
     const { hotelId } = useParams();
     const [hotel, setHotel] = useState([]);
     const [feedbacks, setFeedBacks] = useState([])
-    const [user,setUser] = useState([])
+
     const fetchHotelByHotelId = async () => {
         try {
             const response = await api.get(`/hotels/${hotelId}`)
@@ -44,19 +44,10 @@ function DetailsHotelView() {
         }
     };
 
-    const fetchUserLogin = async () => {
-        try {
-            const userData = await api.get("/users/myInfo")
-            setUser(userData.data.result)
-        } catch (error) {
-            console.error("Error when load data :", error);
-        }
-    }
     useEffect(() => {
         fetchHotelByHotelId()
         fetchFeedBackByHotelId()
         fetchRoomsByHotelId()
-        fetchUserLogin()
     }, [])
 
     const roomsRef = useRef(null);
@@ -146,7 +137,7 @@ function DetailsHotelView() {
 
                             <div className="flex items-center justify-between rounded-md p-3 relative">
                                 {/* Nút trái */}
-                                <button onClick={handlePrev} className="text-gray-600 hover:text-black text-xl px-2 absolute left-2"
+                                <button onClick={handlePrev} className="text-gray-600 cursor-pointer hover:text-black text-xl px-2 absolute left-2"
                                     disabled={feedbacks.length === 0}
                                 >
                                     <ChevronLeft size={22} />
@@ -163,13 +154,13 @@ function DetailsHotelView() {
                                 {/* Nút phải */}
                                 <button
                                     onClick={handleNext}
-                                    className="text-gray-600 hover:text-black text-xl px-2 absolute right-2"
+                                    className="text-gray-600 hover:text-black cursor-pointer text-xl px-2 absolute right-2"
                                     disabled={feedbacks.length === 0}
                                 >
                                     <ChevronRight size={22} />
                                 </button>
                             </div>
-                            <span className="py-2 px-4 text-blue-600">Tác giả : {user.firstName}{" "}{user.lastName}</span>
+                            <span className="py-2 px-4 text-blue-600">Tác giả : {feedbacks.length > 0 && (feedbacks[currentIndex].user.firstName+" "+feedbacks[currentIndex].user.lastName)}</span>
                         </div>
                         <div>
 

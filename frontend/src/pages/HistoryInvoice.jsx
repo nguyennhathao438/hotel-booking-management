@@ -192,6 +192,7 @@ export default function HistoryInvoice() {
                                                         setOpenReview(true);
                                                         setHotelSelect(i.room.hotel.hotelId);
                                                         setInvoiceSelect(i.id);
+                                                        setSelectedFeedback(null)
                                                     }}
                                                 >
                                                     Đánh giá
@@ -254,6 +255,16 @@ export default function HistoryInvoice() {
                                         className="bg-blue-600 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl hover:bg-blue-700 transition-all duration-200"
                                     >
                                         Gửi đánh giá
+                                    </button>
+                                </div>
+                            )}
+                            {selectedFeedback && (
+                                <div className="text-center">
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-600 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl hover:bg-blue-700 transition-all duration-200"
+                                    >
+                                        Sửa đánh giá
                                     </button>
                                 </div>
                             )}

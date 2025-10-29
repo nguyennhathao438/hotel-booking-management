@@ -26,13 +26,13 @@ export default function FormBooking() {
     const [phone, setPhone] = useState("");
     const [errorPhone, setErrorPhone] = useState("");
     const navigate = useNavigate();
-    const totalAmount = room.roomPrice * (checkOutDate.getDate() - checkInDate.getDate());
     const [urlVnpay, setUrlVnpay] = useState(null); // eslint-disable-line no-unused-vars
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [modalType, setModalType] = useState("warning");
     const night = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
     console.log("NIGHT : ", night)
+    const totalAmount = room.roomPrice * night;
     const [invoice, setInvoice] = useState(// eslint-disable-line no-unused-vars
         {
             checkInDate: " ",
