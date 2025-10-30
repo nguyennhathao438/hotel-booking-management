@@ -84,5 +84,14 @@ public class HotelController {
                 .result(hotelResponse)
                 .build());
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse<List<HotelResponse>>> getHotelsByUserId(@PathVariable int userId) {
+        List<HotelResponse> hotels = hotelService.getHotelsByUserId(userId);
+        ApiResponse<List<HotelResponse>> response = ApiResponse.<List<HotelResponse>>builder()
+                .message("Lấy danh sách khách sạn theo userId thành công")
+                .result(hotels)
+                .build();
+        return ResponseEntity.ok(response);
+    }
 
 }

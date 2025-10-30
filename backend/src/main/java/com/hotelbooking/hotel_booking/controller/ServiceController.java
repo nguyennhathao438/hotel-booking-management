@@ -8,11 +8,11 @@ import com.hotelbooking.hotel_booking.service.dichvu;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/service")
 public class ServiceController {
@@ -26,4 +26,20 @@ public class ServiceController {
                 .result(serviceResponse)
                 .build());
     }
+    @GetMapping("/hotel/{hotelId}")
+    public ResponseEntity<ApiResponse<List<ServiceResponse>>> getServicesByHotelId(@PathVariable int hotelId) {
+        List<ServiceResponse> services = dv.getServicesByHotelId(hotelId);
+        return ResponseEntity.ok(ApiResponse.<List<ServiceResponse>>builder()
+                .message("Danh sách dịch vụ của khách sạn")
+                .result(services)
+                .build());
+    }
+    @DeleteMapping("/{serviceId}")
+    public ResponseEntity<ApiResponse<Void>> deleteService(@PathVariable int serviceId) {
+        dv.deleteService(serviceId);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .message("Xóa dịch vụ thành công")
+                .build());
+    }
 }
+

@@ -13,6 +13,7 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     List<Hotel> findByStatus(Integer status);
 
     List<Hotel> findByHotelId(Integer hotelID);
-
+    List<Hotel> findAllByUser_Id(int userId);
+    Hotel findFirstByUser_Id(int userId);
     List<Hotel> findByHotelAddressContainingIgnoreCase(String province);
 }

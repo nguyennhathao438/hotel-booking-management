@@ -69,6 +69,14 @@ private InvoiceRepository invoiceRepository;
                 .toList();
     }
 
+    public List<RoomResponse> getRoomsByHotelId2(int hotelId) {
+        List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
+
+        return rooms.stream()
+                .map(this::mapToRoomResponse)
+                .toList();
+    }
+
 
     public RoomResponse getRoomById(int id) {
         Room room = roomRepository.findById(id)

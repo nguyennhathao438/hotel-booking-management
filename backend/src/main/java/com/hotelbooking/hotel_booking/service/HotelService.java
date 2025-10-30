@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
@@ -141,5 +142,14 @@ public class HotelService {
                 .status(hotel.getStatus())
                 .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
                 .build();
+    }
+    public List<HotelResponse> getHotelsByUserId(int userId) {
+        List<Hotel> hotels = new ArrayList<>();
+        Hotel hotel = hotelRepository.findFirstByUser_Id(userId);
+        if (hotel != null) {
+            hotels.add(hotel);
+        }        return hotels.stream()
+                .map(this::mapToHotelResponse)
+                .toList();
     }
 }
