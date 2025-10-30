@@ -24,7 +24,7 @@ const hotelSchema = z.object({
     hotelDescription: z
         .string()
         .min(10, "Mô tả khách sạn phải ít nhất 10 ký tự")
-        .max(1000, "Mô tả quá dài"),
+        .max(1500, "Mô tả quá dài"),
 });
 const AddHotel = () => {
     const [images, setImages] = useState([]);

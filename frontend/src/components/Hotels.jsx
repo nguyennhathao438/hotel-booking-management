@@ -44,7 +44,7 @@ function Hotels() {
         fetchAllHotel()
         fetchImages();
     }, [])
-    console.log("DANH SACH TAT CA KHACH SAN",hotels)
+
     return (
         <div className="p-4">
             <h3 className="w-full p-4 font-bold font-sans text-lg md:text-xl">

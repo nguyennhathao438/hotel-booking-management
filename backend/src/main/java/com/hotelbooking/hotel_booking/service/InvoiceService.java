@@ -66,7 +66,7 @@ public class InvoiceService {
             room.addInvoice(invoice);
             invoiceRepository.save(invoice);
         } else
-            throw new AppException(ErrorCode.INVOICE_NOT_EXISTED);
+            throw new AppException(ErrorCode.ROOM_ALREADY_BOOKED);
         return mapToInvoiceResponse(invoice);
     }
 

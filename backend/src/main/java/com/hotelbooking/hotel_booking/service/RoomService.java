@@ -142,7 +142,6 @@ private InvoiceRepository invoiceRepository;
         if (room.getHotel() != null) {
             builder.hotel(mapToHotelResponse(room.getHotel()));
         }
-
         return builder.build();
     }
 

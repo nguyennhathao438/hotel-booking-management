@@ -66,24 +66,54 @@ export default function HistoryInvoice() {
         if (invoiceSelect) setValue("invoiceId", String(invoiceSelect));
     }, [invoiceSelect, setValue]);
 
+    console.log("selectedFeedback", selectedFeedback)
+    if (selectedFeedback)
+        console.log("selectedFeedback ID", selectedFeedback.id)
     const onSubmit = async (data) => {
-        if (rating < 1) {
-            toast.error("Bạn phải chọn ít nhất 1 sao")
-            return
-        }
-        console.log("dmmmmmm", data)
-        const review = {
-            ...data,
-            star: Number(rating) || 0,
-        }
-        console.log("review", review)
-        const response = await api.post("/review/create", review)
-        if (response.data.code == 1) {
-            toast.success(response.data.message)
-            fetchFeddBack()
-            setOpenReview(false)
+        console.log("data ne", data)
+        console.log("selectedFeedback", selectedFeedback)
+        console.log("selectedFeedback ID", selectedFeedback.id)
+        if (!selectedFeedback) {
+            console.log("hoang anh huyhu huy")
+
+            if (rating < 1) {
+                toast.error("Bạn phải chọn ít nhất 1 sao")
+                return
+            }
+            console.log("dmmmmmm", data)
+            const review = {
+                ...data,
+                star: Number(rating) || 0,
+            }
+            console.log("review", review)
+            const response = await api.post("/review/create", review)
+            if (response.data.code == 1) {
+                toast.success(response.data.message)
+                fetchFeddBack()
+                setOpenReview(false)
+            } else {
+                toast.error(response.data.message)
+            }
         } else {
-            toast.error(response.data.message)
+            console.log("hoang anh huyhu huy")
+            if (rating < 1) {
+                toast.error("Bạn phải chọn ít nhất 1 sao")
+                return
+            }
+            console.log("dmmmmmm", data)
+            const review = {
+                ...data,
+                star: Number(rating) || 0,
+            }
+            console.log("review", review)
+            const response = await api.put(`/review/update/${selectedFeedback.id}`, review)
+            if (response.data.code == 1) {
+                toast.success(response.data.message)
+                fetchFeddBack()
+                setOpenReview(false)
+            } else {
+                toast.error(response.data.message)
+            }
         }
     }
     const onError = (err) => {
@@ -176,9 +206,9 @@ export default function HistoryInvoice() {
                                                             setRating(fb.star);
                                                             reset({
                                                                 feedback: fb.feedback,
-                                                                invoiceId: fb.invoice.id,
-                                                                userId: fb.user.id,
-                                                                hotelId: fb.hotel.id,
+                                                                invoiceId: String(fb.invoice.id),
+                                                                userId: String(fb.user.id),
+                                                                hotelId: String(fb.hotel.id),
                                                             });
                                                             setOpenReview(true);
                                                         }

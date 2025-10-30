@@ -57,4 +57,13 @@ public class ReviewController {
                 .result(reviewService.findAllReviews())
                 .build());
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ApiResponse<ReviewResponse>> updateReview(@PathVariable int id, @RequestBody ReviewRequest request) {
+        return ResponseEntity.ok(ApiResponse.<ReviewResponse>builder()
+                .code(1)
+                .message("Cập nhật feedback thành công")
+                .result(reviewService.updateReviewResponse(id, request))
+                .build());
+    }
 }

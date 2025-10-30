@@ -61,6 +61,20 @@ public class ReviewService {
         return mapToReviewResponse(review);
     }
 
+    public ReviewResponse updateReviewResponse(int reviewId, ReviewRequest request){
+        Review review = reviewRepository.findById(reviewId).orElseThrow(()->new AppException(ErrorCode.FEEDBACK_NOT_EXISTED));
+        review.setStar(request.getStar());
+        review.setFeedback(request.getFeedback());
+        Hotel hotel = hotelRepository.findById(request.getHotelId()).orElseThrow(()->new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        Invoice invoice = invoiceRepository.findById(request.getInvoiceId()).orElseThrow(()->new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        User user = userRepository.findById(request.getUserId()).orElseThrow(()->new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        review.setHotel(hotel);
+        review.setInvoice(invoice);
+        review.setUser(user);
+        reviewRepository.save(review);
+        return mapToReviewResponse(review);
+    }
+
     public List<ReviewResponse> findAllReviews() {
         List<Review> reviews = reviewRepository.findAll();
         return reviews.stream()
@@ -72,6 +86,7 @@ public class ReviewService {
         Hotel hotel = hotelRepository.findById(review.getHotel().getHotelId()).orElseThrow(()->new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         Invoice invoice = invoiceRepository.findById(review.getInvoice().getId()).orElseThrow(()->new AppException(ErrorCode.INVOICE_FAILED));
         return ReviewResponse.builder()
+                .id(review.getId())
                 .user(mapToUserResponse(user))
                 .hotel(mapToHotelResponse(hotel))
                 .invoice(mapToInvoiceResponse(invoice))

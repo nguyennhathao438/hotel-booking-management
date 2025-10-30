@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ReviewResponse {
+    int id;
     HotelResponse hotel;
     UserResponse user;
     InvoiceResponse invoice;
