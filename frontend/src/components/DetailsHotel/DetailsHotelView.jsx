@@ -39,6 +39,7 @@ function DetailsHotelView() {
       const roomData = await api.get(`rooms/hotel/${hotelId}`);
       setRooms(roomData.data.result);
       const imageData = await api.get(`/images/hotel/${hotelId}`);
+      console.log("Image data1111111111111111111111111:", imageData.data);
       setImages(imageData.data.result);
     } catch (error) {
       console.error("Error when load data :", error);
@@ -120,7 +121,7 @@ function DetailsHotelView() {
         </div>
 
         <div className="flex-1 border-2 border-[#4b2e1f]/20 rounded-xl shadow-inner bg-white/70 backdrop-blur-sm">
-          {/* Bạn có thể thêm đánh giá, mô tả chi tiết, bản đồ... */}
+
         </div>
       </div>
 

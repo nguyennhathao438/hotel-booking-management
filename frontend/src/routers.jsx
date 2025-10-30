@@ -19,6 +19,13 @@ import ConfirmBooking from "./components/Booking/ConfirmBooking";
 import SuccessBooking from "./components/Booking/SuccessBooking";
 import HotelProvince from "./components/BookingSearchResult/HotelProvince";
 import DetailsHotel from "./components/DetailsHotel/DetailsHotelView";
+import RoomManagerCustomer from "./componentcustomer/RoomManagerCustomer";
+import CustomerLayout from "./componentcustomer/CustomerLayout";
+import HotelList from "./componentcustomer/hotelsList";
+import Revenue from "./componentcustomer/Revenue";
+import ReviewList from "./componentcustomer/ReviewList";
+import HotelManager from "./componentadmin/HotelManager";
+
 import Chat from "./pages/Chat";
 const router = createBrowserRouter([
         {
@@ -85,6 +92,29 @@ const router = createBrowserRouter([
                     path: "/oauth2/redirect",
                     element: <OAuth2RedirectHandler/>
                 },
+            {
+                            path : "/customer",
+                            element : <CustomerLayout/>,
+                            children : [
+                                  {
+                                                                path: "room/:hotelId",
+                                                                element: <RoomManagerCustomer/>
+                                                            },
+                                                         {
+                                                                                                            path: "Revenue/:hotelId",
+                                                                                                            element: <Revenue/>
+                                                                                                        },
+                                                        {
+                                                                                 index: true,
+                                                                                  element: <HotelList/>
+                                                                                  },
+                                                                              {
+                                                                                path: "review/:hotelId",
+                                                                                element: <ReviewList />
+                                                                              },
+
+                                ]
+                            },
         {
             path : "/admin",
             element : <AdminLayout/>,
@@ -101,6 +131,11 @@ const router = createBrowserRouter([
                     path:"user",
                     element: <Users/>
                 },
+            {
+                                path:"hotelmanager",
+                                element: <HotelManager/>
+                            },
+
                 {
                     path:"invoice",
                     element: <Invoice/>
