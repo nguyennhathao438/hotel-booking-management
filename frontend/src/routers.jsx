@@ -19,6 +19,7 @@ import ConfirmBooking from "./components/Booking/ConfirmBooking";
 import SuccessBooking from "./components/Booking/SuccessBooking";
 import HotelProvince from "./components/BookingSearchResult/HotelProvince";
 import DetailsHotel from "./components/DetailsHotel/DetailsHotelView"
+import BookingHistory from "./pages/BookingHistory";
 const router = createBrowserRouter([
         {
             path:"/",
@@ -76,7 +77,10 @@ const router = createBrowserRouter([
                     path:"/search-result/:province",
                     element:<HotelProvince/>
                 }
-                
+                ,{
+                    path:"/booking-history",
+                    element:<BookingHistory/>
+                }
 
             ],
         },

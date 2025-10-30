@@ -1,13 +1,12 @@
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js/auto";
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   ChartSplineIcon,
-  ChartColumnBigIcon,
-  HotelIcon
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../api";
+import RevenueLineChart from "../componentadmin/RevenueLineChart";
 export default function Statistic() {
     const [filter,setFilter] = useState("week");
     const [barFiler,setBarFilter] = useState("7-day-last");
@@ -16,7 +15,6 @@ export default function Statistic() {
     const [invoiceStatus,setInvoiceStatus] = useState([]); 
     useEffect(() => {
         fetchInvoiceStatus();
-
       }, []);
       useEffect(() => {
         updateChartData();
@@ -26,7 +24,9 @@ export default function Statistic() {
       },[barFiler]);
     const fetchInvoiceStatus = async () => {
     try {
-      const res = await api.get("/invoice/all");
+      const resUser = await api.get("/users/myInfo");
+      const userId = resUser.data.result.id;
+      const res = await api.get(`/invoice/owner/noPage/${userId}`);
       const invoices = res.data.result || [];
       const invoiceStatus = invoices.filter(i => i.status === 2 && i.checkOutDate);
       console.log(invoiceStatus);
@@ -98,7 +98,9 @@ export default function Statistic() {
     }
     const updateBarChart = async () => {
       try {
-      const res = await api.get("/invoice/all");
+      const resUser = await api.get("/users/myInfo");
+      const userId = resUser.data.result.id;
+      const res = await api.get(`/invoice/owner/noPage/${userId}`);
       const data = res.data.result || [];
       console.log("day la",data);
       const now = new Date();
@@ -181,87 +183,21 @@ export default function Statistic() {
   } catch (err) {
     console.error("Lỗi khi lấy dữ liệu cho biểu đồ Booking/Cancel:", err);
     }
-  }; 
+    }; 
 
     return (
         <div className="bg-gray-100 rounded-lg shadow-sm p-5">
             <div className="mt-[90px]">
-                <h1>Thống kê</h1>
                 {/* Biểu đồ Line */}
-                <div className="bg-white mb-4 max-w-6xl px-2 py-5 ml-32">
-                <div className="flex mb-2 border-b-3 border-b-gray-200">
-                <ChartColumnBigIcon/>
-                <h2 className="text-xl font-semibold">Biểu đồ thống kê doanh thu</h2>
-                <select
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                  className="ml-auto mb-2 border border-gray-300 rounded-md px-2 py-1 text-sm"
-                >
-                  <option value="week">Tuần này</option>
-                  <option value="month">Tháng này</option>
-                  <option value="year">Năm nay</option>
-                </select>
-                </div>
-                  <Line 
-                    data = {{
-                      labels: chartData.labels,
-                      datasets: [
-                    {
-                      label: "Doanh thu (VNĐ)",
-                      data: chartData.data,
-                      borderColor: "#4F46E5",
-                      backgroundColor: "rgba(79,70,229,0.2)",
-                      tension: 0.3,
-                      fill: true,
-                    },
-                  ],
-                }}
-                options={{
-                  responsive: true,
-                  scales: {
-                    y: {
-                      ticks: {
-                        callback: (value) =>
-                          value.toLocaleString("vi-VN") + " ₫", // định dạng tiền VNĐ
-                      },
-                      beginAtZero: true,
-                    },
-                  },
-                  plugins: {
-                    legend: { position: "top" },
-                    tooltip: {
-                      callbacks: {
-                        label: (context) =>
-                          context.parsed.y.toLocaleString("vi-VN") + " ₫",
-                      },
-                    },
-                  },
-                    }}
-                  />
-                </div>
-                    {/* Biểu đồ Donut */}
-              <div className="flex space-x-5">
-                <div className="bg-white mb-4 h-max max-w-1/2 px-2 py-5">
-                  <div className="flex mb-2 border-b-3 border-b-gray-200"> 
-                  <HotelIcon/>
-                  <h2 className="text-xl font-semibold">Phân bố booking khách sạn</h2>
-                  </div>
-                  <Doughnut 
-                    data = {{
-                      labels: ["A","B","C"],
-                      datasets: [
-                        {
-                          label: "Booking",
-                          data: [200,300,400],
-                        },
-                        {
-                          label: "Cancel",
-                          data: [100,200,300],
-                        }
-                      ],
-                    }}
-                  />
-                </div>
+                <RevenueLineChart
+                  chartData={chartData}
+                  filter={filter}
+                  setFilter={setFilter}
+                  title="Biểu đồ thống kê doanh thu"
+                  className="ml-32"
+                />
+              
+              <div className="flex space-x-5 justify-center items-center">
                 {/* biểu đồ Bar */}
                 <div className="bg-white mb-4 h-max min-w-1/2 px-2 py-5">
                   <h2 className="text-xl font-semibold mb-2 border-b-3 border-b-gray-200">Reservation</h2>
@@ -303,32 +239,7 @@ export default function Statistic() {
                 }}
                     />
                 </div>
-                <div className="bg-white mb-4 max-h-80 min-w-96 px-2 py-5">
-                  <div className="flex mb-2 space-x-1 border-b-3 border-b-gray-200">
-                  <ChartSplineIcon />
-                  <h2 className="text-xl font-semibold">Thống kê phòng</h2>
-                  </div>
-                  <div className="mt-5 flex justify-around text-center border-b-3 border-b-gray-200 ">
-                    <div>
-                        <h2 className="text-2xl font-bold text-blue-600 ">12</h2> 
-                        <p className="text-md font-sans">Tổng phòng</p>
-                    </div>
-                    <div className="mb-7">
-                        <h2 className="text-2xl font-bold text-green-400">0</h2>
-                        <p className="text-md font-sans">Đang sử dụng</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-between text-left mt-5">
-                    <div>
-                      <h2>Phòng trống</h2>
-                      <h2>Phòng đang sử dụng</h2>
-                    </div>
-                    <div>
-                      <p className="bg-green-500 rounded-xl px-2 text-white text-center">12</p>
-                      <p className="text-center">0</p>
-                    </div>
-                  </div>
-                </div>
+
               </div>
           </div>
     </div>

@@ -32,8 +32,8 @@ function Header() {
         <Link to="/" className="transition-colors duration-200 hover:text-[#d2b48c]">
           HOME
         </Link>
-        <Link to="/rooms" className="transition-colors duration-200 hover:text-[#d2b48c]">
-          ROOMS
+        <Link to="/HotelsView" className="transition-colors duration-200 hover:text-[#d2b48c]">
+          HOTELS
         </Link>
         <Link to="/spa" className="transition-colors duration-200 hover:text-[#d2b48c]">
           SPA
@@ -64,6 +64,7 @@ function Header() {
                 <Link to="/addhotel" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
                 <Link to="/invoice" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý đơn hàng</Link>
                 <Link to="/statistic" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý thống kê</Link>
+                <Link to="/booking-history" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử mua hàng</Link>
                 <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer" onClick={handleLogout}>Đăng xuất</li>
               </ul>
           )}
