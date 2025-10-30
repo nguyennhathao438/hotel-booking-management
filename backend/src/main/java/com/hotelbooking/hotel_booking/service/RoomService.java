@@ -57,6 +57,7 @@ private InvoiceRepository invoiceRepository;
                 .map(this::mapToRoomResponse)
                 .toList();
     }
+
     public List<RoomResponse> getRoomsByHotelId(int hotelId) {
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
 
@@ -76,7 +77,6 @@ private InvoiceRepository invoiceRepository;
                 .map(this::mapToRoomResponse)
                 .toList();
     }
-
 
     public RoomResponse getRoomById(int id) {
         Room room = roomRepository.findById(id)
@@ -130,8 +130,9 @@ private InvoiceRepository invoiceRepository;
     public long countAvailableRooms(LocalDate startDate, LocalDate endDate) {
         return roomRepository.countAvailableRooms(startDate, endDate);
     }
-    private RoomResponse mapToRoomResponse(Room room) {
-        if (room == null) return null;
+    public RoomResponse mapToRoomResponse(Room room) {
+        if (room == null)
+            return null;
 
         RoomResponse.RoomResponseBuilder builder = RoomResponse.builder()
                 .roomId(room.getRoomId())
@@ -149,13 +150,12 @@ private InvoiceRepository invoiceRepository;
         if (room.getHotel() != null) {
             builder.hotel(mapToHotelResponse(room.getHotel()));
         }
-
         return builder.build();
     }
 
-    private HotelResponse mapToHotelResponse(Hotel hotel) {
-        if (hotel == null) return null;
-
+    public HotelResponse mapToHotelResponse(Hotel hotel) {
+        if (hotel == null)
+            return null;
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())
@@ -166,7 +166,7 @@ private InvoiceRepository invoiceRepository;
                 .hotelCost(hotel.getHotelCost())
                 .hotelDescription(hotel.getHotelDescription())
                 .status(hotel.getStatus())
-                .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
+                .user(mapToUserResponse(hotel.getUser()))
                 .build();
     }
 }

@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { ChatBubbleOvalLeftIcon } from "@heroicons/react/24/solid";
 import ChatBox from "../Chatbox";
+
 function DetailsHotelView() {
     const user = useSelector((state) => state.user);
     const [rooms, setRooms] = useState([]);
@@ -103,7 +104,7 @@ function DetailsHotelView() {
         }
     }
 
-    console.log("danh sach feedback",feedbacks)
+    console.log("danh sach feedback", feedbacks)
     const fetchRoomsByHotelId = async () => {
         try {
             const roomData = await api.get(`rooms/hotel/${hotelId}`);

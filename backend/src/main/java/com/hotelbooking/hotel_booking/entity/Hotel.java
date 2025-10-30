@@ -21,6 +21,7 @@ public class Hotel {
     private String hotelName;
     private String hotelAddress;
     private String hotelPhone;
+
     private Double hotelRating;
     @Column(name = "hotel_total", nullable = false)
     private Double hotelTotalRoom;

@@ -10,7 +10,7 @@ function Hotels() {
     const [images, setImages] = useState([])
     const hotelsSort = [...hotels]
     hotelsSort.sort((a, b) => b.hotelRating - a.hotelRating)
-    const hotelsTops = hotelsSort.splice(0, 10)
+    const hotelsTops = hotelsSort.splice(0, 15)
     const scrollRef = useRef(null);
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -22,17 +22,15 @@ function Hotels() {
             });
         }
     };
-    useEffect(() => {
-        const fetchAllHotel = async () => {
-            try {
-                const request = await api.get("/hotels/all")
-                setHotels(request.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
+
+    const fetchAllHotel = async () => {
+        try {
+            const response = await api.get("/hotels/all")
+            setHotels(response.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
         }
-        fetchAllHotel()
-    }, [])
+    }
 
     const fetchImages = async () => {
         try {
@@ -43,8 +41,10 @@ function Hotels() {
         }
     }
     useEffect(() => {
+        fetchAllHotel()
         fetchImages();
     }, [])
+
     return (
         <div className="p-4">
             <h3 className="w-full p-4 font-bold font-sans text-lg md:text-xl">
@@ -82,7 +82,7 @@ function Hotels() {
                                     <p className="text-sm text-gray-600 line-clamp-1 text-center">{hotel.hotelAddress}</p>
                                     <p className="hidden md:block text-sm text-gray-500 line-clamp-2 text-center">{hotel.hotelDescription}</p>
                                     <div className="flex justify-between items-center mt-2">
-                                        <span className="font-semibold text-blue-600"> ⭐ {hotel.hotelRating}</span>
+                                        <span className="font-semibold text-blue-600"> ⭐ {hotel.hotelRating && (hotel.hotelRating.toFixed(1))}</span>
                                         <span className="font-semibold text-orange-600 text-sm">{hotel.hotelCost.toLocaleString()} VNĐ</span>
                                     </div>
                                 </div>

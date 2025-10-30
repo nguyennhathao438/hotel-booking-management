@@ -19,7 +19,6 @@ import ConfirmBooking from "./components/Booking/BookingConfirm";
 import SuccessBooking from "./components/Booking/BookingSuccess";
 import HotelProvince from "./components/BookingSearchResult/HotelsResult";
 import DetailsHotel from "./components/HotelDetails/HotelViewDetails"
-import ReviewForm from "./components/Review/ReviewForm";
 import HistoryInvoice from "./pages/HistoryInvoice";
 import RoomManagerCustomer from "./componentcustomer/RoomManagerCustomer";
 import CustomerLayout from "./componentcustomer/CustomerLayout";
@@ -85,10 +84,6 @@ const router = createBrowserRouter([
             , {
                 path: "/search-result/:province",
                 element: <HotelProvince />
-            }
-            , {
-                path: "/review",
-                element: <ReviewForm />
             }
             , {
                 path: "/history",
