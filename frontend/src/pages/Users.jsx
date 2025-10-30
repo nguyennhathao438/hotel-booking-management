@@ -115,7 +115,7 @@ export default function Users(){
     const response = await api.get(`/users/get-page?pageNo=${pageNo}&pageSize=${pageSize}&keyword=${keyword}`);
     const pageData = response.data.result;
     const usersWithFullName = pageData.content.map((user) => ({
-    ...user, 
+    ...user,
     roles: user.roles.map((r) =>
     typeof r === "string" ? { name: r } : r), // ✅ chuẩn hóa lại roles
     }));

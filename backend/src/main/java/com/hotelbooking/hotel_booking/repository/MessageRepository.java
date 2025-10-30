@@ -1,6 +1,7 @@
 package com.hotelbooking.hotel_booking.repository;
 
 import com.hotelbooking.hotel_booking.entity.Message;
+import com.hotelbooking.hotel_booking.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,4 +28,21 @@ public interface MessageRepository extends JpaRepository<Message,Long> {
     ORDER BY m.createAt DESC
     """)
     List<Message> getAllLastMessagesForUser(@Param("userId") int receiverId);
+    @Query(value = """
+    SELECT u.*
+    FROM user u
+    JOIN message m ON m.sender_id = u.id
+    WHERE m.receiver_id = :userId
+      AND (
+          :keyword IS NULL OR
+          LOWER(CONCAT(u.first_name, ' ', u.last_name)) LIKE LOWER(CONCAT('%', :keyword, '%'))
+      )
+    GROUP BY u.id
+    ORDER BY MAX(m.create_at) DESC
+    LIMIT 20
+""", nativeQuery = true)
+    List<User> getLastSenders(@Param("userId") int userId,
+                              @Param("keyword") String keyword);
+
+
 }

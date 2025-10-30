@@ -14,8 +14,10 @@ export default function SideBar(){
                 <div className="flex hover:bg-gray-400"> <MegaphoneIcon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Enquiries</p></div>
                 <NavLink to="/admin/invoice" className="flex hover:bg-gray-400"> <HandCoinsIcon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Invoice</p></NavLink>
                 <NavLink to="/admin/permission" className="flex hover:bg-gray-400"> <FileTextIcon   className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Reports</p></NavLink>
+                <NavLink to="/admin/hotelmanager" className="flex hover:bg-gray-400"> <FileTextIcon   className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Ac quy 666666666</p></NavLink>
+
                 <NavLink to="/admin/user" className="flex hover:bg-gray-400"> <User2Icon  className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Agents</p></NavLink>
-                <div className="flex hover:bg-gray-400"> <WrenchIcon className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Setting</p></div>
+                <NavLink to="/admin/chat" className="flex hover:bg-gray-400"> <WrenchIcon className="w-6 h-6 text-gray-600"/><p className=" text-white cursor-pointer pl-2">Setting</p></NavLink>
             </div>
         </div>
     );

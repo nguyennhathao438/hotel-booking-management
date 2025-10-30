@@ -21,6 +21,14 @@ import HotelProvince from "./components/BookingSearchResult/HotelsResult";
 import DetailsHotel from "./components/HotelDetails/HotelViewDetails"
 import ReviewForm from "./components/Review/ReviewForm";
 import HistoryInvoice from "./pages/HistoryInvoice";
+import RoomManagerCustomer from "./componentcustomer/RoomManagerCustomer";
+import CustomerLayout from "./componentcustomer/CustomerLayout";
+import HotelList from "./componentcustomer/hotelsList";
+import Revenue from "./componentcustomer/Revenue";
+import ReviewList from "./componentcustomer/ReviewList";
+import HotelManager from "./componentadmin/HotelManager";
+
+import Chat from "./pages/Chat";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -84,13 +92,36 @@ const router = createBrowserRouter([
             }
             , {
                 path: "/history",
-                element: <HistoryInvoice/>
+                element: <HistoryInvoice />
             }
         ],
     },
     {
         path: "/oauth2/redirect",
         element: <OAuth2RedirectHandler />
+    },
+    {
+        path: "/customer",
+        element: <CustomerLayout />,
+        children: [
+            {
+                path: "room/:hotelId",
+                element: <RoomManagerCustomer />
+            },
+            {
+                path: "Revenue/:hotelId",
+                element: <Revenue />
+            },
+            {
+                index: true,
+                element: <HotelList />
+            },
+            {
+                path: "review/:hotelId",
+                element: <ReviewList />
+            },
+
+        ]
     },
     {
         path: "/admin",
@@ -109,8 +140,17 @@ const router = createBrowserRouter([
                 element: <Users />
             },
             {
+                path: "hotelmanager",
+                element: <HotelManager />
+            },
+
+            {
                 path: "invoice",
                 element: <Invoice />
+            },
+            {
+                path: "chat",
+                element: <Chat />
             }
         ]
 

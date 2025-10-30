@@ -128,5 +128,17 @@ public class RoomController {
                 .result(count)
                 .build());
     }
+    @GetMapping("/room2/{hotelId}")
+    public ResponseEntity<ApiResponse<List<RoomResponse>>> getAllRoomsByHotelId(@PathVariable int hotelId) {
+        List<RoomResponse> rooms = roomService.getRoomsByHotelId2(hotelId);
+
+        ApiResponse<List<RoomResponse>> response = ApiResponse.<List<RoomResponse>>builder()
+                .message("Lấy tất cả phòng theo hotelId thành công")
+                .result(rooms)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
 }
 

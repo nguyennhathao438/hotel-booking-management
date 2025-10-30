@@ -15,35 +15,61 @@ import com.hotelbooking.hotel_booking.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class dichvu {
+
     @Autowired
     private HotelRepository hotelRepository;
+
     @Autowired
     private ServiceRepository serviceRepository;
+
     public ServiceResponse createService(ServiceRequest serviceRequest) {
         Hotel hotel = hotelRepository.findById(serviceRequest.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-        HotelService  hotelService = HotelService.builder()
-                .serviceId(serviceRequest.getServiceId())
+
+        HotelService hotelService = HotelService.builder()
+                .serviceName(serviceRequest.getServiceName())
                 .icon(serviceRequest.getIcon())
                 .description(serviceRequest.getDescription())
+                .price(serviceRequest.getPrice())
                 .hotel(hotel)
                 .build();
+
         serviceRepository.save(hotelService);
         return mapToServiceResponse(hotelService);
+    }
+    public void deleteService(int serviceId) {
+        HotelService service = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new AppException(ErrorCode.SERVICE_NOT_EXISTED));
+        serviceRepository.delete(service);
     }
     private ServiceResponse mapToServiceResponse(HotelService hotelService) {
         return ServiceResponse.builder()
                 .serviceId(hotelService.getServiceId())
+                .serviceName(hotelService.getServiceName())
                 .icon(hotelService.getIcon())
                 .description(hotelService.getDescription())
+                .price(hotelService.getPrice())
                 .hotel(hotelService.getHotel() != null ? mapToHotelResponse(hotelService.getHotel()) : null)
                 .build();
     }
+
+    public List<ServiceResponse> getServicesByHotelId(int hotelId) {
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+
+        List<HotelService> services = serviceRepository.findByHotel(hotel);
+
+        return services.stream()
+                .map(this::mapToServiceResponse)
+                .collect(Collectors.toList());
+    }
+
     private HotelResponse mapToHotelResponse(Hotel hotel) {
         if (hotel == null) return null;
 
@@ -60,7 +86,8 @@ public class dichvu {
                 .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
                 .build();
     }
-    public static UserResponse mapToUserResponse(User user){
+
+    public static UserResponse mapToUserResponse(User user) {
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())

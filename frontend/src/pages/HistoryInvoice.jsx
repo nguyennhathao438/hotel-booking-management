@@ -43,7 +43,7 @@ export default function HistoryInvoice() {
             fetchInvoiceByUserId(user.id);
     }, [user.id])
     console.log("invoice", invoices)
-    const [status, setStatus] = useState("Tất cả");
+    // const [status, setStatus] = useState("Tất cả");
     const [rating, setRating] = useState(0);
     const [hotelSelect, setHotelSelect] = useState();
     const [openReview, setOpenReview] = useState(false)
@@ -80,13 +80,13 @@ export default function HistoryInvoice() {
     return (
         <div className="w-[100%] h-auto">
             <div className="w-[90%] border border-gray-300 rounded-xl mx-auto h-full">
-                <div className="flex gap-3 justify-center p-3">
+                {/* <div className="flex gap-3 justify-center p-3">
                     <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Tất cả")}>Tất cả</button>
                     <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Chờ xác nhận")}>Chờ xác nhận</button>
                     <button className="bg-blue-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đang xác nhận")}>Đang xác nhận</button>
                     <button className="bg-blue-500 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đã xác nhận")}>Đã xác nhận</button>
                     <button className="bg-green-400 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đã hủy")}>Hoàn thành</button>
-                </div>
+                </div> */}
                 <table className="w-full p-2 ">
                     <thead>
                         <tr>
