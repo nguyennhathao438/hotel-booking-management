@@ -33,6 +33,7 @@ public class HotelController {
             @PathVariable String province) {
         List<HotelResponse> hotelProvinceList = hotelService.findByHotelAddressContainingIgnoreCase(province);
         return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
+                .code(1)
                 .message("Tìm khách sạn theo tỉnh thành công")
                 .result(hotelProvinceList)
                 .build());
@@ -42,7 +43,8 @@ public class HotelController {
     public ResponseEntity<ApiResponse<HotelResponse>> getHotelById(@PathVariable int hotelID) {
         HotelResponse hotelResponse = hotelService.getHotelById(hotelID);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
-                .message("Thông tin khách sạn")
+                .code(1)
+                .message("Lấy khách sạn theo ID thành công")
                 .result(hotelResponse)
                 .build());
     }
@@ -51,20 +53,23 @@ public class HotelController {
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels() {
         List<HotelResponse> hotelList = hotelService.getAllHotels();
         return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
-                .message("Danh sách khách sạn")
+                .code(1)
+                .message("Lấy danh sách khách sạn thành công")
                 .result(hotelList)
                 .build());
     }
 
     @PutMapping("/update/{hotelID}")
     public ResponseEntity<ApiResponse<HotelResponse>> updateHotel(@PathVariable int hotelID,
-            @RequestBody @Valid HotelRequest request) {
+                                                                  @RequestBody @Valid HotelRequest request) {
         HotelResponse hotelResponse = hotelService.updateHotel(hotelID, request);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
+                .code(1)
                 .message("Cập nhật khách sạn thành công")
                 .result(hotelResponse)
                 .build());
     }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getHotelsByUserId(@PathVariable int userId) {
         List<HotelResponse> hotels = hotelService.getHotelsByUserId(userId);

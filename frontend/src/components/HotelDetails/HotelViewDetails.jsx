@@ -14,6 +14,18 @@ import { ChatBubbleOvalLeftIcon } from "@heroicons/react/24/solid";
 import ChatBox from "../Chatbox";
 
 function DetailsHotelView() {
+
+    const scrollRef = useRef(null);
+    const scroll = (direction) => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current;
+            const scrollAmount = clientWidth * 0.8; // mỗi lần trượt 80% chiều rộng
+            scrollRef.current.scrollTo({
+                left: direction === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+                behavior: "smooth",
+            });
+        }
+    };
     const user = useSelector((state) => state.user);
     const [rooms, setRooms] = useState([]);
     const [images, setImages] = useState([]);
@@ -22,66 +34,16 @@ function DetailsHotelView() {
     const [openChat, setOpenChat] = useState(false);
     const [hotel, setHotel] = useState([]);
     const [feedbacks, setFeedBacks] = useState([])
+    const [services, setServices] = useState([])
 
-
-    // const data = [
-    //     {
-    //         "serviceId": 1,
-    //         "serviceName": "Dọn phòng hàng ngày",
-    //         "description": "Dịch vụ dọn dẹp phòng và thay khăn mỗi ngày",
-    //         "icon": "https://example.com/icons/cleaning.png",
-    //         "price": 50000.0,
-    //         "hotel": {
-    //             "hotelId": 1,
-    //             "hotelName": "Khách sạn Biển Xanh"
-    //         }
-    //     },
-    //     {
-    //         "serviceId": 2,
-    //         "serviceName": "Giặt ủi",
-    //         "description": "Giặt và ủi quần áo cho khách lưu trú",
-    //         "icon": "https://example.com/icons/laundry.png",
-    //         "price": 80000.0,
-    //         "hotel": {
-    //             "hotelId": 1,
-    //             "hotelName": "Khách sạn Biển Xanh"
-    //         }
-    //     },
-    //     {
-    //         "serviceId": 3,
-    //         "serviceName": "Đưa đón sân bay",
-    //         "description": "Xe đưa đón sân bay quốc tế Tân Sơn Nhất",
-    //         "icon": "https://example.com/icons/airport.png",
-    //         "price": 150000.0,
-    //         "hotel": {
-    //             "hotelId": 2,
-    //             "hotelName": "Khách sạn Ánh Dương"
-    //         }
-    //     },
-    //     {
-    //         "serviceId": 4,
-    //         "serviceName": "Buffet sáng",
-    //         "description": "Buffet sáng đa dạng món Á - Âu",
-    //         "icon": "https://example.com/icons/breakfast.png",
-    //         "price": 120000.0,
-    //         "hotel": {
-    //             "hotelId": 3,
-    //             "hotelName": "Khách sạn Mặt Trời"
-    //         }
-    //     },
-    //     {
-    //         "serviceId": 5,
-    //         "serviceName": "Thuê xe máy",
-    //         "description": "Dịch vụ cho thuê xe máy tại sảnh khách sạn",
-    //         "icon": "https://example.com/icons/motorbike.png",
-    //         "price": 100000.0,
-    //         "hotel": {
-    //             "hotelId": 3,
-    //             "hotelName": "Khách sạn Mặt Trời"
-    //         }
-    //     }
-    // ]
-
+    const fetchHotelService = async () => {
+        const response = await api.get(`/service/hotel/${hotelId}`)
+        setServices(response.data.result)
+        return response.data.result;
+    }
+    useEffect(() => {
+        fetchHotelService()
+    }, [])
 
     const handleCloseChat = () => {
         setOpenChat(false);
@@ -104,7 +66,6 @@ function DetailsHotelView() {
         }
     }
 
-    console.log("danh sach feedback", feedbacks)
     const fetchRoomsByHotelId = async () => {
         try {
             const roomData = await api.get(`rooms/hotel/${hotelId}`);
@@ -253,9 +214,30 @@ function DetailsHotelView() {
                     </div>
                 </div>
                 {/* phía dưới */}
-                <div className="">
-                    <h2 className="font-bold text-xl">Điểm nổi bật của chỗ nghỉ</h2>
-
+                <h2 className="text-xl px-6 font-semibold pt-4">Danh sách dịch vụ nổi bật của khách sạn</h2>
+                <div className="relative py-2 px-4">
+                    {/* Vùng cuộn danh sách */}
+                    <button onClick={() => scroll("left")} className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <div ref={scrollRef} className="flex gap-4 overflow-x scroll-smooth scrollbar-hidden md:overflow-hidden px-2">
+                        {services.map((s) => (
+                            <div key={s.serviceId} className="min-w-[250px] bg-white border border-gray-300 rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-row items-center gap-3 text-left">
+                                <img src={s.icon} className="w-7 h-7 object-contain" />
+                                <div>
+                                    <h3 className="text-blue-600 font-semibold text-md">{s.serviceName}</h3>
+                                    <p className="text-gray-600 text-sm mt-1 line-clamp-2">{s.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <button onClick={() => scroll("right")} className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 

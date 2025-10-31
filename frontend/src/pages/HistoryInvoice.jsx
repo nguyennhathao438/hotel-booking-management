@@ -66,22 +66,12 @@ export default function HistoryInvoice() {
         if (invoiceSelect) setValue("invoiceId", String(invoiceSelect));
     }, [invoiceSelect, setValue]);
 
-    console.log("selectedFeedback", selectedFeedback)
-    if (selectedFeedback)
-        console.log("selectedFeedback ID", selectedFeedback.id)
     const onSubmit = async (data) => {
-        console.log("data ne", data)
-        console.log("selectedFeedback", selectedFeedback)
-        console.log("selectedFeedback ID", selectedFeedback.id)
         if (!selectedFeedback) {
-            console.log("hoang anh huyhu huy")
-
             if (rating < 1) {
                 toast.error("Bạn phải chọn ít nhất 1 sao")
                 return
-            }
-            console.log("dmmmmmm", data)
-            const review = {
+            }            const review = {
                 ...data,
                 star: Number(rating) || 0,
             }
@@ -116,11 +106,13 @@ export default function HistoryInvoice() {
             }
         }
     }
+
     const onError = (err) => {
         const firstErr = Object.values(err)[0]
         if (firstErr)
             toast.error(firstErr.message)
     }
+
     useEffect(() => {
         reset({
             feedback: "",
@@ -140,6 +132,7 @@ export default function HistoryInvoice() {
     useEffect(() => {
         fetchFeedBack();
     }, [])
+    
     return (
         <div className="w-[100%] h-auto">
             <div className="w-[90%] border border-gray-300 rounded-xl mx-auto h-full">
