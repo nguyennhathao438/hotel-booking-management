@@ -19,7 +19,7 @@ public enum ErrorCode {
     HOTEL_EXISTED(1006, "Khách sạn đã tồn tại", HttpStatus.CONFLICT),
     HOTEL_NOT_EXISTED(1008, "Khách sạn không tồn tại", HttpStatus.NOT_FOUND),
     ROOM_NOT_EXISTED(1009, "Phòng không tồn tại", HttpStatus.NOT_FOUND),
-    INVOICE_NOT_EXISTED(1010, "Phòng đã được đặt", HttpStatus.NOT_FOUND),
+    ROOM_ALREADY_BOOKED(1010, "Phòng đã được đặt", HttpStatus.NOT_FOUND),
     INVALID_DATE_RANGE(1011, "Ngày trả phòng không được nhỏ hơn ngày nhận", HttpStatus.BAD_REQUEST),
     INVALID_STATUS_TRANSITION(1015, "Trạng thái chuyển đổi không hợp lệ", HttpStatus.BAD_REQUEST),
 
@@ -30,7 +30,9 @@ public enum ErrorCode {
     BOOKING_NOT_EXISTED(1003, "Không tìm thấy lịch đặt", HttpStatus.NOT_FOUND),
     INVOICE_FAILED(1015, "Ngày checkIn phải trước ngày checkOut", HttpStatus.UNAUTHORIZED),
     CANNOT_SEND_MESSAGE_TO_SELF(1016, "Không th gửi tin nhắn cho bản thân", HttpStatus.BAD_REQUEST),
-    SERVICE_NOT_EXISTED(10011, "Phòng không tồn tại", HttpStatus.NOT_FOUND);
+    SERVICE_NOT_EXISTED(10011, "Phòng không tồn tại", HttpStatus.NOT_FOUND),
+    INVOICE_NOT_EXISTED(1010, "Không tìm thấy phòng", HttpStatus.NOT_FOUND),
+    FEEDBACK_NOT_EXISTED(1003, "Không tìm feedback ", HttpStatus.NOT_FOUND);
     private final int code;
     private final String message;
     private final HttpStatusCode statusCode;

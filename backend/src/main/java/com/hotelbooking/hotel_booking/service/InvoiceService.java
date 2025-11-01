@@ -66,7 +66,7 @@ public class InvoiceService {
             room.addInvoice(invoice);
             invoiceRepository.save(invoice);
         } else
-            throw new AppException(ErrorCode.INVOICE_NOT_EXISTED);
+            throw new AppException(ErrorCode.ROOM_ALREADY_BOOKED);
         return mapToInvoiceResponse(invoice);
     }
 
@@ -75,6 +75,21 @@ public class InvoiceService {
         return invoices.stream()
                 .map(this::mapToInvoiceResponse)
                 .toList();
+    }
+
+    public List<InvoiceResponse> getByUser_Id(int user_id) {
+        List<Invoice> invoices = invoiceRepository.getByUser_Id(user_id);
+        return invoices.stream()
+                .map(this::mapToInvoiceResponse)
+                .toList();
+    }
+
+    public InvoiceResponse cancelInvoice(int id) {
+        Invoice invoice = invoiceRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        invoice.setStatus(3);
+        invoiceRepository.save(invoice);
+        return mapToInvoiceResponse(invoice);
     }
 
     public InvoiceResponse getInvoiceById(int id) {
@@ -86,39 +101,44 @@ public class InvoiceService {
     // InvoiceService
     public List<InvoiceResponse> getInvoiceByHotelOwner(Integer userId) {
         List<Invoice> invoices = invoiceRepository.findAllByRoom_Hotel_User_Id(userId);
-        return  invoices.stream()
+        return invoices.stream()
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
+
     public Page<InvoiceResponse> getInvoicesByHotelOwner(Integer userId,
-                                                         Integer status,
-                                                         Integer payment,
-                                                         LocalDate checkInDate,
-                                                         LocalDate checkOutDate,
-                                                         int pageNo, int pageSize) {
+            Integer status,
+            Integer payment,
+            LocalDate checkInDate,
+            LocalDate checkOutDate,
+            int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Invoice> invoicesPage;
-        if(status != null && payment == null && checkInDate == null && checkOutDate == null){
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatus(userId,status,pageable);
-        } else if (status == null && payment != null && checkInDate == null && checkOutDate == null){
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPayment(userId,payment,pageable);
-        } else if (status == null && payment == null && checkInDate != null && checkOutDate != null ){
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
-                    (userId, checkInDate,checkOutDate,pageable);
-        } else if (status != null && payment == null && checkInDate != null && checkOutDate != null){
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
-                    (userId,status,checkInDate,checkOutDate,pageable);
-        } else if (status == null && payment != null && checkInDate != null && checkOutDate != null){
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
-                    (userId,payment,checkInDate,checkOutDate,pageable);
-        } else if (status != null && payment != null && checkInDate == null && checkOutDate == null ){
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPayment
-                    (userId,status,payment,pageable);
-        } else if (status != null && payment != null && checkInDate != null && checkOutDate != null){
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
-                    (userId,status,payment,checkInDate,checkOutDate,pageable);
+        if (status != null && payment == null && checkInDate == null && checkOutDate == null) {
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatus(userId, status, pageable);
+        } else if (status == null && payment != null && checkInDate == null && checkOutDate == null) {
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPayment(userId, payment, pageable);
+        } else if (status == null && payment == null && checkInDate != null && checkOutDate != null) {
+            invoicesPage = invoiceRepository
+                    .findAllByRoom_Hotel_User_IdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(userId,
+                            checkInDate, checkOutDate, pageable);
+        } else if (status != null && payment == null && checkInDate != null && checkOutDate != null) {
+            invoicesPage = invoiceRepository
+                    .findAllByRoom_Hotel_User_IdAndStatusAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
+                            userId, status, checkInDate, checkOutDate, pageable);
+        } else if (status == null && payment != null && checkInDate != null && checkOutDate != null) {
+            invoicesPage = invoiceRepository
+                    .findAllByRoom_Hotel_User_IdAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
+                            userId, payment, checkInDate, checkOutDate, pageable);
+        } else if (status != null && payment != null && checkInDate == null && checkOutDate == null) {
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPayment(userId, status, payment,
+                    pageable);
+        } else if (status != null && payment != null && checkInDate != null && checkOutDate != null) {
+            invoicesPage = invoiceRepository
+                    .findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
+                            userId, status, payment, checkInDate, checkOutDate, pageable);
         } else {
-            invoicesPage = invoiceRepository.findByHotelOwnerId(userId,pageable);
+            invoicesPage = invoiceRepository.findByHotelOwnerId(userId, pageable);
         }
         return invoicesPage.map(this::mapToInvoiceResponse);
     }
@@ -181,14 +201,6 @@ public class InvoiceService {
         return mapToInvoiceResponse(invoice);
     }
 
-    public InvoiceResponse cancelInvoice(int id) {
-        Invoice invoice = invoiceRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
-        invoice.setStatus(3);
-        invoiceRepository.save(invoice);
-        return mapToInvoiceResponse(invoice);
-    }
-
     public List<InvoiceResponse> getAllInvoiceByRoom_RoomId(int roomId) {
         List<Invoice> invoices = invoiceRepository.getAllInvoicesByRoom_RoomId(roomId);
         return invoices.stream()
@@ -218,16 +230,18 @@ public class InvoiceService {
         return invoices.map(this::mapToInvoiceResponse);
     }
 
-    public Page<InvoiceResponse> filterGetUserInvoice(Integer userId, Integer status, LocalDate dateFrom, LocalDate dateTo ,
-                                                      int pageNo, int pageSize) {
+    public Page<InvoiceResponse> filterGetUserInvoice(Integer userId, Integer status, LocalDate dateFrom,
+            LocalDate dateTo,
+            int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        if(status == null && dateFrom == null & dateTo == null){
+        if (status == null && dateFrom == null & dateTo == null) {
             Page<Invoice> invoices = invoiceRepository.findAllByUser_Id(userId, pageable);
             return invoices.map(this::mapToInvoiceResponse);
         }
-        Page<Invoice> invoices = invoiceRepository.findUserFilteredInvoice(userId, status,dateFrom,dateTo,pageable);
+        Page<Invoice> invoices = invoiceRepository.findUserFilteredInvoice(userId, status, dateFrom, dateTo, pageable);
         return invoices.map(this::mapToInvoiceResponse);
     }
+
     private boolean validateDates(InvoiceRequest request, List<Invoice> exitsInvoices) {
         return exitsInvoices.stream()
                 .noneMatch(exitsInvoice -> request.getCheckInDate().isBefore(exitsInvoice.getCheckOutDate())
@@ -243,8 +257,7 @@ public class InvoiceService {
         }
     }
 
-
-    private RoomResponse mapToRoomResponse(Room room) {
+    public RoomResponse mapToRoomResponse(Room room) {
         return RoomResponse.builder()
                 .roomId(room.getRoomId())
                 .roomName(room.getRoomName())
@@ -261,7 +274,7 @@ public class InvoiceService {
                 .build();
     }
 
-    public static UserResponse mapToUserResponse(User user) {
+    public UserResponse mapToUserResponse(User user) {
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())
@@ -277,7 +290,7 @@ public class InvoiceService {
                 .build();
     }
 
-    private InvoiceResponse mapToInvoiceResponse(Invoice invoice) {
+    public InvoiceResponse mapToInvoiceResponse(Invoice invoice) {
         return InvoiceResponse.builder()
                 .id(invoice.getId())
                 .checkInDate(invoice.getCheckInDate())
@@ -291,7 +304,7 @@ public class InvoiceService {
                 .build();
     }
 
-    private HotelResponse mapToHotelResponse(Hotel hotel) {
+    public HotelResponse mapToHotelResponse(Hotel hotel) {
         if (hotel == null)
             return null;
         return HotelResponse.builder()
@@ -304,7 +317,7 @@ public class InvoiceService {
                 .hotelCost(hotel.getHotelCost())
                 .hotelDescription(hotel.getHotelDescription())
                 .status(hotel.getStatus())
-                .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
+                .user(mapToUserResponse(hotel.getUser()))
                 .build();
     }
 

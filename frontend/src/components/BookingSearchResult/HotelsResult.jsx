@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../../api";
-import ImageSlider from "../DetailsHotel/ImageSlider";
+import ImageSlider from "../Common/ImageSlider";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { Phone } from "lucide-react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { Context } from "../RoomContext";
 export default function HotelProvince() {
-    // let hotelProvince = []
-    // const [hotels, setHotels] = useState([])
-    // console.log("tinh tren link api la luc sau la", province)
     const [images, setImages] = useState([])
     const { province } = useParams();
     const location = useLocation();
     const hotelProvince = location.state?.hotelProvince;
-
-    // useEffect(() => {
-    //     const fetchAllHotel = async () => {
-    //         const respone = await api.get("/hotels/all")
-    //         setHotels(respone.data.result)
-    //     }
-    //     fetchAllHotel()
-    // }, [])
+    const { checkInDate, checkOutDate } = useContext(Context)
 
     useEffect(() => {
         const fetchAllImgHotel = async () => {
@@ -29,23 +20,13 @@ export default function HotelProvince() {
         fetchAllImgHotel()
     }, [])
 
-    // const findHotelByProvince = () => {
-    //     let proviceTemp = ""
-    //     if (hotels.length >= 0 && hotels) {
-    //         for (let hotel of hotels) {
-    //             proviceTemp = (hotel.hotelAddress).split(",")[2].trim()
-    //             if (proviceTemp === province)
-    //                 hotelProvince.push(hotel)
-    //         }
-    //     }
-    // }
-    // findHotelByProvince();
-
     return (
         <div className="h-auto ">
             <div className="w-[85%] border border-gray-300 rounded-xl mx-auto">
                 <div className="px-5 py-3">
-                    <span className="font-bold text-xl">Tìm thấy {hotelProvince.length} chỗ nghỉ ở {province}</span>
+                    <span className="font-bold block py-2 text-xl">Tìm thấy {hotelProvince.length} chỗ nghỉ ở {province}</span>
+                    <span className="font-light py-2 block text-md">Click nút bên dưới để tìm phòng trống từ {checkInDate.toLocaleDateString()} đến {checkOutDate.toLocaleDateString()}</span>
+
                 </div>
                 <div className="grid grid-cols-1 gap-4 md:gap-6 p-2">
                     {hotelProvince.map((item) => {

@@ -5,7 +5,6 @@ import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.dto.response.ServiceResponse;
 import com.hotelbooking.hotel_booking.dto.response.UserResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
-import com.hotelbooking.hotel_booking.entity.HotelService;
 import com.hotelbooking.hotel_booking.entity.Role;
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.exception.AppException;
@@ -13,13 +12,15 @@ import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.HotelRepository;
 import com.hotelbooking.hotel_booking.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.hotelbooking.hotel_booking.entity.HotelService;
+
+
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
+@org.springframework.stereotype.Service
 public class dichvu {
 
     @Autowired
@@ -31,7 +32,6 @@ public class dichvu {
     public ServiceResponse createService(ServiceRequest serviceRequest) {
         Hotel hotel = hotelRepository.findById(serviceRequest.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-
         HotelService hotelService = HotelService.builder()
                 .serviceName(serviceRequest.getServiceName())
                 .icon(serviceRequest.getIcon())
@@ -39,15 +39,16 @@ public class dichvu {
                 .price(serviceRequest.getPrice())
                 .hotel(hotel)
                 .build();
-
         serviceRepository.save(hotelService);
         return mapToServiceResponse(hotelService);
     }
+
     public void deleteService(int serviceId) {
         HotelService service = serviceRepository.findById(serviceId)
                 .orElseThrow(() -> new AppException(ErrorCode.SERVICE_NOT_EXISTED));
         serviceRepository.delete(service);
     }
+
     private ServiceResponse mapToServiceResponse(HotelService hotelService) {
         return ServiceResponse.builder()
                 .serviceId(hotelService.getServiceId())

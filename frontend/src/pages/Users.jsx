@@ -1,6 +1,6 @@
 import { CloudDownloadIcon,SettingsIcon, SearchIcon,Trash2Icon} from "lucide-react";
 import { useEffect, useState } from "react";
-import ModelForm from "../components/FormModel";
+import ModelForm from "../components/Common/FormModel";
 import api from "../api";
 import toast from "react-hot-toast";
 import UserEdit from "../components/UserEdit";

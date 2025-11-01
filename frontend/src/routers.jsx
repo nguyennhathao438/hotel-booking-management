@@ -14,11 +14,12 @@ import InvoiceU from "./pages/InvoiceU";
 import Statistic from "./pages/Statistic";
 import HotelsView from "./pages/HotelsView";
 import MyInfo from "./pages/MyInfo";
-import FormBooking from "./components/Booking/FormBooking";
-import ConfirmBooking from "./components/Booking/ConfirmBooking";
-import SuccessBooking from "./components/Booking/SuccessBooking";
-import HotelProvince from "./components/BookingSearchResult/HotelProvince";
-import DetailsHotel from "./components/DetailsHotel/DetailsHotelView";
+import FormBooking from "./components/Booking/BookingForm";
+import ConfirmBooking from "./components/Booking/BookingConfirm";
+import SuccessBooking from "./components/Booking/BookingSuccess";
+import HotelProvince from "./components/BookingSearchResult/HotelsResult";
+import DetailsHotel from "./components/HotelDetails/HotelViewDetails";
+import HistoryInvoice from "./pages/HistoryInvoice";
 import RoomManagerCustomer from "./componentcustomer/RoomManagerCustomer";
 import CustomerLayout from "./componentcustomer/CustomerLayout";
 import HotelList from "./componentcustomer/hotelsList";
@@ -86,8 +87,8 @@ const router = createBrowserRouter([
         element: <HotelProvince />,
       },
       {
-        path: "/booking-history",
-        element: <BookingHistory />,
+        path: "/history",
+        element: <HistoryInvoice />,
       },
     ],
   },

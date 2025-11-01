@@ -9,6 +9,7 @@ import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.HotelRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
 
+@Builder
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class HotelService {
@@ -150,8 +152,6 @@ public class HotelService {
     }
 
     private HotelResponse mapToHotelResponse(Hotel hotel) {
-        if (hotel == null)
-            return null;
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
                 .hotelName(hotel.getHotelName())

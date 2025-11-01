@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../api";
-import NotificationModal from "../components/Modal";
+import NotificationModal from "../components/Common/Modal";
 
 const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
   const [hotelData, setHotelData] = useState({ ...hotel });

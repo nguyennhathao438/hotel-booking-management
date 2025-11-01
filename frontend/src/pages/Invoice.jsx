@@ -1,7 +1,7 @@
 import { ShoppingBagIcon,EyeIcon,SearchIcon,HotelIcon,UserIcon,CreditCardIcon,BedIcon} from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../api";
-import ModelForm from "../components/FormModel";
+import ModelForm from "../components/Common/FormModel";
 import { useSearchParams } from "react-router-dom";
 
 export default function Invoice(){

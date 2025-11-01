@@ -24,6 +24,7 @@ public class ImgHotelController {
             @RequestParam("hotelId") int hotelId) throws IOException {
         List<ImgHotelRespone> responses = imgHotelService.uploadImages(files, hotelId);
         return ResponseEntity.ok(ApiResponse.<List<ImgHotelRespone>>builder()
+                .code(1)
                 .message("Tạo ảnh khách sạn thành công")
                 .result(responses)
                 .build());
@@ -33,6 +34,7 @@ public class ImgHotelController {
     public ResponseEntity<ApiResponse<List<ImgHotelRespone>>> getImgHotelBy_HotelId(@PathVariable int hotelId) {
         List<ImgHotelRespone> listResponses = imgHotelService.getImgHotelsBy_HotelId(hotelId);
         return ResponseEntity.ok(ApiResponse.<List<ImgHotelRespone>>builder()
+                .code(1)
                 .message("Lấy danh sách ảnh khách sạn thành công")
                 .result(listResponses)
                 .build());
@@ -47,6 +49,7 @@ public class ImgHotelController {
     public ResponseEntity<ApiResponse<List<ImgHotelRespone>>> getAllImageHotels() {
         List<ImgHotelRespone> imgHotels = imgHotelService.getAllImgHotels();
         return ResponseEntity.ok(ApiResponse.<List<ImgHotelRespone>>builder()
+                .code(1)
                 .message("Lấy tất cả ảnh thành công")
                 .result(imgHotels)
                 .build());

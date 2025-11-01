@@ -30,34 +30,58 @@ public class HotelController {
                 .build());
     }
 
-    @PutMapping("/approve/{id}")
-    public ResponseEntity<ApiResponse> approveHotel(@PathVariable("id") int id) {
-        HotelResponse response = hotelService.approveHotel(id);
-        return ResponseEntity.ok(ApiResponse.builder()
-                .code(1000)
-                .message("Duyệt khách sạn thành công")
-                .result(response)
-                .build());
-    }
-
     @GetMapping("/search/{province}")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> findByHotelAddressContainingIgnoreCase(
             @PathVariable String province) {
         List<HotelResponse> hotelProvinceList = hotelService.findByHotelAddressContainingIgnoreCase(province);
         return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
+                .code(1)
                 .message("Tìm khách sạn theo tỉnh thành công")
                 .result(hotelProvinceList)
                 .build());
     }
-    
+
+    @GetMapping("/{hotelID}")
+    public ResponseEntity<ApiResponse<HotelResponse>> getHotelById(@PathVariable int hotelID) {
+        HotelResponse hotelResponse = hotelService.getHotelById(hotelID);
+        return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
+                .code(1)
+                .message("Lấy khách sạn theo ID thành công")
+                .result(hotelResponse)
+                .build());
+    }
+
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels() {
         List<HotelResponse> hotelList = hotelService.getAllHotels();
         return ResponseEntity.ok(ApiResponse.<List<HotelResponse>>builder()
-                .message("Danh sách khách sạn")
+                .code(1)
+                .message("Lấy danh sách khách sạn thành công")
                 .result(hotelList)
                 .build());
     }
+
+    @PutMapping("/update/{hotelID}")
+    public ResponseEntity<ApiResponse<HotelResponse>> updateHotel(@PathVariable int hotelID,
+            @RequestBody @Valid HotelRequest request) {
+        HotelResponse hotelResponse = hotelService.updateHotel(hotelID, request);
+        return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
+                .code(1)
+                .message("Cập nhật khách sạn thành công")
+                .result(hotelResponse)
+                .build());
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse<List<HotelResponse>>> getHotelsByUserId(@PathVariable int userId) {
+        List<HotelResponse> hotels = hotelService.getHotelsByUserId(userId);
+        ApiResponse<List<HotelResponse>> response = ApiResponse.<List<HotelResponse>>builder()
+                .message("Lấy danh sách khách sạn theo userId thành công")
+                .result(hotels)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/getkhong")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels0() {
         List<HotelResponse> hotelList = hotelService.getAllHotels0();
@@ -68,7 +92,7 @@ public class HotelController {
     }
 
     @GetMapping("/see/{hotelID}")
-    public ResponseEntity<ApiResponse<HotelResponse>> getHotelById(@PathVariable int hotelID) {
+    public ResponseEntity<ApiResponse<HotelResponse>> getHotelsById(@PathVariable int hotelID) {
         HotelResponse hotelResponse = hotelService.getHotelById(hotelID);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
                 .message("Thông tin khách sạn")
@@ -76,23 +100,14 @@ public class HotelController {
                 .build());
     }
 
-    @PutMapping("/update/{hotelID}")
-    public ResponseEntity<ApiResponse<HotelResponse>> updateHotel(@PathVariable int hotelID,
-            @RequestBody @Valid HotelRequest request) {
-        HotelResponse hotelResponse = hotelService.updateHotel(hotelID, request);
-        return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
-                .message("Cập nhật khách sạn thành công")
-                .result(hotelResponse)
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<ApiResponse> approveHotel(@PathVariable("id") int id) {
+        HotelResponse response = hotelService.approveHotel(id);
+        return ResponseEntity.ok(ApiResponse.builder()
+                .code(1000)
+                .message("Duyệt khách sạn thành công")
+                .result(response)
                 .build());
-    }
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<HotelResponse>>> getHotelsByUserId(@PathVariable int userId) {
-        List<HotelResponse> hotels = hotelService.getHotelsByUserId(userId);
-        ApiResponse<List<HotelResponse>> response = ApiResponse.<List<HotelResponse>>builder()
-                .message("Lấy danh sách khách sạn theo userId thành công")
-                .result(hotels)
-                .build();
-        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all/get-page")
@@ -108,4 +123,3 @@ public class HotelController {
                 .build());
     }
 }
-

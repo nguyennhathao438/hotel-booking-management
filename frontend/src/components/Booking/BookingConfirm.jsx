@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from "reac
 import { Context } from "../RoomContext";
 import api from "../../api";
 import monney from "../../assets/img/monney.png"
-import ImageSlider from "../DetailsHotel/ImageSlider";
+import ImageSlider from "../Common/ImageSlider";
 import { FaLock } from "react-icons/fa";
 export default function ConfirmBooking() {
     const navigate = useNavigate()
@@ -36,39 +36,34 @@ export default function ConfirmBooking() {
         }
     }, [payment, urlVnpay]);
 
-    useEffect(() => {
-        const fetchHotelById = async () => {
-            try {
-                const request = await api.get(`/hotels/${hotelId}`)
-                setHotel(request.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
+
+    const fetchHotelById = async () => {
+        try {
+            const request = await api.get(`/hotels/${hotelId}`)
+            setHotel(request.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
         }
+    }
+    const fetchRoomById = async () => {
+        try {
+            const request = await api.get(`/rooms/${roomId}`)
+            setRoom(request.data.result)
+        } catch (error) {
+            console.error("Error when load data :", error);
+        }
+    }
+    const fetchImgsHotelByHotelId = async () => {
+        try {
+            const imageData = await api.get(`/images/hotel/${hotelId}`);
+            setImages(imageData.data.result);
+        } catch (error) {
+            console.error("Error when load data :", error);
+        }
+    };
+    useEffect(() => {
         fetchHotelById()
-    }, [])
-
-    useEffect(() => {
-        const fetchAllHotel = async () => {
-            try {
-                const request = await api.get(`/rooms/${roomId}`)
-                setRoom(request.data.result)
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
-        }
-        fetchAllHotel()
-    }, [])
-
-    useEffect(() => {
-        const fetchImgsHotelByHotelId = async () => {
-            try {
-                const imageData = await api.get(`/images/hotel/${hotelId}`);
-                setImages(imageData.data.result);
-            } catch (error) {
-                console.error("Error when load data :", error);
-            }
-        };
+        fetchRoomById()
         fetchImgsHotelByHotelId();
     }, []);
     return (

@@ -28,9 +28,10 @@ public class InvoiceController {
 
     @PostMapping("/room/{roomId}/create")
     public ResponseEntity<ApiResponse<InvoiceResponse>> createInvoice(@PathVariable int roomId,
-            @RequestBody @Valid InvoiceRequest request) {
+                                                                      @RequestBody @Valid InvoiceRequest request) {
         InvoiceResponse invoiceResponse = invoiceService.createInvoice(roomId, request);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
+                .code(1)
                 .message("Tạo hóa đơn thành công")
                 .result(invoiceResponse)
                 .build());
@@ -40,7 +41,18 @@ public class InvoiceController {
     public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getAllInvoices() {
         List<InvoiceResponse> invoices = invoiceService.getAllInvoices();
         return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
+                .code(1)
                 .message("Lấy danh sách hóa đơn thành công")
+                .result(invoices)
+                .build());
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getByUser_Id(@PathVariable("userId") int userId) {
+        List<InvoiceResponse> invoices = invoiceService.getByUser_Id(userId);
+        return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
+                .code(1)
+                .message("Lấy danh sách hóa đơn theo user thành công")
                 .result(invoices)
                 .build());
     }
@@ -88,7 +100,7 @@ public class InvoiceController {
                 .build());
     }
     @GetMapping("/{invoiceID}")
-    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable int invoiceID) {
+    public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable("invoiceID") int invoiceID) {
         InvoiceResponse invoiceResponse = invoiceService.getInvoiceById(invoiceID);
         return ResponseEntity.ok(ApiResponse.<InvoiceResponse>builder()
                 .message("Lấy thông tin hóa đơn thành công")
