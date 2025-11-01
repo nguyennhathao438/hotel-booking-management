@@ -48,7 +48,7 @@ function DetailsHotelView() {
     const handleCloseChat = () => {
         setOpenChat(false);
     };
-    const fetchHotelByHotelId = async () => {
+    const fetchHotelById = async () => {
         try {
             const response = await api.get(`/hotels/${hotelId}`)
             setHotel(response.data.result)
@@ -78,7 +78,7 @@ function DetailsHotelView() {
     };
 
     useEffect(() => {
-        fetchHotelByHotelId()
+        fetchHotelById()
         fetchFeedBackByHotelId()
         fetchRoomsByHotelId()
     }, [])

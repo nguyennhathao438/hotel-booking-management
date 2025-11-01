@@ -6,6 +6,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
+import ImageSlider from "../components/Common/ImageSlider";
 const reviewSchema = z.object({
     feedback: z
         .string()
@@ -48,7 +49,7 @@ export default function HistoryInvoice() {
     const [rating, setRating] = useState(0);
     const [hotelSelect, setHotelSelect] = useState();
     const [selectedFeedback, setSelectedFeedback] = useState(null);
-
+    const [openDetail, setOpenDetail] = useState(false);
     const [openReview, setOpenReview] = useState(false)
     const [invoiceSelect, setInvoiceSelect] = useState()
     const { register, handleSubmit, reset, setValue } = useForm({
@@ -71,11 +72,10 @@ export default function HistoryInvoice() {
             if (rating < 1) {
                 toast.error("Bạn phải chọn ít nhất 1 sao")
                 return
-            }            const review = {
+            } const review = {
                 ...data,
                 star: Number(rating) || 0,
             }
-            console.log("review", review)
             const response = await api.post("/review/create", review)
             if (response.data.code == 1) {
                 toast.success(response.data.message)
@@ -85,7 +85,6 @@ export default function HistoryInvoice() {
                 toast.error(response.data.message)
             }
         } else {
-            console.log("hoang anh huyhu huy")
             if (rating < 1) {
                 toast.error("Bạn phải chọn ít nhất 1 sao")
                 return
@@ -95,7 +94,6 @@ export default function HistoryInvoice() {
                 ...data,
                 star: Number(rating) || 0,
             }
-            console.log("review", review)
             const response = await api.put(`/review/update/${selectedFeedback.id}`, review)
             if (response.data.code == 1) {
                 toast.success(response.data.message)
@@ -125,14 +123,38 @@ export default function HistoryInvoice() {
 
     const fetchFeedBack = async () => {
         const response = await api.get("/review/all")
-        console.log("tat ca feddback", response.data.result)
         setFeedBacks(response.data.result)
     }
 
+    const [iv, setIv] = useState(null)
+    const [imgs, setImgs] = useState([])
+    const [night, setNight] = useState()
+  
+    const tinhSoDem = (iv) => {
+        if (iv) {
+            const checkin = new Date(iv.checkInDate);
+        const checkout = new Date(iv.checkOutDate);
+        const soDem = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+        setNight(soDem);
+        }
+    }
+    console.log("so dem la", night)
+    const fetchImgsByHotelId = async (hotelId, iv) => {
+        try {
+            const response = await api.get(`/images/hotel/${hotelId}`)
+            console.log("gia tri nhan dc", response.data.result)
+            setImgs(response.data.result)
+            setIv(iv)
+            tinhSoDem(iv)
+        } catch (error) {
+            console.log("loi ko the lay du lieu dc", error)
+        }
+    }
+    console.log("hinh anh cua khach san", imgs)
     useEffect(() => {
         fetchFeedBack();
     }, [])
-    
+
     return (
         <div className="w-[100%] h-auto">
             <div className="w-[90%] border border-gray-300 rounded-xl mx-auto h-full">
@@ -188,7 +210,8 @@ export default function HistoryInvoice() {
                                 </td>
                                 <td className="px-4 py-3">
                                     <div className="flex gap-3 justify-center">
-                                        <button className="text-indigo-600 bg-blue-200 p-2 rounded-md cursor-pointer hover:text-indigo-800 font-medium">
+                                        <button className="text-indigo-600 bg-blue-200 p-2 rounded-md cursor-pointer hover:text-indigo-800 font-medium"
+                                            onClick={() => { setOpenDetail(true); fetchImgsByHotelId(i.room.hotel.hotelId, i) }}>
                                             Xem chi tiết
                                         </button>
                                         {i.status === 0 ? (
@@ -297,6 +320,87 @@ export default function HistoryInvoice() {
                             )}
                         </form>
                     </ModelForm>
+                )
+            }
+            {
+                openDetail && (
+                    <ModelForm title="Chi tiết đặt phòng" width="700px" onClose={() => setOpenDetail(false)}>
+                        <div className="flex gap-3 flex-row rounded-2xl w-[700px] h-[75vh] bg-white shadow-md">
+
+                            {/* Cột 1 - Thông tin khách sạn */}
+                            <div className="border border-gray-300 rounded-xl flex-1 flex flex-col bg-gray-50 overflow-hidden hover:shadow transition-shadow duration-300">
+                                {/* Ảnh khách sạn */}
+                                <div className="h-[45%] w-full rounded-t-xl overflow-hidden">
+                                    {imgs && imgs.length > 0 ? (
+                                        <ImageSlider sliders={imgs} />
+                                    ) : (
+                                        <div className="flex w-full h-full items-center justify-center text-gray-400 bg-gray-100 text-sm">
+                                            Chưa có hình ảnh
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Thông tin khách sạn */}
+                                <div className="border-t border-gray-200 flex-1 p-4 text-sm overflow-y-auto">
+                                    {iv && (
+                                        <div className="flex flex-col gap-2 leading-relaxed">
+                                            <h2 className="text-lg font-semibold text-center text-blue-600 border-b border-blue-200 pb-1 mb-1">
+                                                🏨 {iv.room.hotel.hotelName}
+                                            </h2>
+                                            <p><span className="font-medium text-gray-700">Địa chỉ:</span> {iv.room.hotel.hotelAddress}</p>
+                                            <p><span className="font-medium text-gray-700">Số sao:</span> {iv.room.hotel.hotelRating} ⭐</p>
+                                            <p><span className="font-medium text-gray-700">Liên hệ:</span> {iv.room.hotel.hotelPhone}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Cột 2 - Thông tin phòng & thanh toán */}
+                            <div className="border border-gray-300 rounded-xl flex-1 flex flex-col bg-gray-50 overflow-hidden hover:shadow transition-shadow duration-300">
+                                {/* Ảnh phòng */}
+                                <div className="h-[45%] w-full rounded-t-xl overflow-hidden">
+                                    {imgs && imgs.length > 0 ? (
+                                        <ImageSlider sliders={imgs} />
+                                    ) : (
+                                        <div className="flex w-full h-full items-center justify-center text-gray-400 bg-gray-100 text-sm">
+                                            Chưa có hình ảnh
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Thông tin phòng */}
+                                <div className="border-t border-gray-200 flex-1 p-4 text-sm overflow-y-auto">
+                                    {iv && (
+                                        <div className="flex flex-col gap-2 leading-relaxed">
+                                            <h2 className="text-lg font-semibold text-center text-green-600 border-b border-green-200 pb-1 mb-1">
+                                                🛏 {iv.room.roomName}
+                                            </h2>
+
+                                            <p><span className="font-medium text-gray-700">Loại phòng:</span> {iv.room.roomType}</p>
+
+                                            <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                                                <p><span className="font-medium text-gray-700">Diện tích:</span> {iv.room.roomArea} m²</p>
+                                                <p><span className="font-medium text-gray-700">Sức chứa:</span> {iv.room.roomCapacity} người</p>
+                                                <p><span className="font-medium text-gray-700">Số giường:</span> {iv.room.bedCount}</p>
+                                                <p><span className="font-medium text-gray-700">Số phòng ngủ:</span> {iv.room.bedRoomCount}</p>
+                                            </div>
+
+                                            {/* --- Phần thanh toán --- */}
+                                            <div className="border-t border-gray-200 mt-3 pt-2">
+                                                <h3 className="text-base font-semibold text-amber-600 mb-1 text-center">💳 Thông tin thanh toán</h3>
+                                                <p><span className="font-medium text-gray-700">Số đêm đặt:</span> {night} đêm</p>
+                                                <p><span className="font-medium text-gray-700">Giá 1 đêm:</span> <span>{iv.room.roomPrice.toLocaleString()} VNĐ</span></p>
+                                                <p><span className="font-medium text-gray-700">Tổng tiền:</span><span> {iv.totalAmount.toLocaleString()} VNĐ</span></p>
+                                                <p><span className="font-medium text-gray-700">Thanh toán:</span> <span>{iv.payment == 1 ? "Thanh toán tại khách sạn" : (iv.payment == 2 ? "Thanh toán momo" : "Thanh toán vnPay")}</span></p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                        </div>
+                    </ModelForm>
+
                 )
             }
         </div>
