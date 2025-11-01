@@ -120,11 +120,8 @@ export default function Invoice(){
         setOpenFormInvoice(false);
     }
     const handleGetInvoice = (invoiceId) => {
-    console.log("invoiceId nhận được:", invoiceId);
-    console.log("Danh sách invoiceList:", invoiceList);
 
     const invoice = invoiceList.find((invoices) => invoices.id == invoiceId);
-    console.log("invoice duoc chon:", invoice);
 
     setInvoiceSelected(invoice);
     setOpenFormInvoice(true);
@@ -167,8 +164,7 @@ export default function Invoice(){
                 </div>
             </div>    
 
-        <div className="flex bg-white justify-center items-center p-3">
-            <div className="flex items-end space-x-4 bg-white p-4 rounded-md shadow-md">
+        <div className="flex bg-white justify-center items-center gap-5 p-3">
       {/* Filter Status */}
             <div className="flex flex-col">
                 <label className="text-sm font-medium mb-1">Trạng thái</label>
@@ -217,7 +213,6 @@ export default function Invoice(){
                     className="border border-gray-300 rounded-md px-2 py-2 text-sm focus:ring-1 focus:ring-blue-400"
                 />
                 </div>
-            </div>
         </div>
     </div>  
             {/* Bảng đơn hàng */}

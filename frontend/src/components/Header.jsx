@@ -94,11 +94,11 @@ function Header() {
                 Đăng ký khách sạn
               </Link>
               <Link
-                              to="/customer"
-                              className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
-                            >
-                              Quản lý khách sạn
-                            </Link>
+                to="/customer"
+                className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
+              >
+                Quản lý khách sạn
+              </Link>
               <Link
                 to="/invoice"
                 className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"

@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import AdminLayout from "./layout/AdminLayout";
-import DashBoard from "./componentadmin/DashBoard"
+import DashBoard from "./componentadmin/DashBoard";
 import PermissionManager from "./pages/PermissionManager";
 import AddHotel from "./components/AddHotel";
 import OAuth2RedirectHandler from "./pages/OAuth2RedirectHandler";
@@ -25,129 +25,129 @@ import HotelList from "./componentcustomer/hotelsList";
 import Revenue from "./componentcustomer/Revenue";
 import ReviewList from "./componentcustomer/ReviewList";
 import HotelManager from "./componentadmin/HotelManager";
-
 import Chat from "./pages/Chat";
+import BookingHistory from "./pages/BookingHistory";
+
 const router = createBrowserRouter([
-        {
-            path:"/",
-            element : <DefaultLayout/>,
-            children : [    
-                {
-                    path:"",
-                    element: <Home/>,
-                },
-                {
-                    path:"/register",
-                    element: <Register/>
-                },
-                {
-                    path:"/login",
-                    element:<Login/>
-                },
-                {
-                    path : "/addhotel",
-                    element :<AddHotel/>
-                },
-                {
-                    path: "/detailshotel/:hotelId",
-                    element: <DetailsHotel/>
-                },              
-                {
-                    path: "/myinfo",
-                    element: <MyInfo/>
-                },
-                {
-                    path: "/invoice",
-                    element: <InvoiceU/>
-                },
-                {
-                    path: "/statistic",
-                    element: <Statistic/>
-                },
-                {
-                    path: "/HotelsView",
-                    element: <HotelsView/>
-                },
-                {
-                    path:"/booking-form/:roomId",
-                    element:<FormBooking/>
-                }
-                ,{
-                    path:"/confirm-booking/:roomId",
-                    element:<ConfirmBooking/>
-                }
-                ,{
-                    path:"/success-booking",
-                    element:<SuccessBooking/>
-                }
-                ,{
-                    path:"/search-result/:province",
-                    element:<HotelProvince/>
-                }
-                
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/addhotel",
+        element: <AddHotel />,
+      },
+      {
+        path: "/detailshotel/:hotelId",
+        element: <DetailsHotel />,
+      },
+      {
+        path: "/myinfo",
+        element: <MyInfo />,
+      },
+      {
+        path: "/invoice",
+        element: <InvoiceU />,
+      },
+      {
+        path: "/statistic",
+        element: <Statistic />,
+      },
+      {
+        path: "/HotelsView",
+        element: <HotelsView />,
+      },
+      {
+        path: "/booking-form/:roomId",
+        element: <FormBooking />,
+      },
+      {
+        path: "/confirm-booking/:roomId",
+        element: <ConfirmBooking />,
+      },
+      {
+        path: "/success-booking",
+        element: <SuccessBooking />,
+      },
+      {
+        path: "/search-result/:province",
+        element: <HotelProvince />,
+      },
+      {
+        path: "/booking-history",
+        element: <BookingHistory />,
+      },
+    ],
+  },
+  {
+    path: "/oauth2/redirect",
+    element: <OAuth2RedirectHandler />,
+  },
+  {
+    path: "/customer",
+    element: <CustomerLayout />,
+    children: [
+      {
+        path: "room/:hotelId",
+        element: <RoomManagerCustomer />,
+      },
+      {
+        path: "Revenue/:hotelId",
+        element: <Revenue />,
+      },
+      {
+        index: true,
+        element: <HotelList />,
+      },
+      {
+        path: "review/:hotelId",
+        element: <ReviewList />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "",
+        element: <DashBoard />,
+      },
+      {
+        path: "permission",
+        element: <PermissionManager />,
+      },
+      {
+        path: "user",
+        element: <Users />,
+      },
+      {
+        path: "hotelmanager",
+        element: <HotelManager />,
+      },
 
-            ],
-        },
-        {
-                    path: "/oauth2/redirect",
-                    element: <OAuth2RedirectHandler/>
-                },
-            {
-                            path : "/customer",
-                            element : <CustomerLayout/>,
-                            children : [
-                                  {
-                                                                path: "room/:hotelId",
-                                                                element: <RoomManagerCustomer/>
-                                                            },
-                                                         {
-                                                                                                            path: "Revenue/:hotelId",
-                                                                                                            element: <Revenue/>
-                                                                                                        },
-                                                        {
-                                                                                 index: true,
-                                                                                  element: <HotelList/>
-                                                                                  },
-                                                                              {
-                                                                                path: "review/:hotelId",
-                                                                                element: <ReviewList />
-                                                                              },
-
-                                ]
-                            },
-        {
-            path : "/admin",
-            element : <AdminLayout/>,
-            children : [
-                {
-                    path :"",
-                    element: <DashBoard/>
-                },
-                {
-                    path :"permission",
-                    element:<PermissionManager/>
-                },
-                {
-                    path:"user",
-                    element: <Users/>
-                },
-            {
-                                path:"hotelmanager",
-                                element: <HotelManager/>
-                            },
-
-                {
-                    path:"invoice",
-                    element: <Invoice/>
-                },
-                {
-                    path:"chat",
-                    element: <Chat/>
-                }
-            ]
-            
-        }
-    
+      {
+        path: "invoice",
+        element: <Invoice />,
+      },
+      {
+        path: "chat",
+        element: <Chat />,
+      },
+    ],
+  },
 ]);
 
 export default router;

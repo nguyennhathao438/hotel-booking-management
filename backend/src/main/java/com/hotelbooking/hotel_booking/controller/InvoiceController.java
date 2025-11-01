@@ -9,6 +9,7 @@ import com.hotelbooking.hotel_booking.service.InvoiceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -47,7 +48,7 @@ public class InvoiceController {
     @GetMapping("/all-get-page")
     public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getAllInvoice(
             @RequestParam(defaultValue = "1") Integer pageNo,
-            @RequestParam(defaultValue = "2") int pageSize) {
+            @RequestParam(defaultValue = "7") int pageSize) {
         Page<InvoiceResponse> invoices = invoiceService.getAllInvoice(pageNo, pageSize);
         return ResponseEntity.ok(ApiResponse.<Page<InvoiceResponse>>builder()
                 .message("Lấy danh sách hóa đơn thành công")
@@ -70,7 +71,22 @@ public class InvoiceController {
                 .result(invoices)
                 .build());
     }
-
+    @GetMapping("/order/{userId}")
+    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getUserFilterInvoices(
+            @PathVariable Integer userId,
+            @RequestParam(required = false) Integer status,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(defaultValue = "1") int pageNo,
+            @RequestParam(defaultValue = "5") int pageSize
+    ) {
+        Page<InvoiceResponse> invoices = invoiceService.filterGetUserInvoice(userId, status, dateFrom, dateTo, pageNo,
+                pageSize);
+        return  ResponseEntity.ok(ApiResponse.<Page<InvoiceResponse>>builder()
+                .message("Lấy danh sách order User thành công")
+                .result(invoices)
+                .build());
+    }
     @GetMapping("/{invoiceID}")
     public ResponseEntity<ApiResponse<InvoiceResponse>> getInvoice(@PathVariable int invoiceID) {
         InvoiceResponse invoiceResponse = invoiceService.getInvoiceById(invoiceID);
@@ -91,10 +107,28 @@ public class InvoiceController {
 
     // InvoiceController
     @GetMapping("/owner/{userId}")
-    public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getInvoicesByOwner(@PathVariable Integer userId) {
-        List<InvoiceResponse> invoices = invoiceService.getInvoicesByHotelOwner(userId);
+    public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getInvoicesByOwner(
+            @PathVariable Integer userId,
+            @RequestParam(required = false) Integer status,
+            @RequestParam(required = false) Integer payment,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+            @RequestParam(defaultValue = "1") int pageNo,
+            @RequestParam(defaultValue = "6") int pageSize) {
+        Page<InvoiceResponse> invoices = invoiceService.getInvoicesByHotelOwner(
+                userId,status,payment,checkInDate,checkOutDate,pageNo,pageSize);
+        return ResponseEntity.ok(ApiResponse.<Page<InvoiceResponse>>builder()
+                .message("Lấy danh sách hóa đơn của khách sạn thuộc customer thành công")
+                .result(invoices)
+                .build());
+    }
+    @GetMapping("/owner/noPage/{userId}")
+    public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getInvoicesByOwnerNoPage(
+            @PathVariable Integer userId
+    ) {
+        List<InvoiceResponse> invoices = invoiceService.getInvoiceByHotelOwner(userId);
         return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
-                .message("Lấy danh sách hóa đơn của khách sạn thuộc user thành công")
+                .message("Lấy danh sách hóa đơn không phan trang success")
                 .result(invoices)
                 .build());
     }

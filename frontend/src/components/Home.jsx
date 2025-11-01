@@ -1,6 +1,7 @@
 import BookingSearch from "./BookingSearch.jsx";
 import Banner from "./Banner"
 import Hotels from "./Hotels.jsx";
+import Facilities from "./Facilities.jsx";
 function Home(){
     return(
         <>
@@ -12,6 +13,7 @@ function Home(){
                 </div>
             </div>
             <Hotels/>
+            <Facilities/>
         </>
     );
 }

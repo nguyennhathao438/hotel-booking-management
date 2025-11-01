@@ -84,9 +84,43 @@ public class InvoiceService {
     }
 
     // InvoiceService
-    public List<InvoiceResponse> getInvoicesByHotelOwner(Integer userId) {
-        List<Invoice> invoices = invoiceRepository.findByHotelOwnerId(userId);
-        return invoices.stream().map(this::mapToInvoiceResponse).toList();
+    public List<InvoiceResponse> getInvoiceByHotelOwner(Integer userId) {
+        List<Invoice> invoices = invoiceRepository.findAllByRoom_Hotel_User_Id(userId);
+        return  invoices.stream()
+                .map(this::mapToInvoiceResponse)
+                .toList();
+    }
+    public Page<InvoiceResponse> getInvoicesByHotelOwner(Integer userId,
+                                                         Integer status,
+                                                         Integer payment,
+                                                         LocalDate checkInDate,
+                                                         LocalDate checkOutDate,
+                                                         int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Invoice> invoicesPage;
+        if(status != null && payment == null && checkInDate == null && checkOutDate == null){
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatus(userId,status,pageable);
+        } else if (status == null && payment != null && checkInDate == null && checkOutDate == null){
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPayment(userId,payment,pageable);
+        } else if (status == null && payment == null && checkInDate != null && checkOutDate != null ){
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
+                    (userId, checkInDate,checkOutDate,pageable);
+        } else if (status != null && payment == null && checkInDate != null && checkOutDate != null){
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
+                    (userId,status,checkInDate,checkOutDate,pageable);
+        } else if (status == null && payment != null && checkInDate != null && checkOutDate != null){
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
+                    (userId,payment,checkInDate,checkOutDate,pageable);
+        } else if (status != null && payment != null && checkInDate == null && checkOutDate == null ){
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPayment
+                    (userId,status,payment,pageable);
+        } else if (status != null && payment != null && checkInDate != null && checkOutDate != null){
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual
+                    (userId,status,payment,checkInDate,checkOutDate,pageable);
+        } else {
+            invoicesPage = invoiceRepository.findByHotelOwnerId(userId,pageable);
+        }
+        return invoicesPage.map(this::mapToInvoiceResponse);
     }
 
     public InvoiceResponse updateInvoice(Integer id, InvoiceRequest request) {
@@ -184,6 +218,16 @@ public class InvoiceService {
         return invoices.map(this::mapToInvoiceResponse);
     }
 
+    public Page<InvoiceResponse> filterGetUserInvoice(Integer userId, Integer status, LocalDate dateFrom, LocalDate dateTo ,
+                                                      int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        if(status == null && dateFrom == null & dateTo == null){
+            Page<Invoice> invoices = invoiceRepository.findAllByUser_Id(userId, pageable);
+            return invoices.map(this::mapToInvoiceResponse);
+        }
+        Page<Invoice> invoices = invoiceRepository.findUserFilteredInvoice(userId, status,dateFrom,dateTo,pageable);
+        return invoices.map(this::mapToInvoiceResponse);
+    }
     private boolean validateDates(InvoiceRequest request, List<Invoice> exitsInvoices) {
         return exitsInvoices.stream()
                 .noneMatch(exitsInvoice -> request.getCheckInDate().isBefore(exitsInvoice.getCheckOutDate())
@@ -198,6 +242,7 @@ public class InvoiceService {
             }
         }
     }
+
 
     private RoomResponse mapToRoomResponse(Room room) {
         return RoomResponse.builder()
