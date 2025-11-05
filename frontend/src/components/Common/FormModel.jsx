@@ -13,7 +13,7 @@ const ModelForm = ({ title, onClose, children, width = "max-w-md" }) => {
         <h2 className="mb-5 text-2xl font-semibold text-center text-gray-800">
           {title}
         </h2>
-        <div className="space-y-4 overflow-y-auto max-h-[65vh] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent px-1">
+        <div className="space-y-4 overflow-y-auto max-h-[75vh] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent px-1">
           {children}
         </div>
       </div>
