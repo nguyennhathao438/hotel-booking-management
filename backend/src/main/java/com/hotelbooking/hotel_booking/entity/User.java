@@ -35,6 +35,7 @@ public class User {
     @UpdateTimestamp
     LocalDateTime updateAt;
     int status;
+    int isDelete;
     @ManyToMany
     Set<Role> roles;
 }

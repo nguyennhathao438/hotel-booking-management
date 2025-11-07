@@ -77,7 +77,7 @@ public class UserSevice {
     }
     @PreAuthorize("hasAuthority('READ_USER_LIST')")
     public List<User> getAllUser(){
-        return userRepository.findAll();
+        return userRepository.findByIsDeleteNot(1);
     }
     @PostAuthorize("returnObject.email == authentication.name || hasAuthority('UPDATE_USER')")
     public UserResponse getUser(int id){
@@ -138,8 +138,8 @@ public class UserSevice {
         User user = userRepository.findByEmail(name).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         return user;
     }
-    @PostAuthorize("hasAuthority('DELETE_USER')")
-    public void deleteUser(int userID){
+    @PostAuthorize("hasRole('USER')")
+    public void banUser(int userID){
         User user = userRepository.findById(userID).orElseThrow(() -> new AppException(ErrorCode.EMAIL_EXISTED));
         if(user.getStatus() == 0){
             user.setStatus(1);
@@ -147,6 +147,11 @@ public class UserSevice {
             user.setStatus(0);
         }
          userRepository.saveAndFlush(user);
+    }
+    public void deleteUser(int userId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_EXISTED));
+        user.setIsDelete(1);
+        userRepository.saveAndFlush(user);
     }
     public List<User> searchUser(String key){
         List<User> userList = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(key,key,key,key);
@@ -157,10 +162,9 @@ public class UserSevice {
         Pageable pageable = PageRequest.of(pageNo - 1,pageSize );
         Page<User> userPage;
         if(keyword == null || keyword.trim().isEmpty()){
-            userPage = userRepository.findAll(pageable);
+            userPage = userRepository.searchActiveUsers("",pageable);
         } else {
-            userPage = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(
-                    keyword, keyword, keyword, keyword, pageable);
+            userPage = userRepository.searchActiveUsers(keyword,pageable);
         }
         return userPage.map(this::mapToUserResponses);
     }

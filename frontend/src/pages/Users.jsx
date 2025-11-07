@@ -3,7 +3,9 @@ import {
   SettingsIcon,
   SearchIcon,
   Trash2Icon,
+  User2Icon,
 } from "lucide-react";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import ModelForm from "../components/Common/FormModel";
 import api from "../api";
@@ -101,10 +103,6 @@ export default function Users() {
     }));
   };
 
-  {
-    /*Lấy dữ liệu của role set vao checkbox nếu có*/
-  }
-
   const handleRoleCheckbox = (roleName) => {
     setUserSelected((prev) => {
       if (!prev) return prev;
@@ -139,6 +137,7 @@ export default function Users() {
   const fetchUser = async () => {
     try {
       const response = await api.get("/users");
+      console.log("bug1" + response.data.result);
       const usersWithFullName = response.data.result.map((userSelected) => ({
         ...userSelected,
         fullName: `${userSelected.firstName || ""} ${
@@ -162,6 +161,36 @@ export default function Users() {
       console.error("Lỗi khi lấy danh sách role", error);
     }
   };
+  const handleDelete = async (userId) => {
+    const result = await Swal.fire({
+      title: "Bạn có chắc muốn xóa?",
+      text: "Hành động này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      await api.delete(`/users/${userId}`);
+      const response = await api.get(
+        `/users/get-page?pageNo=${pageNo}&pageSize=${pageSize}&keyword=${keyword}`
+      );
+      const pageData = response.data.result;
+      const usersWithFullName = pageData.content.map((user) => ({
+        ...user,
+        roles: user.roles.map((r) => (typeof r === "string" ? { name: r } : r)),
+      }));
+      setUserListSearch(usersWithFullName);
+      toast.success("Xóa user thành công");
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || "Có lỗi xảy ra khi xóa user"
+      );
+    }
+  };
   useEffect(() => {
     fetchRole();
     fetchUser();
@@ -183,20 +212,38 @@ export default function Users() {
   };
   return (
     <>
-      <div className="bg-gray-300 ml-[300px]">
-        <div className="m-5 flex items-center justify-between bg-gray-100 px-6 py-4 w-[1200px] ">
-          <div>
-            <h2 className="text-2xl font-semibold">User List</h2>
-            <p className="text-sm text-gray-500">
-              You have total {userList.length} users.
+      <div className="p-6 bg-gray-100 min-h-screen w-full ml-[300px]">
+        <div className="flex">
+          <User2Icon size={30} />
+          <h1 className="text-2xl font-bold mb-6">Quản lý đơn hàng</h1>
+        </div>
+        <div className="flex justify-start mb-5 space-x-6">
+          <div className="bg-white p-4 rounded-lg pl-9 pr-9">
+            <p>Số tài khoản</p>
+            <div className="flex justify-center items-center space-x-1">
+              <p className="text-blue-500">{userList.length}</p>
+            </div>
+            {console.log(userList)}
+          </div>
+          <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
+            <p>Chủ khách sạn</p>
+            <p className="text-yellow-500">
+              {
+                userList.filter(
+                  (user) =>
+                    user.roles &&
+                    user.roles.some(
+                      (role) => role.name.toLowerCase() === "customer"
+                    )
+                ).length
+              }
             </p>
           </div>
-
-          <div className="flex justify-between items-center space-x-6">
-            <button className="flex text-white bg-blue-400 hover:bg-white hover:text-black w-auto p-2 space-x-2">
-              <CloudDownloadIcon />
-              <p>Export</p>
-            </button>
+          <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
+            <p>Đang hoạt động</p>
+            <p className="text-blue-500">
+              {userList.filter((user) => user.status === 0).length}
+            </p>
           </div>
         </div>
         <div className="m-5 bg-white">
@@ -213,8 +260,10 @@ export default function Users() {
             />
             <SearchIcon className="mt-4" />
           </div>
-          <table className="min-w-full border-collapse border border-white">
-            <thead className="font-semibold border-b">
+        </div>
+        <div className="bg-white rounded-xl shadow-md overflow-hidden mt-5">
+          <table className="min-w-full text-sm text-gray-700">
+            <thead className="bg-gray-200 text-gray-800 text-left">
               <tr>
                 <th className="py-3 px-6 text-left">Name</th>
                 <th className="py-3 px-6 text-left">Email</th>
@@ -271,40 +320,55 @@ export default function Users() {
                       >
                         Edit
                       </button>
+                      <button
+                        className="text-blue-500 hover:text-blue-700 font-medium"
+                        onClick={() => handleDelete(userList.id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))
               )}
             </tbody>
           </table>
-          <div className="flex justify-center items-center mt-4 space-x-2">
+        </div>
+
+        <div className="flex justify-center items-center mt-4 space-x-2">
+          <button
+            onClick={() => handlePageChange(pageNo - 1)}
+            className={`px-3 py-1 rounded-md ${
+              pageNo === 1
+                ? "bg-gray-200 text-gray-500"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+            }`}
+          >
+            {" "}
+            Previous
+          </button>
+          {[...Array(totalPages)].map((_, index) => (
             <button
-              onClick={() => handlePageChange(pageNo - 1)}
-              className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-3 py-1 rounded ${
+                pageNo === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 hover:bg-gray-300"
+              }`}
             >
-              {" "}
-              Previous
+              {index + 1}
             </button>
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageChange(index + 1)}
-                className={`px-3 py-1 rounded ${
-                  pageNo === index + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 hover:bg-gray-300"
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(pageNo + 1)}
-              className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300"
-            >
-              Next
-            </button>
-          </div>
+          ))}
+          <button
+            onClick={() => handlePageChange(pageNo + 1)}
+            className={`px-3 py-1 rounded-md ${
+              pageNo === totalPages
+                ? "bg-gray-200 text-gray-500"
+                : "bg-blue-500 text-white hover:bg-blue-600"
+            }`}
+          >
+            Next
+          </button>
         </div>
       </div>
       {/*EditUser*/}

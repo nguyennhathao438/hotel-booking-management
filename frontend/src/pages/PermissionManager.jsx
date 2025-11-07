@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import ModelForm from "../components/Common/FormModel";
 import toast from "react-hot-toast";
-
+import Swal from "sweetalert2";
 export default function PermissionManager() {
   // Các state cũ giữ nguyên
   const [roleList, setRoleList] = useState([]);
@@ -100,10 +100,16 @@ export default function PermissionManager() {
   };
 
   const handleDeleteRole = async (roleName) => {
-    const confirm = window.confirm(
-      `Bạn có chắc muốn xóa vai trò "${roleName}" không?`
-    );
-    if (!confirm) return;
+    const result = await Swal.fire({
+      title: "Bạn có chắc muốn xóa?",
+      text: "Hành động này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    if (!result.isConfirmed) return;
     try {
       await api.delete(`/role/${roleName}`);
       toast.success("Xóa vai trò thành công");

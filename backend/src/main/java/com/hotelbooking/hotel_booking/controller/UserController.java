@@ -76,8 +76,8 @@ public class UserController {
     }
 
     @PutMapping("/delete/{userId}")
-    ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId){
-        userService.deleteUser(userId);
+    ResponseEntity<ApiResponse<Void>> banUser(@PathVariable int userId){
+        userService.banUser(userId);
         return ResponseEntity.ok(ApiResponse.<Void>builder()
                         .message("Success")
                 .build());
@@ -100,12 +100,19 @@ public class UserController {
                 .result(userResponse)
                 .build());
     }
-
+    @DeleteMapping("/{userId}")
+    ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable int userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .message("Success")
+                .build());
+    }
     @GetMapping("/get-page")
     public ResponseEntity<ApiResponse<Page<UserResponse>>> getAllUserSearch(@RequestParam(defaultValue = "1") int pageNo,
                                                                             @RequestParam(defaultValue = "8") int pageSize,
                                                                             @RequestParam(required = false) String keyword) {
         Page<UserResponse> users = userService.getUserAllSearch(pageNo,pageSize,keyword);
+        System.out.println("Số lượng user tìm thấy: " + users.getTotalElements());
         return ResponseEntity.ok(ApiResponse.<Page<UserResponse>>builder()
                 .message("Lấy danh sách người dùng thành công")
                 .result(users)

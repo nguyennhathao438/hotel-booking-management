@@ -117,7 +117,8 @@ export default function Contact() {
   };
   return (
     <div className="p-6 bg-gray-100 min-h-screen w-full ml-[300px]">
-      <div className="p-3 border-b mb-6 bg-gray-50 flex items-center gap-2 max-w-5xl">
+      {/* Ô tìm kiếm */}
+      <div className="p-3 border-b mb-6 bg-gray-50 flex items-center gap-2 max-w-5xl rounded-lg shadow-sm">
         <input
           type="text"
           value={search}
@@ -126,17 +127,19 @@ export default function Contact() {
           onChange={(e) => setSearch(e.target.value)}
         />
         <MagnifyingGlassIcon
-          className="w-5 h-5 text-gray-500 hover:text-blue-500 "
+          className="w-5 h-5 text-gray-500 hover:text-blue-500 cursor-pointer"
           onClick={handleSearch}
         />
       </div>
+
       {/* Container chính */}
-      <div className="flex flex-col md:flex-row max-w-5xl border bg-white rounded-lg overflow-hidden h-10/12">
-        <aside className="hidden md:block w-64 border-r overflow-y-auto h-[510px]">
+      <div className="flex flex-col md:flex-row max-w-5xl border bg-white rounded-lg overflow-hidden shadow-md">
+        {/* Danh sách user */}
+        <aside className="hidden md:block w-64 border-r overflow-y-auto h-[510px] bg-gray-50">
           {listUser.map((user, i) => (
             <div
               key={i}
-              className={`flex items-center justify-between px-2 py-2 cursor-pointer hover:bg-gray-100 ${
+              className={`flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-gray-100 ${
                 user.id === selectedUser?.id ? "bg-emerald-100" : ""
               }`}
               onClick={() => {
@@ -150,11 +153,9 @@ export default function Contact() {
                   alt={user.firstName}
                   className="w-10 h-10 rounded-full"
                 />
-                <div>
-                  <p className="font-medium">
-                    {user.lastName} {user.firstName}{" "}
-                  </p>
-                </div>
+                <p className="font-medium text-sm">
+                  {user.lastName} {user.firstName}
+                </p>
               </div>
             </div>
           ))}
@@ -163,7 +164,8 @@ export default function Contact() {
         {/* Chat main */}
         {selectedUser ? (
           <main className="flex-1 flex flex-col h-[510px]">
-            <header className="flex items-center justify-between border-b p-2">
+            {/* Header */}
+            <header className="flex items-center justify-between border-b p-3 bg-gray-50">
               <div className="flex items-center gap-2">
                 <button className="md:hidden p-2">
                   <Bars3Icon className="w-6 h-6 text-gray-700" />
@@ -173,11 +175,9 @@ export default function Contact() {
                   alt="chat user"
                   className="w-10 h-10 rounded-full"
                 />
-                <div>
-                  <p className="font-medium">
-                    {selectedUser.lastName} {selectedUser.firstName}
-                  </p>
-                </div>
+                <p className="font-medium text-sm">
+                  {selectedUser.lastName} {selectedUser.firstName}
+                </p>
               </div>
               <button className="p-2 hover:bg-gray-100 rounded">
                 <EllipsisVerticalIcon className="w-6 h-6" />
@@ -192,11 +192,9 @@ export default function Contact() {
               {conversation.map((msg, i) => (
                 <div
                   key={i}
-                  className={
-                    msg.sender?.id === myId
-                      ? "mb-2 text-right"
-                      : "mb-2 text-left"
-                  }
+                  className={`mb-3 ${
+                    msg.sender?.id === myId ? "text-right" : "text-left"
+                  }`}
                 >
                   <span className="text-xs text-gray-400 block mb-1">
                     {new Date(msg.createAt).toLocaleString("vi-VN", {
@@ -208,10 +206,10 @@ export default function Contact() {
                     })}
                   </span>
                   <p
-                    className={`inline-block px-3 py-1 rounded-lg ${
+                    className={`inline-block px-3 py-2 rounded-xl max-w-xs break-words ${
                       msg.sender?.id === myId
                         ? "bg-emerald-500 text-white"
-                        : "bg-gray-200"
+                        : "bg-gray-200 text-gray-800"
                     }`}
                   >
                     {msg.content}
@@ -222,12 +220,12 @@ export default function Contact() {
             </div>
 
             {/* Footer input */}
-            <footer className="border-t p-2 flex items-center gap-2">
+            <footer className="border-t p-3 bg-gray-50 flex items-center gap-2">
               <input
                 type="text"
                 value={input}
                 placeholder="Type a message..."
-                className="flex-1 border rounded-full px-3 py-1 focus:outline-none"
+                className="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
@@ -237,7 +235,7 @@ export default function Contact() {
                 }}
               />
               <button
-                className="p-2 bg-emerald-500 hover:bg-emerald-600 rounded-full text-white"
+                className="p-3 bg-emerald-500 hover:bg-emerald-600 rounded-full text-white flex items-center justify-center"
                 onClick={() => sendMessage()}
               >
                 <PaperAirplaneIcon className="w-5 h-5" />
@@ -245,7 +243,7 @@ export default function Contact() {
             </footer>
           </main>
         ) : (
-          <div className="flex-1 flex items-center justify-center text-gray-500">
+          <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
             Chọn người để chat
           </div>
         )}

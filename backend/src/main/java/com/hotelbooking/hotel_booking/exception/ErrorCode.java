@@ -34,7 +34,8 @@ public enum ErrorCode {
     INVOICE_NOT_EXISTED(1021, "Không tìm thấy phòng", HttpStatus.NOT_FOUND),
     FEEDBACK_NOT_EXISTED(1022, "Không tìm feedback ", HttpStatus.NOT_FOUND),
     ROLE_NOT_DELETE(1023, "Không thể xóa quyền của hệ thống ", HttpStatus.BAD_REQUEST),
-    ROLE_IS_USED(1023, "Vai trò đang được sử dụng không thể xóa ", HttpStatus.BAD_REQUEST);
+    ROLE_IS_USED(1023, "Vai trò đang được sử dụng không thể xóa ", HttpStatus.BAD_REQUEST),
+    ACCOUNT_IS_BANED(1023, "Tài khoản đã bị ngưng hoạt động ", HttpStatus.BAD_REQUEST);
     private final int code;
     private final String message;
     private final HttpStatusCode statusCode;

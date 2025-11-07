@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../api";
 import { login } from "../storages/userSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate, Navigate, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 export default function Login() {
+  const location = useLocation();
   const user = useSelector((state) => state.user);
 
   const navigate = useNavigate();
@@ -14,6 +15,14 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const error = params.get("error");
+    if (error) {
+      toast.error(decodeURIComponent(error));
+      navigate("/login");
+    }
+  }, [location]);
   if (user?.isLogin) {
     return <Navigate to="/" replace />;
   }
