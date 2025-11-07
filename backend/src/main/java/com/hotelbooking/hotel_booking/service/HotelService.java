@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class HotelService {
                 .map(this::mapToHotelResponse)
                 .toList();
     }
-
+    @PreAuthorize("hasAuthority('ADD_HOTEL')")
     public HotelResponse createHotel(HotelRequest request) {
         if (hotelRepository.existsByHotelName(request.getHotelName())) {
             throw new AppException(ErrorCode.HOTEL_EXISTED);
@@ -90,7 +91,7 @@ public class HotelService {
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         return mapToHotelResponse(hotel);
     }
-
+    @PreAuthorize("hasAuthority('UPDATE_HOTEL')")
     public HotelResponse updateHotel(int hotelId, HotelRequest request) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -122,6 +123,7 @@ public class HotelService {
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     public HotelResponse approveHotel(int hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));

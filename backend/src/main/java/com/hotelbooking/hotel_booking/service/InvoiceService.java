@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -99,13 +100,14 @@ public class InvoiceService {
     }
 
     // InvoiceService
+    @PreAuthorize("hasAuthority('READ_INVOICE_LIST_(2)')")
     public List<InvoiceResponse> getInvoiceByHotelOwner(Integer userId) {
         List<Invoice> invoices = invoiceRepository.findAllByRoom_Hotel_User_Id(userId);
         return invoices.stream()
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
-
+    @PreAuthorize("hasAuthority('READ_INVOICE_LIST_(2)')")
     public Page<InvoiceResponse> getInvoicesByHotelOwner(Integer userId,
             Integer status,
             Integer payment,
@@ -142,7 +144,7 @@ public class InvoiceService {
         }
         return invoicesPage.map(this::mapToInvoiceResponse);
     }
-
+    @PreAuthorize("hasAuthority('UPDATE_INVOICE')")
     public InvoiceResponse updateInvoice(Integer id, InvoiceRequest request) {
         Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
@@ -207,7 +209,7 @@ public class InvoiceService {
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
-
+    @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public List<InvoiceResponse> getInvoicesToday() {
         LocalDate today = LocalDate.now();
 
@@ -216,13 +218,13 @@ public class InvoiceService {
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
-
+    @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public Page<InvoiceResponse> getAllInvoice(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Invoice> invoices = invoiceRepository.findAll(pageable);
         return invoices.map(this::mapToInvoiceResponse);
     }
-
+    @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public Page<InvoiceResponse> filterInvoice(Integer status, Integer payment, LocalDate dateFrom, LocalDate dateTo,
             int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);

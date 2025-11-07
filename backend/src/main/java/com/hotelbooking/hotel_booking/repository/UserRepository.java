@@ -1,5 +1,6 @@
 package com.hotelbooking.hotel_booking.repository;
 
+import com.hotelbooking.hotel_booking.entity.Role;
 import com.hotelbooking.hotel_booking.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     boolean existsByEmail(String email);
     Optional<User> findByEmail(String email);
     List<User> findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(String email,String firstName,String lastName,String phone);
-
+    boolean existsByRolesContains(Role role);
     Optional<User> findById(int id);
     Page<User> findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(
             String email, String firstName, String lastName, String phone, Pageable pageable);

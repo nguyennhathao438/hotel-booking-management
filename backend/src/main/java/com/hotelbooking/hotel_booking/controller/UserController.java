@@ -58,9 +58,9 @@ public class UserController {
     }
 
     @GetMapping("/myInfo")
-    ResponseEntity<ApiResponse<UserResponse>> getMyInfo(){
-        UserResponse userResponse = userService.getMyInfo();
-        return ResponseEntity.ok(ApiResponse.<UserResponse>builder()
+    ResponseEntity<ApiResponse<User>> getMyInfo(){
+        User userResponse = userService.getMyInfo();
+        return ResponseEntity.ok(ApiResponse.<User>builder()
                 .message("Success")
                 .result(userResponse)
                 .build());
