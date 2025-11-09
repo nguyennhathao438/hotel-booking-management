@@ -11,8 +11,8 @@ export default function ReviewList({ hotelId }) {
 
     const fetchReviews = async () => {
       try {
-        const res = await api.get(`/review/${hotelId}`);
-        console.log("Dữ liệu review:", res.data);
+        const res = await api.get(`/review/oop/${hotelId}`);
+        console.log("Dữ liệu review:", res);
         setReviews(res.data?.result || []);
       } catch (err) {
         console.error("Lỗi khi lấy đánh giá:", err);

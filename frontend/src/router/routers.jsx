@@ -30,6 +30,7 @@ import Chat from "../pages/Chat";
 import BookingHistory from "../pages/BookingHistory";
 import Forbidden from "../pages/Forbidden";
 import ProtectedRouter from "./ProtectedRouter";
+import HotelManagerCustomer from "../componentcustomer/HotelManagerCustomer";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -110,8 +111,8 @@ const router = createBrowserRouter([
         element: <Revenue />,
       },
       {
-        path: "my-hotel",
-        element: <HotelList />,
+        path: "my-hotel/:hotelId",
+        element: <HotelManagerCustomer />,
       },
       {
         path: "review/:hotelId",

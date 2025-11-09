@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../api";
 import NotificationModal from "../components/Common/Modal";
+import defaultImg from "../assets/img/banner2.jpg";
 
 const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
   const [hotelData, setHotelData] = useState({ ...hotel });
@@ -15,6 +16,7 @@ const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
   const [modalMessage, setModalMessage] = useState("");
   const [modalType, setModalType] = useState("warning");
   const [confirmUpdate, setConfirmUpdate] = useState(false);
+
   useEffect(() => {
     const fetchProvince = async () => {
       try {
@@ -26,7 +28,19 @@ const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
     };
     fetchProvince();
   }, []);
-
+useEffect(() => {
+    if (!hotelData.hotelId) return;
+    const fetchImages = async () => {
+      try {
+        const res = await api.get(`/images/hotel/${hotelData.hotelId}`);
+        console.log("Image data1111111111111111111111111:",res.data);
+        setImages(res.data?.result || []);
+      } catch (err) {
+        console.error("Lỗi khi lấy ảnh khách sạn:", err);
+      }
+    };
+    fetchImages();
+  }, [hotelData.hotelId]);
   useEffect(() => {
     if (provinceCode) {
       const fetchDistrict = async () => {
@@ -120,8 +134,11 @@ const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-150 mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
+      className="w-[1100px] mx-auto p-6 bg-white shadow-md rounded-lg space-y-4"
     >
+  <div className="flex gap-6">
+    {/* Cột form nhập thông tin */}
+    <div className="flex-1 space-y-4">
       <div>
         <label className="block font-semibold mb-1">Tên khách sạn</label>
         <input
@@ -194,8 +211,8 @@ const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
           className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
-
-      <div>
+  <div className="flex gap-12" >
+      <div className="w-[240px]">
         <label className="block font-semibold mb-1">Tổng số phòng</label>
         <input
           name="hotelTotalRoom"
@@ -206,7 +223,7 @@ const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
         />
       </div>
 
-      <div>
+      <div className="w-[240px]">
         <label className="block font-semibold mb-1">Số điện thoại</label>
         <input
           name="hotelPhone"
@@ -216,7 +233,7 @@ const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
           className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
-
+      </div>
       <div>
         <label className="block font-semibold mb-1">Mô tả khách sạn</label>
         <textarea
@@ -228,53 +245,85 @@ const EditHotelForm = ({ hotel, onClose, onUpdated }) => {
         />
       </div>
 
-      <div>
-        <label className="block font-semibold mb-1">Ảnh khách sạn</label>
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageChange}
-          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-      </div>
 
-      <div className="grid grid-cols-3 gap-2 mt-4">
-        {previewUrls.map((url, idx) => (
-          <img
-            key={idx}
-            src={url}
-            alt={`preview-${idx}`}
-            className="w-full h-32 object-cover rounded shadow-sm"
-          />
-        ))}
-      </div>
 
-    {!confirmUpdate ? (
-      <button
-        type="button"
-        onClick={() => setConfirmUpdate(true)}
-        className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-all duration-200"
-      >
-        Cập nhật khách sạn
-      </button>
-    ) : (
-      <div className="flex gap-2 mt-4">
+
+
+      {!confirmUpdate ? (
         <button
           type="button"
-          onClick={() => setConfirmUpdate(false)}
-          className="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 rounded transition-all duration-200"
+          onClick={() => setConfirmUpdate(true)}
+          className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-all duration-200"
         >
-          Hủy
+          Cập nhật khách sạn
         </button>
-        <button
-          type="submit"
-          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-all duration-200"
-        >
-          Xác nhận cập nhật
-        </button>
+      ) : (
+        <div className="flex gap-2 mt-4">
+          <button
+            type="button"
+            onClick={() => setConfirmUpdate(false)}
+            className="flex-1 bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 rounded transition-all duration-200"
+          >
+            Hủy
+          </button>
+          <button
+            type="submit"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-all duration-200"
+          >
+            Xác nhận cập nhật
+          </button>
+        </div>
+      )}
+    </div>
+
+    {/* Cột hiển thị ảnh hiện tại */}
+    <div className="w-[500px]">
+      <span className="font-semibold mb-2 block">Ảnh khách sạn hiện tại:</span>
+      <div className="grid grid-cols-2 gap-2">
+
+        {(images.length > 0 ? images : [defaultImg]).map((img, idx) => (
+            <div  className="relative">
+                  <button className="absolute top-1 right-1 bg-red-500/50 rounded-full w-6 h-6 flex items-center justify-center text-xl "
+                  > x</button>
+          <img
+            key={idx}
+            src={img.imgUrl || defaultImg}
+            alt={`hotel-${idx}`}
+            className="w-full h-32 object-cover rounded shadow-sm"
+          />
+        </div>))}
+         <div className="w-full h-32 object-cover rounded shadow-sm flex items-center justify-center">
+                {previewUrls.map((url, idx) => (
+                  <img
+                    key={idx}
+                    src={url}
+                    alt={`preview-${idx}`}
+                    className="w-full h-32 object-cover rounded shadow-sm"
+                  />
+                ))}
+              </div>
+ <div>
+          <label
+            htmlFor="hotel-images"
+            className="w-full h-32 object-cover rounded shadow-sm flex items-center justify-center"
+          >
+            +
+          </label>
+         <input
+           id="hotel-images"
+           type="file"
+           multiple
+           accept="image/*"
+           onChange={handleImageChange}
+           className="hidden w-full h-32"
+         />
       </div>
-    )}
+
+      </div>
+    </div>
+  </div>
+
+
 
       <NotificationModal
         show={showModal}

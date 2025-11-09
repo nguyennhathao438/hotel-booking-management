@@ -22,7 +22,6 @@ public enum ErrorCode {
     ROOM_ALREADY_BOOKED(1010, "Phòng đã được đặt", HttpStatus.NOT_FOUND),
     INVALID_DATE_RANGE(1011, "Ngày trả phòng không được nhỏ hơn ngày nhận", HttpStatus.BAD_REQUEST),
     INVALID_STATUS_TRANSITION(1012, "Trạng thái chuyển đổi không hợp lệ", HttpStatus.BAD_REQUEST),
-
     INVALID_PASSWORD(1013, "Mật khẩu không chính xác", HttpStatus.UNAUTHORIZED),
     ROLE_NOT_EXISTED(1014, "Vai trò không tồn tại", HttpStatus.NOT_FOUND),
     TOKEN_NOT_FOUND(1015, "Không tìm thấy refresh token trên cookie", HttpStatus.NOT_FOUND),
@@ -35,7 +34,9 @@ public enum ErrorCode {
     FEEDBACK_NOT_EXISTED(1022, "Không tìm feedback ", HttpStatus.NOT_FOUND),
     ROLE_NOT_DELETE(1023, "Không thể xóa quyền của hệ thống ", HttpStatus.BAD_REQUEST),
     ROLE_IS_USED(1023, "Vai trò đang được sử dụng không thể xóa ", HttpStatus.BAD_REQUEST),
-    ACCOUNT_IS_BANED(1023, "Tài khoản đã bị ngưng hoạt động ", HttpStatus.BAD_REQUEST);
+    ACCOUNT_IS_BANED(1023, "Tài khoản đã bị ngưng hoạt động ", HttpStatus.BAD_REQUEST),
+    CLOUDINARY_DELETE_FAILED(1024, "Xóa ảnh trên Cloudinary thất bại", HttpStatus.INTERNAL_SERVER_ERROR),
+    IMAGE_NOT_FOUND(1025, "Không tìm thấy ảnh khách sạn", HttpStatus.NOT_FOUND);
     private final int code;
     private final String message;
     private final HttpStatusCode statusCode;
@@ -47,4 +48,3 @@ public enum ErrorCode {
     }
 
 }
-

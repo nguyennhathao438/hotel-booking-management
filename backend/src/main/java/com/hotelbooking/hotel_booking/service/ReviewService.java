@@ -81,6 +81,10 @@ public class ReviewService {
                 .map(this::mapToReviewResponse)
                 .toList();
     }
+    public List<Review> getReviewByHotelId(int id){
+        Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        return reviewRepository.findAllByHotel(hotel);
+    }
     public ReviewResponse mapToReviewResponse(Review review){
         User user = userRepository.findById(review.getUser().getId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         Hotel hotel = hotelRepository.findById(review.getHotel().getHotelId()).orElseThrow(()->new AppException(ErrorCode.HOTEL_NOT_EXISTED));
