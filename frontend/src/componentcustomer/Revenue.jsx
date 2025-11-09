@@ -34,7 +34,6 @@ export default function Revenue() {
         );
         const totalBookings = filteredInvoices.length;
 
-        // Map chi tiết đặt phòng
         const bookings = filteredInvoices.map((inv) => ({
           bookingId: inv.id,
           roomName: inv.room?.roomName || "N/A",

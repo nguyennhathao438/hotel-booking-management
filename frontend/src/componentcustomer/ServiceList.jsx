@@ -11,7 +11,6 @@ export default function ServiceList({ hotelId }) {
     icon: "",
   });
 
-  // Lấy danh sách dịch vụ
   useEffect(() => {
     if (!hotelId) return;
 
@@ -37,8 +36,17 @@ const handleDeleteService = async (serviceId) => {
     console.error("Lỗi khi xóa dịch vụ:", err);
   }
 };
-  // Hàm thêm dịch vụ mới
-  const handleAddService = async () => {
+const iconOptions = [
+  { label: "", value: "https://example.com/icons/car.png" },
+  { label: "", value: "https://example.com/icons/resort.png" },
+   { label: "", value: "https://example.com/icons/restaurant.png" },
+      { label: "", value: "https://www.flaticon.com/free-icon/hotel-service_9567058" },
+            { label: "", value: "https://cdn-icons-png.flaticon.com/512/809/809957.png" },
+
+
+
+];
+const handleAddService = async () => {
     try {
       const res = await api.post("/service/create", {
         serviceName: newService.serviceName,
@@ -97,15 +105,23 @@ const handleDeleteService = async (serviceId) => {
               }
               className="border p-2 rounded-lg w-full"
             />
-            <input
-              type="text"
-              placeholder="Link icon (URL)"
-              value={newService.icon}
-              onChange={(e) =>
-                setNewService({ ...newService, icon: e.target.value })
-              }
-              className="border p-2 rounded-lg w-full"
-            />
+           <select
+             value={newService.icon}
+             onChange={(e) => setNewService({ ...newService, icon: e.target.value })}
+             className="border p-2 rounded-lg w-full"
+           >
+             <option value="">-- Chọn icon --</option>
+             {iconOptions.map((option, index) => (
+               <option key={index} value={option.value}>
+                 {option.value}
+                 <img
+                                   src={option.value}
+                                   alt={option.value}
+                                   className="w-12 h-12 object-contain"
+                                 />
+               </option>
+             ))}
+           </select>
             <textarea
               placeholder="Mô tả dịch vụ"
               value={newService.description}
