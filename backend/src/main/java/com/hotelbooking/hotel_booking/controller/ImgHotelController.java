@@ -29,6 +29,15 @@ public class ImgHotelController {
                 .result(responses)
                 .build());
     }
+    @DeleteMapping("/delete/{imageId}")
+    public ResponseEntity<ApiResponse<String>> deleteImage(@PathVariable int imageId) {
+        imgHotelService.deleteImage(imageId);
+        return ResponseEntity.ok(ApiResponse.<String>builder()
+                .code(1)
+                .message("Xóa ảnh khách sạn thành công")
+                .result("Đã xóa ảnh có ID: " + imageId)
+                .build());
+    }
 
     @GetMapping("/hotel/{hotelId}")
     public ResponseEntity<ApiResponse<List<ImgHotelRespone>>> getImgHotelBy_HotelId(@PathVariable int hotelId) {

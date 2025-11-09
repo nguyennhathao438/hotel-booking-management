@@ -39,7 +39,15 @@ public class ReviewController {
                 .result(reviewResponse)
                 .build());
     }
-
+    @GetMapping("/oop/{hotelId}")
+    ResponseEntity<ApiResponse<List<Review>>> getReviewByHotel(@PathVariable int hotelId){
+        return ResponseEntity.ok(
+                ApiResponse.<List<Review>>builder()
+                        .message("Success")
+                        .result(reviewService.getReviewByHotelId(hotelId))
+                        .build()
+        );
+    }
     @GetMapping("/hotel/{hotelId}")
     public ResponseEntity<ApiResponse<List<ReviewResponse>>> findByHotel_hotelId(@PathVariable("hotelId") int hotelId) {
         return ResponseEntity.ok(ApiResponse.<List<ReviewResponse>>builder()
