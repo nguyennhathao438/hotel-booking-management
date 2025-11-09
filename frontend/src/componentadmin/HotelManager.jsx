@@ -3,11 +3,17 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import EditHotelForm from "./DetailHotelForm";
 import api from "../api";
 import testImg from "../assets/img/banner2.jpg";
+import ImageSlider from "../components/Common/ImageSlider";
+import { Phone } from "lucide-react";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import CustomerInfo from "./CustomerInfo";
 
 export default function HotelManager() {
   const [hotels, setHotels] = useState([]);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const scrollRef = useRef(null);
+  const [showUserInfo, setShowUserInfo] = useState(false);
+    const [images, setImages] = useState([])
 
   const scroll = (direction) => {
     if (scrollRef.current) {
@@ -22,7 +28,13 @@ export default function HotelManager() {
       });
     }
   };
-
+useEffect(() => {
+        const fetchAllImgHotel = async () => {
+            const respone = await api.get("/images/all")
+            setImages(respone.data.result)
+        }
+        fetchAllImgHotel()
+    }, [])
   const fetchHotels = async () => {
     try {
       const res = await api.get("/hotels/all");
@@ -46,6 +58,10 @@ export default function HotelManager() {
     fetchHotels();
   }, []);
 
+
+
+
+
   return (
     <div className="p-4 flex ">
         <div className="w-80">
@@ -56,81 +72,114 @@ export default function HotelManager() {
       </h3>
 
       <div className="relative group px-4 md:px-8">
-        <button
-          onClick={() => scroll("left")}
-          className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition"
-        >
-          <ChevronLeft className="text-blue-600" />
-        </button>
 
         <ul
           ref={scrollRef}
-          className="flex flex-row gap-4 overflow-x-auto scrollbar-hide scroll-smooth md:gap-6 md:overflow-hidden"
+          className=" flex-row gap-4 overflow-x-auto scrollbar-hide scroll-smooth md:gap-6 md:overflow-hidden"
         >
-          {hotels.map((hotel) => (
-            <div
-              key={hotel.hotelId}
-              className="flex-shrink-0 w-[240px] md:w-[260px] lg:w-[280px] h-[360px] flex flex-col justify-between rounded-xl border shadow p-4 bg-white"
-            >
-              <div className="overflow-hidden h-[45%]">
-               <img
-                 src={hotel.hotelImages && hotel.hotelImages.length > 0 ? hotel.hotelImages[0] : testImg}
-                 alt={hotel.hotelName || "Ảnh khách sạn"}
-                 className="w-full h-full object-cover rounded-t-xl hover:scale-105 transition-transform duration-300"
-               />
-              </div>
-              <div className="flex flex-col justify-between h-[55%] p-2">
-                <h3 className="font-bold text-base text-center line-clamp-1">
-                  {hotel.hotelName}
-                </h3>
-                <p className="text-sm text-gray-600 line-clamp-1 text-center">
-                  {hotel.hotelAddress}
-                </p>
-                <p className="text-sm text-gray-500 line-clamp-2 text-center">
-                  {hotel.hotelDescription}
-                </p>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="font-semibold text-blue-600">
-                    ⭐ {hotel.hotelRating}
-                  </span>
-                  <span className="font-semibold text-orange-600 text-sm">
-                    {hotel.hotelCost.toLocaleString()} VNĐ
-                  </span>
-                </div>
-                <div className="flex gap-2 mt-2 ">
-                  <button
-                    onClick={() => setSelectedHotel(hotel)}
-                    className="w-35 h-10 bg-white border rounded-full shadow-lg hover:bg-blue-100 flex items-center justify-center transition text-xl font-bold"
-                  >
-                    Xem chi tiết
-                  </button>
-                  <button
-                    onClick={() => handleDelete(hotel.hotelId)}
-                    className="w-20 h-10 bg-white border rounded-full shadow-lg hover:bg-blue-100 flex items-center justify-center transition text-xl font-bold"
-                  >
-                    Xóa
-                  </button>
-{/*                   note sau nay sua nut xoa nay thanh thay doi trang thai an di ks =>> thay doi cho phe duyet tu 0 va 1 thanh 0 1 va 2 */}
-                </div>
-              </div>
-            </div>
-          ))}
+       {hotels.map((hotel) => {
+         const hotelImages = images.filter(
+           (img) => img.hotelId === hotel.hotelId || img.hotel?.hotelId === hotel.hotelId
+         );
+
+         return (
+           <div
+             key={hotel.hotelId}
+             className="flex w-[1400px] h-[250px] flex-col md:flex-row bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+           >
+             {/* Ảnh khách sạn */}
+             <div className="md:w-1/3 h-30 md:h-auto">
+               {hotelImages.length > 0 ? (
+                 <ImageSlider sliders={hotelImages} />
+               ) : (
+                 <div className="flex justify-center items-center h-full text-[#4b2e1f]/70">
+                   Chưa có hình ảnh
+                 </div>
+               )}
+             </div>
+
+             {/* Thông tin khách sạn */}
+             <div className="flex-1 flex flex-col justify-between p-4">
+               <div>
+                 {/* Tên & liên hệ */}
+                 <div className="flex justify-between items-center">
+                     <h2 className="text-2xl font-bold text-blue-600 mb-1">
+                       {hotel.hotelName}
+                     </h2>
+                   <div className="flex items-center gap-2">
+                     <Phone className="text-blue-500" />
+                     <span>Liên hệ: {hotel.hotelPhone}</span>
+                   </div>
+                 </div>
+
+                 {/* Địa chỉ */}
+                 <div className="flex items-start gap-2 mb-2">
+                   <FaMapMarkerAlt className="text-red-500 mt-1" />
+                   <p className="text-gray-700">
+                     <span className="font-semibold text-gray-800">Địa chỉ:</span>{" "}
+                     {hotel.hotelAddress}
+                   </p>
+                 </div>
+
+                 {/* Mô tả */}
+                 <p className="text-gray-600 text-sm md:text-base mb-2 line-clamp-2">
+                   {hotel.hotelDescription}
+                 </p>
+
+                 {/* Số phòng & đánh giá */}
+                 <div className="flex flex-wrap gap-4 text-sm md:text-base text-gray-700">
+                   <span>
+                     <strong>⭐ {hotel.hotelRating}</strong> / 5
+                   </span>
+                   <span>|</span>
+                   <span>{hotel.hotelTotalRoom} phòng</span>
+                 </div>
+               </div>
+
+               {/* Giá & nút */}
+               <div className="flex justify-between items-center mt-4">
+                 <div>
+                   <span className="text-gray-600 text-sm">Giá từ</span>
+                   <p className="text-lg md:text-xl font-semibold text-green-600">
+                     {hotel.hotelCost.toLocaleString("vi-VN")}₫ / đêm
+                   </p>
+                 </div>
+
+                 <div className="flex gap-2 mt-2">
+                   <button
+                     onClick={() => setSelectedHotel(hotel)}
+                     className="w-35 h-10 bg-white border rounded-full shadow-lg hover:bg-blue-100 flex items-center justify-center transition text-xl font-bold"
+                   >
+                     Xem chi tiết
+                   </button>
+                   <button
+                     onClick={() => handleDelete(hotel.hotelId)}
+                     className="w-20 h-10 bg-white border rounded-full shadow-lg hover:bg-blue-100 flex items-center justify-center transition text-xl font-bold"
+                   >
+                     Xóa
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </div>
+         );
+       })}
+
+
         </ul>
 
-        <button
-          onClick={() => scroll("right")}
-          className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition"
-        >
-          <ChevronRight className="text-blue-600" />
-        </button>
+
       </div>
 
       {selectedHotel && (
-        <div className="fixed inset-0 bg-black/30 flex justify-center items-start pt-20 z-50"
-         onClick={() => setSelectedHotel(null)}
+        <div
+          className="fixed inset-0  bg-black/30 flex justify-center items-start pt-20 z-50"
+                      style={{ paddingTop: "10px" }}
+
+          onClick={() => setSelectedHotel(null)}
         >
           <div
-            className="w-[1400px] max-w-full bg-white p-6 rounded shadow-lg relative"
+            className="w-[1600px] h-[850px]  max-w-full bg-white p-6 rounded shadow-lg relative flex gap-6 "
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -139,6 +188,16 @@ export default function HotelManager() {
             >
               ✕
             </button>
+            <div className="flex gap-6 max-h-[800px]">
+
+
+              {/* Thông tin admin */}
+              <div className="flex-1 overflow-y-auto p-2">
+                <CustomerInfo userId={selectedHotel.userId} readOnly={true} />
+              </div>
+            </div>
+
+
             <EditHotelForm
               hotel={selectedHotel}
               onClose={() => setSelectedHotel(null)}
