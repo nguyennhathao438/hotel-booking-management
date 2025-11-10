@@ -214,6 +214,7 @@ export default function HistoryInvoice() {
                                             onClick={() => { setOpenDetail(true); fetchImgsByHotelId(i.room.hotel.hotelId, i) }}>
                                             Xem chi tiết
                                         </button>
+                                        {console.log("trang thai la",i.status)}
                                         {i.status === 0 ? (
                                             feedbacks.some(fb => fb.invoice.id === i.id) ? (
                                                 <button
