@@ -8,10 +8,13 @@ import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.PermissionRepository;
 import com.hotelbooking.hotel_booking.repository.RoleRepository;
+import com.hotelbooking.hotel_booking.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +30,9 @@ import java.util.stream.Collectors;
 public class RoleService {
         RoleRepository roleRepository;
         PermissionRepository permissionRepository;
-
-        @PreAuthorize("hasRole('ADMIN')")
+        UserRepository userRepository;
+        String ROLE_SYSTEM[] = {"ADMIN","CUSTOMER","USER","CHAT","HOTEL","INVOICE","INVOICE_(2)","ROLE","ROOM"};
+        @PreAuthorize("hasAuthority('ADD_ROLE')")
         public RoleResponse createRole(RoleRequest request) {
 
                 var permissions = permissionRepository.findAllById(request.getPermission());
@@ -51,9 +55,9 @@ public class RoleService {
         }
 
         @PreAuthorize("hasRole('ADMIN')")
-        public List<RoleResponse> getAllRole() {
-                var roles = roleRepository.findAll();
-                return roles.stream().map(
+        public Page<RoleResponse> getAllRole(Pageable pageable) {
+               Page<Role> roles = roleRepository.findAll(pageable);
+                return roles.map(
                                 role -> RoleResponse.builder()
                                                 .name(role.getName())
                                                 .description(role.getDescription())
@@ -63,11 +67,10 @@ public class RoleService {
                                                                                 .description(p.getDescription())
                                                                                 .build())
                                                                 .collect(Collectors.toSet()))
-                                                .build())
-                                .toList();
+                                                .build());
         }
 
-        @PreAuthorize("hasRole('ADMIN')")
+        @PreAuthorize("hasAuthority('UPDATE_ROLE')")
         public RoleResponse updateRole(String roleId, RoleRequest request) {
                 Role role = roleRepository.findById(roleId)
                                 .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_EXISTED));
@@ -84,5 +87,18 @@ public class RoleService {
                                 .description(role.getDescription())
                                 .permissions(permissionResponse)
                                 .build();
+        }
+
+        public void deleteRole(String roleId){
+                for(String role: ROLE_SYSTEM){
+                    if(roleId.equals(role)){
+                        throw new AppException(ErrorCode.ROLE_NOT_DELETE);
+                    }
+                }
+                Role role = roleRepository.findById(roleId).orElseThrow(()-> new AppException(ErrorCode.ROLE_NOT_EXISTED));
+                if(userRepository.existsByRolesContains(role)){
+                    throw new AppException(ErrorCode.ROLE_IS_USED);
+                }
+                roleRepository.delete(role);
         }
 }

@@ -47,6 +47,33 @@ public class ImgHotelService {
         }
         return responses;
     }
+    public void deleteImage(int imageId) {
+        ImgHotel imgHotel = imgHotelRepository.findById(imageId)
+                .orElseThrow(() -> new AppException(ErrorCode.IMAGE_NOT_FOUND));
+
+        try {
+            String imageUrl = imgHotel.getImgUrl();
+            String publicId = extractPublicId(imageUrl);
+            cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+        } catch (IOException e) {
+            throw new AppException(ErrorCode.CLOUDINARY_DELETE_FAILED);
+        }
+
+        imgHotelRepository.delete(imgHotel);
+    }
+    private String extractPublicId(String imageUrl) {
+        if (imageUrl == null || !imageUrl.contains("/")) {
+            return null;
+        }
+        String[] parts = imageUrl.split("/");
+        if (parts.length < 2) {
+            return null;
+        }
+        String fileName = parts[parts.length - 1];
+        String folderName = parts[parts.length - 2];
+        return folderName + "/" + fileName.substring(0, fileName.lastIndexOf('.'));
+    }
+
 
     public List<ImgHotelRespone> getImgHotelsBy_HotelId(int hotelId) {
         List<ImgHotel> imgHotels = imgHotelRepository.findImgHotelByHotel_HotelId(hotelId);

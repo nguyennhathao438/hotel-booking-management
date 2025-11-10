@@ -4,7 +4,7 @@ import api from "../api";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ServiceList from "./ServiceListView";
 import defaultImg from "../assets/img/banner2.jpg";
-
+import { Link } from "react-router-dom";
 const DetailHotelForm = ({ hotel, onClose }) => {
   const [hotelData, setHotelData] = useState({ ...hotel });
   const [listProvinces, setListProvinces] = useState([]);
@@ -76,9 +76,9 @@ const DetailHotelForm = ({ hotel, onClose }) => {
   }, [hotelData.hotelId]);
 
   return (
-    <div className="w-[1200px] flex mx-auto p-6 space-y-6 overflow-y-auto scroll-smooth">
+    <div className="w-[1300px] flex mx-auto p-6 space-y-6 overflow-y-auto scroll-smooth">
       {/* Thông tin khách sạn */}
-      <div className="w-[750px] bg-white shadow-md rounded-lg p-6 space-y-4">
+      <div className=" w-[750px] h-[850px] bg-white shadow-md rounded-lg p-6 space-y-4">
         <h2 className="text-2xl font-bold">{hotelData.hotelName}</h2>
 
         <p>
@@ -97,9 +97,18 @@ const DetailHotelForm = ({ hotel, onClose }) => {
           <span className="font-semibold">Số sao:</span> ⭐ {hotelData.hotelRating}
         </p>
 
-        <p>
-          <span className="font-semibold">Tổng số phòng:</span> {hotelData.hotelTotalRoom}
-        </p>
+
+
+     <p>
+       <span className="font-semibold">Tổng số phòng:</span> {hotelData.hotelTotalRoom}{" "}
+       <Link
+         to={``}
+         className="text-blue-500 underline hover:text-blue-700"
+       >
+         xem ds phòng
+       </Link>
+     </p>
+
 
         <p>
           <span className="font-semibold">Số điện thoại:</span> {hotelData.hotelPhone}
@@ -128,7 +137,7 @@ const DetailHotelForm = ({ hotel, onClose }) => {
       </div>
 
       {/* Review + Service */}
-      <div className="w-[450px] space-y-6">
+      <div className="w-[550px] space-y-6">
         {/* Review khách sạn */}
         <div className="bg-gray-50 p-6 rounded-xl shadow-md">
           <h3 className="text-2xl font-bold mb-4 text-center">Đánh giá khách sạn</h3>

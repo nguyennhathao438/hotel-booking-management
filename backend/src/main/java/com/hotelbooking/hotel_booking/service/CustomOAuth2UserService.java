@@ -3,6 +3,8 @@ package com.hotelbooking.hotel_booking.service;
 import com.hotelbooking.hotel_booking.entity.Provider;
 import com.hotelbooking.hotel_booking.entity.Role;
 import com.hotelbooking.hotel_booking.entity.User;
+import com.hotelbooking.hotel_booking.exception.AppException;
+import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.RoleRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -90,6 +93,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     .build();
             return userRepository.save(newUser);
         });
+        if (user.getIsDelete() == 1 || user.getStatus() == 1) {
+            throw new OAuth2AuthenticationException(
+                    new OAuth2Error("account_disabled"),
+                    "Tài khoản của bạn đã bị khóa"
+            );
+        }
         // Tạo DefaultOAuth2User để Spring Security dùng
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))

@@ -3,6 +3,7 @@ package com.hotelbooking.hotel_booking.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
+import com.hotelbooking.hotel_booking.service.CustomOAuth2FailureHandler;
 import com.hotelbooking.hotel_booking.service.CustomOAuth2SuccessHandler;
 import com.hotelbooking.hotel_booking.service.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ import java.util.List;
 public class SecurityConfig {
     @Autowired
     CustomOAuth2UserService customOAuth2UserService;
+    @Autowired
+    CustomOAuth2FailureHandler customOAuth2FailureHandler;
     @Autowired
     CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final String[] PUBLIC_ENDPOINTS = { "/api/users/register", "/api/auth/login", "/api/auth/introspect",
@@ -60,6 +63,7 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService))
+                        .failureHandler(customOAuth2FailureHandler)
                         .successHandler(customOAuth2SuccessHandler))
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) -> {
@@ -121,7 +125,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173","http://localhost:80","http://localhost"));
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

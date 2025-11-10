@@ -19,7 +19,7 @@ function Header() {
     dispatch(logout());
     navigate("/");
   };
-
+  const hasRole = (roleName) => user.role?.some((r) => r.name === roleName);
   return (
     <header className="sticky w-full z-50 bg-white shadow-md py-3 px-10 flex justify-between items-center font-sans ">
       {/* Logo */}
@@ -40,15 +40,15 @@ function Header() {
           to="/"
           className="transition-colors duration-200 hover:text-[#d2b48c]"
         >
-          HOME
+          TRANG CHỦ
         </Link>
         <Link
-          to="/rooms"
+          to="/HotelsView"
           className="transition-colors duration-200 hover:text-[#d2b48c]"
         >
-          ROOMS
+          KHÁCH SẠN
         </Link>
-        <Link
+        {/* <Link
           to="/spa"
           className="transition-colors duration-200 hover:text-[#d2b48c]"
         >
@@ -59,7 +59,7 @@ function Header() {
           className="transition-colors duration-200 hover:text-[#d2b48c]"
         >
           CONTACTS
-        </Link>
+        </Link> */}
       </nav>
 
       {/* Account / Auth Buttons */}
@@ -78,12 +78,36 @@ function Header() {
 
           {openAccount && (
             <ul className="absolute right-0 bg-white shadow-lg rounded-md mt-2 transition-transform">
-              <Link to="/myinfo" className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Thông tin cá nhân</Link>
-              <Link to="/history"><li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Lịch sử đặt phòng</li></Link>
-              <Link to="/addhotel" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Đăng ký khách sạn</Link>
-              <Link to="/invoice" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý đơn hàng</Link>
-              <Link to="/statistic" className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">Quản lý thống kê</Link>
-              <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer" onClick={handleLogout}>Đăng xuất</li>
+              <Link to="/myinfo">
+                <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">
+                  Thông tin cá nhân
+                </li>
+              </Link>
+              <Link to="/history">
+                <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">
+                  Lịch sử đặt phòng
+                </li>
+              </Link>
+              {hasRole("CUSTOMER") ? (
+                <Link to="/customer">
+                  <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">
+                    Trang quản lý khách sạn
+                  </li>
+                </Link>
+              ) : (
+                <Link to="/addhotel">
+                  <li className="block px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">
+                    Đăng ký khách sạn
+                  </li>
+                </Link>
+              )}
+
+              <li
+                className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Đăng xuất
+              </li>
             </ul>
           )}
         </div>

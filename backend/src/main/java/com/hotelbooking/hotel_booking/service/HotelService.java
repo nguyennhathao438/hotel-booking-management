@@ -12,6 +12,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -43,12 +48,15 @@ public class HotelService {
                 .map(this::mapToHotelResponse)
                 .toList();
     }
-
+    @PreAuthorize("hasAuthority('ADD_HOTEL')")
     public HotelResponse createHotel(HotelRequest request) {
         if (hotelRepository.existsByHotelName(request.getHotelName())) {
             throw new AppException(ErrorCode.HOTEL_EXISTED);
         }
         User user = getCurrentUser();
+        if(hotelRepository.existsByUser(user)){
+            throw new AppException(ErrorCode.REQUEST_HOTEL_EXISTED);
+        }
         Hotel hotel = Hotel.builder()
                 .hotelName(request.getHotelName())
                 .hotelAddress(request.getHotelAddress())
@@ -86,7 +94,7 @@ public class HotelService {
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         return mapToHotelResponse(hotel);
     }
-
+    @PreAuthorize("hasAuthority('UPDATE_HOTEL')")
     public HotelResponse updateHotel(int hotelId, HotelRequest request) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -118,7 +126,7 @@ public class HotelService {
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public HotelResponse approveHotel(int hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -127,6 +135,25 @@ public class HotelService {
         hotelRepository.save(hotel);
 
         return mapToHotelResponse(hotel);
+    }
+
+    public Page<HotelResponse> getAllHotelSearch(int pageNo, int pageSize, Double hotelRating, String sortByCost){
+        Sort sort = Sort.unsorted();
+        if ("asc".equalsIgnoreCase(sortByCost)) {
+            sort = Sort.by("hotelCost").ascending();
+        } else if ("desc".equalsIgnoreCase(sortByCost)) {
+            sort = Sort.by("hotelCost").descending();
+        }
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        Page<Hotel> hotelPage;
+        if(hotelRating != null){
+            double minRating = hotelRating;
+            double maxRating = Math.min(5.0, hotelRating + 0.9);
+            hotelPage = hotelRepository.findByHotelRatingBetweenAndStatus(minRating,maxRating,1,pageable);
+        } else {
+            hotelPage = hotelRepository.findByStatus(1,pageable);
+        }
+        return hotelPage.map(this::mapToHotelResponse);
     }
 
     private HotelResponse mapToHotelResponse(Hotel hotel) {

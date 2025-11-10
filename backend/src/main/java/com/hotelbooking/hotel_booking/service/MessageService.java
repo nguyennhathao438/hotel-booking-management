@@ -11,6 +11,7 @@ import com.hotelbooking.hotel_booking.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
 public class MessageService {
     MessageRepository messageRepository;
     UserRepository userRepository;
+    @PreAuthorize("hasAuthority('CHAT')")
     public MessageResponse createMessage(MessageRequest request){
         User sender = userRepository.findById(request.getSenderId()).orElseThrow(() ->new AppException(ErrorCode.USER_NOT_EXISTED));
         User receiver = userRepository.findById(request.getReceiverId()).orElseThrow(() ->new AppException(ErrorCode.USER_NOT_EXISTED));
@@ -35,10 +37,12 @@ public class MessageService {
         messageRepository.save(message);
         return mapToMessageResponse(message);
     }
+    @PreAuthorize("hasAuthority('READ_MESSAGES')")
     public List<Message> getMessageTwoPerson(int senderId,int receiverId){
         List<Message> messageList = messageRepository.getConversation(senderId,receiverId);
         return messageList;
     }
+    @PreAuthorize("hasAuthority('READ_MESSAGES')")
     public List<User> getAllMessageByUser(int userId,String keyword){
         System.out.println(keyword);
         List<User> userList = messageRepository.getLastSenders(userId,keyword);

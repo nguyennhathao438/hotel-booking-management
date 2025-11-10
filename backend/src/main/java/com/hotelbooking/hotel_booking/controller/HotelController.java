@@ -3,10 +3,12 @@ package com.hotelbooking.hotel_booking.controller;
 import com.hotelbooking.hotel_booking.dto.request.HotelRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
+import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
 import com.hotelbooking.hotel_booking.service.HotelService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +63,7 @@ public class HotelController {
 
     @PutMapping("/update/{hotelID}")
     public ResponseEntity<ApiResponse<HotelResponse>> updateHotel(@PathVariable int hotelID,
-                                                                  @RequestBody @Valid HotelRequest request) {
+            @RequestBody @Valid HotelRequest request) {
         HotelResponse hotelResponse = hotelService.updateHotel(hotelID, request);
         return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
                 .code(1)
@@ -80,12 +82,6 @@ public class HotelController {
         return ResponseEntity.ok(response);
     }
 
-
-
-
-
-
-
     @GetMapping("/getkhong")
     public ResponseEntity<ApiResponse<List<HotelResponse>>> getAllHotels0() {
         List<HotelResponse> hotelList = hotelService.getAllHotels0();
@@ -103,6 +99,7 @@ public class HotelController {
                 .result(hotelResponse)
                 .build());
     }
+
     @PutMapping("/approve/{id}")
     public ResponseEntity<ApiResponse> approveHotel(@PathVariable("id") int id) {
         HotelResponse response = hotelService.approveHotel(id);
@@ -110,6 +107,19 @@ public class HotelController {
                 .code(1000)
                 .message("Duyệt khách sạn thành công")
                 .result(response)
+                .build());
+    }
+
+    @GetMapping("/all/get-page")
+    public ResponseEntity<ApiResponse<Page<HotelResponse>>> getAllHotelSearch(
+            @RequestParam(defaultValue = "1") int pageNo,
+            @RequestParam(defaultValue = "7") int pageSize,
+            @RequestParam(required = false) Double hotelRating,
+            @RequestParam(required = false) String sortByCost) {
+        Page<HotelResponse> hotels = hotelService.getAllHotelSearch(pageNo, pageSize, hotelRating, sortByCost);
+        return ResponseEntity.ok(ApiResponse.<Page<HotelResponse>>builder()
+                .message("Danh sách Phân trang khách sạn")
+                .result(hotels)
                 .build());
     }
 }

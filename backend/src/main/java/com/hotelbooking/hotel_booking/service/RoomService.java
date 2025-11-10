@@ -13,6 +13,8 @@ import com.hotelbooking.hotel_booking.repository.RoomRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,7 +32,7 @@ public class RoomService {
     private HotelRepository hotelRepository;
 @Autowired
 private InvoiceRepository invoiceRepository;
-
+    @PostAuthorize("hasAuthority('ADD_HOTEL')")
     public RoomResponse createRoom(RoomRequest request) {
         if (roomRepository.existsByRoomName(request.getRoomName())) {
             throw new AppException(ErrorCode.ROOM_EXISTED);
@@ -51,7 +53,6 @@ private InvoiceRepository invoiceRepository;
         roomRepository.save(room);
         return mapToRoomResponse(room);
     }
-
     public List<RoomResponse> getAllRooms() {
         return roomRepository.findAll().stream()
                 .map(this::mapToRoomResponse)
@@ -83,7 +84,7 @@ private InvoiceRepository invoiceRepository;
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
         return mapToRoomResponse(room);
     }
-
+    @PostAuthorize("hasAuthority('UPDATE_ROOM')")
     public RoomResponse updateRoom(int id, RoomRequest request) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
@@ -113,7 +114,7 @@ private InvoiceRepository invoiceRepository;
         roomRepository.save(room);
         return mapToRoomResponse(room);
     }
-
+    @PostAuthorize("hasAuthority('DELETE_ROOM')")
     public void deleteRoom(Integer id) {
         if (!roomRepository.existsById(id)) {
             throw new AppException(ErrorCode.ROOM_NOT_EXISTED);

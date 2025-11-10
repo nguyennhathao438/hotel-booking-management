@@ -11,7 +11,7 @@ export default function RoomManagerCustomer({ hotelId, hotelName }) {
   const [images, setImages] = useState([]);
   const [editingRoom, setEditingRoom] = useState(null);
   const [filter, setFilter] = useState("all");
-const [editingStatusRoomId, setEditingStatusRoomId] = useState(null);
+  const [editingStatusRoomId, setEditingStatusRoomId] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,51 +44,54 @@ const [editingStatusRoomId, setEditingStatusRoomId] = useState(null);
       alert("Cập nhật thất bại!");
     }
   };
- const filteredRooms = rooms.filter((room) => {
+  const filteredRooms = rooms.filter((room) => {
     if (filter === "all") return true;
     if (filter === "active") return room.status === 0;
     if (filter === "maintenance") return room.status === 1;
     return true;
   });
   return (
-    <div className="p-4">
+    <div className="p-4 ml-[300px]">
       <h2 className="text-lg font-semibold mb-3 text-blue-600">
         Danh sách phòng của khách sạn {hotelName || "Khách sạn"}
       </h2>
-<div className="w-full flex justify-end items-center" >
-    <button
-              onClick={() => setFilter("maintenance")}
-              className={`w-24 h-10 border rounded-full shadow-lg flex items-center justify-center text-sm font-semibold transition
-                ${filter === "maintenance"
-                  ? "bg-yellow-500 text-white"
-                  : "bg-white hover:bg-yellow-100"
+      <div className="w-full flex justify-end items-center">
+        <button
+          onClick={() => setFilter("maintenance")}
+          className={`w-24 h-10 border rounded-full shadow-lg flex items-center justify-center text-sm font-semibold transition
+                ${
+                  filter === "maintenance"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-white hover:bg-yellow-100"
                 }`}
-            >
-              Bảo trì
-            </button>
+        >
+          Bảo trì
+        </button>
 
-            <button
-              onClick={() => setFilter("active")}
-              className={`w-24 h-10 border rounded-full shadow-lg flex items-center justify-center text-sm font-semibold transition
-                ${filter === "active"
-                  ? "bg-green-500 text-white"
-                  : "bg-white hover:bg-green-100"
+        <button
+          onClick={() => setFilter("active")}
+          className={`w-24 h-10 border rounded-full shadow-lg flex items-center justify-center text-sm font-semibold transition
+                ${
+                  filter === "active"
+                    ? "bg-green-500 text-white"
+                    : "bg-white hover:bg-green-100"
                 }`}
-            >
-              Hoạt động
-            </button>
+        >
+          Hoạt động
+        </button>
 
-            <button
-              onClick={() => setFilter("all")}
-              className={`w-24 h-10 border rounded-full shadow-lg flex items-center justify-center text-sm font-semibold transition
-                ${filter === "all"
-                  ? "bg-blue-500 text-white"
-                  : "bg-white hover:bg-blue-100"
+        <button
+          onClick={() => setFilter("all")}
+          className={`w-24 h-10 border rounded-full shadow-lg flex items-center justify-center text-sm font-semibold transition
+                ${
+                  filter === "all"
+                    ? "bg-blue-500 text-white"
+                    : "bg-white hover:bg-blue-100"
                 }`}
-            >
-              Tất cả
-            </button>
-</div>
+        >
+          Tất cả
+        </button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-1 ">
         {filteredRooms.map((room) => (
           <div
@@ -122,7 +125,9 @@ const [editingStatusRoomId, setEditingStatusRoomId] = useState(null);
                 </div>
                 <div className="flex items-center pl-2 justify-center lg:justify-start">
                   <FaHome className="text-blue-500" />
-                  <span className="p-2">{room.roomArea} m<sup>2</sup></span>
+                  <span className="p-2">
+                    {room.roomArea} m<sup>2</sup>
+                  </span>
                 </div>
                 <div className="flex items-center pl-2 justify-center lg:justify-start">
                   <MdWifi className="text-green-500" />
@@ -155,90 +160,98 @@ const [editingStatusRoomId, setEditingStatusRoomId] = useState(null);
               </div>
             </div>
             <div className="flex flex-col justify-between h-full p-3">
-  <div className="flex justify-center lg:justify-end items-center p-3">
-            <button
-              onClick={() => handleUpdateClick(room)}
-              className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-            >
-              Cập nhật thông tin phòng
-            </button>
-                      </div>
- <div className="flex justify-center lg:justify-end items-center p-3">
-   {editingStatusRoomId === room.roomId ? (
-     <div className="flex gap-2 w-full">
-       {room.status === 0 ? (
-         <button
-           onClick={async () => {
-             try {
-               await api.put(`/rooms/${room.roomId}`, { ...room, status: 1 });
-               alert("Phòng đã chuyển sang trạng thái bảo trì!");
-               setEditingStatusRoomId(null);
-               const res = await api.get(`/rooms/hotel/${hotelId}`);
-               setRooms(res.data.result || []);
-             } catch (error) {
-               console.error("Lỗi cập nhật trạng thái:", error);
-               alert("Cập nhật thất bại!");
-             }
-           }}
-           className="flex-1 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition"
-         >
-           Bảo trì phòng
-         </button>
-       ) : (
-         <button
-           onClick={async () => {
-             try {
-               await api.put(`/rooms/${room.roomId}`, { ...room, status: 0 });
-               alert("Phòng đã được kích hoạt lại!");
-               setEditingStatusRoomId(null);
-               const res = await api.get(`/rooms/hotel/${hotelId}`);
-               setRooms(res.data.result || []);
-             } catch (error) {
-               console.error("Lỗi cập nhật trạng thái:", error);
-               alert("Cập nhật thất bại!");
-             }
-           }}
-           className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
-         >
-           Kích hoạt lại phòng
-         </button>
-       )}
+              <div className="flex justify-center lg:justify-end items-center p-3">
+                <button
+                  onClick={() => handleUpdateClick(room)}
+                  className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+                >
+                  Cập nhật thông tin phòng
+                </button>
+              </div>
+              <div className="flex justify-center lg:justify-end items-center p-3">
+                {editingStatusRoomId === room.roomId ? (
+                  <div className="flex gap-2 w-full">
+                    {room.status === 0 ? (
+                      <button
+                        onClick={async () => {
+                          try {
+                            await api.put(`/rooms/${room.roomId}`, {
+                              ...room,
+                              status: 1,
+                            });
+                            alert("Phòng đã chuyển sang trạng thái bảo trì!");
+                            setEditingStatusRoomId(null);
+                            const res = await api.get(
+                              `/rooms/hotel/${hotelId}`
+                            );
+                            setRooms(res.data.result || []);
+                          } catch (error) {
+                            console.error("Lỗi cập nhật trạng thái:", error);
+                            alert("Cập nhật thất bại!");
+                          }
+                        }}
+                        className="flex-1 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition"
+                      >
+                        Bảo trì phòng
+                      </button>
+                    ) : (
+                      <button
+                        onClick={async () => {
+                          try {
+                            await api.put(`/rooms/${room.roomId}`, {
+                              ...room,
+                              status: 0,
+                            });
+                            alert("Phòng đã được kích hoạt lại!");
+                            setEditingStatusRoomId(null);
+                            const res = await api.get(
+                              `/rooms/hotel/${hotelId}`
+                            );
+                            setRooms(res.data.result || []);
+                          } catch (error) {
+                            console.error("Lỗi cập nhật trạng thái:", error);
+                            alert("Cập nhật thất bại!");
+                          }
+                        }}
+                        className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+                      >
+                        Kích hoạt lại phòng
+                      </button>
+                    )}
 
-       {/* Nút hủy */}
-       <button
-         onClick={() => setEditingStatusRoomId(null)}
-         className="flex-1 bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 transition"
-       >
-         Hủy
-       </button>
-     </div>
-   ) : (
-     <button
-       onClick={() => setEditingStatusRoomId(room.roomId)}
-       className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-     >
-       Cập nhật trạng thái
-     </button>
-   )}
- </div>
+                    {/* Nút hủy */}
+                    <button
+                      onClick={() => setEditingStatusRoomId(null)}
+                      className="flex-1 bg-gray-400 text-white py-2 rounded-lg hover:bg-gray-500 transition"
+                    >
+                      Hủy
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setEditingStatusRoomId(room.roomId)}
+                    className="mt-3 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+                  >
+                    Cập nhật trạng thái
+                  </button>
+                )}
+              </div>
 
-
-
-                <div className="mt-auto flex  justify-center lg:justify-end items-center p-3">
-
-
-
-                             <p>
-                               Trạng thái:{" "}
-                               <span className={room.status === 0 ? "text-green-600 font-semibold" : "text-yellow-600 font-semibold"}>
-                                 {room.status === 0 ? "Đang hoạt động" : "Bảo trì"}
-                               </span>
-                             </p>
-
-                                      </div>
-                      </div>
-
-
+              <div className="mt-auto flex  justify-center lg:justify-end items-center p-3">
+                <p>
+                  Trạng thái:{" "}
+                  <span
+                    className={
+                      room.status === 0
+                        ? "text-green-600 font-semibold"
+                        : "text-yellow-600 font-semibold"
+                    }
+                  >
+                    {room.status === 0 ? "Đang hoạt động" : "Bảo trì"}
+                  </span>
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>

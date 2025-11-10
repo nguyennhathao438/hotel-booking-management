@@ -49,8 +49,8 @@ public class UserSevice {
     Cloudinary cloudinary;
     @Autowired
     public UserSevice(UserRepository userRepository,
-                       PasswordEncoder pwdEncoder,
-                       RoleRepository roleRepository) {
+                      PasswordEncoder pwdEncoder,
+                      RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.pwdEncoder = pwdEncoder;
         this.roleRepository = roleRepository;
@@ -65,26 +65,26 @@ public class UserSevice {
         Set<Role> roles = new HashSet<>();
         roleRepository.findById("USER").ifPresent(roles::add);
         User user = User.builder()
-                        .email(request.getEmail())
-                        .password(pwdEncoder.encode(request.getPassword()))
-                                .firstName(request.getFirstName())
-                                        .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(pwdEncoder.encode(request.getPassword()))
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
                 .roles(roles)
                 .build();
         System.out.println(user.getFirstName()+ user.getRoles());
         userRepository.save(user);
         return mapToUserResponse(user);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('READ_USER_LIST')")
     public List<User> getAllUser(){
-        return userRepository.findAll();
+        return userRepository.findByIsDeleteNot(1);
     }
-    @PostAuthorize("returnObject.email == authentication.name || hasRole('ADMIN')")
+    @PostAuthorize("returnObject.email == authentication.name || hasAuthority('UPDATE_USER')")
     public UserResponse getUser(int id){
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         return mapToUserResponse(user);
     }
-    @PostAuthorize("returnObject.email == authentication.name || hasRole('ADMIN')")
+    @PostAuthorize("returnObject.email == authentication.name || hasAuthority('UPDATE_USER')")
     public UserResponse updateUser(UserUpdateRequest request,int userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         user.setAvatar(request.getAvatar());
@@ -99,6 +99,7 @@ public class UserSevice {
         userRepository.save(user);
         return mapToUserResponse(user);
     }
+    @PostAuthorize("returnObject.email == authentication.name")
     public UserResponse updateMyInfo(MyInfoRequest request, int userId) throws IOException {
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
         if(request.getFile() != null) {
@@ -114,6 +115,7 @@ public class UserSevice {
         userRepository.save(user);
         return mapToUserResponse(user);
     }
+    @PostAuthorize("returnObject.email == authentication.name")
     public void updatePassword(UpdatePasswordRequest request,int userId){
         System.out.println(request.getPasswordnew1());
         System.out.println(request.getPasswordnew2());
@@ -130,39 +132,43 @@ public class UserSevice {
         userRepository.save(user);
     }
     @PostAuthorize("returnObject.email == authentication.name ")
-    public UserResponse getMyInfo(){
+    public User getMyInfo(){
         var context = SecurityContextHolder.getContext();
         String name = context.getAuthentication().getName();
         User user = userRepository.findByEmail(name).orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_EXISTED));
-        return mapToUserResponse(user);
+        return user;
     }
-    @PostAuthorize("hasRole('ADMIN')")
-    public void deleteUser(int userID){
+    @PostAuthorize("hasRole('USER')")
+    public void banUser(int userID){
         User user = userRepository.findById(userID).orElseThrow(() -> new AppException(ErrorCode.EMAIL_EXISTED));
         if(user.getStatus() == 0){
             user.setStatus(1);
         } else {
             user.setStatus(0);
         }
-         userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(user);
+    }
+    public void deleteUser(int userId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_EXISTED));
+        user.setIsDelete(1);
+        userRepository.saveAndFlush(user);
     }
     public List<User> searchUser(String key){
         List<User> userList = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(key,key,key,key);
         return userList;
     }
-    @PostAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('READ_USER_LIST')")
     public Page<UserResponse> getUserAllSearch(int pageNo, int pageSize,String keyword){
         Pageable pageable = PageRequest.of(pageNo - 1,pageSize );
         Page<User> userPage;
         if(keyword == null || keyword.trim().isEmpty()){
-            userPage = userRepository.findAll(pageable);
+            userPage = userRepository.searchActiveUsers("",pageable);
         } else {
-            userPage = userRepository.findByEmailContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrPhoneContainingIgnoreCase(
-                    keyword, keyword, keyword, keyword, pageable);
+            userPage = userRepository.searchActiveUsers(keyword,pageable);
         }
         return userPage.map(this::mapToUserResponses);
     }
-     UserResponse mapToUserResponses(User user){
+    UserResponse mapToUserResponses(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())

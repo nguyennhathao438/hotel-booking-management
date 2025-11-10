@@ -1,57 +1,75 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../api";
 import { login } from "../storages/userSlice";
-import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
-import {  toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { useNavigate, Navigate, useLocation } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 export default function Login() {
+  const location = useLocation();
+  const user = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading,setLoading] =useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const error = params.get("error");
+    if (error) {
+      toast.error(decodeURIComponent(error));
+      navigate("/login");
+    }
+  }, [location]);
+  if (user?.isLogin) {
+    return <Navigate to="/" replace />;
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await api.post("/auth/login",{
+      const response = await api.post("/auth/login", {
         email,
         password,
       });
-      
+
       console.log(response);
-      localStorage.setItem("token",response.data.result.accessToken);
-      dispatch(login({
-        avatar:response.data.result.avatar,
-        firstName:response.data.result.firstName,
-        lastName:response.data.result.lastName,
-        roles:response.data.result.roles,
-        userId:response.data.result.userId
-      }))
-      navigate("/")
+      localStorage.setItem("token", response.data.result.accessToken);
+      dispatch(
+        login({
+          avatar: response.data.result.avatar,
+          firstName: response.data.result.firstName,
+          lastName: response.data.result.lastName,
+          roles: response.data.result.roles,
+          userId: response.data.result.userId,
+        })
+      );
+      navigate("/");
       toast.success("Đăng nhập thành công");
-    }catch(error){
-        if (error.response && error.response.data) {
-           toast.error(error.response.data.message);
-        } else {
-            toast.error("Lỗi kết nối sever");
-        }
-    }
-    finally{
+    } catch (error) {
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Lỗi kết nối sever");
+      }
+    } finally {
       setLoading(false);
     }
   };
   const handleLoginGoogle = () => {
-  // URL chuẩn để Spring Security tự xử lý OAuth2 flow
-  window.location.href = "http://localhost:8080/oauth2/authorization/google";
-};
-    const handleLoginFaceBook = () => {
-  // URL chuẩn để Spring Security tự xử lý OAuth2 flow
-  window.location.href = "http://localhost:8080/oauth2/authorization/facebook";
-};
+    // URL chuẩn để Spring Security tự xử lý OAuth2 flow
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  };
+  const handleLoginFaceBook = () => {
+    // URL chuẩn để Spring Security tự xử lý OAuth2 flow
+    window.location.href =
+      "http://localhost:8080/oauth2/authorization/facebook";
+  };
   return (
     <div className="flex items-center justify-center min-h-screen ">
-      <div className="bg-white shadow-lg rounded-lg flex w-[800px] max-w-full overflow-hidden">       
+      <div className="bg-white shadow-lg rounded-lg flex w-[800px] max-w-full overflow-hidden">
         {/* Left side (Image/Illustration) */}
         <div className="flex items-center justify-center w-1/2 bg-gray-50 p-8">
           <img
@@ -89,29 +107,42 @@ export default function Login() {
             </div>
             {/* Button */}
             <div className="flex justify-center">
-            <button
-              type="submit" 
-              disabled={loading}
-              className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
-            >
-              {loading ?  "Đang đăng nhập ..." : "Đăng nhập" }
-            </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
+              >
+                {loading ? "Đang đăng nhập ..." : "Đăng nhập"}
+              </button>
             </div>
-            <div className="flex justify-around gap-4"><button className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white" 
-            type="button"
-            onClick={() => handleLoginGoogle()}>Google</button>
-            <button className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white" 
-            type="button"
-            onClick={()=> handleLoginFaceBook()}>Facebook</button></div>
+            <div className="flex justify-around gap-4">
+              <button
+                className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
+                type="button"
+                onClick={() => handleLoginGoogle()}
+              >
+                Google
+              </button>
+              <button
+                className=" w-[200px] rounded-full py-2 font-semibold !bg-green-400  hover:text-white"
+                type="button"
+                onClick={() => handleLoginFaceBook()}
+              >
+                Facebook
+              </button>
+            </div>
           </form>
           {/* Links */}
           <p className="mt-4 text-sm text-center text-gray-500 cursor-pointer hover:underline">
             Forgot Username / Password?
           </p>
           <p className="mt-4 text-sm text-center text-gray-700 ">
-            Bạn chưa có tài khoản 
-            <a href="/register" className="font-semibold text-blue-600 hover:underline ml-1">
-            Đăng ký
+            Bạn chưa có tài khoản
+            <a
+              href="/register"
+              className="font-semibold text-blue-600 hover:underline ml-1"
+            >
+              Đăng ký
             </a>
           </p>
         </div>
