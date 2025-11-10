@@ -70,7 +70,6 @@ export default function Contact() {
     };
     fetchUser();
   }, [myId]);
-  useEffect(() => {}, []);
 
   const getConversation = async (userId) => {
     try {

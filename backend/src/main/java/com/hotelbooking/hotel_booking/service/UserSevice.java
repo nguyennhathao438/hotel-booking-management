@@ -49,8 +49,8 @@ public class UserSevice {
     Cloudinary cloudinary;
     @Autowired
     public UserSevice(UserRepository userRepository,
-                       PasswordEncoder pwdEncoder,
-                       RoleRepository roleRepository) {
+                      PasswordEncoder pwdEncoder,
+                      RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.pwdEncoder = pwdEncoder;
         this.roleRepository = roleRepository;
@@ -65,10 +65,10 @@ public class UserSevice {
         Set<Role> roles = new HashSet<>();
         roleRepository.findById("USER").ifPresent(roles::add);
         User user = User.builder()
-                        .email(request.getEmail())
-                        .password(pwdEncoder.encode(request.getPassword()))
-                                .firstName(request.getFirstName())
-                                        .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(pwdEncoder.encode(request.getPassword()))
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
                 .roles(roles)
                 .build();
         System.out.println(user.getFirstName()+ user.getRoles());
@@ -146,7 +146,7 @@ public class UserSevice {
         } else {
             user.setStatus(0);
         }
-         userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(user);
     }
     public void deleteUser(int userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new AppException(ErrorCode.EMAIL_EXISTED));
@@ -168,7 +168,7 @@ public class UserSevice {
         }
         return userPage.map(this::mapToUserResponses);
     }
-     UserResponse mapToUserResponses(User user){
+    UserResponse mapToUserResponses(User user){
         Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
         return UserResponse.builder()
                 .id(user.getId())

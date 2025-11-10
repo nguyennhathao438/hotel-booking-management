@@ -2,8 +2,9 @@ import { useState } from "react";
 import api from "../api";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 export default function Register() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -19,9 +20,10 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/users/register", formData);
+      await api.post("/users/register", formData);
       toast.success("Đăng ký thành công");
-      console.log(response);
+
+      navigate("/login");
     } catch (error) {
       if (error.response && error.response.data) {
         toast.error(error.response.data.message);

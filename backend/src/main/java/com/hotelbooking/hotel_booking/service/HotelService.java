@@ -54,6 +54,9 @@ public class HotelService {
             throw new AppException(ErrorCode.HOTEL_EXISTED);
         }
         User user = getCurrentUser();
+        if(hotelRepository.existsByUser(user)){
+            throw new AppException(ErrorCode.REQUEST_HOTEL_EXISTED);
+        }
         Hotel hotel = Hotel.builder()
                 .hotelName(request.getHotelName())
                 .hotelAddress(request.getHotelAddress())
