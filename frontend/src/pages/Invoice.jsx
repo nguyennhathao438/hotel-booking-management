@@ -6,11 +6,18 @@ import {
   UserIcon,
   CreditCardIcon,
   BedIcon,
+  DeleteIcon,
+  LoaderIcon,
+  ScanLineIcon,
+  VoteIcon,
+  SquareXIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../api";
 import ModelForm from "../components/Common/FormModel";
 import { useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 export default function Invoice() {
   const [invoiceSelected, setInvoiceSelected] = useState({
@@ -36,7 +43,7 @@ export default function Invoice() {
 
   const fetchInvoiceNoPage = async () => {
     try {
-      const response = await api.get("/invoice/all");
+      const response = await api.get("/invoice/all1");
       const data = response.data.result;
       setInvoiceNoPage(data);
     } catch (error) {
@@ -143,15 +150,35 @@ export default function Invoice() {
     setInvoiceSelected(invoice);
     setOpenFormInvoice(true);
   };
-
+  const handleDelete = async (invoiceId) => {
+    const result = await Swal.fire({
+          title: "Bạn có chắc muốn xóa?",
+          text: "Hành động này không thể hoàn tác!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Xóa",
+          cancelButtonText: "Hủy",
+        });
+    
+        if (!result.isConfirmed) return;
+    try {
+      await api.delete(`/invoice/ac/${invoiceId}`);
+      toast.success("Xóa hóa đơn thành công");
+      fetchInvoice();
+      fetchInvoiceFilter();
+      fetchInvoiceNoPage();
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <>
-      <div className="p-6 bg-gray-100 min-h-screen w-full ml-[300px]">
-        <div className="flex">
+      <div className="p-6 bg-gray-100 min-h-screen w-full ml-[75px] md:ml-[300px] transition-all duration-300">
+        <div className="flex items-center mb-6">
           <ShoppingBagIcon size={30} />
-          <h1 className="text-2xl font-bold mb-6">Quản lý đơn hàng</h1>
+          <h1 className="text-2xl font-bold ml-2">Quản lý đơn hàng</h1>
         </div>
-        <div className="flex justify-between mb-5">
+        <div className="flex flex-wrap justify-center gap-4 mb-5">
           <div className="bg-white p-4 rounded-lg pl-9 pr-9">
             <p>Tổng đơn hàng</p>
             <div className="flex justify-center items-center space-x-1">
@@ -161,26 +188,30 @@ export default function Invoice() {
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Chờ xác nhận</p>
-            <p className="text-yellow-500">
-              {invoiceNoPage.filter((inv) => inv.status === 0).length}
+            <p className="text-yellow-500 space-x-0.5">
+              <LoaderIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 0).length}</span>
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Đã xác nhận</p>
-            <p className="text-blue-500">
-              {invoiceNoPage.filter((inv) => inv.status === 1).length}
+            <p className="text-blue-500 space-x-0.5">
+              <ScanLineIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 1).length}</span>
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Hoàn Thành</p>
-            <p className="text-green-500">
-              {invoiceNoPage.filter((inv) => inv.status === 2).length}
+            <p className="text-green-500 space-x-0.5">
+              <VoteIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 2).length}</span>
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Đã hủy</p>
-            <p className="text-red-600">
-              {invoiceNoPage.filter((inv) => inv.status === 3).length}
+            <p className="text-red-600 space-x-0.5">
+              <SquareXIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 3).length}</span>
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
@@ -194,7 +225,7 @@ export default function Invoice() {
           </div>
         </div>
 
-        <div className="flex bg-white justify-center items-center gap-5 p-3">
+        <div className="flex flex-wrap md:flex-nowrap justify-center bg-white items-center gap-15 p-3 rounded-lg">
           {/* Filter Status */}
           <div className="flex flex-col">
             <label className="text-sm font-medium mb-1">Trạng thái</label>
@@ -250,7 +281,7 @@ export default function Invoice() {
           </div>
         </div>
         {/* Bảng đơn hàng */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden mt-5">
+        <div className="bg-white rounded-xl shadow-md overflow-x-auto mt-5">
           <table className="min-w-full text-sm text-gray-700">
             <thead className="bg-gray-200 text-gray-800 text-left">
               <tr>
@@ -258,9 +289,9 @@ export default function Invoice() {
                 <th className="py-3 px-4">Tên khách sạn</th>
                 <th className="py-3 px-4">Check-in</th>
                 <th className="py-3 px-4">Check-out</th>
-                <th className="py-3 px-4">Payment</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4">Total amount</th>
+                <th className="py-3 px-4">Phương thức thanh toán</th>
+                <th className="py-3 px-4">Trạng thái</th>
+                <th className="py-3 px-4">Tổng tiền</th>
                 <th className="py-3 px-4 text-center">Thao tác</th>
               </tr>
             </thead>
@@ -290,13 +321,13 @@ export default function Invoice() {
                     <td className="py-3 px-4">{invoice.checkInDate}</td>
                     <td className="py-3 px-4">{invoice.checkOutDate}</td>
                     <td className="py-3 px-4">
-                      <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-md text-xs font-semibold">
+                      <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-md text-xs font-semibold inline-block">
                         {getPaymentText(invoice.payment)}
                       </span>
                     </td>
                     <td className="py-3 px-4">
                       <span
-                        className={`px-2 py-1 rounded-md text-xs font-semibold ${getStatusColor(
+                        className={`px-2 py-1 inline-block rounded-md text-xs font-semibold ${getStatusColor(
                           invoice.status
                         )}`}
                       >
@@ -315,6 +346,13 @@ export default function Invoice() {
                           <EyeIcon size={14} />
                           <span>Xem chi tiết</span>
                         </button>
+                        <button
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
+                          onClick={() => handleDelete(invoice.id)}
+                        >
+                          <DeleteIcon size={14} />
+                          <span>Xóa</span>
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -323,7 +361,7 @@ export default function Invoice() {
             </tbody>
           </table>
         </div>
-        <div className="flex justify-center mt-4 space-x-2">
+        <div className="flex justify-center mt-4 space-x-2 flex-wrap">
           <button
             disabled={currentPage === 1}
             onClick={() =>
@@ -390,7 +428,6 @@ export default function Invoice() {
                 </h1>
               </div>
               <p className="text-sm font-semibold mt-3">HÓA ĐƠN THANH TOÁN</p>
-              <p className="text-xs text-gray-500">68d6545b369aa3917ebd6ca3</p>
             </div>
 
             {/* --- THÔNG TIN KHÁCH HÀNG & KHÁCH SẠN --- */}
@@ -463,7 +500,7 @@ export default function Invoice() {
                 </p>
                 <p>
                   <span className="font-medium">Ngày thanh toán:</span>
-                  {invoiceSelected.createdAt}
+                  {invoiceSelected.createdAt.slice(0,10)}
                 </p>
               </div>
             </div>

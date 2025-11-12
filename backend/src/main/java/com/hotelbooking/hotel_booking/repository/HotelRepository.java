@@ -19,7 +19,12 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Hotel findFirstByUser_Id(int userId);
     List<Hotel> findByHotelAddressContainingIgnoreCase(String province);
 
-    Page<Hotel> findByStatus(Integer status, Pageable pageable);
+    Page<Hotel> findByStatusIn(List<Integer> status, Pageable pageable);
 
-    Page<Hotel> findByHotelRatingBetweenAndStatus(Double minRating,Double maxRating,Integer status, Pageable pageable);
+    Page<Hotel> findByHotelRatingBetweenAndStatusIn(Double minRating,Double maxRating,List<Integer> status, Pageable pageable);
+
+    Page<Hotel> findByStatusInAndHotelNameContainingIgnoreCaseOrStatusInAndHotelAddressContainingIgnoreCase(
+            List<Integer> status1,String namekeyword,
+            List<Integer> status2, String addresskeyword,
+            Pageable pageable);
 }

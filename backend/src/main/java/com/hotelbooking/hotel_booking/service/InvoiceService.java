@@ -1,10 +1,7 @@
 package com.hotelbooking.hotel_booking.service;
 
 import com.hotelbooking.hotel_booking.dto.request.InvoiceRequest;
-import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
-import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
-import com.hotelbooking.hotel_booking.dto.response.RoomResponse;
-import com.hotelbooking.hotel_booking.dto.response.UserResponse;
+import com.hotelbooking.hotel_booking.dto.response.*;
 import com.hotelbooking.hotel_booking.entity.*;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
@@ -77,7 +74,12 @@ public class InvoiceService {
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
-
+    public List<InvoiceResponse> getAllInvoicesNoStatistic() {
+        List<Invoice> invoices = invoiceRepository.findAllByIsDeleteNot(1);
+        return invoices.stream()
+                .map(this::mapToInvoiceResponse)
+                .toList();
+    }
     public List<InvoiceResponse> getByUser_Id(int user_id) {
         List<Invoice> invoices = invoiceRepository.getByUser_Id(user_id);
         return invoices.stream()
@@ -102,7 +104,7 @@ public class InvoiceService {
     // InvoiceService
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST_(2)')")
     public List<InvoiceResponse> getInvoiceByHotelOwner(Integer userId) {
-        List<Invoice> invoices = invoiceRepository.findAllByRoom_Hotel_User_Id(userId);
+        List<Invoice> invoices = invoiceRepository.findAllByRoom_Hotel_User_IdAndIsDeleteNot(userId, 1);
         return invoices.stream()
                 .map(this::mapToInvoiceResponse)
                 .toList();
@@ -117,30 +119,32 @@ public class InvoiceService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Invoice> invoicesPage;
         if (status != null && payment == null && checkInDate == null && checkOutDate == null) {
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatus(userId, status, pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndIsDeleteNot(userId, status,1
+                    , pageable);
         } else if (status == null && payment != null && checkInDate == null && checkOutDate == null) {
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPayment(userId, payment, pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPaymentAndIsDeleteNot(userId, payment,1
+                    , pageable);
         } else if (status == null && payment == null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(userId,
-                            checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, checkInDate, checkOutDate, 1,pageable);
         } else if (status != null && payment == null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndStatusAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
-                            userId, status, checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndStatusAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, status, checkInDate, checkOutDate, 1,pageable);
         } else if (status == null && payment != null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
-                            userId, payment, checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, payment, checkInDate, checkOutDate,1, pageable);
         } else if (status != null && payment != null && checkInDate == null && checkOutDate == null) {
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPayment(userId, status, payment,
-                    pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndIsDeleteNot(userId,
+                    status,payment, 1,pageable);
         } else if (status != null && payment != null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
-                            userId, status, payment, checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, status, payment, checkInDate, checkOutDate,1,pageable);
         } else {
-            invoicesPage = invoiceRepository.findByHotelOwnerId(userId, pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndIsDeleteNot(userId,1,pageable);
         }
         return invoicesPage.map(this::mapToInvoiceResponse);
     }
@@ -221,7 +225,7 @@ public class InvoiceService {
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public Page<InvoiceResponse> getAllInvoice(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Invoice> invoices = invoiceRepository.findAll(pageable);
+        Page<Invoice> invoices = invoiceRepository.findAllByIsDeleteNot(1,pageable);
         return invoices.map(this::mapToInvoiceResponse);
     }
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
@@ -242,6 +246,22 @@ public class InvoiceService {
         }
         Page<Invoice> invoices = invoiceRepository.findUserFilteredInvoice(userId, status, dateFrom, dateTo, pageable);
         return invoices.map(this::mapToInvoiceResponse);
+    }
+    public void deleteInvoice(int invoiceId){
+        Invoice invoices = invoiceRepository.findById(invoiceId).orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        invoices.setIsDelete(1);
+        invoiceRepository.saveAndFlush(invoices);
+    }
+
+    public List<InvoiceProjectionResponse> hotelCount() {
+        List<Object[]> results = invoiceRepository.countInvoicesGroupedByHotelNative();
+        return results.stream()
+                .map(obj -> InvoiceProjectionResponse.builder()
+                        .hotelId((Integer) obj[0])
+                        .hotelName((String) obj[1])
+                        .invoiceCount(((Number) obj[2]).longValue())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     private boolean validateDates(InvoiceRequest request, List<Invoice> exitsInvoices) {

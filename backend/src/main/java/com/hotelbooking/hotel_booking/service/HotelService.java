@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
@@ -134,7 +135,8 @@ public class HotelService {
         return mapToHotelResponse(hotel);
     }
 
-    public Page<HotelResponse> getAllHotelSearch(int pageNo, int pageSize, Double hotelRating, String sortByCost){
+    public Page<HotelResponse> getAllHotelSearch(int pageNo, int pageSize, Double hotelRating, String sortByCost,
+                                                 String keyword){
         Sort sort = Sort.unsorted();
         if ("asc".equalsIgnoreCase(sortByCost)) {
             sort = Sort.by("hotelCost").ascending();
@@ -143,16 +145,49 @@ public class HotelService {
         }
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize,sort);
         Page<Hotel> hotelPage;
+        List<Integer> statues = Arrays.asList(1);
         if(hotelRating != null){
             double minRating = hotelRating;
             double maxRating = Math.min(5.0, hotelRating + 0.9);
-            hotelPage = hotelRepository.findByHotelRatingBetweenAndStatus(minRating,maxRating,1,pageable);
+            hotelPage = hotelRepository.findByHotelRatingBetweenAndStatusIn(minRating,maxRating,statues,pageable);
+        } else if(keyword != null && !keyword.isEmpty()){
+            hotelPage = hotelRepository.findByStatusInAndHotelNameContainingIgnoreCaseOrStatusInAndHotelAddressContainingIgnoreCase(
+                    statues ,keyword, statues, keyword, pageable);
         } else {
-            hotelPage = hotelRepository.findByStatus(1,pageable);
+            hotelPage = hotelRepository.findByStatusIn(statues,pageable);
         }
         return hotelPage.map(this::mapToHotelResponse);
     }
-
+    public Page<HotelResponse> getAdminHotel(int pageNo, int pageSize, Double hotelRating, String sortByCost,
+                                             String keyword){
+        Sort sort = Sort.unsorted();
+        if ("asc".equalsIgnoreCase(sortByCost)) {
+            sort = Sort.by("hotelCost").ascending();
+        } else if ("desc".equalsIgnoreCase(sortByCost)) {
+            sort = Sort.by("hotelCost").descending();
+        }
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        Page<Hotel> hotelPage;
+        List<Integer> statues = Arrays.asList(0,1);
+        if(hotelRating != null){
+            double minRating = hotelRating;
+            double maxRating = Math.min(5.0, hotelRating + 0.9);
+            hotelPage = hotelRepository.findByHotelRatingBetweenAndStatusIn(minRating,maxRating,statues,pageable);
+        } else if(keyword != null && !keyword.isEmpty()){
+            hotelPage = hotelRepository.findByStatusInAndHotelNameContainingIgnoreCaseOrStatusInAndHotelAddressContainingIgnoreCase(
+                    statues ,keyword, statues, keyword, pageable);
+        } else {
+            hotelPage = hotelRepository.findByStatusIn(statues,pageable);
+        }
+        return hotelPage.map(this::mapToHotelResponse);
+    }
+    public HotelResponse banHotel(int id){
+        Hotel hotel = hotelRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        hotel.setStatus(2);
+        hotelRepository.save(hotel);
+        return mapToHotelResponse(hotel);
+    }
     private HotelResponse mapToHotelResponse(Hotel hotel) {
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())

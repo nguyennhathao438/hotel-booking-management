@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, CircleDollarSignIcon, HotelIcon, StarIcon } from "lucide-react";
 import EditHotelForm from "./DetailHotelForm";
 import api from "../api";
 import testImg from "../assets/img/banner2.jpg";
@@ -7,14 +7,19 @@ import ImageSlider from "../components/Common/ImageSlider";
 import { Phone } from "lucide-react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import CustomerInfo from "./CustomerInfo";
+import Swal from "sweetalert2";
 
 export default function HotelManager() {
   const [hotels, setHotels] = useState([]);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const scrollRef = useRef(null);
   const [showUserInfo, setShowUserInfo] = useState(false);
-    const [images, setImages] = useState([])
-
+  const [images, setImages] = useState([])
+  const [selectedRating,setSelectedRating] = useState(null);
+  const [selectedAmount,setSelectedAmount] = useState(null);
+  const [keywords,setKeyWords] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const scroll = (direction) => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
@@ -28,24 +33,52 @@ export default function HotelManager() {
       });
     }
   };
-useEffect(() => {
+  useEffect(() => {
         const fetchAllImgHotel = async () => {
             const respone = await api.get("/images/all")
             setImages(respone.data.result)
         }
         fetchAllImgHotel()
     }, [])
-  const fetchHotels = async () => {
+
+  const fetchHotels = async (
+    page = 1,
+    rating = selectedRating,
+    sort = selectedAmount
+  ) => {
     try {
-      const res = await api.get("/hotels/all");
-      setHotels(res.data.result || []);
+      let sortByCost = null;
+      if (sort === "low") sortByCost = "asc";
+      else if (sort === "best") sortByCost = "desc";
+      const res = await api.get("hotels/all/page", {
+        params: {
+          pageNo: page,
+          pageSize: 5,
+          hotelRating: rating || undefined,
+          sortByCost: sortByCost || undefined,
+          keyword: keywords || undefined,
+        },
+      });
+      const hotels = res.data.result;
+      console.log("dữ liệu hotel", hotels);
+      setHotels(hotels.content || []);
+      setTotalPages(hotels.totalPages);
+      setCurrentPage(hotels.number + 1 || 1);
     } catch (err) {
-      console.error(err);
+      console.error("Lỗi khi lấy danh sách người dùng:", err);
     }
   };
-
   const handleDelete = async (hotelId) => {
-    if (!window.confirm("Bạn có chắc muốn xóa khách sạn này?")) return;
+    const result = await Swal.fire({
+          title: "Bạn có chắc muốn xóa?",
+          text: "Hành động này không thể hoàn tác!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Xóa",
+          cancelButtonText: "Hủy",
+        });
+    
+        if (!result.isConfirmed) return;
     try {
       await api.delete(`/hotels/${hotelId}`);
       fetchHotels();
@@ -53,23 +86,95 @@ useEffect(() => {
       console.error(err);
     }
   };
+  const getDynamicPagination = (currentPage, totalPages) => {
+  if (totalPages <= 8) return Array.from({ length: totalPages }, (_, i) => i + 1);
+
+  const pages = [1, 2]; // luôn show 2 trang đầu
+  const left = Math.max(currentPage - 1, 3);
+  const right = Math.min(currentPage + 1, totalPages - 2);
+
+  if (left > 3) pages.push("...");
+  for (let i = left; i <= right; i++) pages.push(i);
+  if (right < totalPages - 2) pages.push("...");
+
+  pages.push(totalPages - 1, totalPages); // luôn show 2 trang cuối
+  return pages;
+  };
 
   useEffect(() => {
-    fetchHotels();
-  }, []);
-
-
-
-
+    fetchHotels(1);
+  }, [keywords, selectedRating, selectedAmount]);
 
   return (
     <div className="p-4 flex ">
         <div className="w-80">
-             </div>
+        </div>
          <div>
-      <h3 className="w-full p-4 font-bold text-lg md:text-xl">
-        TẤT CẢ KHÁCH SẠN
+      <h3 className="w-full p-4 font-bold text-lg md:text-xl space-x-0.5">
+        <HotelIcon className="w-8 h-8 inline"/>
+        <span>TẤT CẢ KHÁCH SẠN</span>
       </h3>
+      <div className="p-4 flex items-end space-x-6 rounded-lg mb-2">
+        {/* Lọc theo sao */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1 text-gray-700 space-x-1">
+            <StarIcon className="inline w-5 h-5 fill-yellow-300 text-yellow-300"/>
+            <span>Số sao</span>
+          </label>
+          <select 
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={selectedRating || ""}
+            onChange={(e) => {
+              const values = e.target.value ? Number(e.target.value) : null;
+              setSelectedRating(values);
+              fetchHotels(1,values,selectedAmount);
+            }}
+          >
+            <option value="">Tất cả</option>
+            <option value="1">1 sao</option>
+            <option value="2">2 sao</option>
+            <option value="3">3 sao</option>
+            <option value="4">4 sao</option>
+            <option value="5">5 sao</option>
+          </select>
+        </div>
+
+        {/* Lọc theo giá */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1 text-gray-700 space-x-1">
+          <CircleDollarSignIcon className="inline w-5 h-5 text-emerald-500"/>
+          <span>Theo giá</span>
+          </label>
+          <select 
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={selectedAmount || ""}
+            onChange={(e) => {
+              const values = e.target.value;
+              setSelectedAmount(values);
+              fetchHotels(1,selectedRating,values);
+            }}  
+          >
+            <option value="">Mặc định</option>
+            <option value="low">Thấp đến cao</option>
+            <option value="best">Cao đến thấp</option>
+          </select>  
+        </div>
+
+        {/* Ô tìm kiếm */}
+        <div className="flex flex-col flex-1">
+          <label className="text-sm font-medium mb-1 text-gray-700">Tìm kiếm</label>
+          <input 
+            type="text"
+            placeholder="Nhập tên hoặc địa chỉ khách sạn..."
+            value={keywords}
+            onChange={(e) => setKeyWords(e.target.value)}
+            onKeyDown={(e) => {
+            if (e.key === "Enter") fetchHotels(1, selectedRating, selectedAmount);
+            }}
+            className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-[600px]"
+          />
+        </div>
+      </div>
 
       <div className="relative group px-4 md:px-8">
 
@@ -85,7 +190,7 @@ useEffect(() => {
          return (
            <div
              key={hotel.hotelId}
-             className="flex w-[1400px] h-[250px] flex-col md:flex-row bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+             className="flex w-[1100px] h-[250px] flex-col md:flex-row bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
            >
              {/* Ảnh khách sạn */}
              <div className="md:w-1/3 h-30 md:h-auto">
@@ -168,8 +273,29 @@ useEffect(() => {
 
         </ul>
 
+      </div>
+
+      <div className="flex justify-center mt-6 space-x-2">
+        {getDynamicPagination(currentPage, totalPages).map((page, index) =>
+        page === "..." ? (
+          <span key={index} className="px-3 py-1">...</span>
+        ) : (
+          <button
+            key={index}
+            onClick={() => fetchHotels(page)}
+            className={`px-3 py-1 border rounded-md ${
+              currentPage === page
+                ? "bg-blue-500 text-white"
+                : "bg-white text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            {page}
+          </button>
+        )
+      )}
 
       </div>
+
 
       {selectedHotel && (
         <div

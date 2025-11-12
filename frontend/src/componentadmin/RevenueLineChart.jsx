@@ -1,11 +1,11 @@
 import { Line } from "react-chartjs-2";
 import { ChartColumnBigIcon } from "lucide-react";
 
-export default function RevenueLineChart({ chartData, filter, setFilter, title = "Biểu đồ thống kê doanh thu",className ="",}) {
+export default function RevenueLineChart({ chartData, filter, setFilter, title ,className ="",}) {
   return (
     <div className={`bg-white mb-4 max-w-6xl px-2 py-5 ${className}`}>
       <div className="flex mb-2 border-b-3 border-b-gray-200">
-        <ChartColumnBigIcon />
+        <ChartColumnBigIcon className="text-indigo-600" />
         <h2 className="text-xl font-semibold ml-2">{title}</h2>
         <select
           value={filter}

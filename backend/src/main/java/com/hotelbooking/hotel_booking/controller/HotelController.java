@@ -115,11 +115,33 @@ public class HotelController {
             @RequestParam(defaultValue = "1") int pageNo,
             @RequestParam(defaultValue = "7") int pageSize,
             @RequestParam(required = false) Double hotelRating,
-            @RequestParam(required = false) String sortByCost) {
-        Page<HotelResponse> hotels = hotelService.getAllHotelSearch(pageNo, pageSize, hotelRating, sortByCost);
+            @RequestParam(required = false) String sortByCost,
+            @RequestParam(required = false) String keyword) {
+        Page<HotelResponse> hotels = hotelService.getAllHotelSearch(pageNo, pageSize, hotelRating, sortByCost,keyword);
         return ResponseEntity.ok(ApiResponse.<Page<HotelResponse>>builder()
                 .message("Danh sách Phân trang khách sạn")
                 .result(hotels)
+                .build());
+    }
+    @GetMapping("/all/page")
+    public ResponseEntity<ApiResponse<Page<HotelResponse>>> getAdminHotel(
+            @RequestParam(defaultValue = "1") int pageNo,
+            @RequestParam(defaultValue = "5") int pageSize,
+            @RequestParam(required = false) Double hotelRating,
+            @RequestParam(required = false) String sortByCost,
+            @RequestParam(required = false) String keyword) {
+        Page<HotelResponse> hotels = hotelService.getAdminHotel(pageNo, pageSize, hotelRating, sortByCost,keyword);
+        return ResponseEntity.ok(ApiResponse.<Page<HotelResponse>>builder()
+                .message("Danh sách Phân trang khách sạn Admin")
+                .result(hotels)
+                .build());
+    }
+    @DeleteMapping("/{HotelId}")
+    public ResponseEntity<ApiResponse<HotelResponse>> deleteHotel(@PathVariable int HotelId) {
+        HotelResponse hotelResponse = hotelService.banHotel(HotelId);
+        return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()
+                .message("Xóa khách sạn thành công")
+                .result(hotelResponse)
                 .build());
     }
 }
