@@ -32,11 +32,8 @@ public class RoomService {
     private HotelRepository hotelRepository;
 @Autowired
 private InvoiceRepository invoiceRepository;
-    @PostAuthorize("hasAuthority('ADD_HOTEL')")
+//    @PostAuthorize("hasAuthority('ADD_HOTEL')")
     public RoomResponse createRoom(RoomRequest request) {
-        if (roomRepository.existsByRoomName(request.getRoomName())) {
-            throw new AppException(ErrorCode.ROOM_EXISTED);
-        }
         Hotel hotel = hotelRepository.findById(request.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         Room room = Room.builder()
@@ -61,11 +58,6 @@ private InvoiceRepository invoiceRepository;
 
     public List<RoomResponse> getRoomsByHotelId(int hotelId) {
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
-
-//        List<Room> availableRooms = rooms.stream()
-//                .filter(room -> !invoiceRepository.existsByRoom_RoomId(room.getRoomId()))
-//                .toList();
-
         return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
@@ -73,7 +65,6 @@ private InvoiceRepository invoiceRepository;
 
     public List<RoomResponse> getRoomsByHotelId2(int hotelId) {
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
-
         return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
@@ -84,7 +75,15 @@ private InvoiceRepository invoiceRepository;
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
         return mapToRoomResponse(room);
     }
-    @PostAuthorize("hasAuthority('UPDATE_ROOM')")
+
+    public List<RoomResponse> findByRoomTypeAndHotel_HotelId(String roomType, int hotelId){
+        List<Room> rooms = roomRepository.findByRoomTypeAndHotel_HotelId(roomType,hotelId);
+        return rooms.stream()
+                .map(this::mapToRoomResponse)
+                .toList();
+    }
+
+//    @PostAuthorize("hasAuthority('UPDATE_ROOM')")
     public RoomResponse updateRoom(int id, RoomRequest request) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
@@ -121,6 +120,7 @@ private InvoiceRepository invoiceRepository;
         }
         roomRepository.deleteById(id);
     }
+
     public List<RoomResponse> getAvailableRooms(LocalDate startDate, LocalDate endDate) {
         return roomRepository.findAvailableRooms(startDate, endDate)
                 .stream()
@@ -131,6 +131,7 @@ private InvoiceRepository invoiceRepository;
     public long countAvailableRooms(LocalDate startDate, LocalDate endDate) {
         return roomRepository.countAvailableRooms(startDate, endDate);
     }
+
     public RoomResponse mapToRoomResponse(Room room) {
         if (room == null)
             return null;

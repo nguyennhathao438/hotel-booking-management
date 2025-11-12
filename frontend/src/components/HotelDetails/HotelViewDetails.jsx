@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
 import banner2 from "../../assets/img/banner2.jpg";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import BookingSearch from "../BookingSearch";
@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { ChatBubbleOvalLeftIcon } from "@heroicons/react/24/solid";
 import ChatBox from "../Chatbox";
+import { Context } from "../RoomContext";
 
 function DetailsHotelView() {
 
@@ -41,9 +42,6 @@ function DetailsHotelView() {
         setServices(response.data.result)
         return response.data.result;
     }
-    useEffect(() => {
-        fetchHotelService()
-    }, [])
 
     const handleCloseChat = () => {
         setOpenChat(false);
@@ -69,7 +67,14 @@ function DetailsHotelView() {
     const fetchRoomsByHotelId = async () => {
         try {
             const roomData = await api.get(`rooms/hotel/${hotelId}`);
-            setRooms(roomData.data.result)
+            const roomsWithStatus = await Promise.all(
+                roomData.data.result.map(async (room) => {
+                    const available = await checkRoomAvailable(room.roomId);
+                    return { ...room, available }; // thêm thuộc tính available
+                })
+            );
+            setRooms(roomsWithStatus);
+
             const imageData = await api.get(`/images/hotel/${hotelId}`);
             setImages(imageData.data.result);
         } catch (error) {
@@ -77,11 +82,14 @@ function DetailsHotelView() {
         }
     };
 
+
+
     useEffect(() => {
         fetchHotelById()
         fetchFeedBackByHotelId()
         fetchRoomsByHotelId()
-    }, [])
+        fetchHotelService()
+    }, [hotelId])
 
     const roomsRef = useRef(null);
     const handleScrollToRooms = () => {
@@ -106,6 +114,58 @@ function DetailsHotelView() {
             prev === feedbacks.length - 1 ? 0 : prev + 1
         );
     };
+
+    const { checkInDate, checkOutDate } = useContext(Context);
+    const navigate = useNavigate();
+    const isValidDate = () => {
+        let flag = true;
+        if (checkOutDate - checkInDate < 0) flag = false;
+        return flag;
+    };
+    const handleBooking = (roomId) => {
+        if (!user.userId) {
+            toast.error("Vui lòng đăng nhập để đặt phòng");
+            return;
+        }
+        if (!isValidDate()) {
+            toast.error("Vui lòng chọn ngày nhận phòng và trả phòng hợp lệ!");
+            return;
+        }
+        navigate(`/booking-form/${roomId}?hotelId=${hotelId}`);
+    };
+
+
+    const checkRoomAvailable = async (roomId) => {
+        try {
+            const response = await api.get(`/invoice/check-room`, {
+                params: {
+                    checkInDate: checkInDate.toISOString().split("T")[0],
+                    checkOutDate: checkOutDate.toISOString().split("T")[0],
+                    roomId: roomId,
+                },
+            });
+            return response.data.result; // true hoặc false
+        } catch (error) {
+            console.error("Lỗi khi kiểm tra phòng:", error);
+            return false;
+        }
+    };
+
+    useEffect(() => {
+        if (checkInDate && checkOutDate) {
+            fetchRoomsByHotelId();
+        }
+    }, [checkInDate, checkOutDate]);
+
+    const tabs = [
+        "Tổng quan",
+        "Thông tin căn hộ & giá",
+        "Tiện nghi",
+        "Quy tắc chung",
+        "Ghi chú",
+        "Đánh giá của khách",
+    ];
+    const [activeTab, setActiveTab] = useState("Tổng quan");
     return (
         <div>
             {/* Banner */}
@@ -118,7 +178,34 @@ function DetailsHotelView() {
             </div>
 
             {/* Thanh tab điều hướng */}
-            <TopTabBar scrollToRooms={handleScrollToRooms} scrollToDetailsHotel={handleScrollToDetailsHotel} />
+            <div className="w-full bg-white shadow-md border-b border-gray-200 top-0">
+                <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+                    <div className="flex space-x-6">
+                        {tabs.map((item) => (
+                            <button key={item} onClick={() => {
+                                setActiveTab(item);
+                                if (item === "Thông tin căn hộ & giá") {
+                                    handleScrollToRooms()
+                                }
+                                if (item === "Tổng quan") {
+                                    handleScrollToDetailsHotel()
+                                }
+                            }}
+                                className={`relative font-medium transition duration-300 group ${activeTab === item ? "text-[#6B4423]" : "text-gray-700 hover:text-[#6B4423]"}`}>
+                                {item}
+                                <span className={`absolute left-0 -bottom-0.5 h-0.5 bg-[#6B4423] transition-all duration-300 ${activeTab === item ? "w-full" : "w-0 group-hover:w-full"}`}>
+
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+
+                    <button className="bg-[#6B4423] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#4E342E] transition duration-300 shadow-md">
+                        Đặt căn hộ của bạn
+                    </button>
+                </div>
+            </div>
+            {/* <TopTabBar scrollToRooms={handleScrollToRooms} scrollToDetailsHotel={handleScrollToDetailsHotel} /> */}
 
 
 
@@ -167,12 +254,14 @@ function DetailsHotelView() {
                         <div>
                             <div className="flex justify-end border-b border-gray-300">
                                 <div >{
-                                    hotel.hotelRating >= 4 ? (
-                                        <span className="block py-1 px-2 font-bold text-md ">Tuyệt hảo</span>
-                                    ) : hotel.hotelRating >= 2 ? (
-                                        <span className="block py-1 px-2 font-bold text-md ">Tạm ổn</span>
-                                    ) : (
-                                        <span className="block py-1 px-2 font-bold text-md">Khá tệ</span>
+                                    feedbacks.length != 0 && (
+                                        hotel.hotelRating >= 4 ? (
+                                            <span className="block py-1 px-2 font-bold text-md ">Tuyệt hảo</span>
+                                        ) : hotel.hotelRating >= 2 ? (
+                                            <span className="block py-1 px-2 font-bold text-md ">Tạm ổn</span>
+                                        ) : (
+                                            <span className="block py-1 px-2 font-bold text-md">Khá tệ</span>
+                                        )
                                     )}
                                     <span className="block pb-1 px-2 font-light text-sm">{feedbacks.length} đánh giá</span>
                                 </div>
@@ -214,38 +303,105 @@ function DetailsHotelView() {
                     </div>
                 </div>
                 {/* phía dưới */}
-                <h2 className="text-xl px-6 font-semibold pt-4">Danh sách dịch vụ nổi bật của khách sạn</h2>
-                <div className="relative py-2 px-4">
-                    {/* Vùng cuộn danh sách */}
-                    <button onClick={() => scroll("left")} className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <div ref={scrollRef} className="flex gap-4 overflow-x scroll-smooth scrollbar-hidden md:overflow-hidden px-2">
-                        {services.map((s) => (
-                            <div key={s.serviceId} className="min-w-[250px] bg-white border border-gray-300 rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-row items-center gap-3 text-left">
-                                <img src={s.icon} className="w-7 h-7 object-contain" />
-                                <div>
-                                    <h3 className="text-blue-600 font-semibold text-md">{s.serviceName}</h3>
-                                    <p className="text-gray-600 text-sm mt-1 line-clamp-2">{s.description}</p>
+                {
+                    services.length != 0 && (
+                        <div>
+                            <h2 className="text-xl px-6 font-semibold pt-4">Danh sách dịch vụ nổi bật của khách sạn</h2>
+                            <div className="relative py-2 px-4">
+                                {/* Vùng cuộn danh sách */}
+                                <button onClick={() => scroll("left")} className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <div ref={scrollRef} className="flex gap-4 overflow-x scroll-smooth scrollbar-hidden md:overflow-hidden px-2">
+                                    {services.map((s) => (
+                                        <div key={s.serviceId} className="min-w-[250px] bg-white border border-gray-300 rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-row items-center gap-3 text-left">
+                                            <img src={s.icon} className="w-7 h-7 object-contain" />
+                                            <div>
+                                                <h3 className="text-blue-600 font-semibold text-md">{s.serviceName}</h3>
+                                                <p className="text-gray-600 text-sm mt-1 line-clamp-2">{s.description}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button onClick={() => scroll("right")} className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
+            </div>
+
+
+            <h2 ref={roomsRef} className="w-full text-center mt-5 p-2 font-bold font-sans text-lg md:text-2xl text-[#4b2e1f]">
+                Danh sách phòng của {hotel.hotelName} {"(" + checkInDate.toLocaleDateString() + " đến " + checkOutDate.toLocaleDateString() + ")"}
+            </h2>
+            {
+                rooms.length != 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-[90%] bg-gray-50 mx-auto py-6">
+                        {rooms.map((room) => (
+                            <div key={room.roomId} className="rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition bg-white">
+                                {/* Nếu bạn có ảnh room thì thay bằng room.imageUrls[0] */}
+                                <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
+                                    <img src={banner2} alt="" />
+                                </div>
+
+                                <div className="pt-7 pb-5 px-4">
+                                    {/* Tên khách sạn */}
+                                    <h2 className="text-lg font-semibold text-blue-700">
+                                        {room.hotel?.hotelName || "Không có tên khách sạn"}
+                                    </h2>
+
+                                    {/* Tên & loại phòng */}
+                                    <p className="mt-1 font-medium text-gray-800">
+                                        {room.roomName} ({room.roomType})
+                                    </p>
+
+                                    {/* Thông tin chi tiết */}
+                                    <p className="text-sm text-gray-600 mt-1">
+                                        🛏️ {room.bedCount} giường • {room.bedRoomCount} phòng ngủ • {room.roomCapacity} khách
+                                    </p>
+                                    <p className="text-sm text-gray-600">
+                                        📐 Diện tích: {room.roomArea} m²
+                                    </p>
+
+                                    {/* Giá phòng */}
+                                    <div className="flex justify-between items-center mt-3">
+                                        <span className="text-lg font-bold text-green-600">
+                                            {room.roomPrice.toLocaleString()} ₫/đêm
+                                        </span>
+                                    </div>
+
+                                    {/* Trạng thái phòng */}
+                                    <div className="flex flex-col gap-2 mt-2">
+                                        {/* Trạng thái phòng */}
+                                        <p className={`text-sm font-medium ${room.available ? "text-green-600" : "text-red-500"}`}>
+                                            {room.available ? "Phòng còn trống" : "Hết chỗ"}
+                                        </p>
+
+                                        {/* Nút hành động */}
+                                        <div className="flex gap-3 justify-end">
+                                            <button
+                                                onClick={() => handleBooking(room.roomId)}
+                                                className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
+                                            >
+                                                Đặt phòng
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <button onClick={() => scroll("right")} className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
+                ) :
+                    <div className="font-md text-xl text-center py-4">Không có phòng nào</div>
+            }
+            {/* <RoomList rooms={rooms} hotelId={hotelId} /> */}
 
-
-            <h2 ref={roomsRef} className="w-full text-center mt-5 p-2 font-bold font-sans text-lg md:text-xl text-[#4b2e1f]">
-                Những phòng còn trống tại khách sạn {hotel.hotelName}
-            </h2>
-            <RoomList rooms={rooms} hotelId={hotelId} />
             {openChat && (
                 <div className="fixed bottom-4 right-4 flex gap-4 z-10">
                     <ChatBox onClose={() => handleCloseChat()} hotelId={hotelId} />

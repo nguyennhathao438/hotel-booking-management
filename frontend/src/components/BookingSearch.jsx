@@ -8,11 +8,8 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
 function BookingSearch() {
-    const { checkInDate, checkOutDate, province } = useContext(Context);
+    const { checkInDate, checkOutDate, province } = useContext(Context);// eslint-disable-line no-unused-vars
     const navigate = useNavigate();
-    console.log("province hahaha", typeof province)
-    console.log("checkInDate", checkInDate)
-    console.log("checkOutdate", checkOutDate)
     const [hotelProvince, setHotelProvince] = useState([])// eslint-disable-line no-unused-vars
     
     const handleSubmit = async (e) => {
@@ -24,6 +21,8 @@ function BookingSearch() {
             state: { hotelProvince: hotelProvinceTemp }
         })
     }
+
+    console.log("huy dep trai")
 
     return (
         <form className="h-[300px] w-full lg:h-[90px] flex flex-col lg:flex-row ">

@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ServiceRepository extends JpaRepository<HotelService,Integer> {
     List<HotelService> findByHotel(Hotel hotel);
+    boolean existsByServiceNameAndHotel_HotelId(String serviceName, int hotelId);
 }

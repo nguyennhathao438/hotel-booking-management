@@ -19,22 +19,6 @@ function ContextProvide({ children }) {
     const [checkInDate,setCheckInDate] = useState(today);
     const [checkOutDate,setCheckOutDate] = useState(tomorrow);
     const [province,setProvince] = useState("Thành phố Hà Nội");
-    //   const [hotels, setHotels] = useState([]);
-    //   const [rooms, setRooms] = useState([]);
-    //   const [images, setImages] = useState([]);
-
-
-    //   useEffect(() => {
-    //     const fetchAllHotel = async () => {
-    //       try {
-    //         const request = await api.get("/hotels/all")
-    //         setHotels(request.data.result)
-    //       } catch (error) {
-    //         console.error("Error when load data :", error);
-    //       }
-    //     }
-    //     fetchAllHotel()
-    //   }, [])
 
     useEffect(() => {
         setTotal(Number(adults[0]) + Number(kids[0]));
@@ -45,9 +29,6 @@ function ContextProvide({ children }) {
     };
 
     return (
-        // <Context.Provider value={{ adults, setAdults, kids, setKids, total, hotels, setHotels, rooms, setRooms, images, setImages, handleClick, }}>
-        //   {children}
-        // </Context.Provider>
         <Context.Provider value={{ province,setProvince,checkInDate,setCheckInDate,checkOutDate,setCheckOutDate,adults, setAdults, kids, setKids, total, handleClick, }}>
             {children}
         </Context.Provider>

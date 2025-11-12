@@ -15,23 +15,23 @@ import { useSelector } from "react-redux";
 import api from "../api";
 export default function SideBar() {
   const [hotels, setHotels] = useState([]);
-
   const user = useSelector((state) => state.user);
-
   const userId = user?.userId;
 
-  useEffect(() => {
-    const fetchHotels = async () => {
-      if (!userId) return;
+  console.log("toi dang la", user)
+  console.log("id cua toi dang la", userId)
 
+  useEffect(() => {
+    const fetchHotelByUserId = async () => {
+      if (!userId) return;
       try {
         const response = await api.get(`/hotels/user/${userId}`);
         setHotels(response.data.result || []);
       } catch (err) {
-        console.error("Lỗi khi lấy danh sách khách sạn:", err);
+        console.error("Lỗi khi lấy danh sách khách sạn theo userId:", err);
       }
     };
-    fetchHotels();
+    fetchHotelByUserId();
   }, [userId]);
 
   const firstHotelId = hotels[0]?.hotelId;
@@ -54,6 +54,24 @@ export default function SideBar() {
           {" "}
           <FileTextIcon className="w-6 h-6 text-gray-600" />
           <p className=" text-white cursor-pointer pl-2">Khách sạn của tôi</p>
+        </NavLink>
+
+        <NavLink
+          to={`/customer/service/hotel/${firstHotelId}`}
+          className="flex hover:bg-gray-400"
+        >
+          {" "}
+          <FileTextIcon className="w-6 h-6 text-gray-600" />
+          <p className=" text-white cursor-pointer pl-2">Dịch vụ khách sạn</p>
+        </NavLink>
+
+        <NavLink
+          to={`/customer/room/hotel/${firstHotelId}`}
+          className="flex hover:bg-gray-400"
+        >
+          {" "}
+          <FileTextIcon className="w-6 h-6 text-gray-600" />
+          <p className=" text-white cursor-pointer pl-2">Phòng của tôi</p>
         </NavLink>
         <NavLink to="/customer/invoice" className="flex hover:bg-gray-400">
           {" "}

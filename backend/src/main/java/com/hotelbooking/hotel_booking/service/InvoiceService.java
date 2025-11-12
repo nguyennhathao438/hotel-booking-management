@@ -251,6 +251,15 @@ public class InvoiceService {
 
     }
 
+    public boolean invoiceCheck(LocalDate checkInDate, LocalDate checkOutDate, int roomId) {
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        List<Invoice> existInvoices = room.getInvoices();
+        return existInvoices.stream()
+                .noneMatch(exitsInvoice -> checkInDate.isBefore(exitsInvoice.getCheckOutDate())
+                        && checkOutDate.isAfter(exitsInvoice.getCheckInDate()));
+
+    }
+
     private void validateDate(InvoiceRequest request) {
         if (request.getCheckInDate() != null && request.getCheckOutDate() != null) {
             if (!request.getCheckOutDate().isAfter(request.getCheckInDate())) {
