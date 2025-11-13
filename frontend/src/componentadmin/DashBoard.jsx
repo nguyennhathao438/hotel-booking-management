@@ -36,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 import RevenueLineChart from "./RevenueLineChart.jsx";
 import BookingBarChart from "./BookingBarChart.jsx";
 import UserAreaLineChart from "./UserAreaLineChart.jsx";
+import InvoiceDChart from "./InvoiceDChart.jsx";
 
 export default function DashBoard() {
   const navigate = useNavigate();
@@ -55,6 +56,10 @@ export default function DashBoard() {
   const [barChart, setBarChart] = useState({ labels: [], datasets: [] });
   const [chartData, setChartData] = useState({ labels: [], data: [] });
   const [chartUserData, setChartUserData] = useState({ labels: [], data: [] });
+  const [chartInvoice, setChartInvoice] = useState({
+    labels: [],
+    datasets: [],
+  });
   useEffect(() => {
     fetchAvailableRooms();
     fetchAvailableCount();
@@ -62,6 +67,7 @@ export default function DashBoard() {
     fetchCheckouttoday();
     fetchInvoiceStatus();
     fetchUserCount();
+    fetchInvoiceCount();
   }, []);
   useEffect(() => {
     updateChartData();
@@ -412,9 +418,47 @@ export default function DashBoard() {
       );
     }
   };
+  const fetchInvoiceCount = async () => {
+    try {
+      const req = await api.get("/invoice/count/hotel");
+      const dataset = req.data.result;
+      console.log("SIUUU", dataset);
+      const top5 = dataset.slice(0, 5);
+      const total = top5.reduce((sum, item) => sum + item.invoiceCount, 0);
+      const labels = top5.map((item) => item.hotelName);
+      const data = top5.map((item) =>
+        ((item.invoiceCount / total) * 100).toFixed(1)
+      );
+
+      setChartInvoice({
+        labels: labels,
+        datasets: [
+          {
+            data: data,
+            backgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56",
+              "#4BC0C0",
+              "#9966FF",
+            ],
+            hoverBackgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56",
+              "#4BC0C0",
+              "#9966FF",
+            ],
+          },
+        ],
+      });
+    } catch (error) {
+      console.log("Lỗi không lấy được count hotel", error);
+    }
+  };
   return (
-    <div className="bg-gray-300 ml-[300px] w-full min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 p-5">
+    <div className="bg-gray-300 min-h-screen w-full ml-[70px] lg:ml-[300px] transition-all duration-300">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 place-items-center gap-5 p-5 ">
         <ItemHeader
           Icon={BedDoubleIcon}
           title="Available Rooms"
@@ -472,6 +516,11 @@ export default function DashBoard() {
           filter={filters}
           setFilter={setFilters}
           title="UserSign"
+        />
+
+        <InvoiceDChart
+          chartData={chartInvoice}
+          title="Top 5 khách sạn nhiều lượt booking"
         />
       </div>
 

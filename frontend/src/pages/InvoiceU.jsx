@@ -7,11 +7,17 @@ import {
   UserIcon,
   CreditCardIcon,
   BedIcon,
+  DeleteIcon,
+  LoaderIcon,
+  ScanLineIcon,
+  VoteIcon,
+  SquareXIcon,
 } from "lucide-react";
 import api from "../api";
 import ModelForm from "../components/Common/FormModel";
 import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
+import Swal from "sweetalert2";
 // import { useSelector } from "react-redux";
 export default function InvoiceU() {
   const [invoiceSelected, setInvoiceSelected] = useState({
@@ -46,13 +52,19 @@ export default function InvoiceU() {
     } else {
       fetchInvoice(currentPage);
     }
-    fetchInvoiceNoPage();
   }, [currentPage, statusFilter, paymentFilter, dateFrom, dateTo]);
   const fetchInvoiceNoPage = async () => {
     try {
       const resUser = await api.get("/users/myInfo");
       const userID = resUser.data.result.id;
-      const resInvoices = await api.get(`/invoice/owner/noPage/${userID}`);
+      const resInvoices = await api.get(`/invoice/owner/noPage/${userID}`, {
+        params: {
+                status: statusFilter || null,
+                payment: paymentFilter || null,
+                checkInDate: dateFrom || null,
+                checkOutDate: dateTo || null,
+            },
+      });
       const data = resInvoices.data.result;
       setInvoiceNoPage(data);
     } catch (error) {
@@ -68,6 +80,7 @@ export default function InvoiceU() {
         `/invoice/owner/${userID}?pageNo=${page}&pageSize=6`
       );
       const data = resInvoices.data.result;
+      fetchInvoiceNoPage();
       setInvoiceList(data.content);
       setInvoiceListSearch(data.content);
       setTotalPages(data.totalPages);
@@ -81,7 +94,7 @@ export default function InvoiceU() {
       const resUser = await api.get("/users/myInfo");
       const userID = resUser.data.result.id;
       const response = await api.get(
-        `/invoice/owner/${userID}?pageNo=${page}&pageSize=6`,
+        `/invoice/owner/${userID}`,
         {
           params: {
             pageNo: page,
@@ -95,7 +108,6 @@ export default function InvoiceU() {
       );
 
       const data = response.data.result;
-      setInvoiceList(data.content);
       setInvoiceListSearch(data.content);
       setTotalPages(data.totalPages);
     } catch (error) {
@@ -185,6 +197,26 @@ export default function InvoiceU() {
       );
     }
   };
+  const handleDelete = async (invoiceId) => {
+      const result = await Swal.fire({
+            title: "Bạn có chắc muốn xóa?",
+            text: "Hành động này không thể hoàn tác!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy",
+          });
+      
+          if (!result.isConfirmed) return;
+      try {
+        await api.delete(`/invoice/ac/${invoiceId}`);
+        toast.success("Xóa hóa đơn thành công");
+        fetchInvoice(1);
+        fetchInvoiceFilter();
+      } catch (err) {
+        console.error(err);
+      }
+    };
   const StatusOptions = [
     { value: 0, label: "Chờ xác nhận" },
     { value: 1, label: "Đã xác nhận" },
@@ -194,7 +226,7 @@ export default function InvoiceU() {
   return (
     <>
       <div className="p-6 bg-gray-100 min-h-screen w-full ml-[300px]">
-        <div className="mt-[70px] sm:mt-[90px]">
+        <div className="">
           {/* Header */}
           <div className="flex items-center space-x-2 mb-4">
             <ShoppingBagIcon size={26} className="sm:size-[30px]" />
@@ -215,30 +247,34 @@ export default function InvoiceU() {
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Chờ xác nhận</p>
-              <p className="text-yellow-500 font-semibold">
-                {invoiceNoPage.filter((inv) => inv.status === 0).length}
-              </p>
+              <p className="text-yellow-500 space-x-0.5">
+              <LoaderIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 0).length}</span>
+            </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Đã xác nhận</p>
-              <p className="text-blue-500 font-semibold">
-                {invoiceNoPage.filter((inv) => inv.status === 1).length}
-              </p>
+              <p className="text-blue-500 space-x-0.5">
+              <ScanLineIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 1).length}</span>
+            </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Hoàn thành</p>
-              <p className="text-green-500 font-semibold">
-                {invoiceNoPage.filter((inv) => inv.status === 2).length}
-              </p>
+              <p className="text-green-500 space-x-0.5">
+              <VoteIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 2).length}</span>
+            </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Đã hủy</p>
-              <p className="text-red-600 font-semibold">
-                {invoiceNoPage.filter((inv) => inv.status === 3).length}
-              </p>
+              <p className="text-red-600 space-x-0.5">
+              <SquareXIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 3).length}</span>
+            </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
@@ -397,13 +433,22 @@ export default function InvoiceU() {
                         {invoice.totalAmount} ₫
                       </td>
                       <td className="py-3 px-4 text-center">
-                        <button
+                        <div className="flex gap-1">
+                          <button
                           className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md flex items-center justify-center space-x-1 text-xs"
                           onClick={() => handleGetInvoice(invoice.id)}
                         >
                           <EyeIcon size={14} />
                           <span>Xem</span>
                         </button>
+                          <button
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center justify-center space-x-1 text-xs"
+                          onClick={() => handleDelete(invoice.id)}
+                        >
+                          <DeleteIcon size={14} />
+                          <span>Xóa</span>
+                        </button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -471,7 +516,6 @@ export default function InvoiceU() {
                 </h1>
               </div>
               <p className="text-sm font-semibold mt-3">HÓA ĐƠN THANH TOÁN</p>
-              <p className="text-xs text-gray-500">68d6545b369aa3917ebd6ca3</p>
             </div>
 
             {/* --- THÔNG TIN KHÁCH HÀNG & KHÁCH SẠN --- */}

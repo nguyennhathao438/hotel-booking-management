@@ -10,7 +10,8 @@ export default function HotelsView() {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const [hotelImages,setHotelImages] = useState([]);
+  const [keywords,setKeyWords] = useState("");
   const getHotels = async (
     page = 1,
     rating = selectedRating,
@@ -26,11 +27,14 @@ export default function HotelsView() {
           pageSize: 7,
           hotelRating: rating || undefined,
           sortByCost: sortByCost || undefined,
+          keyword: keywords || undefined,
         },
       });
       const hotels = res.data.result;
       console.log("dữ liệu hotel", hotels);
-      setHotelList(hotels.content || []);
+      const hotelArray = hotels.content || [];
+      setHotelList(hotelArray);
+      hotelArray.forEach((hotel) => getImg(hotel.hotelId));
       setTotalPages(hotels.totalPages || 1);
       setCurrentPage(hotels.number + 1 || 1);
     } catch (err) {
@@ -69,10 +73,24 @@ export default function HotelsView() {
 
     return stars;
   };
-
+  const getImg = async (hotelId) => {
+    try {
+    const res = await api.get(`images/hotel/${hotelId}`);
+    const imgList = res.data.result;
+    if (imgList && imgList.length > 0) {
+      // Lưu ảnh đầu tiên làm ảnh đại diện
+      setHotelImages((prev) => ({
+        ...prev,
+        [hotelId]: imgList[0].imgUrl,
+      }));
+    }
+  } catch (err) {
+    console.error("Lỗi khi lấy ảnh khách sạn:", err);
+    }
+  }
   useEffect(() => {
     getHotels(1);
-  }, [selectedRating, active]);
+  }, [keywords, selectedRating, active]);
   const buttons = [
     { id: "top", label: "Lựa chọn hàng đầu của chúng tôi" },
     { id: "low", label: "Giá thấp trước" },
@@ -132,6 +150,13 @@ export default function HotelsView() {
                   {btn.label}
                 </button>
               ))}
+              <input 
+                  type="text"
+                  placeholder="Tìm kiếm theo tên và địa chỉ"
+                  className="w-96 border-2 border-gray-400 p-2"
+                  value={keywords}
+                  onChange={(e) => setKeyWords(e.target.value)}
+              />
             </div>
             {/* Khu vực danh sách khách sạn */}
             <div className="space-y-5">
@@ -145,7 +170,8 @@ export default function HotelsView() {
                   >
                     <div className="p-3 sm:w-1/3 flex justify-center sm:justify-start">
                       <img
-                        src="."
+                        src={hotelImages[hotel.hotelId] || "."}
+                        alt={hotel.hotelName}
                         className="w-full sm:w-44 md:w-48 lg:w-52 xl:w-80 h-48 sm:h-60 object-cover rounded-md"
                       ></img>
                     </div>
@@ -175,7 +201,7 @@ export default function HotelsView() {
                           className={`text-sm text-gray-700 transition-all duration-300 ${
                             expandedIndex === id
                               ? "max-h-full"
-                              : "max-h-[40px] overflow-hidden"
+                              : "max-h-10 overflow-hidden"
                           }`}
                         >
                           {hotel.hotelDescription}
@@ -195,10 +221,6 @@ export default function HotelsView() {
                     <div className="p-4 sm:border-l border-t sm:border-t-0 border-gray-200 sm:w-[250px]">
                       <div className="mb-6 text-right">
                         <p className="text-gray-700 text-sm sm:text-base">
-                          Trên cả tuyệt vời
-                          <span className="ml-1 font-semibold">7.8</span>
-                        </p>
-                        <p className="text-gray-700 text-sm sm:text-base">
                           Tổng Số lượng phòng
                           <span className="ml-1 font-semibold">
                             {hotel.hotelTotalRoom}
@@ -211,7 +233,7 @@ export default function HotelsView() {
                       <p className="text-red-500 text-xl sm:text-2xl font-bold text-right">
                         {hotel.hotelCost} đ
                       </p>
-                      <button className="bg-blue-500 w-full mt-4 py-2 rounded-lg hover:bg-blue-400 transition">
+                      <button className="bg-blue-500 w-full mt-9 py-2 rounded-lg hover:bg-blue-400 transition">
                         <Link to={`/detailshotel/${hotel.hotelId}`}>
                           <p className="text-white text-sm sm:text-base">
                             Kiểm tra lượng phòng trống{" "}

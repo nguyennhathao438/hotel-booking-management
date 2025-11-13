@@ -13,53 +13,69 @@ import {
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+
 export default function SideBar() {
   const userRoles = useSelector((state) => state.user.role);
   const hasRole = (roleName) => userRoles?.some((r) => r.name === roleName);
+
   return (
-    <div className="bg-black py-4 px-4 h-screen w-[300px] fixed z-10">
-      <div className="px-4 mb-5 flex">
+    <div className="bg-black py-4 px-3 h-screen fixed z-10 w-[70px] lg:w-[300px] transition-all duration-300">
+      {/* Logo */}
+      <div className="px-2 mb-6 flex items-center justify-center lg:justify-start">
         <ChartNoAxesCombinedIcon className="text-green-400 w-6 h-6" />
-        <h2 className="text-white font-bold pl-2 text-xl">OpenHotel</h2>
+        <h2 className="text-white font-bold pl-2 text-xl hidden lg:block">
+          OpenHotel
+        </h2>
       </div>
-      <div className="px-4 space-y-4">
-        <NavLink to="/admin" className="flex hover:bg-gray-400">
-          {" "}
-          <LayoutGridIcon className="w-6 h-6 text-gray-600" />
-          <p className=" text-white cursor-pointer pl-2">Trang chủ</p>
+
+      {/* Menu */}
+      <div className="space-y-4">
+        <NavLink to="/admin" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+          <LayoutGridIcon className="w-6 h-6 text-gray-400" />
+          <p className="text-white cursor-pointer pl-2 hidden lg:block">Trang chủ</p>
         </NavLink>
+
         {hasRole("INVOICE") && (
-          <NavLink to="/admin/invoice" className="flex hover:bg-gray-400">
-            {" "}
-            <FileTextIcon className="w-6 h-6 text-gray-600" />
-            <p className=" text-white cursor-pointer pl-2">Quản lý hóa đơn</p>
+          <NavLink to="/admin/invoice" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+            <FileTextIcon className="w-6 h-6 text-gray-400" />
+            <p className="text-white cursor-pointer pl-2 hidden lg:block">
+              Quản lý hóa đơn
+            </p>
           </NavLink>
         )}
+
         {hasRole("HOTEL") && (
-          <NavLink to="/admin/hotelmanager" className="flex hover:bg-gray-400">
-            {" "}
-            <HotelIcon className="w-6 h-6 text-gray-600" />
-            <p className=" text-white cursor-pointer pl-2">Quản lý khách sạn</p>
+          <NavLink to="/admin/hotelmanager" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+            <HotelIcon className="w-6 h-6 text-gray-400" />
+            <p className="text-white cursor-pointer pl-2 hidden lg:block">
+              Quản lý khách sạn
+            </p>
           </NavLink>
         )}
+
         {hasRole("USER") && (
-          <NavLink to="/admin/user" className="flex hover:bg-gray-400">
-            {" "}
-            <User2Icon className="w-6 h-6 text-gray-600" />
-            <p className=" text-white cursor-pointer pl-2">Quản lý user</p>
+          <NavLink to="/admin/user" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+            <User2Icon className="w-6 h-6 text-gray-400" />
+            <p className="text-white cursor-pointer pl-2 hidden lg:block">
+              Quản lý user
+            </p>
           </NavLink>
         )}
+
         {hasRole("ROLE") && (
-          <NavLink to="/admin/permission" className="flex hover:bg-gray-400">
-            {" "}
-            <UserLockIcon className="w-6 h-6 text-gray-600" />
-            <p className=" text-white cursor-pointer pl-2">Phân quyền</p>
+          <NavLink to="/admin/permission" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+            <UserLockIcon className="w-6 h-6 text-gray-400" />
+            <p className="text-white cursor-pointer pl-2 hidden lg:block">
+              Phân quyền
+            </p>
           </NavLink>
         )}
-        <NavLink to="/" className="flex hover:bg-gray-400">
-          {" "}
-          <ArrowLeftFromLine className="w-6 h-6 text-gray-600" />
-          <p className=" text-white cursor-pointer pl-2">Quay lại trang web</p>
+
+        <NavLink to="/" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+          <ArrowLeftFromLine className="w-6 h-6 text-gray-400" />
+          <p className="text-white cursor-pointer pl-2 hidden lg:block">
+            Quay lại trang web
+          </p>
         </NavLink>
       </div>
     </div>

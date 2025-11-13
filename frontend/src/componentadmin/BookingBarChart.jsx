@@ -11,7 +11,7 @@ const BookingBarChart = ({ barChart, barFilter, setBarFilter }) => {
       {/* Tiêu đề và bộ lọc */}
       <div className="flex items-center justify-between border-b border-gray-200 pb-2 mb-3">
         <div className="flex items-center gap-2">
-          <CalendarDaysIcon className="text-indigo-600" />
+          <CalendarDaysIcon className="text-blue-500" />
           <h2 className="text-lg font-semibold">Total Bookings</h2>
         </div>
         <select

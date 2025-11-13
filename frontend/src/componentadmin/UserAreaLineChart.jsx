@@ -5,7 +5,7 @@ export default function UserAreaLineChart({ chartData, filter, setFilter, title,
   return (
     <div className={`bg-white mb-4 max-w-6xl px-2 py-5 ${className}`}>
       <div className="flex mb-2 border-b-3 border-b-gray-200">
-        <ChartColumnBigIcon />
+        <ChartColumnBigIcon className="text-emerald-500"/>
         <h2 className="text-xl font-semibold ml-2">{title}</h2>
         <select
           value={filter}
@@ -26,10 +26,10 @@ export default function UserAreaLineChart({ chartData, filter, setFilter, title,
             {
                 label: "User",
                 data: chartData.data,
-                borderColor: "#10B981", // xanh ngọc
-                backgroundColor: "rgba(16,185,129,0.2)", // vùng tô nhẹ
+                borderColor: "#10B981",
+                backgroundColor: "rgba(16,185,129,0.2)", 
                 tension: 0.4,
-                fill: true, // 👈 chính là phần tạo "Area"
+                fill: true, // phần tạo "Area"
                 pointBackgroundColor: "#10B981",
                 pointBorderColor: "#fff",
                 pointHoverRadius: 6,
