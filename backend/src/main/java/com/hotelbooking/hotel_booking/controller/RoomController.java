@@ -8,6 +8,7 @@ import com.hotelbooking.hotel_booking.service.RoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -84,7 +85,7 @@ public class RoomController {
                 .result(roomResponses)
                 .build());
     }
-    @DeleteMapping("/{roomID}")
+    @DeleteMapping("/delete/{roomID}")
     public ResponseEntity<ApiResponse<Void>> deleteRoom(@PathVariable int roomID) {
         roomService.deleteRoom(roomID);
         return ResponseEntity.ok(ApiResponse.<Void>builder()

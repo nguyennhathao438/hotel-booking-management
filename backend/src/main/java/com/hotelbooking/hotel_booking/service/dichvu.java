@@ -66,9 +66,7 @@ public class dichvu {
     public List<ServiceResponse> getServicesByHotelId(int hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-
         List<HotelService> services = serviceRepository.findByHotel(hotel);
-
         return services.stream()
                 .map(this::mapToServiceResponse)
                 .collect(Collectors.toList());

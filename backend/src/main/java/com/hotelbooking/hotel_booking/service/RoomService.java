@@ -113,12 +113,12 @@ private InvoiceRepository invoiceRepository;
         roomRepository.save(room);
         return mapToRoomResponse(room);
     }
+
     @PostAuthorize("hasAuthority('DELETE_ROOM')")
     public void deleteRoom(Integer id) {
-        if (!roomRepository.existsById(id)) {
-            throw new AppException(ErrorCode.ROOM_NOT_EXISTED);
-        }
-        roomRepository.deleteById(id);
+        Room room = roomRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        room.setStatus(0);
+        roomRepository.saveAndFlush(room);
     }
 
     public List<RoomResponse> getAvailableRooms(LocalDate startDate, LocalDate endDate) {

@@ -3,9 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import banner2 from "../../assets/img/banner2.jpg";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import BookingSearch from "../BookingSearch";
-import TopTabBar from "./Tabbar";
 import ImageSlider from "../Common/ImageSlider";
-import RoomList from "./RoomList";
 import api from "../../api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import toast from "react-hot-toast";
@@ -27,17 +25,25 @@ function DetailsHotelView() {
             });
         }
     };
+
+    const formatDate = (date) => {
+        // Nếu date là dạng Date object
+        const d = new Date(date);
+        return d.toISOString().split("T")[0]; // => "2025-10-14"
+    };
+
     const user = useSelector((state) => state.user);
     const [rooms, setRooms] = useState([]);
     const [images, setImages] = useState([]);
     const { hotelId } = useParams();
+    const { checkInDate, checkOutDate } = useContext(Context);
     //Chat
     const [openChat, setOpenChat] = useState(false);
     const [hotel, setHotel] = useState([]);
     const [feedbacks, setFeedBacks] = useState([])
     const [services, setServices] = useState([])
 
-    const fetchHotelService = async () => {
+    const fetchHotelServices = async () => {
         const response = await api.get(`/service/hotel/${hotelId}`)
         setServices(response.data.result)
         return response.data.result;
@@ -64,6 +70,22 @@ function DetailsHotelView() {
         }
     }
 
+    const checkRoomAvailable = async (roomId) => {
+        try {
+            const response = await api.get(`/invoice/check-room`, {
+                params: {
+                    checkInDate: formatDate(checkInDate),
+                    checkOutDate: formatDate(checkOutDate),
+                    roomId: roomId,
+                },
+            });
+            return response.data.result;
+        } catch (error) {
+            console.error("Lỗi khi kiểm tra phòng:", error);
+            return false;
+        }
+    };
+
     const fetchRoomsByHotelId = async () => {
         try {
             const roomData = await api.get(`rooms/hotel/${hotelId}`);
@@ -82,24 +104,14 @@ function DetailsHotelView() {
         }
     };
 
-
-
     useEffect(() => {
         fetchHotelById()
         fetchFeedBackByHotelId()
         fetchRoomsByHotelId()
-        fetchHotelService()
+        fetchHotelServices()
     }, [hotelId])
 
-    const roomsRef = useRef(null);
-    const handleScrollToRooms = () => {
-        roomsRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    const detailsHotelsRef = useRef(null);
-    const handleScrollToDetailsHotel = () => {
-        detailsHotelsRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
+    console.log("danh sach room", rooms)
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -115,16 +127,19 @@ function DetailsHotelView() {
         );
     };
 
-    const { checkInDate, checkOutDate } = useContext(Context);
     const navigate = useNavigate();
     const isValidDate = () => {
         let flag = true;
         if (checkOutDate - checkInDate < 0) flag = false;
         return flag;
     };
-    const handleBooking = (roomId) => {
+    const handleBooking = (roomId, room) => {
         if (!user.userId) {
             toast.error("Vui lòng đăng nhập để đặt phòng");
+            return;
+        }
+        if (!room.available) {
+            toast.error("Phòng đã được đặt trong khoảng ngày này")
             return;
         }
         if (!isValidDate()) {
@@ -135,22 +150,6 @@ function DetailsHotelView() {
     };
 
 
-    const checkRoomAvailable = async (roomId) => {
-        try {
-            const response = await api.get(`/invoice/check-room`, {
-                params: {
-                    checkInDate: checkInDate.toISOString().split("T")[0],
-                    checkOutDate: checkOutDate.toISOString().split("T")[0],
-                    roomId: roomId,
-                },
-            });
-            return response.data.result; // true hoặc false
-        } catch (error) {
-            console.error("Lỗi khi kiểm tra phòng:", error);
-            return false;
-        }
-    };
-
     useEffect(() => {
         if (checkInDate && checkOutDate) {
             fetchRoomsByHotelId();
@@ -158,14 +157,20 @@ function DetailsHotelView() {
     }, [checkInDate, checkOutDate]);
 
     const tabs = [
-        "Tổng quan",
-        "Thông tin căn hộ & giá",
-        "Tiện nghi",
-        "Quy tắc chung",
-        "Ghi chú",
-        "Đánh giá của khách",
-    ];
-    const [activeTab, setActiveTab] = useState("Tổng quan");
+        "Tổng quan", "Thông tin căn hộ", "Tiện nghi", "Quy tắc chung", "Ghi chú", "Đánh giá của khách"
+    ]
+    const [activeTab, setActiveTab] = useState("Tổng quan")
+    const roomRef = useRef(null)
+    const hotelRef = useRef(null)
+    const serviceRef = useRef(null)
+    const handleScroll = (tab) => {
+        if (tab === "Tổng quan")
+            hotelRef.current.scrollIntoView({ behavior: "smooth" })
+        else if (tab === "Thông tin căn hộ")
+            roomRef.current.scrollIntoView({ behavior: "smooth" })
+        else if (tab === "Tiện nghi")
+            serviceRef.current.scrollIntoView({ behavior: "smooth" })
+    }
     return (
         <div>
             {/* Banner */}
@@ -177,40 +182,20 @@ function DetailsHotelView() {
                 </div>
             </div>
 
-            {/* Thanh tab điều hướng */}
-            <div className="w-full bg-white shadow-md border-b border-gray-200 top-0">
-                <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
-                    <div className="flex space-x-6">
-                        {tabs.map((item) => (
-                            <button key={item} onClick={() => {
-                                setActiveTab(item);
-                                if (item === "Thông tin căn hộ & giá") {
-                                    handleScrollToRooms()
-                                }
-                                if (item === "Tổng quan") {
-                                    handleScrollToDetailsHotel()
-                                }
-                            }}
-                                className={`relative font-medium transition duration-300 group ${activeTab === item ? "text-[#6B4423]" : "text-gray-700 hover:text-[#6B4423]"}`}>
-                                {item}
-                                <span className={`absolute left-0 -bottom-0.5 h-0.5 bg-[#6B4423] transition-all duration-300 ${activeTab === item ? "w-full" : "w-0 group-hover:w-full"}`}>
-
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-
-                    <button className="bg-[#6B4423] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#4E342E] transition duration-300 shadow-md">
-                        Đặt căn hộ của bạn
+            {/**Thanh điều hướng */}
+            <div className="w-full flex gap-7 bg-white px-10 py-5 shadow-md bordẻ-gray-300">
+                {tabs.map((tab, index) => (
+                    <button key={index}
+                        onClick={() => { setActiveTab(tab), handleScroll(tab) }}
+                        className="relative group font-medium text-[#4b2e1f] text-md lg:text-xl cursor-pointer">
+                        {tab}
+                        <span className={`absolute left-0 bg-[#6B4423] transition-all duration-400 -bottom-0.5 h-0.5 text-[#4b2e1f] group-hover:w-full ${activeTab === tab ? "w-full" : "w-0"}`}></span>
                     </button>
-                </div>
+                ))}
             </div>
-            {/* <TopTabBar scrollToRooms={handleScrollToRooms} scrollToDetailsHotel={handleScrollToDetailsHotel} /> */}
-
-
 
             {/* Chi tiết khách sạn */}
-            <div ref={detailsHotelsRef} className="gap-6 p-6 bg-gradient-to-r from-[#f9f5f0] via-white to-[#f9f5f0] rounded-2xl shadow-lg">
+            <div ref={hotelRef} className="gap-6 p-6 from-[#f9f5f0] via-white to-[#f9f5f0] rounded-2xl shadow-lg">
                 {/* phía trên */}
                 <div className="flex flex-col lg:flex-row gap-6">
                     {/* bên trái */}
@@ -306,7 +291,7 @@ function DetailsHotelView() {
                 {
                     services.length != 0 && (
                         <div>
-                            <h2 className="text-xl px-6 font-semibold pt-4">Danh sách dịch vụ nổi bật của khách sạn</h2>
+                            <h2 ref={serviceRef} className="text-xl px-6 font-semibold pt-4">Danh sách tiện nghi nổi bật của khách sạn</h2>
                             <div className="relative py-2 px-4">
                                 {/* Vùng cuộn danh sách */}
                                 <button onClick={() => scroll("left")} className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
@@ -337,7 +322,7 @@ function DetailsHotelView() {
             </div>
 
 
-            <h2 ref={roomsRef} className="w-full text-center mt-5 p-2 font-bold font-sans text-lg md:text-2xl text-[#4b2e1f]">
+            <h2 ref={roomRef} className="w-full text-center mt-5 p-2 font-bold font-sans text-lg md:text-2xl text-[#4b2e1f]">
                 Danh sách phòng của {hotel.hotelName} {"(" + checkInDate.toLocaleDateString() + " đến " + checkOutDate.toLocaleDateString() + ")"}
             </h2>
             {
@@ -386,7 +371,7 @@ function DetailsHotelView() {
                                         {/* Nút hành động */}
                                         <div className="flex gap-3 justify-end">
                                             <button
-                                                onClick={() => handleBooking(room.roomId)}
+                                                onClick={() => handleBooking(room.roomId, room)}
                                                 className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
                                             >
                                                 Đặt phòng

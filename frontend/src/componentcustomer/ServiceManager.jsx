@@ -2,28 +2,32 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import api from "../api";
+import Swal from "sweetalert2";
 
 export default function ServiceManager() {
     const [myServices, setMyServices] = useState([]);
-    const {hotelId} = useParams()
+    const { hotelId } = useParams()
     const fetchServicesByHotelId = async (hotelId) => {
-            const response = await api.get(`/service/hotel/${hotelId}`)
-            setMyServices(response.data.result)
-        }
-    useEffect(()=>{
+        const response = await api.get(`/service/hotel/${hotelId}`)
+        setMyServices(response.data.result)
+    }
+    useEffect(() => {
         fetchServicesByHotelId(hotelId)
-    },[hotelId])
+    }, [hotelId])
     const addService = async (sv) => {
         try {
             const dataService = {
                 ...sv,
                 hotelID: hotelId
             }
-            await api.post("/service/create",dataService)
-            fetchServicesByHotelId(hotelId)
+            const response = await api.post("/service/create", dataService)
+            if(response.data.code){
+                toast.success("Thêm dịch vụ thành công")
+                fetchServicesByHotelId(hotelId)
+            }
         } catch (error) {
             toast.error("Dịch vụ đã tồn tại")
-            console.log("Không thể thêm dịch vụ",error)
+            console.log("Không thể thêm dịch vụ", error)
         }
     }
     const services = [
@@ -76,6 +80,27 @@ export default function ServiceManager() {
             price: 0,
         },
     ];
+    const deleteService = async (id) => {
+        const result = await Swal.fire({
+            title: "Bạn có chắc muốn xóa?",
+            text: "Hành động này không thể hoàn tác!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy",
+        });
+        if (!result.isConfirmed) return;
+        try {
+            const response = await api.delete(`/service/delete/${id}`)
+            if (response.data.code) {
+                toast.success("Xóa thành công")
+                fetchServicesByHotelId(hotelId)
+            }
+        } catch (error) {
+            toast.error("Không thể xóa")
+            console.log("Không thể xóa", error)
+        }
+    }
 
     return (
         <div className="w-[1700px] items-center justify-center min-h-screen bg-gray-100 ml-[300px]">
@@ -100,9 +125,12 @@ export default function ServiceManager() {
                                         </h3>
                                     </div>
                                     <p className="text-gray-600 text-sm">{service.description}</p>
-                                    <p className="text-green-700 font-semibold mt-1">
-                                        Giá: {service.price.toLocaleString()} VNĐ
-                                    </p>
+                                    <div className="flex gap-10">
+                                        <p className="text-green-700 font-semibold mt-1">
+                                            Giá: {service.price.toLocaleString()} VNĐ
+                                        </p>
+                                        <button onClick={() => deleteService(service.serviceId)} className="bg-red-500 text-white py-1 px-3 cursor-pointer rounded-md">Hủy</button>
+                                    </div>
                                 </div>
                             ))
                         )}
@@ -130,7 +158,7 @@ export default function ServiceManager() {
                                 </div>
 
                                 {/* Nút thêm */}
-                                <button onClick={() => {addService(service)}} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md w-full mt-auto">
+                                <button onClick={() => { addService(service) }} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md w-full mt-auto">
                                     THÊM
                                 </button>
                             </div>

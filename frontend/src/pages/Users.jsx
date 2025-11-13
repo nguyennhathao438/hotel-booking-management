@@ -63,8 +63,8 @@ export default function Users() {
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
-          error.message ||
-          "Lỗi khi cập nhật trạng thái user"
+        error.message ||
+        "Lỗi khi cập nhật trạng thái user"
       );
     }
   };
@@ -140,9 +140,8 @@ export default function Users() {
       console.log("bug1" + response.data.result);
       const usersWithFullName = response.data.result.map((userSelected) => ({
         ...userSelected,
-        fullName: `${userSelected.firstName || ""} ${
-          userSelected.lastName || ""
-        }`.trim(),
+        fullName: `${userSelected.firstName || ""} ${userSelected.lastName || ""
+          }`.trim(),
       }));
       setUserList(usersWithFullName);
     } catch (error) {
@@ -283,11 +282,10 @@ export default function Users() {
                   <tr
                     key={id}
                     onClick={() => setSelectUserId(userList.id)} // cũng có thể cho phép click vào dòng
-                    className={`border-b transition ${
-                      selectUserId === userList.id
+                    className={`border-b transition ${selectUserId === userList.id
                         ? "bg-blue-100" // màu nền khi chọn
                         : "hover:bg-gray-100"
-                    }`}
+                      }`}
                   >
                     <td className="py-3 px-6">{`${userList.firstName} ${userList.lastName}`}</td>
 
@@ -337,11 +335,10 @@ export default function Users() {
         <div className="flex justify-center items-center mt-4 space-x-2">
           <button
             onClick={() => handlePageChange(pageNo - 1)}
-            className={`px-3 py-1 rounded-md ${
-              pageNo === 1
+            className={`px-3 py-1 rounded-md ${pageNo === 1
                 ? "bg-gray-200 text-gray-500"
                 : "bg-blue-500 text-white hover:bg-blue-600"
-            }`}
+              }`}
           >
             {" "}
             Previous
@@ -350,22 +347,20 @@ export default function Users() {
             <button
               key={index}
               onClick={() => handlePageChange(index + 1)}
-              className={`px-3 py-1 rounded ${
-                pageNo === index + 1
+              className={`px-3 py-1 rounded ${pageNo === index + 1
                   ? "bg-blue-500 text-white"
                   : "bg-gray-200 hover:bg-gray-300"
-              }`}
+                }`}
             >
               {index + 1}
             </button>
           ))}
           <button
             onClick={() => handlePageChange(pageNo + 1)}
-            className={`px-3 py-1 rounded-md ${
-              pageNo === totalPages
+            className={`px-3 py-1 rounded-md ${pageNo === totalPages
                 ? "bg-gray-200 text-gray-500"
                 : "bg-blue-500 text-white hover:bg-blue-600"
-            }`}
+              }`}
           >
             Next
           </button>

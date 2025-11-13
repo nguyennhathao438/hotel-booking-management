@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../api";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import banner2 from "../assets/img/banner2.jpg"
 const roomSchema = z.object({
     roomName: z
         .string()
@@ -171,6 +173,29 @@ export default function RoomManager() {
         fetchRoomsByRoomType()
     }, [roomType, hotelId])
 
+
+    const deleteRoom = async (roomId) => {
+        const result = await Swal.fire({
+            title: "Bạn có chắc muốn xóa?",
+            text: "Hành động này không thể hoàn tác!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy",
+        });
+        if (!result.isConfirmed) return;
+        try {
+            const response = await api.delete(`/rooms/delete/${roomId}`)
+            console.log(response.data)
+            if (response.data.code) {
+                toast.success("Xóa phòng thành công")
+                fetchRoomsByHotelId(hotelId)
+            }
+        } catch (error) {
+            toast.error("Không thể xóa phòng")
+            console.log("Không thể xóa phòng", error)
+        }
+    }
     return (
         <div className="w-[1700px] items-center justify-center min-h-screen bg-gray-100 ml-[300px]">
             <div className="px-2 py-2 h-auto">
@@ -210,60 +235,62 @@ export default function RoomManager() {
                     rooms.length != 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 py-6">
                             {rooms.map((room) => (
-                                <div key={room.roomId} className="rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition bg-white">
-                                    {/* Nếu bạn có ảnh room thì thay bằng room.imageUrls[0] */}
-                                    <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
-                                        Không có ảnh
-                                    </div>
-
-                                    <div className="p-4">
-                                        {/* Tên khách sạn */}
-                                        <h2 className="text-lg font-semibold text-blue-700">
-                                            {room.hotel?.hotelName || "Không có tên khách sạn"}
-                                        </h2>
-
-                                        {/* Tên & loại phòng */}
-                                        <p className="mt-1 font-medium text-gray-800">
-                                            {room.roomName} ({room.roomType})
-                                        </p>
-
-                                        {/* Thông tin chi tiết */}
-                                        <p className="text-sm text-gray-600 mt-1">
-                                            🛏️ {room.bedCount} giường • {room.bedRoomCount} phòng ngủ • {room.roomCapacity} khách
-                                        </p>
-                                        <p className="text-sm text-gray-600">
-                                            📐 Diện tích: {room.roomArea} m²
-                                        </p>
-
-                                        {/* Giá phòng */}
-                                        <div className="flex justify-between items-center mt-3">
-                                            <span className="text-lg font-bold text-green-600">
-                                                {room.roomPrice.toLocaleString()} ₫/đêm
-                                            </span>
+                                room.status === 1 && (
+                                    <div key={room.roomId} className="rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition bg-white">
+                                        {/* Nếu bạn có ảnh room thì thay bằng room.imageUrls[0] */}
+                                        <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
+                                            <img src={banner2} alt="" />
                                         </div>
 
-                                        {/* Trạng thái phòng */}
-                                        <div className="flex flex-col gap-2 mt-2">
-                                            {/* Trạng thái phòng */}
-                                            <p className={`text-sm font-medium ${room.status === 1 ? "text-green-600" : "text-red-500"}`}>
-                                                {room.status === 1 ? "Phòng còn trống" : "Hết chỗ"}
+                                        <div className="p-4">
+                                            {/* Tên khách sạn */}
+                                            <h2 className="text-lg font-semibold text-blue-700">
+                                                {room.hotel?.hotelName || "Không có tên khách sạn"}
+                                            </h2>
+
+                                            {/* Tên & loại phòng */}
+                                            <p className="mt-1 font-medium text-gray-800">
+                                                {room.roomName} ({room.roomType})
                                             </p>
 
-                                            {/* Nút hành động */}
-                                            <div className="flex gap-3 justify-end">
-                                                <button onClick={() => { setOpenCreate(true); defaultUpdate(room) }} className="bg-yellow-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600">
-                                                    <Edit className="inline-block mr-1" />
-                                                    Sửa
-                                                </button>
+                                            {/* Thông tin chi tiết */}
+                                            <p className="text-sm text-gray-600 mt-1">
+                                                🛏️ {room.bedCount} giường • {room.bedRoomCount} phòng ngủ • {room.roomCapacity} khách
+                                            </p>
+                                            <p className="text-sm text-gray-600">
+                                                📐 Diện tích: {room.roomArea} m²
+                                            </p>
 
-                                                <button className="bg-red-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-red-600">
-                                                    <Trash className="inline-block mr-1" />
-                                                    Xóa
-                                                </button>
+                                            {/* Giá phòng */}
+                                            <div className="flex justify-between items-center mt-3">
+                                                <span className="text-lg font-bold text-green-600">
+                                                    {room.roomPrice.toLocaleString()} ₫/đêm
+                                                </span>
+                                            </div>
+
+                                            {/* Trạng thái phòng */}
+                                            <div className="flex flex-col gap-2 mt-2">
+                                                {/* Trạng thái phòng */}
+                                                <p className={`text-sm font-medium ${room.status === 1 ? "text-green-600" : "text-red-500"}`}>
+                                                    {room.status === 1 ? "Phòng còn trống" : "Hết chỗ"}
+                                                </p>
+
+                                                {/* Nút hành động */}
+                                                <div className="flex gap-3 justify-end">
+                                                    <button onClick={() => { setOpenCreate(true); defaultUpdate(room) }} className="bg-yellow-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600">
+                                                        <Edit className="inline-block mr-1" />
+                                                        Sửa
+                                                    </button>
+
+                                                    <button onClick={() => { deleteRoom(room.roomId) }} className="bg-red-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-red-600">
+                                                        <Trash className="inline-block mr-1" />
+                                                        Xóa
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                )
                             ))}
                         </div>
                     ) :

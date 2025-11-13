@@ -22,7 +22,7 @@ export default function HotelProvince() {
 
     return (
         <div className="h-auto ">
-            <div className="w-[85%] border border-gray-300 rounded-xl mx-auto">
+            <div className="w-[70%] border border-gray-300 rounded-xl mx-auto">
                 <div className="px-5 py-3">
                     <span className="font-bold block py-2 text-xl">Tìm thấy {hotelProvince.length} chỗ nghỉ ở {province}</span>
                     <span className="font-light py-2 block text-md">Click nút bên dưới để tìm phòng trống từ {checkInDate.toLocaleDateString()} đến {checkOutDate.toLocaleDateString()}</span>

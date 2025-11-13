@@ -1,28 +1,22 @@
 import Checkin from "./Checkin";
 import Checkout from "./Checkout";
-import Adults from "./Adults";
-import Kids from "./Kid";
 import Province from "./Province";
 import { Context } from "./RoomContext";
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import api from "../api";
+import { useContext } from "react";
 function BookingSearch() {
     const { checkInDate, checkOutDate, province } = useContext(Context);// eslint-disable-line no-unused-vars
     const navigate = useNavigate();
-    const [hotelProvince, setHotelProvince] = useState([])// eslint-disable-line no-unused-vars
     
     const handleSubmit = async (e) => {
         e.preventDefault();
         const respone = await api.get(`/hotels/search/${encodeURIComponent(province)}`)
         const hotelProvinceTemp = respone.data.result;
-        setHotelProvince(hotelProvinceTemp)
         navigate(`/search-result/${province}`, {
             state: { hotelProvince: hotelProvinceTemp }
         })
     }
-
-    console.log("huy dep trai")
 
     return (
         <form className="h-[300px] w-full lg:h-[90px] flex flex-col lg:flex-row ">

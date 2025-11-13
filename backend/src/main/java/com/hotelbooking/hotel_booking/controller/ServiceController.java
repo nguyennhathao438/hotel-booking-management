@@ -39,7 +39,7 @@ public class ServiceController {
                 .build());
     }
 
-    @DeleteMapping("/{serviceId}")
+    @DeleteMapping("/delete/{serviceId}")
     public ResponseEntity<ApiResponse<Void>> deleteService(@PathVariable int serviceId) {
         dv.deleteService(serviceId);
         return ResponseEntity.ok(ApiResponse.<Void>builder()

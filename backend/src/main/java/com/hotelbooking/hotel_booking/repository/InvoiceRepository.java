@@ -108,5 +108,6 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
 
         public Page<Invoice> findAllByUser_Id(Integer userId, Pageable pageable);
 
+        public List<Invoice> findByRoom_RoomId(int roomId);
         public List<Invoice> getByUser_Id(int user_id);
 }
