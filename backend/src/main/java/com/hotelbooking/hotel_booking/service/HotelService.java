@@ -3,10 +3,12 @@ package com.hotelbooking.hotel_booking.service;
 import com.hotelbooking.hotel_booking.dto.request.HotelRequest;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
+import com.hotelbooking.hotel_booking.entity.ImgHotel;
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.HotelRepository;
+import com.hotelbooking.hotel_booking.repository.ImgHotelRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,8 @@ public class HotelService {
     HotelRepository hotelRepository;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    ImgHotelRepository imgHotelRepository;
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -178,5 +182,18 @@ public class HotelService {
         }        return hotels.stream()
                 .map(this::mapToHotelResponse)
                 .toList();
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
+    public void deleteRequestAddHotel(int hotelId){
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(()->new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        if(hotel.getStatus() != 0){
+            throw new AppException(ErrorCode.REQUEST_HOTEL_NOT_DELETED);
+        }
+        List<ImgHotel> listImgHotel = imgHotelRepository.findImgHotelByHotel_HotelId(hotelId);
+        if(!listImgHotel.isEmpty()){
+            imgHotelRepository.deleteAllByHotel_HotelId(hotelId);
+        }
+        hotelRepository.delete(hotel);
     }
 }

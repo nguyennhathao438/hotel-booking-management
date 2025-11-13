@@ -4,7 +4,10 @@ import com.hotelbooking.hotel_booking.dto.request.HotelRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
+import com.hotelbooking.hotel_booking.entity.ImgHotel;
+import com.hotelbooking.hotel_booking.repository.ImgHotelRepository;
 import com.hotelbooking.hotel_booking.service.HotelService;
+import com.hotelbooking.hotel_booking.service.ImgHotelService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,4 +125,11 @@ public class HotelController {
                 .result(hotels)
                 .build());
     }
+        @DeleteMapping("/{hotelId}")
+        public ResponseEntity<ApiResponse<Void>> deleteRequiredAddHotel(@PathVariable int hotelId){
+            hotelService.deleteRequestAddHotel(hotelId);
+            return ResponseEntity.ok(ApiResponse.<Void>builder()
+                    .message("Xóa yêu cầu khách sạn thành công")
+                    .build());
+        }
 }

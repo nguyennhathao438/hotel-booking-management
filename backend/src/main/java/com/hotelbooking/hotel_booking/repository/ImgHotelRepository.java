@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ImgHotelRepository extends JpaRepository<ImgHotel,Integer> {
     List<ImgHotel> findImgHotelByHotel_HotelId(int hotelId);
+    void deleteAllByHotel_HotelId(int hotelId);
 }
