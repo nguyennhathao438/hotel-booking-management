@@ -115,9 +115,9 @@ export default function Contact() {
     }
   };
   return (
-    <div className="p-6 bg-gray-100 min-h-screen w-full ml-[300px]">
+    <div className="p-4 bg-gray-100 min-h-screen w-full ml-[70px] lg:ml-[300px]">
       {/* Ô tìm kiếm */}
-      <div className="p-3 border-b mb-6 bg-gray-50 flex items-center gap-2 max-w-5xl rounded-lg shadow-sm">
+      <div className="p-3 border-b mb-6 bg-gray-50 flex items-center gap-2 rounded-lg shadow-sm">
         <input
           type="text"
           value={search}
@@ -132,9 +132,9 @@ export default function Contact() {
       </div>
 
       {/* Container chính */}
-      <div className="flex flex-col md:flex-row max-w-5xl border bg-white rounded-lg overflow-hidden shadow-md">
+      <div className="flex md:flex-row w-full h-[calc(100vh-180px)] border bg-white rounded-lg overflow-hidden shadow-md">
         {/* Danh sách user */}
-        <aside className="hidden md:block w-64 border-r overflow-y-auto h-[510px] bg-gray-50">
+        <aside className=" md:block w-64 border-r overflow-y-auto h-full bg-gray-50">
           {listUser.map((user, i) => (
             <div
               key={i}
@@ -162,7 +162,7 @@ export default function Contact() {
 
         {/* Chat main */}
         {selectedUser ? (
-          <main className="flex-1 flex flex-col h-[510px]">
+          <main className="flex-1 flex flex-col h-full">
             {/* Header */}
             <header className="flex items-center justify-between border-b p-3 bg-gray-50">
               <div className="flex items-center gap-2">
