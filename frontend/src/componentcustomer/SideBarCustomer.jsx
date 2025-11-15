@@ -8,6 +8,7 @@ import {
   LayoutGridIcon,
   LayersIcon,
   BookmarkCheckIcon,
+  ArrowLeftFromLine,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -59,6 +60,12 @@ export default function SideBar() {
           {" "}
           <FileTextIcon className="w-6 h-6 text-gray-600" />
           <p className=" text-white cursor-pointer pl-2">Đơn hàng</p>
+        </NavLink>
+        <NavLink to="/" className="flex items-center hover:bg-gray-700 rounded-md">
+          <ArrowLeftFromLine className="w-6 h-6 text-gray-400" />
+          <p className="text-white cursor-pointer pl-2 hidden lg:block">
+            Quay lại trang web
+          </p>
         </NavLink>
       </div>
     </div>

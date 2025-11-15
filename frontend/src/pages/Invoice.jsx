@@ -11,6 +11,7 @@ import {
   ScanLineIcon,
   VoteIcon,
   SquareXIcon,
+  ReceiptIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../api";
@@ -119,8 +120,10 @@ export default function Invoice() {
       case 1:
         return "Đã xác nhận";
       case 2:
-        return "Hoàn thành";
+        return "Đã Thanh toán";
       case 3:
+        return "Hoàn thành";
+      case 4:
         return "Đã hủy";
       default:
         return "Không rõ";
@@ -132,9 +135,11 @@ export default function Invoice() {
         return "bg-yellow-100 text-yellow-700";
       case 1: // Đã xác nhận
         return "bg-blue-100 text-blue-700";
-      case 2: // Hoàn thành
-        return "bg-green-100 text-green-700";
-      case 3: // Đã hủy
+      case 2: // Đã thanh toán
+        return "bg-green-100 text-emarald-700";
+      case 3: // Đã hoàn thành
+        return "bg-green-100 text-green-400"
+      case 4: // Đã hủy
         return "bg-red-100 text-red-700";
       default:
         return "bg-gray-100 text-gray-700";
@@ -178,47 +183,54 @@ export default function Invoice() {
           <ShoppingBagIcon size={30} />
           <h1 className="text-2xl font-bold ml-2">Quản lý đơn hàng</h1>
         </div>
-        <div className="flex flex-wrap justify-center gap-4 mb-5">
-          <div className="bg-white p-4 rounded-lg pl-9 pr-9">
+        <div className="grid grid-cols-2 lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-3 gap-4 mb-5 text-center">
+          <div className="bg-white p-4 rounded-lg">
             <p>Tổng đơn hàng</p>
             <div className="flex justify-center items-center space-x-1">
               <ShoppingBagIcon className="text-blue-500" />
               <p className="text-blue-500">{invoiceNoPage.length}</p>
             </div>
           </div>
-          <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
+          <div className="bg-white p-4 rounded-lg text-center">
             <p>Chờ xác nhận</p>
             <p className="text-yellow-500 space-x-0.5">
               <LoaderIcon className="w-5 h-5 inline"/>
               <span>{invoiceNoPage.filter((inv) => inv.status === 0).length}</span>
             </p>
           </div>
-          <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
+          <div className="bg-white p-4 rounded-lg text-center">
             <p>Đã xác nhận</p>
             <p className="text-blue-500 space-x-0.5">
               <ScanLineIcon className="w-5 h-5 inline"/>
               <span>{invoiceNoPage.filter((inv) => inv.status === 1).length}</span>
             </p>
           </div>
-          <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
-            <p>Hoàn Thành</p>
-            <p className="text-green-500 space-x-0.5">
-              <VoteIcon className="w-5 h-5 inline"/>
+          <div className="bg-white p-4 rounded-lg text-center">
+            <p>Đã thanh toán</p>
+            <p className="text-emerald-700 space-x-0.5">
+              <ReceiptIcon className="w-5 h-5 inline"/>
               <span>{invoiceNoPage.filter((inv) => inv.status === 2).length}</span>
             </p>
           </div>
-          <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
+          <div className="bg-white p-4 rounded-lg text-center">
+            <p>Hoàn Thành</p>
+            <p className="text-green-500 space-x-0.5">
+              <VoteIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 3).length}</span>
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-lg text-center">
             <p>Đã hủy</p>
             <p className="text-red-600 space-x-0.5">
               <SquareXIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 3).length}</span>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 4).length}</span>
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Doanh thu</p>
             <p className="text-green-500">
               {invoiceNoPage
-                .filter((inv) => inv.status === 2)
+                .filter((inv) => inv.status === 3)
                 .reduce((sum, inv) => sum + inv.totalAmount, 0)}{" "}
               đ
             </p>
@@ -237,8 +249,9 @@ export default function Invoice() {
               <option value="">Tất cả</option>
               <option value="0">Chờ xác nhận</option>
               <option value="1">Đã xác nhận</option>
-              <option value="2">Hoàn thành</option>
-              <option value="3">Đã hủy</option>
+              <option value="2">Đã thanh toán</option>
+              <option value="3">Hoàn thành</option>
+              <option value="4">Đã hủy</option>
             </select>
           </div>
 
@@ -438,20 +451,22 @@ export default function Invoice() {
                   <UserIcon />
                   <span>THÔNG TIN KHÁCH HÀNG</span>
                 </h3>
-                <p>
+                
+                <div className="space-x-2">
                   <span className="font-medium">Họ tên:</span>
-                  {invoiceSelected.user
+                  <span>{invoiceSelected.user
                     ? `${invoiceSelected.user.firstName} ${invoiceSelected.user.lastName}`
                     : "No Name"}
-                </p>
-                <p>
+                  </span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">Email:</span>
-                  {invoiceSelected.user.email}
-                </p>
-                <p>
+                  <span>{invoiceSelected.user.email}</span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">Số điện thoại:</span>
-                  {invoiceSelected.user.phone}
-                </p>
+                  <span>{invoiceSelected.user.phone}</span>
+                </div>
               </div>
 
               {/* Khách sạn */}
@@ -460,18 +475,18 @@ export default function Invoice() {
                   <HotelIcon />
                   <span>THÔNG TIN KHÁCH SẠN</span>
                 </h3>
-                <p>
+                <div className="space-x-2">
                   <span className="font-medium">Tên khách sạn:</span>
-                  {invoiceSelected.room.hotel.hotelName}
-                </p>
-                <p>
+                  <span>{invoiceSelected.room.hotel.hotelName}</span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">Địa chỉ:</span>
-                  {invoiceSelected.room.hotel.hotelAddress}
-                </p>
-                <p>
+                  <span>{invoiceSelected.room.hotel.hotelAddress}</span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">SĐT:</span>
-                  {invoiceSelected.room.hotel.hotelPhone}
-                </p>
+                  <span>{invoiceSelected.room.hotel.hotelPhone}</span>
+                </div>
               </div>
             </div>
 
@@ -484,11 +499,11 @@ export default function Invoice() {
                 <span>THÔNG TIN THANH TOÁN</span>
               </h3>
               <div className="grid grid-cols-3 text-sm">
-                <p>
+                <div className="space-x-1">
                   <span className="font-medium">Phương thức thanh toán:</span>
-                  {getPaymentText(invoiceSelected.payment)}
-                </p>
-                <p className="ml-10">
+                  <span>{getPaymentText(invoiceSelected.payment)}</span>
+                </div>
+                <p className="ml-10 space-x-1">
                   <span>Trạng thái:</span>
                   <span
                     className={`font-medium ${getStatusColor(
@@ -498,9 +513,9 @@ export default function Invoice() {
                     {getStatusText(invoiceSelected.status)}
                   </span>
                 </p>
-                <p>
+                <p className="space-x-1">
                   <span className="font-medium">Ngày thanh toán:</span>
-                  {invoiceSelected.createdAt.slice(0,10)}
+                  <span>{invoiceSelected.checkInDate.slice(0,10)}</span>
                 </p>
               </div>
             </div>
@@ -519,23 +534,23 @@ export default function Invoice() {
                   <p className="font-semibold text-blue-500">
                     {invoiceSelected.room.roomName}
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">sức chứa:</span>
-                    {invoiceSelected.room.roomCapacity}
+                    <span>{invoiceSelected.room.roomCapacity}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Giá/đêm:</span>
-                    {invoiceSelected.room.roomPrice}
+                    <span>{invoiceSelected.room.roomPrice}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Nhận phòng:</span>
-                    {invoiceSelected.checkInDate}
+                    <span>{invoiceSelected.checkInDate}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Trả phòng:</span>
-                    {invoiceSelected.checkOutDate}
+                    <span>{invoiceSelected.checkOutDate}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Số đêm:</span>{" "}
                     {(() => {
                       const checkIn = new Date(invoiceSelected.checkInDate);
@@ -545,32 +560,14 @@ export default function Invoice() {
                       return diffTime / (1000 * 60 * 60 * 24);
                     })()}
                   </p>
-                  <p className="font-medium mt-1">
-                    Thành tiền
-                    <span className="text-blue-600 font-semibold">
-                      {(() => {
-                        const checkIn = new Date(invoiceSelected.checkInDate);
-                        const checkOut = new Date(invoiceSelected.checkOutDate);
-
-                        const diffTime = checkOut - checkIn;
-                        const Nights = diffTime / (1000 * 60 * 60 * 24);
-
-                        return (
-                          (
-                            invoiceSelected.room?.roomPrice * Nights
-                          ).toLocaleString() + "đ"
-                        );
-                      })()}
-                    </span>
-                  </p>
                 </div>
               </div>
             </div>
 
             {/* --- TỔNG CỘNG --- */}
             <div className="text-right border-t pt-3">
-              <p className="text-lg font-bold">
-                Tổng cộng:
+              <p className="text-lg font-bold space-x-1">
+                <span>Tổng cộng:</span>
                 <span className="text-blue-600">
                   {invoiceSelected.totalAmount}
                 </span>

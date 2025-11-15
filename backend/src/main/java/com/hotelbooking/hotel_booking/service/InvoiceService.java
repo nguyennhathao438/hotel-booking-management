@@ -170,13 +170,17 @@ public class InvoiceService {
 
             switch (oldStatus) {
                 case 0: // Chờ xác nhận
-                    validTransition = (newStatus == 1 || newStatus == 3);
+                    validTransition = (newStatus == 1 || newStatus == 4);
                     break;
                 case 1: // Đã xác nhận
                     validTransition = (newStatus == 2);
                     break;
-                case 2: // Hoàn thành
-                case 3: // Đã hủy
+                case 2: // Đã thanh toán
+                    validTransition = (newStatus == 3);
+                    break;
+                case 3: // Hoàn thành
+                    break;
+                case 4: // Đã hủy
                     validTransition = false; // Không thể đổi nữa
                     break;
                 default:
