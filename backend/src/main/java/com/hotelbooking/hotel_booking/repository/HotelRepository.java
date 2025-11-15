@@ -23,4 +23,5 @@ public interface HotelRepository extends JpaRepository<Hotel, Integer> {
     Page<Hotel> findByStatus(Integer status, Pageable pageable);
 
     Page<Hotel> findByHotelRatingBetweenAndStatus(Double minRating,Double maxRating,Integer status, Pageable pageable);
+    boolean existsByHotelNameAndHotelIdNot(String hotelName, Integer hotelId);
 }

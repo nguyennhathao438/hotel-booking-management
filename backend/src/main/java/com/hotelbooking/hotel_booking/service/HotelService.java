@@ -53,6 +53,12 @@ public class HotelService {
         if (hotelRepository.existsByHotelName(request.getHotelName())) {
             throw new AppException(ErrorCode.HOTEL_EXISTED);
         }
+        if (request.getHotelName() == null || request.getHotelName().isBlank()
+                || request.getHotelTotalRoom() == null || request.getHotelTotalRoom() <= 0
+                || request.getHotelCost() == null || request.getHotelCost() < 0
+                || (request.getHotelRating() != null && request.getHotelRating() > 5)) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
         User user = getCurrentUser();
         if(hotelRepository.existsByUser(user)){
             throw new AppException(ErrorCode.REQUEST_HOTEL_EXISTED);
@@ -71,6 +77,7 @@ public class HotelService {
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
+
 
     public List<HotelResponse> getAllHotels() {
         List<Hotel> hotels = hotelRepository.findByStatus(1);
@@ -99,9 +106,27 @@ public class HotelService {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
 
-        if (request.getHotelName() != null && !request.getHotelName().isBlank()) {
-            hotel.setHotelName(request.getHotelName());
+        if (request.getHotelName() == null || request.getHotelName().isBlank()) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
         }
+
+        if (request.getHotelTotalRoom() != null && request.getHotelTotalRoom() <= 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        if (request.getHotelCost() != null && request.getHotelCost() < 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        if (request.getHotelRating() != null && (request.getHotelRating() < 0 || request.getHotelRating() > 5)) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        if (hotelRepository.existsByHotelNameAndHotelIdNot(request.getHotelName(), hotelId)) {
+            throw new AppException(ErrorCode.HOTEL_EXISTED);
+        }
+
+        hotel.setHotelName(request.getHotelName());
         if (request.getHotelAddress() != null && !request.getHotelAddress().isBlank()) {
             hotel.setHotelAddress(request.getHotelAddress());
         }
@@ -123,9 +148,11 @@ public class HotelService {
         if (request.getStatus() != null) {
             hotel.setStatus(request.getStatus());
         }
+
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     public HotelResponse approveHotel(int hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)

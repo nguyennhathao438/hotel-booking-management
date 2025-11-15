@@ -34,11 +34,18 @@ public class RoomService {
 private InvoiceRepository invoiceRepository;
     @PostAuthorize("hasAuthority('ADD_HOTEL')")
     public RoomResponse createRoom(RoomRequest request) {
-        if (roomRepository.existsByRoomName(request.getRoomName())) {
+
+
+        Hotel hotel = hotelRepository.findById(request.getHotelID())
+                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED)); if (request.getRoomName() == null || request.getRoomName().isBlank() || request.getRoomCapacity() <= 0
+                || request.getRoomPrice() < 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        boolean roomExisted = roomRepository.existsByRoomNameAndHotel(request.getRoomName(), hotel);
+        if (roomExisted) {
             throw new AppException(ErrorCode.ROOM_EXISTED);
         }
-        Hotel hotel = hotelRepository.findById(request.getHotelID())
-                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         Room room = Room.builder()
                 .roomName(request.getRoomName())
                 .roomType(request.getRoomType())
@@ -88,23 +95,24 @@ private InvoiceRepository invoiceRepository;
     public RoomResponse updateRoom(int id, RoomRequest request) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-        if (request.getRoomName() != null && !request.getRoomName().isBlank()) {
-            room.setRoomName(request.getRoomName());
+        if (request.getRoomName() == null || request.getRoomName().isBlank() || request.getRoomCapacity() <= 0
+                || request.getRoomPrice() < 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
         }
+        room.setRoomName(request.getRoomName());
+        room.setRoomCapacity(request.getRoomCapacity());
+        room.setRoomPrice(request.getRoomPrice());
         if (request.getRoomType() != null) {
             room.setRoomType(request.getRoomType());
         }
-        if (request.getRoomCapacity() > 0) {
-            room.setRoomCapacity(request.getRoomCapacity());
+        if (request.getRoomArea() != null) {
+            room.setRoomArea(request.getRoomArea());
         }
-        if (request.getBedCount() > 0) {
+        if (request.getBedCount() != null) {
             room.setBedCount(request.getBedCount());
         }
-        if (request.getRoomPrice() > 0) {
-            room.setRoomPrice(request.getRoomPrice());
-        }
-        if (request.getStatus() >= 0) {
-            room.setStatus(request.getStatus());
+        if (request.getBedRoomCount() != null) {
+            room.setBedRoomCount(request.getBedRoomCount());
         }
         if (request.getHotelID() > 0) {
             Hotel hotel = hotelRepository.findById(request.getHotelID())

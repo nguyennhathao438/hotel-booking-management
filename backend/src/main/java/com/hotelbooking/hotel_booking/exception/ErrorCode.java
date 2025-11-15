@@ -36,8 +36,11 @@ public enum ErrorCode {
     ROLE_IS_USED(1023, "Vai trò đang được sử dụng không thể xóa ", HttpStatus.BAD_REQUEST),
     ACCOUNT_IS_BANED(1023, "Tài khoản đã bị ngưng hoạt động ", HttpStatus.BAD_REQUEST),
     CLOUDINARY_DELETE_FAILED(1024, "Xóa ảnh trên Cloudinary thất bại", HttpStatus.INTERNAL_SERVER_ERROR),
+    PERMISSION_NOT_EXISTED(1029, "Không tìm thấy PERMISSION ", HttpStatus.NOT_FOUND),
     IMAGE_NOT_FOUND(1025, "Không tìm thấy ảnh khách sạn", HttpStatus.NOT_FOUND),
-    REQUEST_HOTEL_EXISTED(1025, "Bạn đã có yêu cầu tạo khách sạn rồi", HttpStatus.CONFLICT);
+
+    REQUEST_HOTEL_EXISTED(1025, "Bạn đã có yêu cầu tạo khách sạn rồi", HttpStatus.CONFLICT),
+    INVALID_INPUT(1026, "Thông tin đầu vào không hợp lệ", HttpStatus.BAD_REQUEST);
     private final int code;
     private final String message;
     private final HttpStatusCode statusCode;

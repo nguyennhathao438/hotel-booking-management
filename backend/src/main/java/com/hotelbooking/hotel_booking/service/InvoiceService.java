@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,8 +52,13 @@ public class InvoiceService {
         if (request.getCheckOutDate().isBefore(request.getCheckInDate())) {
             throw new AppException(ErrorCode.INVOICE_FAILED);
         }
-        Room room = roomRepository.getReferenceById(roomId);
-        List<Invoice> existInvoices = room.getInvoices();
+        //thay đổi từ getReferenceById trong service create invoice thành findByIdWithInvoices nếu có lỗi alo H
+
+        Room room = roomRepository.findByIdWithInvoices(roomId)
+                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        List<Invoice> existInvoices = room.getInvoices() != null ? room.getInvoices() : new ArrayList<>();
+
+
         User user = getCurrentUser();
         Invoice invoice = Invoice.builder()
                 .checkInDate(request.getCheckInDate())
@@ -114,6 +120,8 @@ public class InvoiceService {
             LocalDate checkInDate,
             LocalDate checkOutDate,
             int pageNo, int pageSize) {
+
+
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Invoice> invoicesPage;
         if (status != null && payment == null && checkInDate == null && checkOutDate == null) {

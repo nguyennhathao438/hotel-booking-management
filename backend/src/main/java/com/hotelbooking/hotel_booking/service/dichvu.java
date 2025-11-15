@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hotelbooking.hotel_booking.entity.HotelService;
 
 
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,6 +32,12 @@ public class dichvu {
     public ServiceResponse createService(ServiceRequest serviceRequest) {
         Hotel hotel = hotelRepository.findById(serviceRequest.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        if (serviceRequest.getServiceName() == null || serviceRequest.getServiceName().isBlank()) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+        if (serviceRequest.getPrice() == null || serviceRequest.getPrice() < 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
         HotelService hotelService = HotelService.builder()
                 .serviceName(serviceRequest.getServiceName())
                 .icon(serviceRequest.getIcon())
@@ -89,7 +95,10 @@ public class dichvu {
     }
 
     public static UserResponse mapToUserResponse(User user) {
-        Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
+        Set<String> roleNames = user.getRoles() != null
+                ? user.getRoles().stream().map(Role::getName).collect(Collectors.toSet())
+                : Collections.emptySet();
+
         return UserResponse.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())

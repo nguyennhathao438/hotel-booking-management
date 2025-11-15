@@ -1,5 +1,6 @@
 package com.hotelbooking.hotel_booking.repository;
 
+import com.hotelbooking.hotel_booking.entity.Hotel;
 import com.hotelbooking.hotel_booking.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -7,11 +8,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
+import java.util.Optional;
+
 @Repository
 public interface RoomRepository extends JpaRepository<Room,Integer> {
     boolean existsByRoomName(String roomName);
     List<Room> findAllByHotel_HotelId(Integer hotelHotelId);
-
+    @Query("SELECT r FROM Room r LEFT JOIN FETCH r.invoices WHERE r.roomId = :roomId")
+    Optional<Room> findByIdWithInvoices(@Param("roomId") int roomId);
 
 
 
@@ -44,4 +48,5 @@ public interface RoomRepository extends JpaRepository<Room,Integer> {
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
     );
+    boolean existsByRoomNameAndHotel(String roomName, Hotel hotel);
 }

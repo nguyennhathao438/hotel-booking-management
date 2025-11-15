@@ -37,6 +37,9 @@ public class ReviewService {
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         Hotel hotel = hotelRepository.findById(request.getHotelId()).orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         Invoice invoice = invoiceRepository.findById(request.getInvoiceId()).orElseThrow(()->new AppException(ErrorCode.INVOICE_FAILED));
+        if (request.getStar() < 0 || request.getStar() > 5) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
         Review review = Review.builder()
                 .user(user)
                 .hotel(hotel)
