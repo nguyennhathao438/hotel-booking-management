@@ -9,6 +9,7 @@ import api from "../api";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import banner2 from "../assets/img/banner2.jpg"
+import { Context } from "../components/RoomContext";
 const roomSchema = z.object({
     roomName: z
         .string()
@@ -36,6 +37,7 @@ const roomSchema = z.object({
     ]).refine(val => val !== "", {
         message: "Vui lòng chọn loại phòng hợp lệ",
     }),
+    status: z.enum(["0", "1", "2", "3"]),
     roomArea: z
         .string()
         .trim()
@@ -76,6 +78,7 @@ export default function RoomManager() {
         const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
         setPreviewUrls((prev) => [...prev, ...newPreviews]);
     };
+    // const { checkInDate, checkOutDate } = useContext(Context)
 
     const { hotelId } = useParams();
     const [rooms, setRooms] = useState([])
@@ -87,6 +90,46 @@ export default function RoomManager() {
             console.log("Lỗi không thể lấy được danh sách", error)
         }
     }
+    // const formatDate = (date) => {
+    //     const d = new Date(date);
+    //     const year = d.getFullYear();
+    //     const month = String(d.getMonth() + 1).padStart(2, "0");
+    //     const day = String(d.getDate()).padStart(2, "0");
+    //     return `${year}-${month}-${day}`;
+    // };
+
+    // const checkRoomStatus = async (roomId, checkInDate, checkOutDate) => {
+    //     try {
+    //         const response = await api.get("/rooms/check-room-status", {
+    //             params: {
+    //                 roomId,
+    //                 checkInDate: formatDate(checkInDate),
+    //                 checkOutDate: formatDate(checkOutDate),
+    //             }
+    //         });
+    //         return response.data.result;
+    //     } catch (error) {
+    //         console.error("Lỗi khi kiểm tra trạng thái phòng:", error);
+    //         return 0;
+    //     }
+    // };
+
+    // const fetchRoomsByHotelId = async () => {
+    //     try {
+    //         const roomData = await api.get(`rooms/hotel/${hotelId}`);
+    //         const roomsWithStatus = await Promise.all(
+    //             roomData.data.result.map(async (room) => {
+    //                 const status = await checkRoomStatus(room.roomId, checkInDate, checkOutDate);
+    //                 return { ...room, status };
+    //             })
+    //         );
+    //         setRooms(roomsWithStatus);
+    //         const imageData = await api.get(`/images/hotel/${hotelId}`);
+    //         setImages(imageData.data.result);
+    //     } catch (error) {
+    //         console.error("Lỗi khi load phòng:", error);
+    //     }
+    // };
     useEffect(() => {
         fetchRoomsByHotelId(hotelId)
     }, [hotelId])
@@ -114,6 +157,7 @@ export default function RoomManager() {
             roomArea: String(r.roomArea),
             roomName: r.roomName,
             roomType: r.roomType,
+            status: r.status,
             roomCapacity: String(r.roomCapacity),
             bedCount: String(r.bedCount),
             bedRoomCount: String(r.bedRoomCount),
@@ -128,9 +172,9 @@ export default function RoomManager() {
     }
 
     const onSubmit = async (data) => {
+        console.log("du lieu ban vua click de cap nhat la", data)
         const dataNew = {
             ...data,
-            status: 1,
             hotelID: hotelId,
         }
         if (!room) {
@@ -174,6 +218,21 @@ export default function RoomManager() {
     }, [roomType, hotelId])
 
 
+
+    // const handleChangeRoomStatus = async (roomId, newStatus) => {
+    //     try {
+    //         await api.put(`/rooms/${roomId}/status`, { status: newStatus });
+    //         toast.success("Cập nhật trạng thái phòng thành công");
+
+    //         // Cập nhật lại danh sách rooms tại chỗ (nếu không refetch)
+    //         setRooms((prev) =>
+    //             prev.map((r) => (r.roomId === roomId ? { ...r, status: newStatus } : r))
+    //         );
+    //     } catch (error) {
+    //         toast.error("Không thể cập nhật trạng thái phòng", error);
+    //     }
+    // };
+
     const deleteRoom = async (roomId) => {
         const result = await Swal.fire({
             title: "Bạn có chắc muốn xóa?",
@@ -195,6 +254,17 @@ export default function RoomManager() {
             toast.error("Không thể xóa phòng")
             console.log("Không thể xóa phòng", error)
         }
+    }
+
+    const renderStatus = (status) => {
+        if (status === 0)
+            return (<span className="text-green-600 text-sm font-medium">Con trong</span>)
+        if (status === 1)
+            return (<span className="text-red-500 text-sm font-medium">Khach dang o</span>)
+        if (status === 2)
+            return (<span className="text-blue-500 text-sm font-medium">Da duoc dat</span>)
+        else
+            return (<span className="text-yellow-500 text-sm font-medium">Bao tri</span>)
     }
     return (
         <div className="w-[1700px] items-center justify-center min-h-screen bg-gray-100 ml-[300px]">
@@ -235,66 +305,75 @@ export default function RoomManager() {
                     rooms.length != 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 py-6">
                             {rooms.map((room) => (
-                                room.status === 1 && (
-                                    <div key={room.roomId} className="rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition bg-white">
-                                        {/* Nếu bạn có ảnh room thì thay bằng room.imageUrls[0] */}
-                                        <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
-                                            <img src={banner2} alt="" />
+                                <div key={room.roomId} className="rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition bg-white">
+                                    {/* Ảnh phòng */}
+                                    <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
+                                        <img src={banner2} alt="" />
+                                    </div>
+
+                                    <div className="px-4 pb-2 pt-1">
+                                        <p className="mt-1 font-medium text-gray-800">
+                                            {room.roomName} ({room.roomType})
+                                        </p>
+
+                                        <p className="text-sm text-gray-600 mt-1">
+                                            🛏️ {room.bedCount} giường • {room.bedRoomCount} phòng ngủ • {room.roomCapacity} khách
+                                        </p>
+                                        <p className="text-sm text-gray-600">
+                                            📐 Diện tích: {room.roomArea} m²
+                                        </p>
+
+                                        <div className="flex justify-between items-center mt-3">
+                                            <span className="text-lg font-bold text-green-600">
+                                                {room.roomPrice.toLocaleString()} ₫/đêm
+                                            </span>
+                                            {renderStatus(room.status)}
                                         </div>
 
-                                        <div className="p-4">
-                                            {/* Tên khách sạn */}
-                                            <h2 className="text-lg font-semibold text-blue-700">
-                                                {room.hotel?.hotelName || "Không có tên khách sạn"}
-                                            </h2>
+                                        {/* Trạng thái phòng */}
+                                        <div className="flex flex-col gap-2 mt-3">
+                                            {/* <p
+                                                className={`text-sm font-medium ${room.status === 0
+                                                    ? "text-green-600"
+                                                    : room.status === 1
+                                                        ? "text-orange-500"
+                                                        : "text-red-500"
+                                                    }`}
+                                            >
+                                                {room.status === 0
+                                                    ? "Phòng còn trống"
+                                                    : room.status === 1
+                                                        ? "Khách đang ở"
+                                                        : "Hết chỗ"}
+                                            </p> */}
 
-                                            {/* Tên & loại phòng */}
-                                            <p className="mt-1 font-medium text-gray-800">
-                                                {room.roomName} ({room.roomType})
-                                            </p>
 
-                                            {/* Thông tin chi tiết */}
-                                            <p className="text-sm text-gray-600 mt-1">
-                                                🛏️ {room.bedCount} giường • {room.bedRoomCount} phòng ngủ • {room.roomCapacity} khách
-                                            </p>
-                                            <p className="text-sm text-gray-600">
-                                                📐 Diện tích: {room.roomArea} m²
-                                            </p>
 
-                                            {/* Giá phòng */}
-                                            <div className="flex justify-between items-center mt-3">
-                                                <span className="text-lg font-bold text-green-600">
-                                                    {room.roomPrice.toLocaleString()} ₫/đêm
-                                                </span>
-                                            </div>
+                                            {/* Các nút hành động */}
+                                            <div className="flex gap-3 justify-end mt-3">
+                                                <button onClick={() => { setOpenCreate(true); defaultUpdate(room); }}
+                                                    className="bg-yellow-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600"
+                                                >
+                                                    <Edit className="inline-block mr-1" />
+                                                    Sửa
+                                                </button>
 
-                                            {/* Trạng thái phòng */}
-                                            <div className="flex flex-col gap-2 mt-2">
-                                                {/* Trạng thái phòng */}
-                                                <p className={`text-sm font-medium ${room.status === 1 ? "text-green-600" : "text-red-500"}`}>
-                                                    {room.status === 1 ? "Phòng còn trống" : "Hết chỗ"}
-                                                </p>
-
-                                                {/* Nút hành động */}
-                                                <div className="flex gap-3 justify-end">
-                                                    <button onClick={() => { setOpenCreate(true); defaultUpdate(room) }} className="bg-yellow-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600">
-                                                        <Edit className="inline-block mr-1" />
-                                                        Sửa
-                                                    </button>
-
-                                                    <button onClick={() => { deleteRoom(room.roomId) }} className="bg-red-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-red-600">
-                                                        <Trash className="inline-block mr-1" />
-                                                        Xóa
-                                                    </button>
-                                                </div>
+                                                <button onClick={() => { deleteRoom(room.roomId); }}
+                                                    className="bg-red-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-red-600"
+                                                >
+                                                    <Trash className="inline-block mr-1" />
+                                                    Xóa
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                )
+                                </div>
                             ))}
                         </div>
                     ) :
-                        <div className="font-md text-xl text-center py-4">Bạn chưa có phòng nào cho khách sạn của mình</div>
+                        <div className="font-md text-xl text-center py-4">
+                            Bạn chưa có phòng nào cho khách sạn của mình
+                        </div>
                 }
             </div>
             {
@@ -341,16 +420,38 @@ export default function RoomManager() {
                                     </select>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium">Diện tích (m²)</label>
-                                    <input
-                                        type="number"
-                                        step="0.1"
-                                        placeholder="VD: 25.5"
-                                        className="w-full border px-3 py-2 rounded-lg"
-                                        {...register("roomArea")}
-                                    />
+                                <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label className="block text-sm font-medium">Diện tích (m²)</label>
+                                        <input
+                                            type="number"
+                                            step="0.1"
+                                            placeholder="VD: 25.5"
+                                            className="w-full border px-3 py-2 rounded-lg"
+                                            {...register("roomArea")}
+                                        />
+                                    </div>
+
+                                    {room && (
+                                        <div>
+                                            <label className="block text-sm font-medium">Trạng thái phòng</label>
+                                            <select
+                                                // value={room.status}
+                                                // onChange={(e) => handleChangeRoomStatus(room.roomId, Number(e.target.value))}
+                                                // disabled={room.status === 3} 
+                                                // className={`w-full border px-3 py-2 rounded-lg ${room.status === 3 ? "bg-gray-100 cursor-not-allowed" : "bg-white"}`}
+                                                className={`w-full border px-3 py-2 rounded-lg bg-gray-100 cursor-pointer`}
+                                                {...register("status")}
+                                            >
+                                                <option value={0}>Phòng còn trống</option>
+                                                <option value={1}>Khách đang ở</option>
+                                                <option value={2}>Hết chỗ</option>
+                                                <option value={3}>Bao tri</option>
+                                            </select>
+                                        </div>
+                                    )}
                                 </div>
+
 
                                 <div className="grid grid-cols-2 gap-2">
                                     <div>
@@ -429,6 +530,7 @@ export default function RoomManager() {
                     </ModelForm>
                 )
             }
+
         </div>
     )
 }

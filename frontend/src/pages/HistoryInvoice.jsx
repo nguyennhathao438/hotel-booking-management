@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import ImageSlider from "../components/Common/ImageSlider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 const reviewSchema = z.object({
     feedback: z
         .string()
@@ -44,7 +46,6 @@ export default function HistoryInvoice() {
         if (user.id != null)
             fetchInvoiceByUserId(user.id);
     }, [user.id])
-    console.log("invoice", invoices)
     // const [status, setStatus] = useState("Tất cả");
     const [rating, setRating] = useState(0);
     const [hotelSelect, setHotelSelect] = useState();
@@ -52,6 +53,7 @@ export default function HistoryInvoice() {
     const [openDetail, setOpenDetail] = useState(false);
     const [openReview, setOpenReview] = useState(false)
     const [invoiceSelect, setInvoiceSelect] = useState()
+    // const [urlVnpay, setUrlVnpay] = useState(null); // eslint-disable-line no-unused-vars
     const { register, handleSubmit, reset, setValue } = useForm({
         resolver: zodResolver(reviewSchema),
     })
@@ -129,20 +131,18 @@ export default function HistoryInvoice() {
     const [iv, setIv] = useState(null)
     const [imgs, setImgs] = useState([])
     const [night, setNight] = useState()
-  
+
     const tinhSoDem = (iv) => {
         if (iv) {
             const checkin = new Date(iv.checkInDate);
-        const checkout = new Date(iv.checkOutDate);
-        const soDem = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
-        setNight(soDem);
+            const checkout = new Date(iv.checkOutDate);
+            const soDem = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+            setNight(soDem);
         }
     }
-    console.log("so dem la", night)
     const fetchImgsByHotelId = async (hotelId, iv) => {
         try {
             const response = await api.get(`/images/hotel/${hotelId}`)
-            console.log("gia tri nhan dc", response.data.result)
             setImgs(response.data.result)
             setIv(iv)
             tinhSoDem(iv)
@@ -150,14 +150,102 @@ export default function HistoryInvoice() {
             console.log("loi ko the lay du lieu dc", error)
         }
     }
-    console.log("hinh anh cua khach san", imgs)
     useEffect(() => {
         fetchFeedBack();
     }, [])
 
+    const navigate = useNavigate()
+    const confirmPay = async (p, totalAmount, roomId, hotelId, i) => {
+        const result = await Swal.fire({
+            title: "Xác nhận thanh toán?",
+            text: "Hành động này không thể hoàn tác!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Thanh toán",
+            cancelButtonText: "Hủy",
+        });
+        if (!result.isConfirmed) return;
+        if (p === 3) {
+            const response = await api.get(`/payment/vn-pay?amount=${totalAmount}`);
+            const newVnpayUrl = response.data.result.paymentUrl;
+            // setUrlVnpay(newVnpayUrl);
+            navigate(`/confirm-booking/${roomId}?hotelId=${hotelId}&payment=${p}`, {
+                state: { invoice: i, urlVnpay: newVnpayUrl },
+            });
+        }
+    }
+    const renderPaymentButton = (payment, status, totalAmount, roomId, hotelId, i) => {
+        // Thanh toán tại chỗ
+        if (payment === 1) {
+            return (
+                <button className="bg-green-200 p-2 rounded-md ">
+                    Tại khách sạn
+                </button>
+            );
+        }
+
+        // Nếu chưa active (status !== 1) thì không cho thanh toán online
+        if (status === 0) {
+            return (
+                <button
+                    className="bg-blue-500 text-white py-1 px-2 rounded-md"
+                >
+                    Chờ thanh toán
+                </button>
+            );
+        }
+
+        if (status === 2) {
+            return (
+                <button
+                    className="bg-blue-500 text-white py-1 px-2 rounded-md"
+                >
+                    Đã thanh toán
+                </button>
+            );
+        }
+
+        // Thanh toán online
+        const paymentName = payment === 2 ? "Momo" : payment === 3 ? "Vnpay" : "";
+        return (
+            <button onClick={() => confirmPay(payment, totalAmount, roomId, hotelId, i)} className="text-white px-2 py-1 cursor-pointer bg-green-500 rounded-md hover:bg-green-600 font-medium">
+                Thanh toán {paymentName}
+            </button>
+        );
+    };
+
+    const setStatusInvoice = (status) => {
+        console.log("status la", status)
+        if (status === 0) return (
+            <span className="px-2 py-1 text-sm font-medium rounded-md bg-yellow-100 text-yellow-700">
+                Chờ xác nhận
+            </span>
+        )
+        else if (status === 1) return (
+            <span className="px-2 py-1 text-sm font-medium rounded-md bg-blue-100 text-blue-700">
+                Đã xác nhận
+            </span>
+        )
+        else if (status === 2) return (
+            <span className="px-2 py-1 text-sm font-medium rounded-md bg-green-100 text-green-700">
+                Đã thanh toán
+            </span>
+        )
+        else if (status === 3) return (
+            <span className="px-2 py-1 text-sm font-medium rounded-md bg-red-100 text-red-700">
+                Đã hoàn thành
+            </span>
+        )
+        else (
+            <span className="px-2 py-1 text-sm font-medium rounded-md bg-gray-100 text-gray-600">
+                Đã hủy
+            </span>
+        )
+    }
+
     return (
-        <div className="w-[100%] h-auto">
-            <div className="w-[90%] border border-gray-300 rounded-xl mx-auto h-full">
+        <div className="h-auto">
+            <div className="w-[95%] border border-gray-300 rounded-xl mx-auto h-full">
                 {/* <div className="flex gap-3 justify-center p-3">
                     <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Tất cả")}>Tất cả</button>
                     <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Chờ xác nhận")}>Chờ xác nhận</button>
@@ -165,6 +253,7 @@ export default function HistoryInvoice() {
                     <button className="bg-blue-500 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đã xác nhận")}>Đã xác nhận</button>
                     <button className="bg-green-400 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đã hủy")}>Hoàn thành</button>
                 </div> */}
+                <h2 className="font-medium text-xl text-center py-4 px-6">THEO DÕI THÔNG TIN ĐẶT PHÒNG CỦA BẠN ĐỂ THỰC HIỆN THANH TOÁN</h2>
                 <table className="w-full p-2 ">
                     <thead>
                         <tr>
@@ -174,48 +263,29 @@ export default function HistoryInvoice() {
                             <th className="p-2 border border-gray-300">Ngày trả</th>
                             <th className="p-2 border border-gray-300">Tổng tiền</th>
                             <th className="p-2 border border-gray-300">Trạng thái</th>
+                            <th className="p-2 border border-gray-300">Thanh toán</th>
                             <th className="p-2 border border-gray-300">Thực hiện</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 text-sm text-gray-700">
-                        {invoices.map((i, index) => (
+                        {invoices.length != 0 ? (invoices.map((i, index) => (
                             <tr key={index} className="hover:bg-gray-50 transition-colors duration-200 text-center">
                                 <td className="px-4 py-3 font-medium text-gray-900">{i.room.hotel.hotelName}</td>
                                 <td className="px-4 py-3">{i.room.roomName}</td>
                                 <td className="px-4 py-3">{i.checkInDate}</td>
                                 <td className="px-4 py-3">{i.checkOutDate}</td>
                                 <td className="px-4 py-3 font-semibold text-green-600">{i.totalAmount.toLocaleString()}₫</td>
-                                <td className="px-4 py-3">
-                                    {i.status === 0 ? (
-                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700">
-                                            Chờ xác nhận
-                                        </span>
-                                    ) : i.status === 1 ? (
-                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700">
-                                            Đang xác nhận
-                                        </span>
-                                    ) : i.status === 2 ? (
-                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
-                                            Đã xác nhận
-                                        </span>
-                                    ) : i.status === 3 ? (
-                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700">
-                                            Đã hủy
-                                        </span>
-                                    ) : (
-                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600">
-                                            Không xác định
-                                        </span>
-                                    )}
-                                </td>
+                                <td className="px-4 py-3">{setStatusInvoice(i.status)}</td>
+                                <td className="px-4 py-3">{renderPaymentButton(i.payment, i.status, i.totalAmount, i.room.roomId, i.room.hotel.hotelId, i)}</td>
+
                                 <td className="px-4 py-3">
                                     <div className="flex gap-3 justify-center">
                                         <button className="text-indigo-600 bg-blue-200 p-2 rounded-md cursor-pointer hover:text-indigo-800 font-medium"
                                             onClick={() => { setOpenDetail(true); fetchImgsByHotelId(i.room.hotel.hotelId, i) }}>
-                                            Xem chi tiết
+                                            Chi tiết
                                         </button>
-                                        {console.log("trang thai la",i.status)}
-                                        {i.status === 0 ? (
+                                        {console.log("trang thai la", i.status)}
+                                        {i.status === 1 || i.status === 2 ? (
                                             feedbacks.some(fb => fb.invoice.id === i.id) ? (
                                                 <button
                                                     className="text-white px-2 cursor-pointer bg-green-400 rounded-md hover:text-indigo-800 font-medium"
@@ -257,10 +327,11 @@ export default function HistoryInvoice() {
                                                 Đánh giá
                                             </button>
                                         )}
+
                                     </div>
                                 </td>
                             </tr>
-                        ))}
+                        ))) : <tr><td colSpan={8} className="border text-center font-medium text-xl py-2">Bạn chưa đặt phòng nào</td></tr>}
                     </tbody>
                 </table>
             </div>

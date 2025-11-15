@@ -19,6 +19,11 @@ function Checkout() {
             <div className="relative flex items-center w-full">
                 <DatePicker
                     selected={checkOutDate}
+                    minDate={(() => {
+                        const d = new Date();
+                        d.setDate(d.getDate() + 1);
+                        return d;
+                    })()}
                     onChange={(date) => setCheckOutDate(date)}
                     placeholderText="dd/mm/yyyy"
                     dateFormat="dd/MM/yyyy"

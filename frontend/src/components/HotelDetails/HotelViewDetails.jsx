@@ -3,7 +3,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import banner2 from "../../assets/img/banner2.jpg";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import BookingSearch from "../BookingSearch";
+import SlidePanel from "../Common/SlidePanel";
 import ImageSlider from "../Common/ImageSlider";
+import { FaRegCommentDots, FaConciergeBell } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaBed } from "react-icons/fa";
+import { FaDollarSign } from "react-icons/fa";
 import api from "../../api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import toast from "react-hot-toast";
@@ -11,7 +16,7 @@ import { useSelector } from "react-redux";
 import { ChatBubbleOvalLeftIcon } from "@heroicons/react/24/solid";
 import ChatBox from "../Chatbox";
 import { Context } from "../RoomContext";
-
+import ModelForm from "../Common/FormModel";
 function DetailsHotelView() {
 
     const scrollRef = useRef(null);
@@ -27,10 +32,13 @@ function DetailsHotelView() {
     };
 
     const formatDate = (date) => {
-        // Nếu date là dạng Date object
         const d = new Date(date);
-        return d.toISOString().split("T")[0]; // => "2025-10-14"
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
     };
+
 
     const user = useSelector((state) => state.user);
     const [rooms, setRooms] = useState([]);
@@ -42,6 +50,8 @@ function DetailsHotelView() {
     const [hotel, setHotel] = useState([]);
     const [feedbacks, setFeedBacks] = useState([])
     const [services, setServices] = useState([])
+    const [openDetails, setOpenDetails] = useState(false)
+
 
     const fetchHotelServices = async () => {
         const response = await api.get(`/service/hotel/${hotelId}`)
@@ -52,6 +62,7 @@ function DetailsHotelView() {
     const handleCloseChat = () => {
         setOpenChat(false);
     };
+
     const fetchHotelById = async () => {
         try {
             const response = await api.get(`/hotels/${hotelId}`)
@@ -70,39 +81,105 @@ function DetailsHotelView() {
         }
     }
 
-    const checkRoomAvailable = async (roomId) => {
+    const checkRoomStatus = async (roomId, checkInDate, checkOutDate) => {
         try {
-            const response = await api.get(`/invoice/check-room`, {
+            const response = await api.get("/rooms/check-room-status", {
                 params: {
+                    roomId,
                     checkInDate: formatDate(checkInDate),
                     checkOutDate: formatDate(checkOutDate),
-                    roomId: roomId,
-                },
+                }
             });
             return response.data.result;
         } catch (error) {
-            console.error("Lỗi khi kiểm tra phòng:", error);
-            return false;
+            console.error("Lỗi khi kiểm tra trạng thái phòng:", error);
+            return 0;
         }
     };
+
 
     const fetchRoomsByHotelId = async () => {
         try {
             const roomData = await api.get(`rooms/hotel/${hotelId}`);
             const roomsWithStatus = await Promise.all(
                 roomData.data.result.map(async (room) => {
-                    const available = await checkRoomAvailable(room.roomId);
-                    return { ...room, available }; // thêm thuộc tính available
+                    const roomStatus = await checkRoomStatus(room.roomId, checkInDate, checkOutDate);
+                    return { ...room, roomStatus };
                 })
             );
             setRooms(roomsWithStatus);
-
             const imageData = await api.get(`/images/hotel/${hotelId}`);
             setImages(imageData.data.result);
         } catch (error) {
-            console.error("Error when load data :", error);
+            console.error("Lỗi khi load phòng:", error);
         }
     };
+
+    const disableBooking = (status, room) => {
+        if (status === 3 || status === 1)
+            return (<button></button>)
+        else
+            return (<button onClick={() => handleBooking(room.roomId, room)}
+                className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
+            >
+                Đặt phòng
+            </button>)
+    }
+    const changeStatusRoom = (status, roomStatus) => {
+        if (status === 3) {
+            return <span className="text-md font-medium text-red-500">Đang bảo trì</span>;
+        }
+        if (status === 1) {
+            return <span className="text-md font-medium text-red-500">Khách đang ở</span>;
+        }
+        if (status === 2) {
+            if (roomStatus === 2) {
+                return <span className="text-md font-medium text-orange-500">Đã đặt (trùng ngày)</span>;
+            }
+            return <span className="text-md font-medium text-green-600">Phòng còn trống</span>;
+        }
+        if (status === 0) {
+            if (roomStatus === 2) {
+                return <span className="text-md font-medium text-orange-500">Đã đặt (trùng ngày)</span>;
+            }
+            return <span className="text-md font-medium text-green-600">Phòng còn trống</span>;
+        }
+        return null;
+    };
+
+
+    // const checkRoomAvailable = async (roomId) => {
+    //     try {
+    //         const response = await api.get(`/invoice/check-room`, {
+    //             params: {
+    //                 checkInDate: formatDate(checkInDate),
+    //                 checkOutDate: formatDate(checkOutDate),
+    //                 roomId: roomId,
+    //             },
+    //         });
+    //         return response.data.result;
+    //     } catch (error) {
+    //         console.error("Lỗi khi kiểm tra phòng:", error);
+    //         return false;
+    //     }
+    // };
+
+    // const fetchRoomsByHotelId = async () => {
+    //     try {
+    //         const roomData = await api.get(`rooms/hotel/${hotelId}`);
+    //         const roomsWithStatus = await Promise.all(
+    //             roomData.data.result.map(async (room) => {
+    //                 const available = await checkRoomAvailable(room.roomId);
+    //                 return { ...room, available }; // thêm thuộc tính available
+    //             })
+    //         );
+    //         setRooms(roomsWithStatus);
+    //         const imageData = await api.get(`/images/hotel/${hotelId}`);
+    //         setImages(imageData.data.result);
+    //     } catch (error) {
+    //         console.error("Error when load data :", error);
+    //     }
+    // };
 
     useEffect(() => {
         fetchHotelById()
@@ -120,6 +197,7 @@ function DetailsHotelView() {
             prev === 0 ? feedbacks.length - 1 : prev - 1
         );
     };
+    console.log("danh sach phog", rooms)
 
     const handleNext = () => {
         setCurrentIndex((prev) =>
@@ -132,14 +210,15 @@ function DetailsHotelView() {
         let flag = true;
         if (checkOutDate - checkInDate < 0) flag = false;
         return flag;
-    };
+    }
+
     const handleBooking = (roomId, room) => {
         if (!user.userId) {
             toast.error("Vui lòng đăng nhập để đặt phòng");
             return;
         }
-        if (!room.available) {
-            toast.error("Phòng đã được đặt trong khoảng ngày này")
+        if (room.roomStatus === 2) {
+            toast.error("Phòng da het cho vao khoang ngay nay")
             return;
         }
         if (!isValidDate()) {
@@ -149,6 +228,11 @@ function DetailsHotelView() {
         navigate(`/booking-form/${roomId}?hotelId=${hotelId}`);
     };
 
+
+
+
+    const [openSlide, setOpenSlide] = useState(false);
+    const [slideContent, setSlideContent] = useState(""); // "feedback" hoặc "service"
 
     useEffect(() => {
         if (checkInDate && checkOutDate) {
@@ -171,6 +255,7 @@ function DetailsHotelView() {
         else if (tab === "Tiện nghi")
             serviceRef.current.scrollIntoView({ behavior: "smooth" })
     }
+
     return (
         <div>
             {/* Banner */}
@@ -223,9 +308,18 @@ function DetailsHotelView() {
                             <ChatBubbleOvalLeftIcon className="w-6 h-6 text-white" />
                         </button>
 
-                        <div className="h-[50vh] w-[75%] border-2 border-[#4b2e1f]/40 rounded-xl overflow-hidden">
+                        <div className="relative h-[50vh] w-[75%] border-2 border-[#4b2e1f]/40 rounded-xl overflow-hidden group">
                             {images && images.length > 0 ? (
-                                <ImageSlider sliders={images} />
+                                <>
+                                    <ImageSlider sliders={images} />
+
+                                    {/* "Modal nhỏ" hiện khi hover */}
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                        <div onClick={() => setOpenDetails(true)} className="bg-white/90 cursor-pointer text-[#4b2e1f] px-6 py-3 rounded-xl shadow-lg font-semibold text-lg transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                                            Xem chi tiết khách sạn
+                                        </div>
+                                    </div>
+                                </>
                             ) : (
                                 <div className="flex justify-center items-center h-full text-[#4b2e1f]/70">
                                     Chưa có hình ảnh
@@ -364,18 +458,24 @@ function DetailsHotelView() {
                                     {/* Trạng thái phòng */}
                                     <div className="flex flex-col gap-2 mt-2">
                                         {/* Trạng thái phòng */}
-                                        <p className={`text-sm font-medium ${room.available ? "text-green-600" : "text-red-500"}`}>
-                                            {room.available ? "Phòng còn trống" : "Hết chỗ"}
-                                        </p>
+                                        {/* <p className={`text-sm font-medium ${room.statusRoom === 0 ? "text-green-600" :
+                                            room.statusRoom === 1 ? "text-red-500" :
+                                                "text-yellow-600"
+                                            }`}>
+                                            {room.statusRoom === 0 ? "Phòng còn trống" :
+                                                room.statusRoom === 1 ? "Khách đang ở" :
+                                                    "Hết chỗ"}
+                                        </p> */}
+
+                                        {/* <p className={`text-sm font-medium ${room.statusRoom === 0 ? "text-green-600" : "text-red-500"}`}>
+                                            {room.statusRoom === 0 ? "Phòng còn trống" : "Hết chỗ"}
+                                        </p> */}
+                                        {changeStatusRoom(room.status, room.roomStatus)}
+
 
                                         {/* Nút hành động */}
                                         <div className="flex gap-3 justify-end">
-                                            <button
-                                                onClick={() => handleBooking(room.roomId, room)}
-                                                className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
-                                            >
-                                                Đặt phòng
-                                            </button>
+                                            {disableBooking(room.status, room)}
                                         </div>
                                     </div>
                                 </div>
@@ -391,6 +491,201 @@ function DetailsHotelView() {
                 <div className="fixed bottom-4 right-4 flex gap-4 z-10">
                     <ChatBox onClose={() => handleCloseChat()} hotelId={hotelId} />
                 </div>
+            )}
+            {openDetails && (
+                <ModelForm width="1100px" onClose={() => setOpenDetails(false)}>
+                    <div className="w-full max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {/* Cột 1: Thông tin cá nhân */}
+                        <div className="flex justify-center">
+                            <div className="bg-white shadow-lg rounded-2xl w-full p-8">
+                                <h1 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+                                    Chủ khách sạn
+                                </h1>
+
+                                <div className="flex flex-col items-center mb-6">
+                                    <div className="relative w-24 h-24">
+                                        <img
+                                            alt="Avatar"
+                                            src={hotel.user.avatar || "/default-avatar.png"}
+                                            className="w-24 h-24 rounded-full object-cover border"
+                                        />
+                                        <input
+                                            id="avatar"
+                                            className="absolute inset-0 opacity-0 cursor-pointer"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Họ</label>
+                                        <input
+                                            value={hotel.user.firstName}
+                                            disabled
+                                            className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Tên</label>
+                                        <input
+                                            value={hotel.user.lastName}
+                                            disabled
+                                            className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Email</label>
+                                        <input
+                                            type="email"
+                                            value={hotel.user.email}
+                                            disabled
+                                            className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Số điện thoại</label>
+                                        <input
+                                            disabled
+                                            value={hotel.user.phone}
+                                            className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 mb-4">
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1">Ngày sinh</label>
+                                        <input
+                                            type="date"
+                                            value={hotel.user.dateOfBirth || ""}
+                                            disabled
+                                            className="w-full bg-gray-100 rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Cột 2 */}
+                        <div className="flex flex-col justify-start items-center bg-white shadow-lg rounded-2xl p-6 gap-4 w-full max-w-md mx-auto">
+                            <div className="grid grid-cols-2 gap-2">
+                                {(images.length > 0 ? images : [banner2]).map((img, idx) => (
+                                    <img
+                                        key={idx}
+                                        src={img.imgUrl || banner2}
+                                        alt={`hotel-${idx}`}
+                                        className="w-full h-32 object-cover rounded shadow-sm"
+                                    />
+
+                                ))}
+                            </div>
+
+                            <h2 className="text-2xl font-bold text-[#4b2e1f] text-center">{hotel.hotelName}</h2>
+                            <p className="flex items-center text-gray-600 text-sm text-center">
+                                <FaMapMarkerAlt className="text-red-600 mr-2" /> {hotel.hotelAddress}
+                            </p>
+
+                            <div className="flex justify-between items-center w-full mt-2 text-gray-700 text-sm px-4">
+                                {/* Điện thoại */}
+                                <div className="flex items-center gap-1">
+                                    <FaPhoneAlt className="text-green-600" />
+                                    {hotel.hotelPhone}
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <span className="bg-green-600 text-white px-3 py-1 rounded-full font-semibold text-sm">
+                                        {hotel.hotelRating.toFixed(1)}
+                                    </span>
+                                    <span className="text-gray-600 text-sm">
+                                        {feedbacks.length} đánh giá
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div className="flex justify-between w-full mt-2 text-gray-700 text-sm px-4">
+                                <span className="flex items-center gap-1">
+                                    <FaBed className="text-blue-600" /> {hotel.hotelTotalRoom} phòng
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <FaDollarSign className="text-green-600" /> {hotel.hotelCost.toLocaleString()}₫/đêm
+                                </span>
+                            </div>
+
+                            {hotel.hotelDescription && (
+                                <p className="text-gray-700 text-sm text-center mt-2 line-clamp-4">
+                                    {hotel.hotelDescription}
+                                </p>
+                            )}
+                        </div>
+
+
+                        {/* Cột 3 */}
+                        <div className="flex flex-col gap-6 p-4 w-full max-h-[80vh] overflow-y-auto">
+                            <button
+                                onClick={() => {
+                                    setSlideContent("feedback");
+                                    setOpenSlide(true);
+                                }}
+                                className="flex items-center gap-3 w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:bg-blue-700 hover:scale-105 transition-transform duration-200"
+                            >
+                                <FaRegCommentDots className="text-xl" />
+                                <span className="text-lg">Xem tất cả đánh giá</span>
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    setSlideContent("service");
+                                    setOpenSlide(true);
+                                }}
+                                className="flex items-center gap-3 w-full bg-green-600 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:bg-green-700 hover:scale-105 transition-transform duration-200"
+                            >
+                                <FaConciergeBell className="text-xl" />
+                                <span className="text-lg">Xem tất cả dịch vụ</span>
+                            </button>
+                            <SlidePanel isOpen={openSlide} onClose={() => setOpenSlide(false)} width="50%">
+                                {slideContent === "feedback" ? (
+                                    <div>
+                                        <h2 className="text-xl font-bold mb-4">Tất cả đánh giá</h2>
+                                        {feedbacks.length > 0 ? (
+                                            feedbacks.map((f, i) => (
+                                                <div key={i} className="border-b py-2">
+                                                    <p className="text-gray-700">{f.feedback}</p>
+                                                    <p className=" text-sm font-medium mt-1">
+                                                        Khách hàng : {f.user.firstName} {f.user.lastName} — Đánh giá {f.star} ⭐
+                                                    </p>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-500 italic">Chưa có đánh giá nào.</p>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <h2 className="text-xl font-bold mb-4">Tất cả dịch vụ</h2>
+                                        {services.length > 0 ? (
+                                            services.map((s) => (
+                                                <div key={s.serviceId} className="flex items-center gap-3 border-b py-2">
+                                                    <img src={s.icon} className="w-6 h-6" />
+                                                    <p className="text-gray-700">{s.serviceName}</p>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="text-gray-500 italic">Chưa có dịch vụ nào.</p>
+                                        )}
+                                    </div>
+                                )}
+                            </SlidePanel>
+                        </div>
+
+                    </div>
+
+
+                </ModelForm>
             )}
         </div>
     );

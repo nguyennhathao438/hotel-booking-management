@@ -95,9 +95,19 @@ public class RoomController {
     }
 
 
-
-
-
+    @GetMapping("/check-room-status")
+    public ResponseEntity<ApiResponse<Integer>> checkRoomStatus(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+            @RequestParam int roomId
+    ) {
+        int status = roomService.getRoomStatus(checkInDate, checkOutDate, roomId);
+        return ResponseEntity.ok(ApiResponse.<Integer>builder()
+                .code(1)
+                .message("Lấy trạng thái phòng thành công")
+                .result(status)
+                .build());
+    }
 
 
 

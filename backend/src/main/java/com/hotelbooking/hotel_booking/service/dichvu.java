@@ -39,7 +39,6 @@ public class dichvu {
                 .serviceName(serviceRequest.getServiceName())
                 .icon(serviceRequest.getIcon())
                 .description(serviceRequest.getDescription())
-                .price(serviceRequest.getPrice())
                 .hotel(hotel)
                 .build();
         serviceRepository.save(hotelService);
@@ -58,7 +57,6 @@ public class dichvu {
                 .serviceName(hotelService.getServiceName())
                 .icon(hotelService.getIcon())
                 .description(hotelService.getDescription())
-                .price(hotelService.getPrice())
                 .hotel(hotelService.getHotel() != null ? mapToHotelResponse(hotelService.getHotel()) : null)
                 .build();
     }

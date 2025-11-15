@@ -35,49 +35,41 @@ export default function ServiceManager() {
             serviceName: "Dọn phòng hằng ngày",
             description: "Giữ phòng của bạn luôn sạch sẽ và gọn gàng mỗi ngày.",
             icon: "https://cdn-icons-png.flaticon.com/128/5443/5443535.png",
-            price: 150000,
         },
         {
             serviceName: "Giặt ủi quần áo",
             description: "Giặt, sấy và ủi chuyên nghiệp cho khách lưu trú.",
             icon: "https://cdn-icons-png.flaticon.com/128/2990/2990631.png",
-            price: 80000,
         },
         {
             serviceName: "Đưa đón sân bay",
             description: "Xe đưa đón tận nơi, an toàn và đúng giờ.",
             icon: "https://cdn-icons-png.flaticon.com/512/854/854878.png",
-            price: 250000,
         },
         {
             serviceName: "Buffet sáng",
             description: "Thưởng thức bữa sáng đa dạng với món Á - Âu mỗi ngày.",
             icon: "https://cdn-icons-png.flaticon.com/512/3075/3075977.png",
-            price: 180000,
         },
         {
             serviceName: "Thuê xe máy",
             description: "Thuê xe máy tiện lợi để khám phá thành phố.",
             icon: "https://cdn-icons-png.flaticon.com/128/7053/7053332.png",
-            price: 200000,
         },
         {
             serviceName: "Giao đồ ăn tận phòng",
             description: "Đặt món ăn yêu thích và nhận ngay tại phòng.",
             icon: "https://cdn-icons-png.flaticon.com/512/562/562678.png",
-            price: 50000,
         },
         {
             serviceName: "Giữ hành lý",
             description: "Gửi hành lý an toàn trước khi nhận hoặc sau khi trả phòng.",
             icon: "https://cdn-icons-png.flaticon.com/512/2331/2331970.png",
-            price: 0,
         },
         {
             serviceName: "Wi-Fi tốc độ cao",
             description: "Kết nối internet nhanh và ổn định trong toàn bộ khu vực khách sạn.",
             icon: "https://cdn-icons-png.flaticon.com/128/17902/17902763.png",
-            price: 0,
         },
     ];
     const deleteService = async (id) => {
@@ -125,10 +117,7 @@ export default function ServiceManager() {
                                         </h3>
                                     </div>
                                     <p className="text-gray-600 text-sm">{service.description}</p>
-                                    <div className="flex gap-10">
-                                        <p className="text-green-700 font-semibold mt-1">
-                                            Giá: {service.price.toLocaleString()} VNĐ
-                                        </p>
+                                    <div className="flex justify-end">
                                         <button onClick={() => deleteService(service.serviceId)} className="bg-red-500 text-white py-1 px-3 cursor-pointer rounded-md">Hủy</button>
                                     </div>
                                 </div>
@@ -152,9 +141,6 @@ export default function ServiceManager() {
                                         </h3>
                                     </div>
                                     <p className="text-gray-600 mb-3 line-clamp-3">{service.description}</p>
-                                    <p className="text-green-600 font-semibold mb-4">
-                                        Giá: {service.price.toLocaleString()} VNĐ
-                                    </p>
                                 </div>
 
                                 {/* Nút thêm */}

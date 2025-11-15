@@ -17,8 +17,8 @@ export default function MyInfo() {
         avatar: "",
         file: null,
     });
-    const [formPassword,setFormPassword] = useState({
-        password : "",
+    const [formPassword, setFormPassword] = useState({
+        password: "",
         passwordnew1: "",
         passwordnew2: ""
     });
@@ -39,12 +39,12 @@ export default function MyInfo() {
             [name]: value,
         }));
     };
-    const handleChangeFormPassword = (e) =>{
-        const {name,value} = e.target;
+    const handleChangeFormPassword = (e) => {
+        const { name, value } = e.target;
         setFormPassword({
-    ...formPassword,
-    [name]: value
-  });
+            ...formPassword,
+            [name]: value
+        });
     }
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
@@ -88,14 +88,14 @@ export default function MyInfo() {
             setLoading(false)
         }
     }
-    function handleCloseForm(){
-    setOpenFormPassword(false)
+    function handleCloseForm() {
+        setOpenFormPassword(false)
     }
-    const handleUpdatePassword =async()=>{
-        try{
-        await api.put(`/users/pwd/${user.userId}`,formPassword)
-        toast.success("Đổi mật khẩu thành công")
-        }catch(error){
+    const handleUpdatePassword = async () => {
+        try {
+            await api.put(`/users/pwd/${user.userId}`, formPassword)
+            toast.success("Đổi mật khẩu thành công")
+        } catch (error) {
             const message =
                 error.response?.data?.message ||
                 error.message ||
@@ -200,7 +200,7 @@ export default function MyInfo() {
                         <button
                             type="button"
                             className="absolute right-4 top-2/3 -translate-y-1/2 text-blue-500 text-sm font-medium hover:underline"
-                            onClick={()=>setOpenFormPassword(true)}
+                            onClick={() => setOpenFormPassword(true)}
                         >
                             Đổi mật khẩu
                         </button>
@@ -238,53 +238,53 @@ export default function MyInfo() {
                     </div>)}
 
             </div>
-            
+
             {openFormPassword && (<ModelForm title="Đổi mật khẩu" onClose={handleCloseForm}>
-            <div>
-        <label className="block text-sm font-medium mb-1">Mật khẩu cũ</label>
-        <input
-          type="password"
-          name="password"
-          value={formPassword.password}
-          onChange={handleChangeFormPassword}
-          required
-          className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-      </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">Mật khẩu cũ</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={formPassword.password}
+                        onChange={handleChangeFormPassword}
+                        required
+                        className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Mật khẩu mới</label>
-        <input
-          type="password"
-          name="passwordnew1"
-          value={formPassword.passwordnew1}
-          onChange={handleChangeFormPassword}
-          required
-          className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-      </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">Mật khẩu mới</label>
+                    <input
+                        type="password"
+                        name="passwordnew1"
+                        value={formPassword.passwordnew1}
+                        onChange={handleChangeFormPassword}
+                        required
+                        className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Xác nhận mật khẩu mới</label>
-        <input
-          type="password"
-          name="passwordnew2"
-          value={formPassword.passwordnew2}
-          onChange={handleChangeFormPassword}
-          required
-          className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-      </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">Xác nhận mật khẩu mới</label>
+                    <input
+                        type="password"
+                        name="passwordnew2"
+                        value={formPassword.passwordnew2}
+                        onChange={handleChangeFormPassword}
+                        required
+                        className="w-full border rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                </div>
 
-      <div className="text-right mt-6">
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-full transition-all"
-            onClick={()=> handleUpdatePassword()}
-        >
-          Lưu
-        </button>
-      </div>
+                <div className="text-right mt-6">
+                    <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-full transition-all"
+                        onClick={() => handleUpdatePassword()}
+                    >
+                        Lưu
+                    </button>
+                </div>
             </ModelForm>)}
         </div>
     </>)

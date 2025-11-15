@@ -4,6 +4,7 @@ import com.hotelbooking.hotel_booking.dto.request.RoomRequest;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.dto.response.RoomResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
+import com.hotelbooking.hotel_booking.entity.Invoice;
 import com.hotelbooking.hotel_booking.entity.Room;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
@@ -30,8 +31,6 @@ public class RoomService {
     private RoomRepository roomRepository;
     @Autowired
     private HotelRepository hotelRepository;
-@Autowired
-private InvoiceRepository invoiceRepository;
 //    @PostAuthorize("hasAuthority('ADD_HOTEL')")
     public RoomResponse createRoom(RoomRequest request) {
         Hotel hotel = hotelRepository.findById(request.getHotelID())
@@ -44,7 +43,7 @@ private InvoiceRepository invoiceRepository;
                 .bedRoomCount(request.getBedRoomCount())
                 .bedCount(request.getBedCount())
                 .roomPrice(request.getRoomPrice())
-                .status(1)
+                .status(0)
                 .hotel(hotel)
                 .build();
         roomRepository.save(room);
@@ -68,6 +67,24 @@ private InvoiceRepository invoiceRepository;
         return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
+    }
+
+    public int getRoomStatus(LocalDate desiredCheckIn, LocalDate desiredCheckOut, int roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        LocalDate today = LocalDate.now();
+        for (Invoice inv : room.getInvoices()) {
+            if (inv.getStatus() != 1 && inv.getStatus() !=2) continue; // chỉ tính booking đã xác nhận
+            // Khách đang ở
+//            if (!today.isBefore(inv.getCheckInDate()) && today.isBefore(inv.getCheckOutDate())) {
+//                return 1;
+//            }
+            // Hết chỗ (có booking trùng ngày user muốn đặt
+            if (desiredCheckIn.isBefore(inv.getCheckOutDate()) && desiredCheckOut.isAfter(inv.getCheckInDate())) {
+                return 2;
+            }
+        }
+        return 0;
     }
 
     public RoomResponse getRoomById(int id) {
@@ -117,7 +134,7 @@ private InvoiceRepository invoiceRepository;
     @PostAuthorize("hasAuthority('DELETE_ROOM')")
     public void deleteRoom(Integer id) {
         Room room = roomRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-        room.setStatus(0);
+        room.setStatus(3);
         roomRepository.saveAndFlush(room);
     }
 

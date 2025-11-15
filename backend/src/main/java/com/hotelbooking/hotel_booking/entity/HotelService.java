@@ -22,8 +22,6 @@ public class HotelService {
     String description;
     @Column(name = "icon")
     String icon;
-    @Column(name = "price")
-    Double price;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id", nullable = false)

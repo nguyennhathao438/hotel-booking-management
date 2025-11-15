@@ -12,6 +12,5 @@ public class ServiceRequest {
     String serviceName;
     String description;
     String icon;
-    Double price;
     Integer hotelID;
 }

@@ -5,13 +5,15 @@ import { FaRegCreditCard } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
+import { ArrowLeft } from "lucide-react";
 import success from "../../assets/img/success.png"
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function SuccessBooking() {
-    // const {selected} = useContext(Context)
-    //  console.log("phuong thuc thanh toan o success-booking la : ",selected)
     const invoice = localStorage.getItem("invoice")
     const objectInvoice = JSON.parse(invoice)
+    console.log("objectInvoice trong localstorage la", objectInvoice)
     const formatDate = (dateString) => {
         const [year, month, day] = dateString.split('-');
         return `${day}/${month}/${year}`;
@@ -21,29 +23,40 @@ export default function SuccessBooking() {
     const checkIn = new Date(objectInvoice.checkInDate);
     const checkOut = new Date(objectInvoice.checkOutDate);
     const night = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-    useEffect(() => {
-        const postInvoice = async () => {
-            await api.post(`/invoice/room/${objectInvoice.roomId}/create`, objectInvoice)
-            alert("đặt phòng thành công")
-        }
-        postInvoice()
-    }, [])
+
+
     useEffect(() => {
         const fecthRoomById = async () => {
-            const respone = await api.get(`/rooms/${objectInvoice.roomId}`)
+            const respone = await api.get(`/rooms/${objectInvoice.room.roomId}`)
             setRoom(respone.data.result)
         }
         fecthRoomById()
     }, [objectInvoice.roomId])
+    
     useEffect(() => {
         const fecthUserById = async () => {
-            const respone = await api.get(`/users/${objectInvoice.userId}`)
+            const respone = await api.get(`/users/${objectInvoice.user.id}`)
             setUser(respone.data.result)
         }
         fecthUserById()
     }, [objectInvoice.userId])
+
+    useEffect(() => {
+        const postInvoice = async () => {
+            try {
+                await api.put(`/invoice/payment/${objectInvoice.id}`, null, {
+                    params: { status: 2 }
+                });
+            } catch (error) {
+                console.error(error);
+                toast.error("Có lỗi khi tạo hoặc cập nhật hóa đơn");
+            }
+        };
+        postInvoice();
+    }, []);
+
     return (
-        <div className="border h-[auto] bg-gray-50">
+        <div className="border h-auto bg-gray-50">
             <div className="mx-auto w-[60%] flex flex-col bg-white border px-2 py-7 border-gray-300">
                 <div className="flex flex-col w-full h-auto p-6 mx-auto rounded-2xl items-center border border-gray-300">
                     <img className="w-[60px] h-[70px]" src={success} alt="" />
@@ -51,7 +64,7 @@ export default function SuccessBooking() {
                     <span className="block text-md text-center">Cảm ơn bạn đã đặt phòng . Chúng tôi sẽ liên hệ với bạn sớm nhất để nhận phòng</span>
                     <div className="flex items-center text-center bg-amber-200 rounded-2xl px-4 py-2 mt-4">
                         <FaClock />
-                        <span className="px-2 block"> Chờ xác nhận</span>
+                        <span className="px-2 block">Đã thanh toán</span>
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 mt-3 mx-1 md:flex-row h-auto lg:flex-row">
@@ -114,6 +127,14 @@ export default function SuccessBooking() {
                             <span>Tổng tiền : <span className="text-blue-500 font-bold">{(objectInvoice.totalAmount).toLocaleString()} VNĐ</span> </span>
                         </div>
                     </div>
+                </div>
+                <div className="flex justify-center mt-4">
+                    <Link to="/">
+                        <button className="bg-green-500 text-white cursor-pointer px-4 py-2 font-medium text-md rounded-md flex items-center gap-2">
+                            <ArrowLeft className="w-5 h-5 text-white" />
+                            Về trang chủ
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
