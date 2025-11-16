@@ -16,6 +16,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,13 @@ public class MessageController {
     @PostMapping
     ResponseEntity<ApiResponse<MessageResponse>> createMessage(@RequestBody @Valid MessageRequest request){
         MessageResponse messageResponse = messageService.createMessage(request);
-        simpMessagingTemplate.convertAndSend("/topic/messages", messageResponse);
+        String receiverId = String.valueOf(request.getReceiverId());
+        System.out.println("Sending message to user " + receiverId+"Message Response"+ messageResponse.getContent());
+        simpMessagingTemplate.convertAndSendToUser(
+                receiverId,
+                "/queue/messages",
+                messageResponse
+        );
         return ResponseEntity.ok(
                 ApiResponse.<MessageResponse>builder()
                         .message("Success")

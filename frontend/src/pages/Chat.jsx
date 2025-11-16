@@ -22,17 +22,18 @@ export default function Contact() {
   const messageContainerRef = useRef(null);
   const stompClientRef = useRef(null);
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS(`http://localhost:8080/ws?userId=${myId}`);
     const client = over(socket);
     stompClientRef.current = client;
 
     client.connect({}, () => {
-      console.log("✅ WebSocket connected");
-      client.subscribe("/topic/messages", (payload) => {
+      console.log("WebSocket connected");
+
+      client.subscribe("/user/queue/messages", (payload) => {
         const msg = JSON.parse(payload.body);
         if (
-          msg.sender?.id === selectedUser?.id ||
-          msg.receiver?.id === selectedUser?.id
+          msg.senderId === selectedUser?.id ||
+          msg.receiverId === selectedUser?.id
         ) {
           setConversation((prev) => [...prev, msg]);
         }
@@ -42,11 +43,12 @@ export default function Contact() {
     return () => {
       if (stompClientRef.current?.connected) {
         stompClientRef.current.disconnect(() => {
-          console.log("✅ WebSocket disconnected");
+          console.log(" WebSocket disconnected");
         });
       }
     };
-  }, []);
+  }, [myId, selectedUser]);
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "auto" });
