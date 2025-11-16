@@ -37,7 +37,7 @@ public class SecurityConfig {
     CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     private final String[] PUBLIC_ENDPOINTS = { "/api/users/register", "/api/auth/login", "/api/auth/introspect",
             "/api/hotels/all", "/api/auth/refresh", "/api/auth/login/google","/api/payment/vn-pay-callback" ,
-            "/ws/info","/api/hotels/all/get-page","/api/images/all","api/images/hotel/{hotelId}"
+            "/ws/info","/api/hotels/all/get-page","/api/images/all","api/images/hotel/**","api/hotels/search/**"
     };
     @Value("${jwt.signerKey}")
     private String signerKey;

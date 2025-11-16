@@ -7,8 +7,8 @@ import com.hotelbooking.hotel_booking.dto.response.RoomResponse;
 import com.hotelbooking.hotel_booking.service.RoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -94,6 +94,18 @@ public class RoomController {
                 .build());
     }
 
+    @PutMapping("/status/{roomId}")
+    public ResponseEntity<ApiResponse<String>> setStatusRoom(
+            @PathVariable int roomId,
+            @RequestBody Map<String,Integer> body) {
+        int status = body.get("status");
+        roomService.setStatusRoom(roomId, status);
+        return ResponseEntity.ok(ApiResponse.<String>builder()
+                .code(1)
+                .message("Cập nhật trạng thái thành công cho hóa đơn " + roomId)
+                .result("Success")
+                .build());
+    }
 
     @GetMapping("/check-room-status")
     public ResponseEntity<ApiResponse<Integer>> checkRoomStatus(

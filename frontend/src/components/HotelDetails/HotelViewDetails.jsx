@@ -54,9 +54,12 @@ function DetailsHotelView() {
 
 
     const fetchHotelServices = async () => {
-        const response = await api.get(`/service/hotel/${hotelId}`)
-        setServices(response.data.result)
-        return response.data.result;
+        try {
+            const response = await api.get(`/service/hotel/${hotelId}`)
+            setServices(response.data.result)
+        } catch (error) {
+            console.log("Khong the lay dich vu khach san", error)
+        }
     }
 
     const handleCloseChat = () => {
@@ -218,7 +221,7 @@ function DetailsHotelView() {
             return;
         }
         if (room.roomStatus === 2) {
-            toast.error("Phòng da het cho vao khoang ngay nay")
+            toast.error("Phòng đã hết, vào khoảng ngày này")
             return;
         }
         if (!isValidDate()) {
@@ -493,10 +496,10 @@ function DetailsHotelView() {
                 </div>
             )}
             {openDetails && (
-                <ModelForm width="1100px" onClose={() => setOpenDetails(false)}>
-                    <div className="w-full max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+                <ModelForm width="1150px" onClose={() => setOpenDetails(false)}>
+                    <div className="w-[1150px] grid grid-cols-1 md:grid-cols-12 gap-2">
                         {/* Cột 1: Thông tin cá nhân */}
-                        <div className="flex justify-center">
+                        <div className="md:col-span-4 flex justify-center">
                             <div className="bg-white shadow-lg rounded-2xl w-full p-8">
                                 <h1 className="text-2xl font-semibold text-center mb-6 text-gray-800">
                                     Chủ khách sạn
@@ -571,25 +574,14 @@ function DetailsHotelView() {
                         </div>
 
                         {/* Cột 2 */}
-                        <div className="flex flex-col justify-start items-center bg-white shadow-lg rounded-2xl p-6 gap-4 w-full max-w-md mx-auto">
-                            <div className="grid grid-cols-2 gap-2">
-                                {(images.length > 0 ? images : [banner2]).map((img, idx) => (
-                                    <img
-                                        key={idx}
-                                        src={img.imgUrl || banner2}
-                                        alt={`hotel-${idx}`}
-                                        className="w-full h-32 object-cover rounded shadow-sm"
-                                    />
-
-                                ))}
-                            </div>
+                        <div className="md:col-span-5 flex flex-col justify-start items-center bg-white shadow-lg rounded-2xl pb-2 gap-4 w-full mx-auto">
 
                             <h2 className="text-2xl font-bold text-[#4b2e1f] text-center">{hotel.hotelName}</h2>
                             <p className="flex items-center text-gray-600 text-sm text-center">
                                 <FaMapMarkerAlt className="text-red-600 mr-2" /> {hotel.hotelAddress}
                             </p>
 
-                            <div className="flex justify-between items-center w-full mt-2 text-gray-700 text-sm px-4">
+                            <div className="flex justify-center gap-15 items-center w-full mt-2 text-gray-700 text-sm px-4">
                                 {/* Điện thoại */}
                                 <div className="flex items-center gap-1">
                                     <FaPhoneAlt className="text-green-600" />
@@ -607,7 +599,7 @@ function DetailsHotelView() {
                             </div>
 
 
-                            <div className="flex justify-between w-full mt-2 text-gray-700 text-sm px-4">
+                            <div className="flex justify-center gap-15 w-full mt-2 text-gray-700 text-sm px-4">
                                 <span className="flex items-center gap-1">
                                     <FaBed className="text-blue-600" /> {hotel.hotelTotalRoom} phòng
                                 </span>
@@ -621,11 +613,22 @@ function DetailsHotelView() {
                                     {hotel.hotelDescription}
                                 </p>
                             )}
+
+                            <div className="grid grid-cols-2 gap-2 w-[95%]">
+                                {(images.length > 0 ? images : [banner2]).map((img, idx) => (
+                                    <img
+                                        key={idx}
+                                        src={img.imgUrl || banner2}
+                                        alt={`hotel-${idx}`}
+                                        className="w-full h-32 object-cover rounded shadow-sm"
+                                    />
+                                ))}
+                            </div>
                         </div>
 
 
                         {/* Cột 3 */}
-                        <div className="flex flex-col gap-6 p-4 w-full max-h-[80vh] overflow-y-auto">
+                        <div className="md:col-span-3 flex flex-col gap-6 p-4 w-full max-h-[80vh] overflow-y-auto">
                             <button
                                 onClick={() => {
                                     setSlideContent("feedback");

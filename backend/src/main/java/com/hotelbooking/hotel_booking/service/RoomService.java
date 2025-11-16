@@ -100,6 +100,19 @@ public class RoomService {
                 .toList();
     }
 
+    public void setStatusRoom(int roomId, int status) {
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        if (status == 0)
+            room.setStatus(0);
+        else if (status == 1)
+            room.setStatus(1);
+        else if (status == 2)
+            room.setStatus(2);
+        else
+            room.setStatus(3);
+        roomRepository.save(room);
+    }
+
 //    @PostAuthorize("hasAuthority('UPDATE_ROOM')")
     public RoomResponse updateRoom(int id, RoomRequest request) {
         Room room = roomRepository.findById(id)
@@ -118,9 +131,6 @@ public class RoomService {
         }
         if (request.getRoomPrice() > 0) {
             room.setRoomPrice(request.getRoomPrice());
-        }
-        if (request.getStatus() >= 0) {
-            room.setStatus(request.getStatus());
         }
         if (request.getHotelID() > 0) {
             Hotel hotel = hotelRepository.findById(request.getHotelID())

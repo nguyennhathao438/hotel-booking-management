@@ -37,7 +37,7 @@ const roomSchema = z.object({
     ]).refine(val => val !== "", {
         message: "Vui lòng chọn loại phòng hợp lệ",
     }),
-    status: z.enum(["0", "1", "2", "3"]),
+    // status: z.enum(["0", "1", "2", "3"]),
     roomArea: z
         .string()
         .trim()
@@ -157,7 +157,6 @@ export default function RoomManager() {
             roomArea: String(r.roomArea),
             roomName: r.roomName,
             roomType: r.roomType,
-            status: r.status,
             roomCapacity: String(r.roomCapacity),
             bedCount: String(r.bedCount),
             bedRoomCount: String(r.bedRoomCount),
@@ -172,7 +171,6 @@ export default function RoomManager() {
     }
 
     const onSubmit = async (data) => {
-        console.log("du lieu ban vua click de cap nhat la", data)
         const dataNew = {
             ...data,
             hotelID: hotelId,
@@ -258,13 +256,35 @@ export default function RoomManager() {
 
     const renderStatus = (status) => {
         if (status === 0)
-            return (<span className="text-green-600 text-sm font-medium">Con trong</span>)
+            return (<span className="text-green-600 text-sm font-medium">Phòng còn trống</span>)
         if (status === 1)
-            return (<span className="text-red-500 text-sm font-medium">Khach dang o</span>)
+            return (<span className="text-red-500 text-sm font-medium">Khách đang ở</span>)
         if (status === 2)
-            return (<span className="text-blue-500 text-sm font-medium">Da duoc dat</span>)
+            return (<span className="text-blue-500 text-sm font-medium">Đã được đặt</span>)
         else
-            return (<span className="text-yellow-500 text-sm font-medium">Bao tri</span>)
+            return (<span className="text-yellow-500 text-sm font-medium">Bảo trì</span>)
+    }
+    const [openStatus, setOpenStatus] = useState(false)
+    const statusList = [
+        { label: "Phòng còn trống", status: 0 },
+        { label: "Khách đang ở", status: 1 },
+        { label: "Đã được đặt", status: 2 },
+        { label: "Bảo trì", status: 3 }
+    ];
+    const [selected, setSelected] = useState(0);
+    const [roomSelected, setRoomSelected] = useState(null)
+    const setStatusRoom = async (status) => {
+        try {
+            if (roomSelected != null) {
+                const response = await api.put(`rooms/status/${roomSelected.roomId}`,{status})
+                if (response.data.code) {
+                    toast.success("Cập nhật trạng thái phòng thành công")
+                    fetchRoomsByHotelId(hotelId)
+                }
+            }
+        } catch (error) {
+            console.log("loi khong the cap nhat trang thai", error)
+        }
     }
     return (
         <div className="w-[1700px] items-center justify-center min-h-screen bg-gray-100 ml-[300px]">
@@ -303,78 +323,76 @@ export default function RoomManager() {
 
                 {
                     rooms.length != 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 py-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 gap-y-5 px-2 py-6">
                             {rooms.map((room) => (
-                                <div key={room.roomId} className="rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition bg-white">
+                                <div key={room.roomId}
+                                    className="rounded-2xl shadow-md hover:shadow-xl transition-all bg-white overflow-hidden border border-gray-100">
                                     {/* Ảnh phòng */}
-                                    <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
-                                        <img src={banner2} alt="" />
+                                    <div className="h-48 w-full bg-gray-100 overflow-hidden">
+                                        <img src={banner2} alt="" className="w-full h-full object-cover hover:scale-105 transition" />
                                     </div>
 
-                                    <div className="px-4 pb-2 pt-1">
-                                        <p className="mt-1 font-medium text-gray-800">
-                                            {room.roomName} ({room.roomType})
+                                    <div className="px-5 py-4">
+                                        {/* Tên phòng */}
+                                        <p className="text-lg font-semibold text-gray-800">
+                                            {room.roomName}{" "}
+                                            <span className="text-sm text-gray-500">
+                                                ({room.roomType})
+                                            </span>
                                         </p>
 
-                                        <p className="text-sm text-gray-600 mt-1">
+                                        {/* Info */}
+                                        <p className="text-sm text-gray-600 mt-2">
                                             🛏️ {room.bedCount} giường • {room.bedRoomCount} phòng ngủ • {room.roomCapacity} khách
                                         </p>
+
                                         <p className="text-sm text-gray-600">
                                             📐 Diện tích: {room.roomArea} m²
                                         </p>
 
-                                        <div className="flex justify-between items-center mt-3">
-                                            <span className="text-lg font-bold text-green-600">
+                                        <div className="flex justify-between items-center mt-4">
+                                            <span className="text-xl font-bold text-green-600">
                                                 {room.roomPrice.toLocaleString()} ₫/đêm
                                             </span>
+
                                             {renderStatus(room.status)}
                                         </div>
 
-                                        {/* Trạng thái phòng */}
-                                        <div className="flex flex-col gap-2 mt-3">
-                                            {/* <p
-                                                className={`text-sm font-medium ${room.status === 0
-                                                    ? "text-green-600"
-                                                    : room.status === 1
-                                                        ? "text-orange-500"
-                                                        : "text-red-500"
-                                                    }`}
-                                            >
-                                                {room.status === 0
-                                                    ? "Phòng còn trống"
-                                                    : room.status === 1
-                                                        ? "Khách đang ở"
-                                                        : "Hết chỗ"}
-                                            </p> */}
+                                        {/* Nút hành động */}
+                                        <div className="flex justify-end gap-2 mt-5">
+                                            <button onClick={() => { setOpenStatus(true), setRoomSelected(room),setSelected(room.status) }} className="flex cursor-pointer items-center gap-1 bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition">
+                                                Trạng thái
+                                            </button>
+                                            {/* Sửa */}
+                                            <button
+                                                onClick={() => { setOpenCreate(true); defaultUpdate(room); }}
+                                                className="flex cursor-pointer items-center gap-1 bg-yellow-500 text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600 transition">
+                                                {/* <Edit size={16} /> */}
+                                                <span>Sửa</span>
+                                            </button>
+
+                                            {/* Chỉnh trạng thái */}
 
 
-
-                                            {/* Các nút hành động */}
-                                            <div className="flex gap-3 justify-end mt-3">
-                                                <button onClick={() => { setOpenCreate(true); defaultUpdate(room); }}
-                                                    className="bg-yellow-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600"
-                                                >
-                                                    <Edit className="inline-block mr-1" />
-                                                    Sửa
-                                                </button>
-
-                                                <button onClick={() => { deleteRoom(room.roomId); }}
-                                                    className="bg-red-500 cursor-pointer text-white px-3 py-1.5 rounded-lg hover:bg-red-600"
-                                                >
-                                                    <Trash className="inline-block mr-1" />
-                                                    Xóa
-                                                </button>
-                                            </div>
+                                            {/* Xóa */}
+                                            <button
+                                                onClick={() => deleteRoom(room.roomId)}
+                                                className="flex cursor-pointer items-center gap-1 bg-red-500 text-white px-3 py-1.5 rounded-lg hover:bg-red-600 transition">
+                                                {/* <Trash size={16} /> */}
+                                                <span>Xóa</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                    ) :
+                    ) : (
                         <div className="font-md text-xl text-center py-4">
                             Bạn chưa có phòng nào cho khách sạn của mình
                         </div>
+                    )
                 }
+
             </div>
             {
                 openCreate && (
@@ -420,7 +438,7 @@ export default function RoomManager() {
                                     </select>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-2">
+                                <div className="grid grid-cols-1">
                                     <div>
                                         <label className="block text-sm font-medium">Diện tích (m²)</label>
                                         <input
@@ -432,7 +450,7 @@ export default function RoomManager() {
                                         />
                                     </div>
 
-                                    {room && (
+                                    {/* {room && (
                                         <div>
                                             <label className="block text-sm font-medium">Trạng thái phòng</label>
                                             <select
@@ -449,7 +467,7 @@ export default function RoomManager() {
                                                 <option value={3}>Bao tri</option>
                                             </select>
                                         </div>
-                                    )}
+                                    )} */}
                                 </div>
 
 
@@ -530,7 +548,35 @@ export default function RoomManager() {
                     </ModelForm>
                 )
             }
+            {
+                openStatus && (
+                    <ModelForm onClose={() => setOpenStatus(false)} width="500px" title="Cập nhật trạng thái phòng">
+                        <div className="flex w-[520px] bg-white rounded-xl shadow-md p-4 gap-4">
+                            <div className="flex-1 flex flex-col gap-3">
+                                {statusList.map((item, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => { setSelected(item.status) }}
+                                        className={`border py-2 rounded-lg w-full text-left cursor-pointer px-4 transition ${selected=== item.status
+                                            ? "bg-gray-800 text-white"
+                                            : "bg-gray-100 hover:bg-gray-200 text-black"}  `}>
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="flex flex-1 flex-col justify-center items-center rounded-lg bg-gray-50">
+                                <span className="text-gray-700 font-medium text-lg">
+                                    Trạng thái phòng:
+                                </span>
 
+                                {/* Ví dụ hiển thị trạng thái */}
+                                {renderStatus(selected)}
+                            </div>
+                        </div>
+                        <div className="flex justify-center"><button onClick={() => {setStatusRoom(selected),setOpenStatus(false)}} className="px-4 py-2 bg-green-500 rounded-md text-white cursor-pointer ">Cập nhật</button></div>
+                    </ModelForm>
+                )
+            }
         </div>
     )
 }
