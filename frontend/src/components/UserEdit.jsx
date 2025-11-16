@@ -2,9 +2,9 @@ export default function UserEdit({
   label,
   placeholder,
   type = "text",
-  onChange,
-  name,
-  value,
+  registerName,
+  register,
+  error, 
 }) {
   return (
     <div className="flex flex-col">
@@ -12,11 +12,12 @@ export default function UserEdit({
       <input
         type={type}
         placeholder={placeholder}
-        className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-        onChange={onChange}
-        name={name}
-        value={value}
+        className={`border p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400 transition ${
+          error ? "border-red-500" : "border-gray-300"
+        }`}
+        {...register(registerName)}
       />
+      {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
     </div>
   );
 }
