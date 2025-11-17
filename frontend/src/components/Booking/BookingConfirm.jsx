@@ -10,20 +10,14 @@ export default function ConfirmBooking() {
     const [searchParams] = useSearchParams();
     const hotelId = searchParams.get("hotelId");
     const payment = searchParams.get("payment")
-    console.log("payment", payment)
     const location = useLocation();
     const invoice = location.state?.invoice;
     const urlVnpay = location.state?.urlVnpay;
-    console.log("paymentUrl", urlVnpay)
-    console.log("thong tin booking", invoice)
     const { roomId } = useParams();
     const [images, setImages] = useState([]);
     const [room, setRoom] = useState([]);
     const [hotel, setHotel] = useState([])
-    const { checkInDate } = useContext(Context)
-    console.log(checkInDate.getDate())
-    const { checkOutDate } = useContext(Context)
-    console.log(checkOutDate.toLocaleDateString())
+    const { checkInDate,checkOutDate } = useContext(Context)
 
     const handleSubmit = async (e, roomId) => {
         e.preventDefault();

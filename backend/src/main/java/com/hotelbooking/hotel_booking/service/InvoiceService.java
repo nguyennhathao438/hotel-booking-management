@@ -49,7 +49,7 @@ public class InvoiceService {
             throw new AppException(ErrorCode.INVOICE_FAILED);
         }
         Room room = roomRepository.getReferenceById(roomId);
-        List<Invoice> existInvoices = room.getInvoices();
+//        List<Invoice> existInvoices = room.getInvoices();
         User user = getCurrentUser();
         Invoice invoice = Invoice.builder()
                 .checkInDate(request.getCheckInDate())
@@ -60,11 +60,12 @@ public class InvoiceService {
                 .room(room)
                 .user(user)
                 .build();
-        if (validateDates(request, existInvoices)) {
-            room.addInvoice(invoice);
-            invoiceRepository.save(invoice);
-        } else
-            throw new AppException(ErrorCode.ROOM_ALREADY_BOOKED);
+//        if (validateDates(request, existInvoices)) {
+//            room.addInvoice(invoice);
+//            invoiceRepository.save(invoice);
+//        } else
+//            throw new AppException(ErrorCode.ROOM_ALREADY_BOOKED);
+        invoiceRepository.save(invoice);
         return mapToInvoiceResponse(invoice);
     }
 
@@ -148,6 +149,7 @@ public class InvoiceService {
         }
         return invoicesPage.map(this::mapToInvoiceResponse);
     }
+
     @PreAuthorize("hasAuthority('UPDATE_INVOICE')")
     public InvoiceResponse updateInvoice(Integer id, InvoiceRequest request) {
         Invoice invoice = invoiceRepository.findById(id)
@@ -164,64 +166,54 @@ public class InvoiceService {
         if (request.getStatus() != null) {
             int oldStatus = invoice.getStatus();
             int newStatus = request.getStatus();
-
             // Logic kiểm tra chuyển trạng thái hợp lệ
             boolean validTransition = false;
-
             switch (oldStatus) {
                 case 0: // Chờ xác nhận
-                    validTransition = (newStatus == 1 || newStatus == 3);
+                    validTransition = (newStatus == 1 || newStatus == 4);
                     break;
                 case 1: // Đã xác nhận
                     validTransition = (newStatus == 2);
                     break;
-                case 2: // Hoàn thành
-                case 3: // Đã hủy
+                case 2: // Đã thanh toán
+                    validTransition = (newStatus == 3);
+                    break;
+                case 3: // Hoàn thành
+                    break;
+                case 4: // Đã hủy
                     validTransition = false; // Không thể đổi nữa
                     break;
                 default:
                     validTransition = false;
             }
-
             if (!validTransition) {
                 throw new AppException(ErrorCode.INVALID_STATUS_TRANSITION);
             }
-
             invoice.setStatus(newStatus);
         }
-        ;
-
         if (request.getRoomId() != null) {
             Room room = roomRepository.findById(request.getRoomId())
                     .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
             invoice.setRoom(room);
         }
-
         if (request.getUserId() != null) {
             User user = userRepository.findById(request.getUserId())
                     .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
             invoice.setUser(user);
         }
-
         invoiceRepository.save(invoice);
         return mapToInvoiceResponse(invoice);
     }
 
-    public List<InvoiceResponse> getAllInvoiceByRoom_RoomId(int roomId) {
-        List<Invoice> invoices = invoiceRepository.getAllInvoicesByRoom_RoomId(roomId);
-        return invoices.stream()
-                .map(this::mapToInvoiceResponse)
-                .toList();
-    }
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public List<InvoiceResponse> getInvoicesToday() {
         LocalDate today = LocalDate.now();
-
         return invoiceRepository.findAll().stream()
                 .filter(invoice -> invoice.getCheckOutDate().isEqual(today))
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
+
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public Page<InvoiceResponse> getAllInvoice(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
@@ -270,6 +262,36 @@ public class InvoiceService {
                         && request.getCheckOutDate().isAfter(exitsInvoice.getCheckInDate()));
 
     }
+
+    //    public boolean invoiceCheck(LocalDate checkInDate, LocalDate checkOutDate, int roomId) {
+//        Room room = roomRepository.findById(roomId).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+//        List<Invoice> existInvoices = room.getInvoices();
+//        return existInvoices.stream()
+//                .noneMatch(exitsInvoice -> checkInDate.isBefore(exitsInvoice.getCheckOutDate())
+//                        && checkOutDate.isAfter(exitsInvoice.getCheckInDate()));
+//    }
+
+    public void changeStatusAfterPayment(int invoiceId, int status){
+        Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(()->new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        invoice.setStatus(status);
+        invoiceRepository.save(invoice);
+    }
+
+    public boolean invoiceCheck(LocalDate checkInDate, LocalDate checkOutDate, int roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        List<Invoice> existInvoices = room.getInvoices().stream()
+                .filter(invoice -> invoice.getStatus() == 1)
+                .toList();
+        System.out.println("exitsInvoice"+existInvoices);
+        System.out.println("exitsInvoice"+existInvoices.size());
+        return existInvoices.stream()
+                .noneMatch(existInvoice ->
+                        checkInDate.isBefore(existInvoice.getCheckOutDate()) &&
+                                checkOutDate.isAfter(existInvoice.getCheckInDate())
+                );
+    }
+
 
     private void validateDate(InvoiceRequest request) {
         if (request.getCheckInDate() != null && request.getCheckOutDate() != null) {

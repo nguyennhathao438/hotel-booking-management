@@ -67,6 +67,48 @@ public class InvoiceController {
                 .build());
     }
 
+    @GetMapping("/check-room")
+    public ResponseEntity<ApiResponse<Boolean>> checkRoomAvailable(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+            @RequestParam int roomId
+    ) {
+        boolean isAvailable = invoiceService.invoiceCheck(checkInDate, checkOutDate, roomId);
+
+        return ResponseEntity.ok(ApiResponse.<Boolean>builder()
+                .code(1)
+                .message(isAvailable ? "Phòng trống" : "Phòng đã có người đặt trong thời gian này")
+                .result(isAvailable)
+                .build());
+    }
+
+
+    @PutMapping("/payment/{invoiceId}")
+    public ResponseEntity<ApiResponse<String>> changeStatusAfterPayment(
+            @PathVariable int invoiceId,
+            @RequestParam int status) {
+        invoiceService.changeStatusAfterPayment(invoiceId, status);
+        return ResponseEntity.ok(ApiResponse.<String>builder()
+                .code(1)
+                .message("Cập nhật trạng thái thành công cho hóa đơn " + invoiceId)
+                .result("Success")
+                .build());
+    }
+//    @GetMapping("/check-room")
+//    public ResponseEntity<ApiResponse<Boolean>> checkRoomAvailable(
+//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+//            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate,
+//            @RequestParam int roomId
+//    ) {
+//        boolean isAvailable = invoiceService.invoiceCheck(checkInDate, checkOutDate, roomId);
+//        return ResponseEntity.ok(ApiResponse.<Boolean>builder()
+//                .code(1)
+//                .message(isAvailable ? "Phòng trống" : "Phòng đã có người đặt trong thời gian này")
+//                .result(isAvailable)
+//                .build());
+//    }
+
+
     @GetMapping("/all-get-page")
     public ResponseEntity<ApiResponse<Page<InvoiceResponse>>> getAllInvoice(
             @RequestParam(defaultValue = "1") Integer pageNo,

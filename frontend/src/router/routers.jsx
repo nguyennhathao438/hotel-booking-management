@@ -31,6 +31,8 @@ import BookingHistory from "../pages/BookingHistory";
 import Forbidden from "../pages/Forbidden";
 import ProtectedRouter from "./ProtectedRouter";
 import HotelManagerCustomer from "../componentcustomer/HotelManagerCustomer";
+import RoomManager from "../componentcustomer/RoomManager";
+import ServiceManager from "../componentcustomer/ServiceManager";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -122,6 +124,14 @@ const router = createBrowserRouter([
         path: "invoice",
         element: <InvoiceU />,
       },
+      {
+        path: "room/hotel/:hotelId",
+        element: <RoomManager/>
+      },
+      {
+        path: "service/hotel/:hotelId",
+        element: <ServiceManager/>
+      }
     ],
   },
   {

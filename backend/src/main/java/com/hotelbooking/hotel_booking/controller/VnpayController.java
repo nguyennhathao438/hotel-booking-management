@@ -23,8 +23,9 @@ public class VnpayController {
     public ResponseEntity<ApiResponse<VnpayResponse>> pay(HttpServletRequest request) {
         VnpayResponse vnpayResponse = paymentService.createVnPayPayment(request);
         return ResponseEntity.ok(ApiResponse.<VnpayResponse>builder()
-                        .message("Get UrlVpn thành công")
-                        .result(vnpayResponse)
+                .code(1)
+                .message("Get UrlVpn thành công")
+                .result(vnpayResponse)
                 .build());
     }
     @GetMapping("/vn-pay-callback")

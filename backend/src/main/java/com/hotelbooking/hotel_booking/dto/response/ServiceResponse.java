@@ -13,6 +13,5 @@ public class ServiceResponse {
     String serviceName;
     String description;
     String icon;
-    Double price;
     HotelResponse hotel;
 }

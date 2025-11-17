@@ -44,10 +44,10 @@ export default function Users() {
   const handleCloseFormEdit = () => {
     setOpenFormEdit(false);
   };
-  const handleGetUser = (userEmail,action) => {
-    if(action === "Edit"){
+  const handleGetUser = (userEmail, action) => {
+    if (action === "Edit") {
       setOpenFormEdit(true);
-    } else if(action === "View"){
+    } else if (action === "View") {
       setOpenFormView(true);
     }
     const user = userListSearch.find((users) => users.email == userEmail);
@@ -230,38 +230,38 @@ export default function Users() {
           <div className="bg-white p-4 rounded-lg pl-9 pr-9">
             <p>Số tài khoản</p>
             <div className="flex justify-center items-center space-x-1">
-              <ContactIcon className="w-5 h-5 text-blue-500"/>
+              <ContactIcon className="w-5 h-5 text-blue-500" />
               <p className="text-blue-500">{userList.length}</p>
             </div>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Chủ khách sạn</p>
             <p className="text-yellow-500 space-x-1">
-              <UserStarIcon className="w-5 h-5 inline"/>
+              <UserStarIcon className="w-5 h-5 inline" />
               <span>
                 {
-                userList.filter(
-                  (user) =>
-                    user.roles &&
-                    user.roles.some(
-                      (role) => role.name.toLowerCase() === "customer"
-                    )
-                ).length
-              }
+                  userList.filter(
+                    (user) =>
+                      user.roles &&
+                      user.roles.some(
+                        (role) => role.name.toLowerCase() === "customer"
+                      )
+                  ).length
+                }
               </span>
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Đang hoạt động</p>
             <p className="text-emerald-600 space-x-0.5">
-              <UserRoundCheckIcon className="w-5 h-5 inline"/>
+              <UserRoundCheckIcon className="w-5 h-5 inline" />
               <span>{userList.filter((user) => user.status === 0).length}</span>
             </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Đang bị ban</p>
             <p className="text-red-500 space-x-0.5">
-              <UserRoundXIcon className="w-5 h-5 inline"/>
+              <UserRoundXIcon className="w-5 h-5 inline" />
               <span>{userList.filter((user) => user.status === 1).length}</span>
             </p>
           </div>
@@ -301,7 +301,7 @@ export default function Users() {
                     onClick={() => setSelectUserId(userList.id)} // cũng có thể cho phép click vào dòng
                     className={`border-b transition ${
                       selectUserId === userList.id
-                        ? "bg-blue-100" 
+                        ? "bg-blue-100"
                         : "hover:bg-gray-100"
                     }`}
                   >
@@ -321,26 +321,26 @@ export default function Users() {
                     <td className="py-3 px-6 text-center">
                       <div className="flex justify-center gap-2">
                         <button
-                        className="bg-teal-500 hover:bg-teal-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
-                        onClick={() => handleGetUser(userList.email , "Edit")}
-                      >
-                      <UserPenIcon size = {14}/>
-                        <span>sửa</span>
-                      </button>
-                      <button
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
-                        onClick={() => handleDelete(userList.id)}
-                      >
-                      <UserMinusIcon size={14} />
-                      <span>Xóa</span>
-                      </button>
-                      <button
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
-                        onClick={() => handleGetUser(userList.email , "View")}
-                      >
-                      <EyeIcon size={14} />
-                        <span>Xem chi tiết</span>
-                      </button>
+                          className="bg-teal-500 hover:bg-teal-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
+                          onClick={() => handleGetUser(userList.email, "Edit")}
+                        >
+                          <UserPenIcon size={14} />
+                          <span>sửa</span>
+                        </button>
+                        <button
+                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
+                          onClick={() => handleDelete(userList.id)}
+                        >
+                          <UserMinusIcon size={14} />
+                          <span>Xóa</span>
+                        </button>
+                        <button
+                          className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
+                          onClick={() => handleGetUser(userList.email, "View")}
+                        >
+                          <EyeIcon size={14} />
+                          <span>Xem chi tiết</span>
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -390,164 +390,188 @@ export default function Users() {
       {/*EditUser*/}
 
       {openFormEdit && (
-      <ModelForm
-        title="Cập nhật thông tin user"
-        width="w-[700px]" // rộng hơn một chút để chia 2 cột
-        onClose={() => handleCloseFormEdit()}
-      >
-        <div className="bg-white p-4 rounded-lg shadow-sm">
-          {/* Nhóm input 2 cột */}
-          <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-6">
-            <UserEdit
-              label="Họ:"
-              placeholder="Nhập họ"
-              onChange={handleChangeForm}
-              name="firstName"
-              value={userSelected.firstName}
-            />
-            <UserEdit
-              label="Số điện thoại:"
-              placeholder="Nhập số điện thoại"
-              type="tel"
-              onChange={handleChangeForm}
-              name="phone"
-              value={userSelected.phone}
-            />
-            <UserEdit
-              label="Tên:"
-              placeholder="Nhập tên"
-              onChange={handleChangeForm}
-              name="lastName"
-              value={userSelected.lastName}
-            />
-            <UserEdit
-              label="Ngày sinh:"
-              placeholder="Nhập ngày sinh"
-              type="date"
-              onChange={handleChangeForm}
-              name="dateOfBirth"
-              value={userSelected.dateOfBirth}
-            />
-          </div>
+        <ModelForm
+          title="Cập nhật thông tin user"
+          width="w-[700px]" // rộng hơn một chút để chia 2 cột
+          onClose={() => handleCloseFormEdit()}
+        >
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            {/* Nhóm input 2 cột */}
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-6">
+              <UserEdit
+                label="Họ:"
+                placeholder="Nhập họ"
+                onChange={handleChangeForm}
+                name="firstName"
+                value={userSelected.firstName}
+              />
+              <UserEdit
+                label="Số điện thoại:"
+                placeholder="Nhập số điện thoại"
+                type="tel"
+                onChange={handleChangeForm}
+                name="phone"
+                value={userSelected.phone}
+              />
+              <UserEdit
+                label="Tên:"
+                placeholder="Nhập tên"
+                onChange={handleChangeForm}
+                name="lastName"
+                value={userSelected.lastName}
+              />
+              <UserEdit
+                label="Ngày sinh:"
+                placeholder="Nhập ngày sinh"
+                type="date"
+                onChange={handleChangeForm}
+                name="dateOfBirth"
+                value={userSelected.dateOfBirth}
+              />
+            </div>
 
-          {/* Bảng role */}
-          <div className="mt-4">
-            <p className="text-lg font-semibold mb-2 text-gray-700">Vai trò người dùng</p>
-            <div className="border rounded-lg overflow-hidden">
-              <div className="max-h-[200px] overflow-y-auto">
-                <table className="w-full border-collapse table-auto">
-                  <thead className="bg-gray-100 border-b">
-                    <tr>
-                      <th className="px-4 py-2 border text-left font-medium text-gray-700">Role</th>
-                      <th className="px-4 py-2 border text-center font-medium text-gray-700">Chọn</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {!roleList || roleList.length === 0 ? (
+            {/* Bảng role */}
+            <div className="mt-4">
+              <p className="text-lg font-semibold mb-2 text-gray-700">
+                Vai trò người dùng
+              </p>
+              <div className="border rounded-lg overflow-hidden">
+                <div className="max-h-[200px] overflow-y-auto">
+                  <table className="w-full border-collapse table-auto">
+                    <thead className="bg-gray-100 border-b">
                       <tr>
-                        <td colSpan="2" className="text-center py-3 text-gray-500 italic">
-                          Không có dữ liệu role
-                        </td>
+                        <th className="px-4 py-2 border text-left font-medium text-gray-700">
+                          Role
+                        </th>
+                        <th className="px-4 py-2 border text-center font-medium text-gray-700">
+                          Chọn
+                        </th>
                       </tr>
-                    ) : (
-                      roleList.map((role, id) => (
-                        <tr
-                          key={id}
-                          className="border-t hover:bg-gray-50 transition-colors duration-150"
-                        >
-                          <td className="px-4 py-2 text-gray-700">{role.name}</td>
-                          <td className="px-4 py-2 text-center">
-                            <input
-                              type="checkbox"
-                              checked={userSelected.roles?.some((r) => r.name === role.name)}
-                              onChange={() => handleRoleCheckbox(role.name)}
-                              className="w-5 h-5 accent-blue-500 cursor-pointer"
-                            />
+                    </thead>
+                    <tbody>
+                      {!roleList || roleList.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan="2"
+                            className="text-center py-3 text-gray-500 italic"
+                          >
+                            Không có dữ liệu role
                           </td>
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      ) : (
+                        roleList.map((role, id) => (
+                          <tr
+                            key={id}
+                            className="border-t hover:bg-gray-50 transition-colors duration-150"
+                          >
+                            <td className="px-4 py-2 text-gray-700">
+                              {role.name}
+                            </td>
+                            <td className="px-4 py-2 text-center">
+                              <input
+                                type="checkbox"
+                                checked={userSelected.roles?.some(
+                                  (r) => r.name === role.name
+                                )}
+                                onChange={() => handleRoleCheckbox(role.name)}
+                                className="w-5 h-5 accent-blue-500 cursor-pointer"
+                              />
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Nút hành động */}
-          <div className="flex justify-center gap-4 mt-6">
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg px-6 py-2 transition"
-              onClick={() => handleUpdateUser()}
-            >
-              Xác nhận
-            </button>
-            <button
-              className={`${
-                userSelected.status === 1
-                  ? "bg-green-500 hover:bg-green-600"
-                  : "bg-red-500 hover:bg-red-600"
-              } text-white font-medium rounded-lg px-6 py-2 transition`}
-              onClick={() => handleBanUser()}
-            >
-              {userSelected.status === 1 ? "UnBan" : "Ban"}
-            </button>
+            {/* Nút hành động */}
+            <div className="flex justify-center gap-4 mt-6">
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg px-6 py-2 transition"
+                onClick={() => handleUpdateUser()}
+              >
+                Xác nhận
+              </button>
+              <button
+                className={`${
+                  userSelected.status === 1
+                    ? "bg-green-500 hover:bg-green-600"
+                    : "bg-red-500 hover:bg-red-600"
+                } text-white font-medium rounded-lg px-6 py-2 transition`}
+                onClick={() => handleBanUser()}
+              >
+                {userSelected.status === 1 ? "UnBan" : "Ban"}
+              </button>
+            </div>
           </div>
-        </div>
-      </ModelForm>
-    )}
-
+        </ModelForm>
+      )}
 
       {/*ViewUser*/}
       {openFormView && userSelected && (
-      <ModelForm
-        title="Xem chi tiết thông tin user"
-        width="w-[450px]" 
-        onClose={() => setOpenFormView(false)}
-      >
-        <div className="p-4 bg-white rounded-lg">
-          <div className="flex flex-col items-center mb-4">
-            <img
-              src={userSelected.avatar}
-              alt="User Avatar"
-              className="w-24 h-24 rounded-full object-cover border-2 border-blue-400 shadow-md mb-3"
-            />
-            <h2 className="text-xl font-semibold text-gray-800">{`${userSelected.firstName} ${userSelected.lastName}`}</h2>
-            <p className="text-gray-500 text-sm">{userSelected.email}</p>
+        <ModelForm
+          title="Xem chi tiết thông tin user"
+          width="w-[450px]"
+          onClose={() => setOpenFormView(false)}
+        >
+          <div className="p-4 bg-white rounded-lg">
+            <div className="flex flex-col items-center mb-4">
+              <img
+                src={userSelected.avatar}
+                alt="User Avatar"
+                className="w-24 h-24 rounded-full object-cover border-2 border-blue-400 shadow-md mb-3"
+              />
+              <h2 className="text-xl font-semibold text-gray-800">{`${userSelected.firstName} ${userSelected.lastName}`}</h2>
+              <p className="text-gray-500 text-sm">{userSelected.email}</p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">
+                  <PhoneIcon className="inline w-5 h-5 text-red-500" /> Số điện
+                  thoại:
+                </span>
+                <span className="text-gray-600">
+                  {userSelected.phone || "—"}
+                </span>
+              </div>
+
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-700">
+                  <CakeIcon className="inline w-5 h-5 text-cyan-600" /> Ngày
+                  sinh:
+                </span>
+                <span className="text-gray-600">
+                  {userSelected.dateOfBirth || "—"}
+                </span>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="font-medium text-gray-700 mb-1">
+                  <UserStarIcon className="inline w-5 h-5 text-fuchsia-800" />{" "}
+                  Vai trò:
+                </span>
+                {userSelected.roles && userSelected.roles.length > 0 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {userSelected.roles.map((r, index) => (
+                      <span
+                        key={index}
+                        className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium shadow-sm"
+                      >
+                        {r.name}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <span className="text-gray-600 italic">Không có vai trò</span>
+                )}
+              </div>
+            </div>
           </div>
-
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="font-medium text-gray-700"><PhoneIcon className="inline w-5 h-5 text-red-500"/> Số điện thoại:</span>
-              <span className="text-gray-600">{userSelected.phone || "—"}</span>
-            </div>
-
-            <div className="flex justify-between">
-              <span className="font-medium text-gray-700"><CakeIcon className="inline w-5 h-5 text-cyan-600"/> Ngày sinh:</span>
-              <span className="text-gray-600">{userSelected.dateOfBirth || "—"}</span>
-            </div>
-
-            <div className="flex flex-col">
-              <span className="font-medium text-gray-700 mb-1"><UserStarIcon className="inline w-5 h-5 text-fuchsia-800"/> Vai trò:</span>
-              {userSelected.roles && userSelected.roles.length > 0 ? (
-                <div className="flex flex-wrap gap-2">
-                  {userSelected.roles.map((r, index) => (
-                    <span
-                      key={index}
-                      className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium shadow-sm"
-                    >
-                      {r.name}
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <span className="text-gray-600 italic">Không có vai trò</span>
-              )}
-            </div>
-          </div>
-        </div>
-      </ModelForm>
-    )}
-
+        </ModelForm>
+      )}
     </>
   );
 }

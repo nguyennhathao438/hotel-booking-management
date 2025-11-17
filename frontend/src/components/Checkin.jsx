@@ -19,6 +19,7 @@ function Checkin() {
       <div className="relative">
         <DatePicker
           selected={checkInDate}
+          minDate={new Date()}
           onChange={(date) => setCheckInDate(date)}
           dateFormat="dd/MM/yyyy"
           className="w-full border-gray-300 py-2.5 pl-4 pr-10 border rounded-xl shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all duration-200 text-gray-700 placeholder:text-gray-400"

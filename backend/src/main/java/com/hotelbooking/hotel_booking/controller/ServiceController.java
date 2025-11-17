@@ -18,26 +18,32 @@ import java.util.List;
 public class ServiceController {
     @Autowired
     private dichvu dv;
+
     @PostMapping("/create")
     ResponseEntity<ApiResponse<ServiceResponse>> create(@Valid @RequestBody ServiceRequest rs) {
         ServiceResponse serviceResponse = dv.createService(rs);
         return ResponseEntity.ok(ApiResponse.<ServiceResponse>builder()
-                .message("cc")
+                .code(1)
+                .message("Thêm dịch vụ thành công")
                 .result(serviceResponse)
                 .build());
     }
+
     @GetMapping("/hotel/{hotelId}")
     public ResponseEntity<ApiResponse<List<ServiceResponse>>> getServicesByHotelId(@PathVariable int hotelId) {
         List<ServiceResponse> services = dv.getServicesByHotelId(hotelId);
         return ResponseEntity.ok(ApiResponse.<List<ServiceResponse>>builder()
+                .code(1)
                 .message("Danh sách dịch vụ của khách sạn")
                 .result(services)
                 .build());
     }
-    @DeleteMapping("/{serviceId}")
+
+    @DeleteMapping("/delete/{serviceId}")
     public ResponseEntity<ApiResponse<Void>> deleteService(@PathVariable int serviceId) {
         dv.deleteService(serviceId);
         return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .code(1)
                 .message("Xóa dịch vụ thành công")
                 .build());
     }

@@ -17,7 +17,6 @@ export default function RoomManagerCustomer({ hotelId, hotelName }) {
       try {
         const roomData = await api.get(`/rooms/hotel/${hotelId}`);
         setRooms(roomData.data.result || []);
-
         const imageData = await api.get(`/images/hotel/${hotelId}`);
         setImages(imageData.data.result || []);
       } catch (error) {

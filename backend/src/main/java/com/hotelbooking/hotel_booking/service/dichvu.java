@@ -32,11 +32,13 @@ public class dichvu {
     public ServiceResponse createService(ServiceRequest serviceRequest) {
         Hotel hotel = hotelRepository.findById(serviceRequest.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        if (serviceRepository.existsByServiceNameAndHotel_HotelId(serviceRequest.getServiceName(), hotel.getHotelId())) {
+            throw new AppException(ErrorCode.SERVICE_EXISTED);
+        }
         HotelService hotelService = HotelService.builder()
                 .serviceName(serviceRequest.getServiceName())
                 .icon(serviceRequest.getIcon())
                 .description(serviceRequest.getDescription())
-                .price(serviceRequest.getPrice())
                 .hotel(hotel)
                 .build();
         serviceRepository.save(hotelService);
@@ -55,7 +57,6 @@ public class dichvu {
                 .serviceName(hotelService.getServiceName())
                 .icon(hotelService.getIcon())
                 .description(hotelService.getDescription())
-                .price(hotelService.getPrice())
                 .hotel(hotelService.getHotel() != null ? mapToHotelResponse(hotelService.getHotel()) : null)
                 .build();
     }
@@ -63,9 +64,7 @@ public class dichvu {
     public List<ServiceResponse> getServicesByHotelId(int hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-
         List<HotelService> services = serviceRepository.findByHotel(hotel);
-
         return services.stream()
                 .map(this::mapToServiceResponse)
                 .collect(Collectors.toList());

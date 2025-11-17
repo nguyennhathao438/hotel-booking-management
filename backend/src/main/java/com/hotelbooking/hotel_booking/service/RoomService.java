@@ -4,6 +4,7 @@ import com.hotelbooking.hotel_booking.dto.request.RoomRequest;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.dto.response.RoomResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
+import com.hotelbooking.hotel_booking.entity.Invoice;
 import com.hotelbooking.hotel_booking.entity.Room;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
@@ -30,13 +31,8 @@ public class RoomService {
     private RoomRepository roomRepository;
     @Autowired
     private HotelRepository hotelRepository;
-@Autowired
-private InvoiceRepository invoiceRepository;
-    @PostAuthorize("hasAuthority('ADD_HOTEL')")
+//    @PostAuthorize("hasAuthority('ADD_HOTEL')")
     public RoomResponse createRoom(RoomRequest request) {
-        if (roomRepository.existsByRoomName(request.getRoomName())) {
-            throw new AppException(ErrorCode.ROOM_EXISTED);
-        }
         Hotel hotel = hotelRepository.findById(request.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         Room room = Room.builder()
@@ -47,7 +43,7 @@ private InvoiceRepository invoiceRepository;
                 .bedRoomCount(request.getBedRoomCount())
                 .bedCount(request.getBedCount())
                 .roomPrice(request.getRoomPrice())
-                .status(1)
+                .status(0)
                 .hotel(hotel)
                 .build();
         roomRepository.save(room);
@@ -61,11 +57,6 @@ private InvoiceRepository invoiceRepository;
 
     public List<RoomResponse> getRoomsByHotelId(int hotelId) {
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
-
-//        List<Room> availableRooms = rooms.stream()
-//                .filter(room -> !invoiceRepository.existsByRoom_RoomId(room.getRoomId()))
-//                .toList();
-
         return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
@@ -73,10 +64,27 @@ private InvoiceRepository invoiceRepository;
 
     public List<RoomResponse> getRoomsByHotelId2(int hotelId) {
         List<Room> rooms = roomRepository.findAllByHotel_HotelId(hotelId);
-
         return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
+    }
+
+    public int getRoomStatus(LocalDate desiredCheckIn, LocalDate desiredCheckOut, int roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        LocalDate today = LocalDate.now();
+        for (Invoice inv : room.getInvoices()) {
+            if (inv.getStatus() != 1 && inv.getStatus() !=2) continue; // chỉ tính booking đã xác nhận
+            // Khách đang ở
+//            if (!today.isBefore(inv.getCheckInDate()) && today.isBefore(inv.getCheckOutDate())) {
+//                return 1;
+//            }
+            // Hết chỗ (có booking trùng ngày user muốn đặt
+            if (desiredCheckIn.isBefore(inv.getCheckOutDate()) && desiredCheckOut.isAfter(inv.getCheckInDate())) {
+                return 2;
+            }
+        }
+        return 0;
     }
 
     public RoomResponse getRoomById(int id) {
@@ -84,7 +92,28 @@ private InvoiceRepository invoiceRepository;
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
         return mapToRoomResponse(room);
     }
-    @PostAuthorize("hasAuthority('UPDATE_ROOM')")
+
+    public List<RoomResponse> findByRoomTypeAndHotel_HotelId(String roomType, int hotelId){
+        List<Room> rooms = roomRepository.findByRoomTypeAndHotel_HotelId(roomType,hotelId);
+        return rooms.stream()
+                .map(this::mapToRoomResponse)
+                .toList();
+    }
+
+    public void setStatusRoom(int roomId, int status) {
+        Room room = roomRepository.findById(roomId).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        if (status == 0)
+            room.setStatus(0);
+        else if (status == 1)
+            room.setStatus(1);
+        else if (status == 2)
+            room.setStatus(2);
+        else
+            room.setStatus(3);
+        roomRepository.save(room);
+    }
+
+//    @PostAuthorize("hasAuthority('UPDATE_ROOM')")
     public RoomResponse updateRoom(int id, RoomRequest request) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
@@ -103,9 +132,6 @@ private InvoiceRepository invoiceRepository;
         if (request.getRoomPrice() > 0) {
             room.setRoomPrice(request.getRoomPrice());
         }
-        if (request.getStatus() >= 0) {
-            room.setStatus(request.getStatus());
-        }
         if (request.getHotelID() > 0) {
             Hotel hotel = hotelRepository.findById(request.getHotelID())
                     .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
@@ -114,13 +140,14 @@ private InvoiceRepository invoiceRepository;
         roomRepository.save(room);
         return mapToRoomResponse(room);
     }
+
     @PostAuthorize("hasAuthority('DELETE_ROOM')")
     public void deleteRoom(Integer id) {
-        if (!roomRepository.existsById(id)) {
-            throw new AppException(ErrorCode.ROOM_NOT_EXISTED);
-        }
-        roomRepository.deleteById(id);
+        Room room = roomRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        room.setStatus(3);
+        roomRepository.saveAndFlush(room);
     }
+
     public List<RoomResponse> getAvailableRooms(LocalDate startDate, LocalDate endDate) {
         return roomRepository.findAvailableRooms(startDate, endDate)
                 .stream()
@@ -131,6 +158,7 @@ private InvoiceRepository invoiceRepository;
     public long countAvailableRooms(LocalDate startDate, LocalDate endDate) {
         return roomRepository.countAvailableRooms(startDate, endDate);
     }
+
     public RoomResponse mapToRoomResponse(Room room) {
         if (room == null)
             return null;

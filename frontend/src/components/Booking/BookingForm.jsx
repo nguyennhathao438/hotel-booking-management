@@ -8,6 +8,7 @@ import vnpay from "../../assets/img/vnpay.png"
 import thanhtoan from "../../assets/img/thanhToan.png"
 import { Mail, Phone } from "lucide-react";
 import NotificationModal from "../Common/Modal";
+import Swal from "sweetalert2";
 export default function FormBooking() {
     const [searchParams] = useSearchParams();
     const hotelId = searchParams.get("hotelId");
@@ -16,12 +17,7 @@ export default function FormBooking() {
     const [images, setImages] = useState([]);
     const [room, setRoom] = useState([]);
     const [user, setUser] = useState([]);
-    // const {kids} = useContext(Context)
-    // const {adults} = useContext(Context)
-    const { checkInDate } = useContext(Context)
-    console.log(checkInDate.getDate())
-    const { checkOutDate } = useContext(Context)
-    console.log(checkOutDate.toLocaleDateString())
+    const { checkInDate, checkOutDate } = useContext(Context)
     const [selected, setSelected] = useState(0);
     const [phone, setPhone] = useState("");
     const [errorPhone, setErrorPhone] = useState("");
@@ -31,20 +27,21 @@ export default function FormBooking() {
     const [modalMessage, setModalMessage] = useState("");
     const [modalType, setModalType] = useState("warning");
     const night = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
-    console.log("NIGHT : ", night)
     const totalAmount = room.roomPrice * night;
-    const [invoice, setInvoice] = useState(// eslint-disable-line no-unused-vars
-        {
-            checkInDate: " ",
-            checkOutDate: " ",
-            totalAmount: " ",
-            payment: " ",
-            roomId: " ",
-            userId: " ",
-        }
-    )
+    // const [invoice, setInvoice] = useState(// eslint-disable-line no-unused-vars
+    //     {
+    //         checkInDate: " ",
+    //         checkOutDate: " ",
+    //         totalAmount: " ",
+    //         payment: " ",
+    //         roomId: " ",
+    //         userId: " ",
+    //     }
+    // )
 
 
+    console.log("ngay vao", checkInDate.getDate())
+    console.log("ngay ra", checkOutDate.getDate())
 
     const payments = [
         {
@@ -68,10 +65,16 @@ export default function FormBooking() {
     ]
 
     const formatDate = (date) => {
-        // Nếu date là dạng Date object
         const d = new Date(date);
-        return d.toISOString().split("T")[0]; // => "2025-10-14"
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
     };
+    console.log("ngay vao", formatDate(checkInDate))
+    console.log("ngay ra", formatDate(checkOutDate))
+
+
 
     const handleNext = async (e, roomId) => {
         e.preventDefault();
@@ -99,22 +102,33 @@ export default function FormBooking() {
             roomId: roomId,
             userId: user.id,
         };
+        // setInvoice(newInvoice);
+        const result = await Swal.fire({
+            title: "Xác nhận đặt phòng này?",
+            text: "Hành động này không thể hoàn tác!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Hủy",
+        });
+        if (!result.isConfirmed) return;
 
-        localStorage.setItem("invoice", JSON.stringify(newInvoice));
-        setInvoice(newInvoice);
-
-        if (selected == 1) {
-            navigate(`/confirm-booking/${roomId}?hotelId=${hotelId}&payment=${selected}`, {
-                state: { invoice: newInvoice },
-            });
-        } else if (selected == 3) {
-            const response = await api.get(`/payment/vn-pay?amount=${totalAmount}`);
-            const newVnpayUrl = response.data.result.paymentUrl;
-            setUrlVnpay(newVnpayUrl);
-            navigate(`/confirm-booking/${roomId}?hotelId=${hotelId}&payment=${selected}`, {
-                state: { invoice: newInvoice, urlVnpay: newVnpayUrl },
-            });
-        }
+        const response = await api.post(`/invoice/room/${roomId}/create`, newInvoice)
+        // eslint-disable-line no-unused-vars
+        localStorage.setItem("invoice", JSON.stringify(response.data.result));
+        navigate("/history")
+        // if (selected == 1) {
+        //     navigate(`/confirm-booking/${roomId}?hotelId=${hotelId}&payment=${selected}`, {
+        //         state: { invoice: newInvoice },
+        //     });
+        // } else if (selected == 3) {
+        //     const response = await api.get(`/payment/vn-pay?amount=${totalAmount}`);
+        //     const newVnpayUrl = response.data.result.paymentUrl;
+        //     setUrlVnpay(newVnpayUrl);
+        //     navigate(`/confirm-booking/${roomId}?hotelId=${hotelId}&payment=${selected}`, {
+        //         state: { invoice: newInvoice, urlVnpay: newVnpayUrl },
+        //     });
+        // }
     };
 
     const fetchUserLogin = async () => {
@@ -205,7 +219,7 @@ export default function FormBooking() {
                     <div className="w-full border rounded-2xl p-2 mt-2 border-gray-400 border-opacity-30 h-auto">
                         <span className="block font-bold p-2 text-xl">Tóm tắt giá</span>
                         <div
-                            className="w-fit mx-auto bg-gradient-to-r from-blue-50 to-blue-100 
+                            className="w-fit mx-auto from-blue-50 to-blue-100 
                             border border-blue-200 rounded-2xl px-5 py-2 shadow-md hover:shadow-lg 
                             transition-all duration-300 
                             hover:scale-[1.02] hover:from-blue-100 hover:to-blue-200">
@@ -219,7 +233,7 @@ export default function FormBooking() {
                             </span>
                         </div>
                         <div
-                            className="flex justify-between items-center border border-blue-200 bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl px-3 py-1 mt-3 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]">
+                            className="flex justify-between items-center border border-blue-200 from-blue-50 to-blue-100 rounded-2xl px-3 py-1 mt-3 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.01]">
                             <span className="font-bold text-gray-800 text-lg">Tổng tiền:</span>
                             <span className="font-semibold text-blue-700 text-md">
                                 {Number(room.roomPrice * (night)).toLocaleString("vi-VN")} VNĐ
@@ -295,7 +309,7 @@ export default function FormBooking() {
                             ))}
                         </div>
                         <div className="flex justify-end">
-                            <button type="submit" onClick={(e) => handleNext(e, room.roomId)} className="font-bold text-xl p-2 m-2 rounded-md text-white bg-blue-500 cursor-pointer">Tiếp theo : Chi tiết cuối cùng</button>
+                            <button type="submit" onClick={(e) => handleNext(e, room.roomId)} className="font-bold text-xl p-2 m-2 rounded-md text-white bg-blue-500 cursor-pointer">Xác nhận đặt phòng</button>
                         </div>
                     </div>
                 </div>

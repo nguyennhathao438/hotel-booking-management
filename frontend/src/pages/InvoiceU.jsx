@@ -133,8 +133,10 @@ export default function InvoiceU() {
       case 1:
         return "Đã xác nhận";
       case 2:
-        return "Hoàn thành";
+          return "Đã Thanh toán";
       case 3:
+        return "Hoàn thành";
+      case 4:
         return "Đã hủy";
       default:
         return "Không rõ";
@@ -146,9 +148,11 @@ export default function InvoiceU() {
         return "bg-yellow-100 text-yellow-700";
       case 1: // Đã xác nhận
         return "bg-blue-100 text-blue-700";
-      case 2: // Hoàn thành
-        return "bg-green-100 text-green-700";
-      case 3: // Đã hủy
+      case 2: // Đã thanh toán
+        return "bg-green-100 text-emarald-700";
+      case 3: // Đã hoàn thành
+        return "bg-green-100 text-green-400"
+      case 4: // Đã hủy
         return "bg-red-100 text-red-700";
       default:
         return "bg-gray-100 text-gray-700";
@@ -220,8 +224,9 @@ export default function InvoiceU() {
   const StatusOptions = [
     { value: 0, label: "Chờ xác nhận" },
     { value: 1, label: "Đã xác nhận" },
-    { value: 2, label: "Hoàn thành" },
-    { value: 3, label: "Đã hủy" },
+    { value: 2, label: "Đã thanh toán" },
+    { value: 3, label: "Hoàn thành" },
+    { value: 4, label: "Đã hủy" },
   ];
   return (
     <>
