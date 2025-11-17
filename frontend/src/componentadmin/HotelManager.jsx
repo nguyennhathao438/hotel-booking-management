@@ -10,7 +10,6 @@ import SlidePanel from "../components/Common/SlidePanel";
 import ImageSlider from "../components/Common/ImageSlider";
 import { Phone } from "lucide-react";
 import { FaMapMarkerAlt } from "react-icons/fa";
-import CustomerInfo from "./CustomerInfo";
 import ModelForm from "../components/Common/FormModel";
 
 export default function HotelManager() {
@@ -33,6 +32,19 @@ export default function HotelManager() {
       }
     }
     fetchAllImgHotel()
+  }, [selectedHotel])
+
+  const [rooms, setRooms] = useState([])
+  useEffect(() => {
+    const fetchRoomByHotelId = async () => {
+      try {
+        const response = await api.get(`/rooms/hotel/${selectedHotel.hotelId}`)
+        setRooms(response.data.result || [])
+      } catch (error) {
+        console.log("Khong the lay du lieu phong", error)
+      }
+    }
+    fetchRoomByHotelId()
   }, [selectedHotel])
 
   const fetchHotels = async () => {
@@ -342,8 +354,22 @@ export default function HotelManager() {
                   <FaConciergeBell className="text-xl" />
                   <span className="text-lg">Xem tất cả dịch vụ</span>
                 </button>
+
+                <button
+                  onClick={() => {
+                    setSlideContent("rooms");
+                    setOpenSlide(true);
+                  }}
+                  className="flex items-center gap-3 w-full bg-purple-600 text-white font-semibold py-4 px-6 rounded-2xl shadow-lg hover:bg-purple-700 hover:scale-105 transition-transform duration-200"
+                >
+                  <FaBed className="text-xl" />
+                  <span className="text-lg">Xem danh sách phòng</span>
+                </button>
+
                 <SlidePanel isOpen={openSlide} onClose={() => setOpenSlide(false)} width="50%">
+
                   {slideContent === "feedback" ? (
+                    /* ==== FEEDBACK ==== */
                     <div>
                       <h2 className="text-xl font-bold mb-4">Tất cả đánh giá</h2>
                       {feedbacks.length > 0 ? (
@@ -359,7 +385,9 @@ export default function HotelManager() {
                         <p className="text-gray-500 italic">Chưa có đánh giá nào.</p>
                       )}
                     </div>
-                  ) : (
+
+                  ) : slideContent === "service" ? (
+                    /* ==== SERVICE ==== */
                     <div>
                       <h2 className="text-xl font-bold mb-4">Tất cả dịch vụ</h2>
                       {services.length > 0 ? (
@@ -373,8 +401,80 @@ export default function HotelManager() {
                         <p className="text-gray-500 italic">Chưa có dịch vụ nào.</p>
                       )}
                     </div>
+
+                  ) : (
+                    /* ==== ROOMS ==== */
+                    <div>
+                      <h2 className="text-2xl font-bold mb-6">Danh sách phòng</h2>
+
+                      {rooms.length > 0 ? (
+                        rooms.map((r) => (
+                          <div
+                            key={r.roomId}
+                            className="border p-4 mb-4 rounded-xl shadow-sm hover:shadow-md transition flex items-center gap-4"
+                          >
+                            {/* Ảnh bên trái */}
+                            <img
+                              // src={r.imageUrls?.[0] || "/no-image.jpg"}
+                              src={banner2}
+                              alt={r.roomName}
+                              className="w-40 h-35 object-cover rounded-lg shadow"
+                            />
+
+                            {/* Thông tin bên phải */}
+                            <div className="flex-1">
+                              <p className="text-xl font-bold text-blue-700">{r.roomName} ({r.roomType})</p>
+                              <p className="text-base text-gray-700 mt-1 mb-1">
+                                Giá:{" "}<span className="font-semibold text-green-700">{r.roomPrice.toLocaleString()}₫</span>{" "}/ đêm
+                              </p>
+
+                              <div className="grid grid-cols-2 gap-2 text-gray-700 text-base">
+                                <p>Dien tich: <span className="font-semibold">{r.roomArea}m²</span></p>
+                                <p>Sức chứa: <span className="font-semibold">{r.roomCapacity}</span></p>
+                                <p>Số phòng ngủ: <span className="font-semibold">{r.bedRoomCount}</span></p>
+                                <p>Số giường ngủ: <span className="font-semibold">{r.bedCount}</span></p>
+                              </div>
+
+
+                              <p className="text-base text-gray-700 justify-end flex mt-1">
+                                Trạng thái:{" "}
+                                <span
+                                  className={
+                                    r.status === 0
+                                      ? "text-green-600 font-semibold"
+                                      : r.status === 1
+                                        ? "text-red-600 font-semibold"
+                                        : r.status === 2
+                                          ? "text-orange-500 font-semibold"
+                                          : r.status === 3
+                                            ? "text-purple-600 font-semibold"
+                                            : "text-gray-500"
+                                  }
+                                >
+                                  {r.status === 0
+                                    ? " Còn trống"
+                                    : r.status === 1
+                                      ? " Khách đang ở"
+                                      : r.status === 2
+                                        ? " Đã đặt"
+                                        : r.status === 3
+                                          ? " Bảo trì"
+                                          : " Không xác định"}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-gray-500 italic">Chưa có phòng nào.</p>
+                      )}
+                    </div>
+
+
                   )}
+
                 </SlidePanel>
+
               </div>
 
             </div>
