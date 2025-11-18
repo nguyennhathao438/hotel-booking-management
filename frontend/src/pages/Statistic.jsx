@@ -53,11 +53,11 @@ export default function Statistic() {
       const res = await api.get(`/invoice/owner/noPage/${userId}`);
       const invoices = res.data.result || [];
       const invoiceStatus = invoices.filter(
-        (i) => i.status === 2 && i.checkOutDate
+        (i) => i.status === 3 && i.checkOutDate
       );
-      // tìm pttt đã thanh toán 
+      // tìm pttt đã hoàn thành 
       const invoiceStatues = invoices.filter(
-        (i) => i.status === 2
+        (i) => i.status === 3
       );
       const invoicePayment = invoiceStatues.map(
         (i) => i.payment  
@@ -156,8 +156,8 @@ export default function Statistic() {
           const d = new Date(i.checkOutDate);
           if (d >= startOfWeek && d <= endOfWeek) {
             const dayIdx = d.getDay();
-            if (i.status === 2) bookedData[dayIdx]++;
-            if (i.status === 3) canceledData[dayIdx]++;
+            if (i.status === 3) bookedData[dayIdx]++;
+            if (i.status === 4) canceledData[dayIdx]++;
           }
         });
       } else if (barFiler === "this-month") {
@@ -174,8 +174,8 @@ export default function Statistic() {
           const d = new Date(i.checkOutDate);
           if (d.getMonth() === month && d.getFullYear() === year) {
             const day = d.getDate() - 1;
-            if (i.status === 2) bookedData[day]++;
-            if (i.status === 3) canceledData[day]++;
+            if (i.status === 3) bookedData[day]++;
+            if (i.status === 4) canceledData[day]++;
           }
         });
       } else if (barFiler === "this-year") {
@@ -189,8 +189,8 @@ export default function Statistic() {
           const d = new Date(inv.checkOutDate);
           if (d.getFullYear() === y) {
             const month = d.getMonth(); // 0–11
-            if (inv.status === 2) bookedData[month]++;
-            if (inv.status === 3) canceledData[month]++;
+            if (inv.status === 3) bookedData[month]++;
+            if (inv.status === 4) canceledData[month]++;
           }
         });
       }

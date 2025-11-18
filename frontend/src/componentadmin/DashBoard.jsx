@@ -141,7 +141,7 @@ export default function DashBoard() {
       const res = await api.get("/invoice/all");
       const invoices = res.data.result;
       const invoiceStatus = invoices.filter(
-        (i) => i.status === 2 && i.checkOutDate
+        (i) => i.status === 3 && i.checkOutDate
       );
       console.log(invoiceStatus);
       setInvoiceStatus(invoiceStatus);
@@ -270,15 +270,14 @@ export default function DashBoard() {
         startOfWeek.setHours(0, 0, 0, 0);
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(startOfWeek.getDate() + 6);
-
         bookedData = Array(7).fill(0);
         canceledData = Array(7).fill(0);
         data.forEach((i) => {
           const d = new Date(i.checkOutDate);
           if (d >= startOfWeek && d <= endOfWeek) {
             const dayIdx = d.getDay();
-            if (i.status === 2) bookedData[dayIdx]++;
-            if (i.status === 3) canceledData[dayIdx]++;
+            if (i.status === 3) bookedData[dayIdx]++;
+            if (i.status === 4) canceledData[dayIdx]++;
           }
         });
       } else if (barFiler === "this-month") {
@@ -290,13 +289,12 @@ export default function DashBoard() {
         labels = Array.from({ length: daysInMonth }, (_, i) => `T${i + 1}`);
         bookedData = Array(daysInMonth).fill(0);
         canceledData = Array(daysInMonth).fill(0);
-
         data.forEach((i) => {
           const d = new Date(i.checkOutDate);
           if (d.getMonth() === month && d.getFullYear() === year) {
             const day = d.getDate() - 1;
-            if (i.status === 2) bookedData[day]++;
-            if (i.status === 3) canceledData[day]++;
+            if (i.status === 3) bookedData[day]++;
+            if (i.status === 4) canceledData[day]++;
           }
         });
       } else if (barFiler === "this-year") {
@@ -310,8 +308,8 @@ export default function DashBoard() {
           const d = new Date(inv.checkOutDate);
           if (d.getFullYear() === y) {
             const month = d.getMonth(); // 0–11
-            if (inv.status === 2) bookedData[month]++;
-            if (inv.status === 3) canceledData[month]++;
+            if (inv.status === 3) bookedData[month]++;
+            if (inv.status === 4) canceledData[month]++;
           }
         });
       }

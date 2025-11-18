@@ -115,7 +115,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
         FROM invoice i
         JOIN room r ON i.roomid = r.room_id
         JOIN hotel h ON r.hotelid = h.hotel_id
-        WHERE i.status = 2
+        WHERE i.status = 3
         GROUP BY h.hotel_id, h.hotel_name
         ORDER BY COUNT(i.id) DESC
     """, nativeQuery = true)

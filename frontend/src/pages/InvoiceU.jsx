@@ -12,6 +12,7 @@ import {
   ScanLineIcon,
   VoteIcon,
   SquareXIcon,
+  ReceiptIcon,
 } from "lucide-react";
 import api from "../api";
 import ModelForm from "../components/Common/FormModel";
@@ -239,7 +240,7 @@ export default function InvoiceU() {
           </div>
 
           {/* Summary Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-5 mb-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-5 mb-5">
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Tổng đơn hàng</p>
               <div className="flex justify-center items-center space-x-1">
@@ -265,12 +266,18 @@ export default function InvoiceU() {
               <span>{invoiceNoPage.filter((inv) => inv.status === 1).length}</span>
             </p>
             </div>
-
+            <div className="bg-white p-4 rounded-lg text-center">
+              <span>Đã thanh toán</span>
+              <p className="text-emerald-700 space-x-0.5">
+              <ReceiptIcon className="w-5 h-5 inline"/>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 2).length}</span>
+              </p>
+            </div>
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Hoàn thành</p>
               <p className="text-green-500 space-x-0.5">
               <VoteIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 2).length}</span>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 3).length}</span>
             </p>
             </div>
 
@@ -278,15 +285,15 @@ export default function InvoiceU() {
               <p className="text-sm sm:text-base">Đã hủy</p>
               <p className="text-red-600 space-x-0.5">
               <SquareXIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 3).length}</span>
+              <span>{invoiceNoPage.filter((inv) => inv.status === 4).length}</span>
             </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Doanh thu</p>
-              <p className="text-green-500 font-semibold break-words">
+              <p className="text-green-500 font-semibold ">
                 {invoiceNoPage
-                  .filter((inv) => inv.status === 2)
+                  .filter((inv) => inv.status === 3)
                   .reduce((sum, inv) => sum + inv.totalAmount, 0)}{" "}
                 đ
               </p>
@@ -307,8 +314,9 @@ export default function InvoiceU() {
                   <option value="">Tất cả</option>
                   <option value="0">Chờ xác nhận</option>
                   <option value="1">Đã xác nhận</option>
-                  <option value="2">Hoàn thành</option>
-                  <option value="3">Đã hủy</option>
+                  <option value="2">Đã thanh toán</option>
+                  <option value="3">Hoàn thành</option>
+                  <option value="4">Đã hủy</option>
                 </select>
               </div>
 
@@ -397,11 +405,11 @@ export default function InvoiceU() {
                       <td className="py-3 px-4">{invoice.checkInDate}</td>
                       <td className="py-3 px-4">{invoice.checkOutDate}</td>
                       <td className="py-3 px-4">
-                        <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-md text-xs font-semibold">
+                        <span className="bg-blue-100 text-blue-600 px-2 py-1 rounded-md text-xs font-semibold inline-table">
                           {getPaymentText(invoice.payment)}
                         </span>
                       </td>
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 ">
                         {editInvoiceId === invoice.id ? (
                           <select
                             value={statusSelected ?? invoice.status}
@@ -411,7 +419,7 @@ export default function InvoiceU() {
                                 parseInt(e.target.value)
                               )
                             }
-                            className="border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="border border-gray-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 "
                           >
                             {StatusOptions.map((opt) => (
                               <option key={opt.value} value={opt.value}>
@@ -426,7 +434,7 @@ export default function InvoiceU() {
                               setEditInvoiceId(invoice.id);
                               setStatusSelected(invoice.status);
                             }}
-                            className={`cursor-pointer px-2 py-1 rounded-md text-xs font-semibold ${getStatusColor(
+                            className={`cursor-pointer inline-table px-2 py-1 rounded-md text-xs font-semibold ${getStatusColor(
                               invoice.status
                             )}`}
                           >
@@ -435,7 +443,7 @@ export default function InvoiceU() {
                         )}
                       </td>
                       <td className="py-3 px-4 font-semibold">
-                        {invoice.totalAmount} ₫
+                        <span className="inline">{invoice.totalAmount} đ</span>
                       </td>
                       <td className="py-3 px-4 text-center">
                         <div className="flex gap-1">
@@ -531,20 +539,22 @@ export default function InvoiceU() {
                   <UserIcon />
                   <span>THÔNG TIN KHÁCH HÀNG</span>
                 </h3>
-                <p>
+                
+                <div className="space-x-2">
                   <span className="font-medium">Họ tên:</span>
-                  {invoiceSelected.user
+                  <span>{invoiceSelected.user
                     ? `${invoiceSelected.user.firstName} ${invoiceSelected.user.lastName}`
                     : "No Name"}
-                </p>
-                <p>
+                  </span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">Email:</span>
-                  {invoiceSelected.user.email}
-                </p>
-                <p>
+                  <span>{invoiceSelected.user.email}</span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">Số điện thoại:</span>
-                  {invoiceSelected.user.phone}
-                </p>
+                  <span>{invoiceSelected.user.phone}</span>
+                </div>
               </div>
 
               {/* Khách sạn */}
@@ -553,18 +563,18 @@ export default function InvoiceU() {
                   <HotelIcon />
                   <span>THÔNG TIN KHÁCH SẠN</span>
                 </h3>
-                <p>
+                <div className="space-x-2">
                   <span className="font-medium">Tên khách sạn:</span>
-                  {invoiceSelected.room.hotel.hotelName}
-                </p>
-                <p>
+                  <span>{invoiceSelected.room.hotel.hotelName}</span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">Địa chỉ:</span>
-                  {invoiceSelected.room.hotel.hotelAddress}
-                </p>
-                <p>
+                  <span>{invoiceSelected.room.hotel.hotelAddress}</span>
+                </div>
+                <div className="space-x-2">
                   <span className="font-medium">SĐT:</span>
-                  {invoiceSelected.room.hotel.hotelPhone}
-                </p>
+                  <span>{invoiceSelected.room.hotel.hotelPhone}</span>
+                </div>
               </div>
             </div>
 
@@ -577,11 +587,11 @@ export default function InvoiceU() {
                 <span>THÔNG TIN THANH TOÁN</span>
               </h3>
               <div className="grid grid-cols-3 text-sm">
-                <p>
+                <div className="space-x-1">
                   <span className="font-medium">Phương thức thanh toán:</span>
-                  {getPaymentText(invoiceSelected.payment)}
-                </p>
-                <p className="ml-10">
+                  <span>{getPaymentText(invoiceSelected.payment)}</span>
+                </div>
+                <p className="ml-10 space-x-1">
                   <span>Trạng thái:</span>
                   <span
                     className={`font-medium ${getStatusColor(
@@ -591,9 +601,9 @@ export default function InvoiceU() {
                     {getStatusText(invoiceSelected.status)}
                   </span>
                 </p>
-                <p>
+                <p className="space-x-1">
                   <span className="font-medium">Ngày thanh toán:</span>
-                  {`${invoiceSelected.createdAt}`.slice(0, 10)}
+                  <span>{invoiceSelected.checkInDate.slice(0,10)}</span>
                 </p>
               </div>
             </div>
@@ -612,49 +622,31 @@ export default function InvoiceU() {
                   <p className="font-semibold text-blue-500">
                     {invoiceSelected.room.roomName}
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">sức chứa:</span>
-                    {invoiceSelected.room.roomCapacity}
+                    <span>{invoiceSelected.room.roomCapacity}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Giá/đêm:</span>
-                    {invoiceSelected.room.roomPrice}
+                    <span>{invoiceSelected.room.roomPrice}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Nhận phòng:</span>
-                    {invoiceSelected.checkInDate}
+                    <span>{invoiceSelected.checkInDate}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Trả phòng:</span>
-                    {invoiceSelected.checkOutDate}
+                    <span>{invoiceSelected.checkOutDate}</span>
                   </p>
-                  <p>
+                  <p className="space-x-1">
                     <span className="font-medium">Số đêm:</span>{" "}
                     {(() => {
                       const checkIn = new Date(invoiceSelected.checkInDate);
                       const checkOut = new Date(invoiceSelected.checkOutDate);
 
-                      const diffTime = Math.ceil(checkOut - checkIn);
+                      const diffTime = checkOut - checkIn;
                       return diffTime / (1000 * 60 * 60 * 24);
                     })()}
-                  </p>
-                  <p className="font-medium mt-1">
-                    Thành tiền
-                    <span className="text-blue-600 font-semibold">
-                      {(() => {
-                        const checkIn = new Date(invoiceSelected.checkInDate);
-                        const checkOut = new Date(invoiceSelected.checkOutDate);
-
-                        const diffTime = checkOut - checkIn;
-                        const Nights = diffTime / (1000 * 60 * 60 * 24);
-
-                        return (
-                          (
-                            invoiceSelected.room?.roomPrice * Nights
-                          ).toLocaleString() + "đ"
-                        );
-                      })()}
-                    </span>
                   </p>
                 </div>
               </div>
@@ -662,8 +654,8 @@ export default function InvoiceU() {
 
             {/* --- TỔNG CỘNG --- */}
             <div className="text-right border-t pt-3">
-              <p className="text-lg font-bold">
-                Tổng cộng:
+              <p className="text-lg font-bold space-x-1">
+                <span>Tổng cộng:</span>
                 <span className="text-blue-600">
                   {invoiceSelected.totalAmount}
                 </span>

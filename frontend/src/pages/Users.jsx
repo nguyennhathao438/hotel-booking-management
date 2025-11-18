@@ -19,6 +19,16 @@ import api from "../api";
 import toast from "react-hot-toast";
 import UserEdit from "../components/UserEdit";
 import { useSearchParams } from "react-router-dom";
+import z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const userSchema = z.object({
+  firstName: z.string().min(1, "Họ không được để trống"),
+  lastName: z.string().min(1, "Tên không được để trống"),
+  phone: z.string().regex(/^0\d{9}$/, "Số điện thoại không hợp lệ"),
+  dateOfBirth: z.string().min(1, "Ngày sinh không được để trống"),
+});
 export default function Users() {
   const [userSelected, setUserSelected] = useState({
     id: "",
@@ -41,6 +51,21 @@ export default function Users() {
   const [pageSize] = useState(8);
   const [totalPages, setTotalPages] = useState(1);
   const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(userSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phone: "",
+      dateOfBirth: "",
+    },
+  });
+
   const handleCloseFormEdit = () => {
     setOpenFormEdit(false);
   };
@@ -76,39 +101,25 @@ export default function Users() {
       );
     }
   };
-  const handleUpdateUser = async () => {
-    setOpenFormEdit(false);
+  const handleUpdateUser = async (data) => {
+    console.log("Na");
     try {
       await api.put(`/users/${userSelected.id}`, {
-        firstName: userSelected.firstName,
-        lastName: userSelected.lastName,
-        phone: userSelected.phone,
-        dateOfBirth: userSelected.dateOfBirth,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+        dateOfBirth: data.dateOfBirth,
         avatar: userSelected.avatar,
         roles: userSelected.roles.map((r) => r.name),
       });
-      const response = await api.get(
-        `/users/get-page?pageNo=${pageNo}&pageSize=${pageSize}&keyword=${keyword}`
-      );
-      const pageData = response.data.result;
-      const usersWithFullName = pageData.content.map((user) => ({
-        ...user,
-        roles: user.roles.map((r) => (typeof r === "string" ? { name: r } : r)),
-      }));
-      setUserListSearch(usersWithFullName);
+      fetchUserPage();
       toast.success("Cập nhật vai trò thành công");
+      setOpenFormEdit(false);
     } catch (error) {
       toast.error(
         error.response?.data?.message || error.message || "Lỗi không xác định"
       );
     }
-  };
-  const handleChangeForm = (e) => {
-    const { name, value } = e.target;
-    setUserSelected((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
   };
 
   const handleRoleCheckbox = (roleName) => {
@@ -145,7 +156,6 @@ export default function Users() {
   const fetchUser = async () => {
     try {
       const response = await api.get("/users");
-      console.log("bug1" + response.data.result);
       const usersWithFullName = response.data.result.map((userSelected) => ({
         ...userSelected,
         fullName: `${userSelected.firstName || ""} ${
@@ -213,8 +223,19 @@ export default function Users() {
   useEffect(() => {
     fetchUserPage();
   }, [pageNo, keyword]);
-
-  const handleSearch = (e) => setKeyword(e.target.value);
+  useEffect(() => {
+    reset({
+      firstName: userSelected.firstName || "",
+      lastName: userSelected.lastName || "",
+      phone: userSelected.phone || "",
+      dateOfBirth: userSelected.dateOfBirth || "",
+    });
+  }, [userSelected, reset]);
+  const handleSearchKey = (e) => {
+    if (e.key === "Enter") {
+      setKeyword(e.target.value);
+    }
+  };
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) setPageNo(newPage);
@@ -274,8 +295,8 @@ export default function Users() {
             <input
               type="text"
               placeholder="Search user..."
-              value={keyword}
-              onChange={handleSearch}
+              defaultValue={keyword}
+              onKeyDown={handleSearchKey}
               className=" border border-gray-200 rounded-md px-7 py-2 w-[250px] md:w-[350px] sm:w-[300px] lg:w-[550px] focus:outline-none focus:ring-2 focus:ring-black"
             />
             <SearchIcon className="absolute w-4 h-4 font-light sm:top-4 sm:left-24 md:top-4 md:left-24 top-4 left-24" />
@@ -395,117 +416,122 @@ export default function Users() {
           width="w-[700px]" // rộng hơn một chút để chia 2 cột
           onClose={() => handleCloseFormEdit()}
         >
-          <div className="bg-white p-4 rounded-lg shadow-sm">
-            {/* Nhóm input 2 cột */}
-            <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-6">
-              <UserEdit
-                label="Họ:"
-                placeholder="Nhập họ"
-                onChange={handleChangeForm}
-                name="firstName"
-                value={userSelected.firstName}
-              />
-              <UserEdit
-                label="Số điện thoại:"
-                placeholder="Nhập số điện thoại"
-                type="tel"
-                onChange={handleChangeForm}
-                name="phone"
-                value={userSelected.phone}
-              />
-              <UserEdit
-                label="Tên:"
-                placeholder="Nhập tên"
-                onChange={handleChangeForm}
-                name="lastName"
-                value={userSelected.lastName}
-              />
-              <UserEdit
-                label="Ngày sinh:"
-                placeholder="Nhập ngày sinh"
-                type="date"
-                onChange={handleChangeForm}
-                name="dateOfBirth"
-                value={userSelected.dateOfBirth}
-              />
-            </div>
+          <form
+            onSubmit={handleSubmit(handleUpdateUser)}
+            className="bg-white p-4 rounded-lg shadow-sm"
+          >
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              {/* Nhóm input 2 cột */}
+              <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                <UserEdit
+                  label="Họ:"
+                  placeholder="Nhập họ"
+                  registerName="firstName"
+                  register={register}
+                  error={errors.firstName}
+                />
+                <UserEdit
+                  label="Số điện thoại:"
+                  placeholder="Nhập số điện thoại"
+                  type="tel"
+                  registerName="phone"
+                  register={register}
+                  error={errors.phone}
+                />
+                <UserEdit
+                  label="Tên:"
+                  placeholder="Nhập tên"
+                  registerName="lastName"
+                  register={register}
+                  error={errors.lastName}
+                />
+                <UserEdit
+                  label="Ngày sinh:"
+                  placeholder="Nhập ngày sinh"
+                  type="date"
+                  registerName="dateOfBirth"
+                  register={register}
+                  error={errors.dateOfBirth}
+                />
+              </div>
 
-            {/* Bảng role */}
-            <div className="mt-4">
-              <p className="text-lg font-semibold mb-2 text-gray-700">
-                Vai trò người dùng
-              </p>
-              <div className="border rounded-lg overflow-hidden">
-                <div className="max-h-[200px] overflow-y-auto">
-                  <table className="w-full border-collapse table-auto">
-                    <thead className="bg-gray-100 border-b">
-                      <tr>
-                        <th className="px-4 py-2 border text-left font-medium text-gray-700">
-                          Role
-                        </th>
-                        <th className="px-4 py-2 border text-center font-medium text-gray-700">
-                          Chọn
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {!roleList || roleList.length === 0 ? (
+              {/* Bảng role */}
+              <div className="mt-4">
+                <p className="text-lg font-semibold mb-2 text-gray-700">
+                  Vai trò người dùng
+                </p>
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="max-h-[200px] overflow-y-auto">
+                    <table className="w-full border-collapse table-auto">
+                      <thead className="bg-gray-100 border-b">
                         <tr>
-                          <td
-                            colSpan="2"
-                            className="text-center py-3 text-gray-500 italic"
-                          >
-                            Không có dữ liệu role
-                          </td>
+                          <th className="px-4 py-2 border text-left font-medium text-gray-700">
+                            Role
+                          </th>
+                          <th className="px-4 py-2 border text-center font-medium text-gray-700">
+                            Chọn
+                          </th>
                         </tr>
-                      ) : (
-                        roleList.map((role, id) => (
-                          <tr
-                            key={id}
-                            className="border-t hover:bg-gray-50 transition-colors duration-150"
-                          >
-                            <td className="px-4 py-2 text-gray-700">
-                              {role.name}
-                            </td>
-                            <td className="px-4 py-2 text-center">
-                              <input
-                                type="checkbox"
-                                checked={userSelected.roles?.some(
-                                  (r) => r.name === role.name
-                                )}
-                                onChange={() => handleRoleCheckbox(role.name)}
-                                className="w-5 h-5 accent-blue-500 cursor-pointer"
-                              />
+                      </thead>
+                      <tbody>
+                        {!roleList || roleList.length === 0 ? (
+                          <tr>
+                            <td
+                              colSpan="2"
+                              className="text-center py-3 text-gray-500 italic"
+                            >
+                              Không có dữ liệu role
                             </td>
                           </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+                        ) : (
+                          roleList.map((role, id) => (
+                            <tr
+                              key={id}
+                              className="border-t hover:bg-gray-50 transition-colors duration-150"
+                            >
+                              <td className="px-4 py-2 text-gray-700">
+                                {role.name}
+                              </td>
+                              <td className="px-4 py-2 text-center">
+                                <input
+                                  type="checkbox"
+                                  checked={userSelected.roles?.some(
+                                    (r) => r.name === role.name
+                                  )}
+                                  onChange={() => handleRoleCheckbox(role.name)}
+                                  className="w-5 h-5 accent-blue-500 cursor-pointer"
+                                />
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Nút hành động */}
-            <div className="flex justify-center gap-4 mt-6">
-              <button
-                className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg px-6 py-2 transition"
-                onClick={() => handleUpdateUser()}
-              >
-                Xác nhận
-              </button>
-              <button
-                className={`${
-                  userSelected.status === 1
-                    ? "bg-green-500 hover:bg-green-600"
-                    : "bg-red-500 hover:bg-red-600"
-                } text-white font-medium rounded-lg px-6 py-2 transition`}
-                onClick={() => handleBanUser()}
-              >
-                {userSelected.status === 1 ? "UnBan" : "Ban"}
-              </button>
+              {/* Nút hành động */}
+              <div className="flex justify-center gap-4 mt-6">
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg px-6 py-2 transition"
+                >
+                  Xác nhận
+                </button>
+                <button
+                  className={`${
+                    userSelected.status === 1
+                      ? "bg-green-500 hover:bg-green-600"
+                      : "bg-red-500 hover:bg-red-600"
+                  } text-white font-medium rounded-lg px-6 py-2 transition`}
+                  onClick={() => handleBanUser()}
+                >
+                  {userSelected.status === 1 ? "UnBan" : "Ban"}
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
         </ModelForm>
       )}
 
