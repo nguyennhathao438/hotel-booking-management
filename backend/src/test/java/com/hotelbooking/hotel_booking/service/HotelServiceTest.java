@@ -383,4 +383,91 @@ public class HotelServiceTest {
                 () -> hotelService.approveHotel(hotel.getHotelId())
         );
     }
+    @Test
+    @DisplayName("Tìm khách sạn theo địa chỉ")
+    void findByHotelAddressContainingIgnoreCase_Success() {
+        Hotel hotel1 = Hotel.builder()
+                .hotelName("Hotel Hanoi")
+                .hotelAddress("Hanoi")
+                .user(testUser)
+                .hotelTotalRoom(20.0)
+                .status(1)
+                .build();
+        hotelRepository.save(hotel1);
+
+        Hotel hotel2 = Hotel.builder()
+                .hotelName("Hotel HCM")
+                .hotelAddress("Ho Chi Minh")
+                .user(testUser)
+                .hotelTotalRoom(25.0)
+                .status(1)
+                .build();
+        hotelRepository.save(hotel2);
+
+        List<HotelResponse> hotels = hotelService.findByHotelAddressContainingIgnoreCase("hanoi");
+        assertThat(hotels).hasSize(1);
+        assertThat(hotels.get(0).getHotelAddress()).containsIgnoringCase("hanoi");
+    }
+
+    @Test
+    @DisplayName("Lấy khách sạn status=0")
+    void getAllHotels0_Success() {
+        Hotel hotel = Hotel.builder()
+                .hotelName("Hotel Pending")
+                .user(testUser)
+                .hotelTotalRoom(15.0)
+                .status(0)
+                .build();
+        hotelRepository.save(hotel);
+
+        List<HotelResponse> hotels = hotelService.getAllHotels0();
+        assertThat(hotels).isNotEmpty();
+        assertThat(hotels.get(0).getStatus()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("Tìm kiếm khách sạn có paging và sort")
+    void getAllHotelSearch_Success() {
+        Hotel hotel1 = Hotel.builder()
+                .hotelName("Hotel Low")
+                .hotelCost(100.0)
+                .hotelRating(3.0)
+                .status(1)
+                .user(testUser)
+                .hotelTotalRoom(20.0)
+                .build();
+        hotelRepository.save(hotel1);
+
+        Hotel hotel2 = Hotel.builder()
+                .hotelName("Hotel High")
+                .hotelCost(200.0)
+                .hotelRating(4.5)
+                .status(1)
+                .user(testUser)
+                .hotelTotalRoom(30.0)
+                .build();
+        hotelRepository.save(hotel2);
+
+        var page = hotelService.getAllHotelSearch(1, 10, null, "asc");
+        assertThat(page.getContent()).hasSizeGreaterThanOrEqualTo(2);
+        assertThat(page.getContent().get(0).getHotelCost()).isLessThanOrEqualTo(page.getContent().get(1).getHotelCost());
+    }
+
+
+    @Test
+    @DisplayName("Lấy khách sạn theo userId")
+    void getHotelsByUserId_Success() {
+        Hotel hotel = Hotel.builder()
+                .hotelName("User Hotel")
+                .user(testUser)
+                .hotelTotalRoom(20.0)
+                .status(1)
+                .build();
+        hotelRepository.save(hotel);
+
+        List<HotelResponse> hotels = hotelService.getHotelsByUserId(testUser.getId());
+        assertThat(hotels).isNotEmpty();
+        assertThat(hotels.get(0).getUser().getEmail()).isEqualTo(testUser.getEmail());
+    }
+
 }

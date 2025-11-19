@@ -217,4 +217,82 @@ public class ReviewServiceTest {
                 () -> reviewService.updateReviewResponse(9999, updateRequest));
         assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.FEEDBACK_NOT_EXISTED);
     }
+
+    /// ///
+    @Test
+    @DisplayName("Lấy review theo invoiceId thành công")
+    void findByInvoiceId_Success() {
+        ReviewRequest request = new ReviewRequest();
+        request.setUserId(user.getId());
+        request.setHotelId(hotel.getHotelId());
+        request.setInvoiceId(invoice.getId());
+        request.setFeedback("Rất tốt!");
+        request.setStar(4);
+
+        ReviewResponse response2 = reviewService.createReview(request);
+
+
+        ReviewResponse response = reviewService.findByInvoice_Id(invoice.getId());
+        assertThat(response).isNotNull();
+        assertThat(response.getId()).isEqualTo(response.getId());
+        assertThat(response.getFeedback()).isEqualTo("Rất tốt!");
+    }
+
+    @Test
+    @DisplayName("Lấy tất cả review")
+    void findAllReviews_Success() {
+        ReviewRequest request = new ReviewRequest();
+        request.setUserId(user.getId());
+        request.setHotelId(hotel.getHotelId());
+        request.setInvoiceId(invoice.getId());
+        request.setFeedback("Rất tốt!");
+        request.setStar(4);
+
+        ReviewResponse response = reviewService.createReview(request);
+
+        List<ReviewResponse> reviews = reviewService.findAllReviews();
+        assertThat(reviews).hasSize(1);
+    }
+
+
+    @Test
+    @DisplayName("Lấy danh sách review theo hotel")
+    void getReviewByHotelId_Success() {
+        ReviewRequest request = new ReviewRequest();
+        request.setUserId(user.getId());
+        request.setHotelId(hotel.getHotelId());
+        request.setInvoiceId(invoice.getId());
+        request.setFeedback("Rất tốt!");
+        request.setStar(4);
+
+        ReviewResponse response = reviewService.createReview(request);
+
+        List<Review> reviews = reviewService.getReviewByHotelId(hotel.getHotelId());
+        assertThat(reviews).hasSize(1);
+    }
+
+
+    @Test
+    @DisplayName("Map review to ReviewResponse")
+    void mapToReviewResponse_Success() {
+        ReviewRequest request = new ReviewRequest();
+        request.setUserId(user.getId());
+        request.setHotelId(hotel.getHotelId());
+        request.setInvoiceId(invoice.getId());
+        request.setFeedback("Rất tốt!");
+        request.setStar(4);
+
+        ReviewResponse response2 = reviewService.createReview(request);
+
+        Review reviewEntity = reviewRepository.findById(response2.getId())
+                .orElseThrow(() -> new RuntimeException("Review không tồn tại"));
+
+        ReviewResponse response = reviewService.mapToReviewResponse(reviewEntity);
+
+        assertThat(response.getStar()).isEqualTo(4);
+        assertThat(response.getFeedback()).isEqualTo("Rất tốt!");
+        assertThat(response.getUser().getId()).isEqualTo(user.getId());
+        assertThat(response.getHotel().getHotelId()).isEqualTo(hotel.getHotelId());
+    }
+
 }

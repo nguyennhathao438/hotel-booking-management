@@ -524,6 +524,87 @@ public class InvoiceServiceTest {
         });
     }
 
+    @Test
+    @DisplayName("Lấy hóa đơn theo userId thành công")
+    @WithMockUser(username = "user@test.com")
+    void getByUserId_Success() {
+        InvoiceRequest request = new InvoiceRequest();
+        request.setCheckInDate(LocalDate.now().plusDays(1));
+        request.setCheckOutDate(LocalDate.now().plusDays(2));
+        request.setTotalAmount(150.0);
+        request.setPayment(1);
+        request.setStatus(0);
+
+        InvoiceResponse invoice = invoiceService.createInvoice(testRoom.getRoomId(), request);
+
+        List<InvoiceResponse> invoices = invoiceService.getByUser_Id(testUser.getId());
+        assertFalse(invoices.isEmpty());
+        assertEquals(testUser.getId(), invoices.get(0).getUser().getId());
+    }
+
+    @Test
+    @DisplayName("Lấy tất cả hóa đơn theo phòng thành công")
+    @WithMockUser(username = "user@test.com")
+    void getAllInvoiceByRoom_Success() {
+        InvoiceRequest request = new InvoiceRequest();
+        request.setCheckInDate(LocalDate.now().plusDays(1));
+        request.setCheckOutDate(LocalDate.now().plusDays(2));
+        request.setTotalAmount(200.0);
+        request.setPayment(1);
+        request.setStatus(0);
+
+        InvoiceResponse invoice = invoiceService.createInvoice(testRoom.getRoomId(), request);
+
+        List<InvoiceResponse> invoices = invoiceService.getAllInvoiceByRoom_RoomId(testRoom.getRoomId());
+        assertFalse(invoices.isEmpty());
+        assertEquals(testRoom.getRoomId(), invoices.get(0).getRoom().getRoomId());
+    }
+
+    @Test
+    @DisplayName("Lấy hóa đơn hôm nay thành công")
+    @WithMockUser(username = "user@test.com", authorities = {"READ_INVOICE_LIST"})
+    void getInvoicesToday_Success() {
+        LocalDate today = LocalDate.now();
+        InvoiceRequest request = new InvoiceRequest();
+        request.setCheckInDate(today);
+        request.setCheckOutDate(today);
+        request.setTotalAmount(100.0);
+        request.setPayment(1);
+        request.setStatus(0);
+
+        invoiceService.createInvoice(testRoom.getRoomId(), request);
+
+        List<InvoiceResponse> invoices = invoiceService.getInvoicesToday();
+        assertFalse(invoices.isEmpty());
+        assertTrue(invoices.stream().allMatch(inv -> inv.getCheckOutDate().isEqual(today)));
+    }
+
+    @Test
+    @DisplayName("Lọc hóa đơn theo userId với tham số status và dateRange")
+    @WithMockUser(username = "user@test.com")
+    void filterGetUserInvoice_Success() {
+        LocalDate today = LocalDate.now();
+        for (int i = 0; i < 3; i++) {
+            InvoiceRequest request = new InvoiceRequest();
+            request.setCheckInDate(today.plusDays(i));
+            request.setCheckOutDate(today.plusDays(i + 1));
+            request.setTotalAmount(100.0 + i * 50);
+            request.setPayment(1);
+            request.setStatus(1);
+            invoiceService.createInvoice(testRoom.getRoomId(), request);
+        }
+
+        Page<InvoiceResponse> page = invoiceService.filterGetUserInvoice(
+                testUser.getId(), 1, today, today.plusDays(2), 1, 5);
+
+        assertTrue(page.isEmpty());
+        page.getContent().forEach(inv -> {
+            assertEquals(testUser.getId(), inv.getUser().getId());
+            assertEquals(1, inv.getStatus());
+            assertTrue(!inv.getCheckInDate().isBefore(today));
+            assertTrue(!inv.getCheckOutDate().isAfter(today.plusDays(2)));
+        });
+    }
 
 }
 

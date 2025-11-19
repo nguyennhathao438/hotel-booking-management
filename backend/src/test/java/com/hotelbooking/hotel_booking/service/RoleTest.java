@@ -24,6 +24,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -51,6 +52,7 @@ public class RoleTest {
     private Role role;
     private Permission permission;
     private User user;
+    private Role testDeleteRole;
 
     @BeforeEach
     void setUp() {
@@ -63,15 +65,24 @@ public class RoleTest {
         role = Role.builder()
                 .name("ADMIN")
                 .description("Default role")
+                .permissions(new HashSet<>())
                 .build();
         role = roleRepository.save(role);
+
+//luu y co role TEST_DELETE_USED trong dtb
+        testDeleteRole = Role.builder()
+                .name("TEST_DELETE_USED")
+                .description("Role for delete testing")
+                .permissions(new HashSet<>())
+                .build();
+        testDeleteRole = roleRepository.save(testDeleteRole);
 
         user = User.builder()
                 .firstName("John")
                 .lastName("Doe")
                 .email("john@test.com")
                 .phone("0123456789")
-                .roles(Set.of(role))
+                .roles(Set.of(role,testDeleteRole))
                 .build();
         user = userRepository.save(user);
 
@@ -104,18 +115,12 @@ public class RoleTest {
     @WithMockUser(authorities = "UPDATE_ROLE")
     @DisplayName("Cập nhật role thành công")
     void updateRole_Success() {
-        Role role = Role.builder()
-                .name("EMPLOYEE")
-                .description("old")
-                .permissions(Set.of(permission))
-                .build();
-        roleRepository.save(role);
 
         RoleRequest req = new RoleRequest();
         req.setDescription("updated desc");
         req.setPermission(Set.of(permission.getName()));
 
-        RoleResponse updated = roleService.updateRole("EMPLOYEE", req);
+        RoleResponse updated = roleService.updateRole("TEST_DELETE_USED", req);
 
         assertThat(updated.getDescription()).isEqualTo("updated desc");
         assertThat(updated.getPermissions()).hasSize(1);
@@ -167,7 +172,7 @@ public class RoleTest {
     @DisplayName("Xoá role thất bại vì đang có user sử dụng role")
     void deleteRole_RoleIsUsed_Throws() {
         AppException ex = assertThrows(AppException.class,
-                () -> roleService.deleteRole(role.getName()));
+                () -> roleService.deleteRole("TEST_DELETE_USED"));
 
         assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.ROLE_IS_USED);
     }
@@ -186,26 +191,26 @@ public class RoleTest {
 
         assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.PERMISSION_NOT_EXISTED);
     }
-////loi quyen truy cap
-//    @Test
-//    @WithMockUser(username = "john@test.com", roles = {"ADMIN"})
-//    @DisplayName("Lấy tất cả role thành công")
-//    void getAllRole_Success() {
-//        RoleRequest roleRequest = new RoleRequest();
-//        roleRequest.setDescription("test");
-//        roleRequest.setName("TEST_ROLE");
-//        roleRequest.setPermission(Set.of(permission.getName()));
-//
-//        RoleResponse response = roleService.createRole(roleRequest);
-//
-//        var page = roleService.getAllRole(Pageable.ofSize(10));
-//
-//        assertThat(page).isNotEmpty();
-//        assertThat(page.getContent().get(0).getName()).isEqualTo("TEST_ROLE");
-//        assertThat(page.getContent().get(0).getPermissions())
-//                .extracting(PermissionResponse::getName)
-//                .contains("ADD_USER");
-//    }
+
+
+//loi quyen truy cap
+    @Test
+    @WithMockUser(username = "admin@gmail.com", roles = {"ADMIN"})
+    @DisplayName("Lấy tất cả role thành công")
+    void getAllRole_Success() {
+
+        var page = roleService.getAllRole(Pageable.ofSize(10));
+System.out.println(page.getContent().get(1).getName());
+
+        assertThat(page).isNotEmpty();
+        assertThat(page.getContent().get(0).getName()).isEqualTo("ADMIN");
+        assertThat(page.getContent().get(1).getName()).isEqualTo("USER");
+        assertThat(page.getContent().get(2).getName()).isEqualTo("HOTEL");
+        assertThat(page.getContent().get(3).getName()).isEqualTo("INVOICE");
+        assertThat(page.getContent().get(4).getName()).isEqualTo("CHAT");
+
+
+    }
 
     @Test
     @DisplayName("Xoá role thất bại khi role không tồn tại")

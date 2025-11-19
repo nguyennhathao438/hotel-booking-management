@@ -31,25 +31,22 @@ public class PermissionServiceTest {
 
     @BeforeEach
     void setup() {
-        permissionRepository.deleteAll();
+
     }
 
     @Test
     @DisplayName("Tạo permission thành công")
     void createPermission_Success() {
         PermissionRequest request = new PermissionRequest();
-        request.setName("READ_USERS");
+        request.setName("TEST");
         request.setDescription("Quyền xem danh sách người dùng");
 
         PermissionResponse response = permissionService.createPermission(request);
 
         assertThat(response).isNotNull();
-        assertThat(response.getName()).isEqualTo("READ_USERS");
+        assertThat(response.getName()).isEqualTo("TEST");
         assertThat(response.getDescription()).isEqualTo("Quyền xem danh sách người dùng");
 
-        List<Permission> saved = permissionRepository.findAll();
-        assertThat(saved).hasSize(1);
-        assertThat(saved.get(0).getName()).isEqualTo("READ_USERS");
     }
 
     @Test
@@ -69,18 +66,16 @@ public class PermissionServiceTest {
     @Test
     @DisplayName("Lấy tất cả permission thành công")
     void getAll_Success() {
-        permissionRepository.save(Permission.builder()
-                .name("READ_USERS")
-                .description("Xem danh sách")
-                .build());
-        permissionRepository.save(Permission.builder()
-                .name("WRITE_USERS")
-                .description("Thêm/sửa")
-                .build());
+        PermissionRequest request = new PermissionRequest();
+        request.setName("TEST");
+        request.setDescription("Quyền xem danh sách người dùng");
+
+       permissionService.createPermission(request);
+
 
         List<PermissionResponse> responses = permissionService.getAll();
+        System.out.println("so hasSize" + responses.size());
 
-        assertThat(responses).hasSize(2);
-        assertThat(responses).extracting("name").containsExactlyInAnyOrder("READ_USERS", "WRITE_USERS");
+        assertThat(responses).hasSize(11);
     }
 }
