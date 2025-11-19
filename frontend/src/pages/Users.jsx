@@ -26,8 +26,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const userSchema = z.object({
   firstName: z.string().min(1, "Họ không được để trống"),
   lastName: z.string().min(1, "Tên không được để trống"),
-  phone: z.string().regex(/^0\d{9}$/, "Số điện thoại không hợp lệ"),
-  dateOfBirth: z.string().min(1, "Ngày sinh không được để trống"),
 });
 export default function Users() {
   const [userSelected, setUserSelected] = useState({

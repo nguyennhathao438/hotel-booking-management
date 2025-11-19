@@ -151,7 +151,7 @@ public class HotelController {
                                 .build());
         }
 
-        @DeleteMapping("/{HotelId}")
+        @DeleteMapping("delete/{HotelId}")
         public ResponseEntity<ApiResponse<HotelResponse>> deleteHotel(@PathVariable int HotelId) {
                 HotelResponse hotelResponse = hotelService.banHotel(HotelId);
                 return ResponseEntity.ok(ApiResponse.<HotelResponse>builder()

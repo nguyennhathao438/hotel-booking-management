@@ -33,6 +33,7 @@ import ProtectedRouter from "./ProtectedRouter";
 import HotelManagerCustomer from "../componentcustomer/HotelManagerCustomer";
 import RoomManager from "../componentcustomer/RoomManager";
 import ServiceManager from "../componentcustomer/ServiceManager";
+import PendingHotelApproval from "../pages/PendingHotelApproval";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
         element: <ConfirmBooking />,
       },
       {
+        path: "/pending-approval",
+        element: <PendingHotelApproval />,
+      },
+      {
         path: "/success-booking",
         element: <SuccessBooking />,
       },
@@ -102,36 +107,53 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Statistic />,
+        element: (
+          <ProtectedRouter requiredRoles={["CUSTOMER"]}>
+            <Statistic />
+          </ProtectedRouter>
+        ),
       },
-      {
-        path: "room/:hotelId",
-        element: <RoomManagerCustomer />,
-      },
-      {
-        path: "Revenue/:hotelId",
-        element: <Revenue />,
-      },
+
       {
         path: "my-hotel/:hotelId",
-        element: <HotelManagerCustomer />,
-      },
-      {
-        path: "review/:hotelId",
-        element: <ReviewList />,
+        element: (
+          <ProtectedRouter requiredRoles={["HOTEL"]}>
+            <HotelManagerCustomer />
+          </ProtectedRouter>
+        ),
       },
       {
         path: "invoice",
-        element: <InvoiceU />,
+        element: (
+          <ProtectedRouter requiredRoles={["INVOICE_(2)"]}>
+            <InvoiceU />
+          </ProtectedRouter>
+        ),
       },
       {
         path: "room/hotel/:hotelId",
-        element: <RoomManager/>
+        element: (
+          <ProtectedRouter requiredRoles={["ROOM"]}>
+            <RoomManager />
+          </ProtectedRouter>
+        ),
       },
       {
         path: "service/hotel/:hotelId",
-        element: <ServiceManager/>
-      }
+        element: (
+          <ProtectedRouter requiredRoles={["HOTEL"]}>
+            <ServiceManager />
+          </ProtectedRouter>
+        ),
+      },
+      {
+        path: "chat",
+        element: (
+          <ProtectedRouter requiredRoles={["CHAT"]}>
+            <Chat />
+          </ProtectedRouter>
+        ),
+      },
     ],
   },
   {
@@ -182,7 +204,7 @@ const router = createBrowserRouter([
       {
         path: "chat",
         element: (
-          <ProtectedRouter requiredRoles={["CHAT"]}>
+          <ProtectedRouter requiredRoles={["ADMIN"]}>
             <Chat />
           </ProtectedRouter>
         ),

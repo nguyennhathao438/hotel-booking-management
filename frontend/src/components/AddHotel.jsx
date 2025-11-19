@@ -27,14 +27,29 @@ const hotelSchema = z.object({
     .min(10, "Mô tả khách sạn phải ít nhất 10 ký tự")
     .max(1500, "Mô tả quá dài"),
 });
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const AddHotel = () => {
+  const userId = useSelector((state) => state.user.userId);
+  const navigator = useNavigate();
   const [images, setImages] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [listProvinces, setListProvinces] = useState([]);
   const [provinceCode, setProvinceCode] = useState("");
   const [listDistricts, setListDistricts] = useState([]);
   const [district, setDistrict] = useState("");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    const getHotelById = async () => {
+      try {
+        const apiResponse = await api.get(`/hotels/user/${userId}`);
+        if (apiResponse.data.result.length > 0) {
+          navigator("/pending-approval");
+        }
+      } catch (error) {
+        console.warn("Bạn chưa có khách sạn", error);
+      }
+    };
     const fetchProvince = async () => {
       try {
         const response = await axios.get(
@@ -47,6 +62,7 @@ const AddHotel = () => {
         console.error(err);
       }
     };
+    getHotelById();
     fetchProvince();
   }, []);
 
@@ -78,6 +94,7 @@ const AddHotel = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       if (images.length > 0) {
         let fullAddress = "";
@@ -105,6 +122,7 @@ const AddHotel = () => {
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Thêm khách sạn thành công");
+        navigator("/pending-approval");
       } else {
         toast.error("Vui lòng chọn ảnh khách sạn");
       }
@@ -112,6 +130,8 @@ const AddHotel = () => {
       toast.error(
         error?.response?.data?.message || "Có lỗi xảy ra khi xóa vai trò"
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -264,9 +284,18 @@ const AddHotel = () => {
       {/* Nút submit */}
       <button
         type="submit"
-        className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl shadow-md transition-all duration-200 focus:ring-2 focus:ring-blue-400"
+        disabled={loading}
+        className={`
+    w-full mt-6 text-white font-semibold py-2.5 rounded-xl shadow-md transition-all duration-200
+    focus:ring-2 focus:ring-blue-400
+    ${
+      loading
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-blue-600 hover:bg-blue-700"
+    }
+  `}
       >
-        Thêm khách sạn
+        {loading ? "Yêu cầu đang được gửi ..." : "Thêm khách sạn"}
       </button>
     </form>
   );

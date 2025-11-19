@@ -60,11 +60,11 @@ export default function InvoiceU() {
       const userID = resUser.data.result.id;
       const resInvoices = await api.get(`/invoice/owner/noPage/${userID}`, {
         params: {
-                status: statusFilter || null,
-                payment: paymentFilter || null,
-                checkInDate: dateFrom || null,
-                checkOutDate: dateTo || null,
-            },
+          status: statusFilter || null,
+          payment: paymentFilter || null,
+          checkInDate: dateFrom || null,
+          checkOutDate: dateTo || null,
+        },
       });
       const data = resInvoices.data.result;
       setInvoiceNoPage(data);
@@ -94,19 +94,16 @@ export default function InvoiceU() {
       setSearchParams({ page });
       const resUser = await api.get("/users/myInfo");
       const userID = resUser.data.result.id;
-      const response = await api.get(
-        `/invoice/owner/${userID}`,
-        {
-          params: {
-            pageNo: page,
-            pageSize: 6,
-            status: statusFilter || null,
-            payment: paymentFilter || null,
-            checkInDate: dateFrom || null,
-            checkOutDate: dateTo || null,
-          },
-        }
-      );
+      const response = await api.get(`/invoice/owner/${userID}`, {
+        params: {
+          pageNo: page,
+          pageSize: 6,
+          status: statusFilter || null,
+          payment: paymentFilter || null,
+          checkInDate: dateFrom || null,
+          checkOutDate: dateTo || null,
+        },
+      });
 
       const data = response.data.result;
       setInvoiceListSearch(data.content);
@@ -134,7 +131,7 @@ export default function InvoiceU() {
       case 1:
         return "Đã xác nhận";
       case 2:
-          return "Đã Thanh toán";
+        return "Đã Thanh toán";
       case 3:
         return "Hoàn thành";
       case 4:
@@ -152,7 +149,7 @@ export default function InvoiceU() {
       case 2: // Đã thanh toán
         return "bg-green-100 text-emarald-700";
       case 3: // Đã hoàn thành
-        return "bg-green-100 text-green-400"
+        return "bg-green-100 text-green-400";
       case 4: // Đã hủy
         return "bg-red-100 text-red-700";
       default:
@@ -193,6 +190,7 @@ export default function InvoiceU() {
       const data = resInvoices.data.result;
       setEditInvoiceId(data.content.status);
       setInvoiceListSearch(data.content);
+      setInvoiceList(data.content); // ở đây ak
       setTotalPages(data.totalPages);
       toast.success("Cập nhật trạng thái đơn hàng thành công");
       setEditInvoiceId(null);
@@ -203,25 +201,25 @@ export default function InvoiceU() {
     }
   };
   const handleDelete = async (invoiceId) => {
-      const result = await Swal.fire({
-            title: "Bạn có chắc muốn xóa?",
-            text: "Hành động này không thể hoàn tác!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Xóa",
-            cancelButtonText: "Hủy",
-          });
-      
-          if (!result.isConfirmed) return;
-      try {
-        await api.delete(`/invoice/ac/${invoiceId}`);
-        toast.success("Xóa hóa đơn thành công");
-        fetchInvoice(1);
-        fetchInvoiceFilter();
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    const result = await Swal.fire({
+      title: "Bạn có chắc muốn xóa?",
+      text: "Hành động này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Xóa",
+      cancelButtonText: "Hủy",
+    });
+
+    if (!result.isConfirmed) return;
+    try {
+      await api.delete(`/invoice/ac/${invoiceId}`);
+      toast.success("Xóa hóa đơn thành công");
+      fetchInvoice(1);
+      fetchInvoiceFilter();
+    } catch (err) {
+      console.error(err);
+    }
+  };
   const StatusOptions = [
     { value: 0, label: "Chờ xác nhận" },
     { value: 1, label: "Đã xác nhận" },
@@ -254,39 +252,49 @@ export default function InvoiceU() {
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Chờ xác nhận</p>
               <p className="text-yellow-500 space-x-0.5">
-              <LoaderIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 0).length}</span>
-            </p>
+                <LoaderIcon className="w-5 h-5 inline" />
+                <span>
+                  {invoiceNoPage.filter((inv) => inv.status === 0).length}
+                </span>
+              </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Đã xác nhận</p>
               <p className="text-blue-500 space-x-0.5">
-              <ScanLineIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 1).length}</span>
-            </p>
+                <ScanLineIcon className="w-5 h-5 inline" />
+                <span>
+                  {invoiceNoPage.filter((inv) => inv.status === 1).length}
+                </span>
+              </p>
             </div>
             <div className="bg-white p-4 rounded-lg text-center">
               <span>Đã thanh toán</span>
               <p className="text-emerald-700 space-x-0.5">
-              <ReceiptIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 2).length}</span>
+                <ReceiptIcon className="w-5 h-5 inline" />
+                <span>
+                  {invoiceNoPage.filter((inv) => inv.status === 2).length}
+                </span>
               </p>
             </div>
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Hoàn thành</p>
               <p className="text-green-500 space-x-0.5">
-              <VoteIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 3).length}</span>
-            </p>
+                <VoteIcon className="w-5 h-5 inline" />
+                <span>
+                  {invoiceNoPage.filter((inv) => inv.status === 3).length}
+                </span>
+              </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
               <p className="text-sm sm:text-base">Đã hủy</p>
               <p className="text-red-600 space-x-0.5">
-              <SquareXIcon className="w-5 h-5 inline"/>
-              <span>{invoiceNoPage.filter((inv) => inv.status === 4).length}</span>
-            </p>
+                <SquareXIcon className="w-5 h-5 inline" />
+                <span>
+                  {invoiceNoPage.filter((inv) => inv.status === 4).length}
+                </span>
+              </p>
             </div>
 
             <div className="bg-white p-3 sm:p-4 rounded-lg text-center">
@@ -448,19 +456,19 @@ export default function InvoiceU() {
                       <td className="py-3 px-4 text-center">
                         <div className="flex gap-1">
                           <button
-                          className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md flex items-center justify-center space-x-1 text-xs"
-                          onClick={() => handleGetInvoice(invoice.id)}
-                        >
-                          <EyeIcon size={14} />
-                          <span>Xem</span>
-                        </button>
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md flex items-center justify-center space-x-1 text-xs"
+                            onClick={() => handleGetInvoice(invoice.id)}
+                          >
+                            <EyeIcon size={14} />
+                            <span>Xem</span>
+                          </button>
                           <button
-                          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center justify-center space-x-1 text-xs"
-                          onClick={() => handleDelete(invoice.id)}
-                        >
-                          <DeleteIcon size={14} />
-                          <span>Xóa</span>
-                        </button>
+                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center justify-center space-x-1 text-xs"
+                            onClick={() => handleDelete(invoice.id)}
+                          >
+                            <DeleteIcon size={14} />
+                            <span>Xóa</span>
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -539,12 +547,13 @@ export default function InvoiceU() {
                   <UserIcon />
                   <span>THÔNG TIN KHÁCH HÀNG</span>
                 </h3>
-                
+
                 <div className="space-x-2">
                   <span className="font-medium">Họ tên:</span>
-                  <span>{invoiceSelected.user
-                    ? `${invoiceSelected.user.firstName} ${invoiceSelected.user.lastName}`
-                    : "No Name"}
+                  <span>
+                    {invoiceSelected.user
+                      ? `${invoiceSelected.user.firstName} ${invoiceSelected.user.lastName}`
+                      : "No Name"}
                   </span>
                 </div>
                 <div className="space-x-2">
@@ -603,7 +612,7 @@ export default function InvoiceU() {
                 </p>
                 <p className="space-x-1">
                   <span className="font-medium">Ngày thanh toán:</span>
-                  <span>{invoiceSelected.checkInDate.slice(0,10)}</span>
+                  <span>{invoiceSelected.checkInDate.slice(0, 10)}</span>
                 </p>
               </div>
             </div>

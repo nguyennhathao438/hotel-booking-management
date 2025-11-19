@@ -10,6 +10,7 @@ import {
   UserLockIcon,
   HotelIcon,
   ArrowLeftFromLine,
+  MessageCircle,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -30,13 +31,21 @@ export default function SideBar() {
 
       {/* Menu */}
       <div className="space-y-4">
-        <NavLink to="/admin" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+        <NavLink
+          to="/admin"
+          className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+        >
           <LayoutGridIcon className="w-6 h-6 text-gray-400" />
-          <p className="text-white cursor-pointer pl-2 hidden lg:block">Trang chủ</p>
+          <p className="text-white cursor-pointer pl-2 hidden lg:block">
+            Trang chủ
+          </p>
         </NavLink>
 
         {hasRole("INVOICE") && (
-          <NavLink to="/admin/invoice" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+          <NavLink
+            to="/admin/invoice"
+            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          >
             <FileTextIcon className="w-6 h-6 text-gray-400" />
             <p className="text-white cursor-pointer pl-2 hidden lg:block">
               Quản lý hóa đơn
@@ -45,7 +54,10 @@ export default function SideBar() {
         )}
 
         {hasRole("HOTEL") && (
-          <NavLink to="/admin/hotelmanager" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+          <NavLink
+            to="/admin/hotelmanager"
+            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          >
             <HotelIcon className="w-6 h-6 text-gray-400" />
             <p className="text-white cursor-pointer pl-2 hidden lg:block">
               Quản lý khách sạn
@@ -54,8 +66,11 @@ export default function SideBar() {
         )}
 
         {hasRole("USER") && (
-          <NavLink to="/admin/user" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
-            <User2Icon className="w-6 h-6 text-gray-400" />
+          <NavLink
+            to="/admin/user"
+            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          >
+            <UserLockIcon className="w-6 h-6 text-gray-400" />
             <p className="text-white cursor-pointer pl-2 hidden lg:block">
               Quản lý user
             </p>
@@ -63,15 +78,32 @@ export default function SideBar() {
         )}
 
         {hasRole("ROLE") && (
-          <NavLink to="/admin/permission" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+          <NavLink
+            to="/admin/permission"
+            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          >
             <UserLockIcon className="w-6 h-6 text-gray-400" />
             <p className="text-white cursor-pointer pl-2 hidden lg:block">
               Phân quyền
             </p>
           </NavLink>
         )}
+        {hasRole("CHAT") && (
+          <NavLink
+            to="/admin/chat"
+            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          >
+            <MessageCircle className="w-6 h-6 text-gray-400" />
+            <p className="text-white cursor-pointer pl-2 hidden lg:block">
+              Tin nhắn
+            </p>
+          </NavLink>
+        )}
 
-        <NavLink to="/" className="flex items-center hover:bg-gray-700 p-2 rounded-md">
+        <NavLink
+          to="/"
+          className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+        >
           <ArrowLeftFromLine className="w-6 h-6 text-gray-400" />
           <p className="text-white cursor-pointer pl-2 hidden lg:block">
             Quay lại trang web
