@@ -235,16 +235,16 @@ public class InvoiceControllerTest {
                 .andExpect(jsonPath("$.result.status").value(1));
     }
 
-//    @Test
-//    @Rollback
-//    @Transactional
-//    @DisplayName("Hủy hóa đơn không tồn tại trả về 404")
-//    void cancelInvoice_NotFound() throws Exception {
-//        mockMvc.perform(delete("/api/invoice/9999")
-//                        .header("Authorization", "Bearer " + accessToken))
-//                .andExpect(status().isNotFound())
-//                .andExpect(jsonPath("$.errorCode").value("INVOICE_NOT_EXISTED"));
-//    }
+    @Test
+    @Rollback
+    @Transactional
+    @DisplayName("Hủy hóa đơn không tồn tại trả về 404")
+    void cancelInvoice_NotFound() throws Exception {
+        mockMvc.perform(delete("/api/invoice/9999")
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errorCode").value("INVOICE_NOT_EXISTED"));
+    }
 
     @Test
     @Rollback
@@ -265,7 +265,7 @@ public class InvoiceControllerTest {
     }
 
 
-
+//
 //    @Test
 //    @Rollback
 //    @Transactional
@@ -273,7 +273,7 @@ public class InvoiceControllerTest {
 //    void getInvoiceByHotelOwner_Authorized() throws Exception {
 //        createTestInvoice();
 //
-//        mockMvc.perform(get("/api/invoice/hotel-owner/%d".formatted(testHotelId))
+//        mockMvc.perform(get("/api/invoice/owner/%d".formatted(1))
 //                        .header("Authorization", "Bearer " + accessToken))
 //                .andExpect(status().isOk())
 //                .andExpect(jsonPath("$.result").isArray())
@@ -297,33 +297,33 @@ public class InvoiceControllerTest {
                 .andExpect(jsonPath("$.result").isArray());
     }
 
-//    @Test
-//    @Rollback
-//    @Transactional
-//    @DisplayName("Lấy hóa đơn theo hotel owner có phân trang")
-//    void getInvoicesByOwnerPaging_Success() throws Exception {
-//        createTestInvoice();
-//
-//        mockMvc.perform(get("/api/invoice/owner/{userId}", 1)
-//                        .param("pageNo", "1")
-//                        .param("pageSize", "5")
-//                        .header("Authorization", "Bearer " + accessToken))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.result.content").isArray());
-//    }
+    @Test
+    @Rollback
+    @Transactional
+    @DisplayName("Lấy hóa đơn theo hotel owner có phân trang")
+    void getInvoicesByOwnerPaging_Success() throws Exception {
+        createTestInvoice();
 
-//    @Test
-//    @Rollback
-//    @Transactional
-//    @DisplayName("Lấy hóa đơn theo hotel owner không phân trang")
-//    void getInvoicesByOwnerNoPage_Success() throws Exception {
-//        createTestInvoice();
-//
-//        mockMvc.perform(get("/api/invoice/owner/noPage/{userId}", 1)
-//                        .header("Authorization", "Bearer " + accessToken))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.result").isArray());
-//    }
+        mockMvc.perform(get("/api/invoice/owner/{userId}", 1)
+                        .param("pageNo", "1")
+                        .param("pageSize", "5")
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result.content").isArray());
+    }
+
+    @Test
+    @Rollback
+    @Transactional
+    @DisplayName("Lấy hóa đơn theo hotel owner không phân trang")
+    void getInvoicesByOwnerNoPage_Success() throws Exception {
+        createTestInvoice();
+
+        mockMvc.perform(get("/api/invoice/owner/noPage/{userId}", 1)
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result").isArray());
+    }
 
 
     @Test

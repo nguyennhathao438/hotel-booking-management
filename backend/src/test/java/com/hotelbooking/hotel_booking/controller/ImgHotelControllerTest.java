@@ -2,6 +2,8 @@ package com.hotelbooking.hotel_booking.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hotelbooking.hotel_booking.entity.ImgHotel;
+import com.hotelbooking.hotel_booking.repository.ImgHotelRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +18,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.InputStream;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -134,20 +137,47 @@ public class ImgHotelControllerTest {
                 .andExpect(jsonPath("$.result[0].imgUrl").exists());
     }
 
-//    @Test
-//    @Rollback
-//    @Transactional
-//    @DisplayName("Xóa ảnh khách sạn thành công")
-//    void deleteImage_Success() throws Exception {
-//        int imageId = uploadTestImage();
-//
-//        mockMvc.perform(delete("/api/images/delete/{imageId}", imageId)
-//                        .header("Authorization", "Bearer " + accessToken))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.code").value(1))
-//                .andExpect(jsonPath("$.message").value("Xóa ảnh khách sạn thành công"))
-//                .andExpect(jsonPath("$.result").value("Đã xóa ảnh có ID: " + imageId));
-//    }
+    @Autowired
+    private ImgHotelRepository imgHotelRepository;
+
+    @Test
+    @Rollback
+    @Transactional
+    @DisplayName("Xóa ảnh khách sạn thành công")
+    void deleteImage_Success() throws Exception {
+        InputStream is = getClass().getResourceAsStream("/test-image.JPG");
+        if (is == null) {
+            throw new RuntimeException("File test-image.jpg không tìm thấy trong src/test/resources!");
+        }
+
+        MockMultipartFile file = new MockMultipartFile(
+                "files",
+                "test-image.JPG",
+                MediaType.IMAGE_JPEG_VALUE,
+                is
+        );
+
+        String response = mockMvc.perform(multipart("/api/images/upload")
+                        .file(file)
+                        .param("hotelId", String.valueOf(testHotelId))
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        int uploadedImageId=0;
+        List<ImgHotel> images = imgHotelRepository.findImgHotelByHotel_HotelId(testHotelId);
+        if (!images.isEmpty()) {
+            uploadedImageId = images.get(0).getImgHotelId();
+        }
+
+        mockMvc.perform(delete("/api/images/delete/{imageId}", uploadedImageId)
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(1))
+                .andExpect(jsonPath("$.message").value("Xóa ảnh khách sạn thành công"))
+                .andExpect(jsonPath("$.result").value("Đã xóa ảnh có ID: " + uploadedImageId));
+    }
 
 
     @Test
@@ -155,28 +185,76 @@ public class ImgHotelControllerTest {
     @Transactional
     @DisplayName("Lấy ảnh theo hotelId thành công")
     void getImgHotelBy_HotelId_Success() throws Exception {
-        uploadTestImage();
+        InputStream is = getClass().getResourceAsStream("/test-image.JPG");
+        if (is == null) {
+            throw new RuntimeException("File test-image.jpg không tìm thấy trong src/test/resources!");
+        }
+
+        MockMultipartFile file = new MockMultipartFile(
+                "files",
+                "test-image.JPG",
+                MediaType.IMAGE_JPEG_VALUE,
+                is
+        );
+
+        String response = mockMvc.perform(multipart("/api/images/upload")
+                        .file(file)
+                        .param("hotelId", String.valueOf(testHotelId))
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        int uploadedImageId=0;
+        List<ImgHotel> images = imgHotelRepository.findImgHotelByHotel_HotelId(testHotelId);
+        if (!images.isEmpty()) {
+            uploadedImageId = images.get(0).getImgHotelId();
+        }
 
         mockMvc.perform(get("/api/images/hotel/{hotelId}", testHotelId)
                         .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(1))
                 .andExpect(jsonPath("$.message").value("Lấy danh sách ảnh khách sạn thành công"))
-                .andExpect(jsonPath("$.result").isArray());
+                .andExpect(jsonPath("$.result[0].imgHotelId").value(uploadedImageId));
     }
 
-//    @Test
-//    @Rollback
-//    @Transactional
-//    @DisplayName("Lấy ảnh theo ID thành công")
-//    void getImageById_Success() throws Exception {
-//        int imageId = uploadTestImage();
-//
-//        mockMvc.perform(get("/api/images/{id}", imageId)
-//                        .header("Authorization", "Bearer " + accessToken))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.result.imgHotelId").value(imageId));
-//    }
+    @Test
+    @Rollback
+    @Transactional
+    @DisplayName("Lấy ảnh theo ID thành công")
+    void getImageById_Success() throws Exception {
+        InputStream is = getClass().getResourceAsStream("/test-image.JPG");
+        if (is == null) {
+            throw new RuntimeException("File test-image.jpg không tìm thấy trong src/test/resources!");
+        }
+
+        MockMultipartFile file = new MockMultipartFile(
+                "files",
+                "test-image.JPG",
+                MediaType.IMAGE_JPEG_VALUE,
+                is
+        );
+
+        String response = mockMvc.perform(multipart("/api/images/upload")
+                        .file(file)
+                        .param("hotelId", String.valueOf(testHotelId))
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        int uploadedImageId=0;
+        List<ImgHotel> images = imgHotelRepository.findImgHotelByHotel_HotelId(testHotelId);
+        if (!images.isEmpty()) {
+            uploadedImageId = images.get(0).getImgHotelId();
+        }
+
+        mockMvc.perform(get("/api/images/{id}", uploadedImageId)
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.imgHotelId").value(uploadedImageId));
+    }
 
     @Test
     @Rollback

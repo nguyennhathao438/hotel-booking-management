@@ -36,7 +36,6 @@ public class RoomControllerTest {
     @BeforeEach
     void setUp() throws Exception {
 
-        // ---- LOGIN ----
         String loginJson = """
         {
             "email": "admin@gmail.com",
