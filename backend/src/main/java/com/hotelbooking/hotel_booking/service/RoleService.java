@@ -36,6 +36,11 @@ public class RoleService {
         public RoleResponse createRole(RoleRequest request) {
 
                 var permissions = permissionRepository.findAllById(request.getPermission());
+
+            if (permissions.size() != request.getPermission().size()) {
+                throw new AppException(ErrorCode.PERMISSION_NOT_EXISTED);
+            }
+
                 Role role = Role.builder()
                                 .name(request.getName())
                                 .description(request.getDescription())

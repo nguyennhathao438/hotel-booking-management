@@ -31,10 +31,21 @@ public class RoomService {
     private RoomRepository roomRepository;
     @Autowired
     private HotelRepository hotelRepository;
-//    @PostAuthorize("hasAuthority('ADD_HOTEL')")
+
+    // @PostAuthorize("hasAuthority('ADD_HOTEL')")
     public RoomResponse createRoom(RoomRequest request) {
+
         Hotel hotel = hotelRepository.findById(request.getHotelID())
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        if (request.getRoomName() == null || request.getRoomName().isBlank() || request.getRoomCapacity() <= 0
+                || request.getRoomPrice() < 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        boolean roomExisted = roomRepository.existsByRoomNameAndHotel(request.getRoomName(), hotel);
+        if (roomExisted) {
+            throw new AppException(ErrorCode.ROOM_EXISTED);
+        }
         Room room = Room.builder()
                 .roomName(request.getRoomName())
                 .roomType(request.getRoomType())
@@ -49,6 +60,7 @@ public class RoomService {
         roomRepository.save(room);
         return mapToRoomResponse(room);
     }
+
     public List<RoomResponse> getAllRooms() {
         return roomRepository.findAll().stream()
                 .map(this::mapToRoomResponse)
@@ -74,11 +86,13 @@ public class RoomService {
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
         LocalDate today = LocalDate.now();
         for (Invoice inv : room.getInvoices()) {
-            if (inv.getStatus() != 1 && inv.getStatus() !=2) continue; // chỉ tính booking đã xác nhận
+            if (inv.getStatus() != 1 && inv.getStatus() != 2)
+                continue; // chỉ tính booking đã xác nhận
             // Khách đang ở
-//            if (!today.isBefore(inv.getCheckInDate()) && today.isBefore(inv.getCheckOutDate())) {
-//                return 1;
-//            }
+            // if (!today.isBefore(inv.getCheckInDate()) &&
+            // today.isBefore(inv.getCheckOutDate())) {
+            // return 1;
+            // }
             // Hết chỗ (có booking trùng ngày user muốn đặt
             if (desiredCheckIn.isBefore(inv.getCheckOutDate()) && desiredCheckOut.isAfter(inv.getCheckInDate())) {
                 return 2;
@@ -93,8 +107,8 @@ public class RoomService {
         return mapToRoomResponse(room);
     }
 
-    public List<RoomResponse> findByRoomTypeAndHotel_HotelId(String roomType, int hotelId){
-        List<Room> rooms = roomRepository.findByRoomTypeAndHotel_HotelId(roomType,hotelId);
+    public List<RoomResponse> findByRoomTypeAndHotel_HotelId(String roomType, int hotelId) {
+        List<Room> rooms = roomRepository.findByRoomTypeAndHotel_HotelId(roomType, hotelId);
         return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
@@ -113,24 +127,32 @@ public class RoomService {
         roomRepository.save(room);
     }
 
-//    @PostAuthorize("hasAuthority('UPDATE_ROOM')")
+    // @PostAuthorize("hasAuthority('UPDATE_ROOM')")
     public RoomResponse updateRoom(int id, RoomRequest request) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-        if (request.getRoomName() != null && !request.getRoomName().isBlank()) {
-            room.setRoomName(request.getRoomName());
+        if (request.getRoomName() == null || request.getRoomName().isBlank() || request.getRoomCapacity() <= 0
+                || request.getRoomPrice() < 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
         }
+        room.setRoomName(request.getRoomName());
+        room.setRoomCapacity(request.getRoomCapacity());
+        room.setRoomPrice(request.getRoomPrice());
         if (request.getRoomType() != null) {
             room.setRoomType(request.getRoomType());
         }
-        if (request.getRoomCapacity() > 0) {
-            room.setRoomCapacity(request.getRoomCapacity());
+        if (request.getRoomArea() != null) {
+            room.setRoomArea(request.getRoomArea());
         }
-        if (request.getBedCount() > 0) {
+        if (request.getBedCount() != null) {
             room.setBedCount(request.getBedCount());
         }
         if (request.getRoomPrice() > 0) {
             room.setRoomPrice(request.getRoomPrice());
+        }
+        if (request.getBedRoomCount() != null) {
+            room.setBedRoomCount(request.getBedRoomCount());
+
         }
         if (request.getHotelID() > 0) {
             Hotel hotel = hotelRepository.findById(request.getHotelID())
@@ -199,4 +221,3 @@ public class RoomService {
                 .build();
     }
 }
-

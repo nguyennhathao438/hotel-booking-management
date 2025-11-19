@@ -14,8 +14,7 @@ import com.hotelbooking.hotel_booking.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.hotelbooking.hotel_booking.entity.HotelService;
 
-
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,71 +34,84 @@ public class dichvu {
         if (serviceRepository.existsByServiceNameAndHotel_HotelId(serviceRequest.getServiceName(), hotel.getHotelId())) {
             throw new AppException(ErrorCode.SERVICE_EXISTED);
         }
-        HotelService hotelService = HotelService.builder()
-                .serviceName(serviceRequest.getServiceName())
-                .icon(serviceRequest.getIcon())
-                .description(serviceRequest.getDescription())
-                .hotel(hotel)
-                .build();
-        serviceRepository.save(hotelService);
-        return mapToServiceResponse(hotelService);
-    }
+            if (serviceRequest.getServiceName() == null || serviceRequest.getServiceName().isBlank()) {
+                throw new AppException(ErrorCode.INVALID_INPUT);
+            }
+            if (serviceRequest.getPrice() == null || serviceRequest.getPrice() < 0) {
+                throw new AppException(ErrorCode.INVALID_INPUT);
+            }
+            HotelService hotelService = HotelService.builder()
+                    .serviceName(serviceRequest.getServiceName())
+                    .icon(serviceRequest.getIcon())
+                    .description(serviceRequest.getDescription())
+                    .hotel(hotel)
+                    .build();
+            serviceRepository.save(hotelService);
+            return mapToServiceResponse(hotelService);
+        }
 
-    public void deleteService(int serviceId) {
-        HotelService service = serviceRepository.findById(serviceId)
-                .orElseThrow(() -> new AppException(ErrorCode.SERVICE_NOT_EXISTED));
-        serviceRepository.delete(service);
-    }
 
-    private ServiceResponse mapToServiceResponse(HotelService hotelService) {
-        return ServiceResponse.builder()
-                .serviceId(hotelService.getServiceId())
-                .serviceName(hotelService.getServiceName())
-                .icon(hotelService.getIcon())
-                .description(hotelService.getDescription())
-                .hotel(hotelService.getHotel() != null ? mapToHotelResponse(hotelService.getHotel()) : null)
-                .build();
-    }
+        public void deleteService ( int serviceId){
+            HotelService service = serviceRepository.findById(serviceId)
+                    .orElseThrow(() -> new AppException(ErrorCode.SERVICE_NOT_EXISTED));
+            serviceRepository.delete(service);
+        }
 
-    public List<ServiceResponse> getServicesByHotelId(int hotelId) {
-        Hotel hotel = hotelRepository.findById(hotelId)
-                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
-        List<HotelService> services = serviceRepository.findByHotel(hotel);
-        return services.stream()
-                .map(this::mapToServiceResponse)
-                .collect(Collectors.toList());
-    }
+        private ServiceResponse mapToServiceResponse (HotelService hotelService){
+            return ServiceResponse.builder()
+                    .serviceId(hotelService.getServiceId())
+                    .serviceName(hotelService.getServiceName())
+                    .icon(hotelService.getIcon())
+                    .description(hotelService.getDescription())
+                    .hotel(hotelService.getHotel() != null ? mapToHotelResponse(hotelService.getHotel())
+                            : null)
+                    .build();
+        }
 
-    private HotelResponse mapToHotelResponse(Hotel hotel) {
-        if (hotel == null) return null;
+        public List<ServiceResponse> getServicesByHotelId ( int hotelId){
+            Hotel hotel = hotelRepository.findById(hotelId)
+                    .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+            List<HotelService> services = serviceRepository.findByHotel(hotel);
+            return services.stream()
+                    .map(this::mapToServiceResponse)
+                    .collect(Collectors.toList());
+        }
 
-        return HotelResponse.builder()
-                .hotelId(hotel.getHotelId())
-                .hotelName(hotel.getHotelName())
-                .hotelAddress(hotel.getHotelAddress())
-                .hotelPhone(hotel.getHotelPhone())
-                .hotelRating(hotel.getHotelRating())
-                .hotelTotalRoom(hotel.getHotelTotalRoom())
-                .hotelCost(hotel.getHotelCost())
-                .hotelDescription(hotel.getHotelDescription())
-                .status(hotel.getStatus())
-                .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
-                .build();
-    }
+        private HotelResponse mapToHotelResponse (Hotel hotel){
+            if (hotel == null)
+                return null;
 
-    public static UserResponse mapToUserResponse(User user) {
-        Set<String> roleNames = user.getRoles().stream().map(Role::getName).collect(Collectors.toSet());
-        return UserResponse.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .phone(user.getPhone())
-                .roles(roleNames)
-                .dateOfBirth(user.getDateOfBirth())
-                .avatar(user.getAvatar())
-                .createAt(user.getCreateAt())
-                .updateAt(user.getUpdateAt())
-                .build();
-    }
+            return HotelResponse.builder()
+                    .hotelId(hotel.getHotelId())
+                    .hotelName(hotel.getHotelName())
+                    .hotelAddress(hotel.getHotelAddress())
+                    .hotelPhone(hotel.getHotelPhone())
+                    .hotelRating(hotel.getHotelRating())
+                    .hotelTotalRoom(hotel.getHotelTotalRoom())
+                    .hotelCost(hotel.getHotelCost())
+                    .hotelDescription(hotel.getHotelDescription())
+                    .status(hotel.getStatus())
+                    .user(hotel.getUser() != null ? mapToUserResponse(hotel.getUser()) : null)
+                    .build();
+        }
+
+        public static UserResponse mapToUserResponse (User user){
+            Set<String> roleNames = user.getRoles() != null
+                    ? user.getRoles().stream().map(Role::getName).collect(Collectors.toSet())
+                    : Collections.emptySet();
+
+            return UserResponse.builder()
+                    .id(user.getId())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .email(user.getEmail())
+                    .phone(user.getPhone())
+                    .roles(roleNames)
+                    .dateOfBirth(user.getDateOfBirth())
+                    .avatar(user.getAvatar())
+                    .createAt(user.getCreateAt())
+                    .updateAt(user.getUpdateAt())
+                    .build();
+        }
+
 }

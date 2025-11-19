@@ -1,5 +1,6 @@
 package com.hotelbooking.hotel_booking.repository;
 
+import com.hotelbooking.hotel_booking.entity.Hotel;
 import com.hotelbooking.hotel_booking.entity.Room;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,40 +10,46 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
-@Repository
-public interface RoomRepository extends JpaRepository<Room,Integer> {
-    boolean existsByRoomName(String roomName);
-    List<Room> findAllByHotel_HotelId(Integer hotelHotelId);
-    List<Room> findByRoomTypeAndHotel_HotelId(String roomType,int hotelId);
+import java.util.Optional;
 
+@Repository
+public interface RoomRepository extends JpaRepository<Room, Integer> {
+    boolean existsByRoomName(String roomName);
+
+    List<Room> findAllByHotel_HotelId(Integer hotelHotelId);
+
+    List<Room> findByRoomTypeAndHotel_HotelId(String roomType, int hotelId);
+
+    @Query("SELECT r FROM Room r LEFT JOIN FETCH r.invoices WHERE r.roomId = :roomId")
+    Optional<Room> findByIdWithInvoices(@Param("roomId") int roomId);
 
     @Query("""
-        SELECT r
-        FROM Room r
-        WHERE r.status = 1
-          AND r.id NOT IN (
-              SELECT i.room.id
-              FROM Invoice i
-              WHERE (i.checkInDate <= :endDate AND i.checkOutDate >= :startDate)
-          )
-    """)
+                SELECT r
+                FROM Room r
+                WHERE r.status = 1
+                  AND r.id NOT IN (
+                      SELECT i.room.id
+                      FROM Invoice i
+                      WHERE (i.checkInDate <= :endDate AND i.checkOutDate >= :startDate)
+                  )
+            """)
     List<Room> findAvailableRooms(
             @Param("startDate") LocalDate startDate,
-            @Param("endDate") LocalDate endDate
-    );
+            @Param("endDate") LocalDate endDate);
 
     @Query("""
-        SELECT COUNT(r)
-        FROM Room r
-        WHERE r.status = 1
-          AND r.id NOT IN (
-              SELECT i.room.id
-              FROM Invoice i
-              WHERE (i.checkInDate <= :endDate AND i.checkOutDate >= :startDate)
-          )
-    """)
+                SELECT COUNT(r)
+                FROM Room r
+                WHERE r.status = 1
+                  AND r.id NOT IN (
+                      SELECT i.room.id
+                      FROM Invoice i
+                      WHERE (i.checkInDate <= :endDate AND i.checkOutDate >= :startDate)
+                  )
+            """)
     long countAvailableRooms(
             @Param("startDate") LocalDate startDate,
-            @Param("endDate") LocalDate endDate
-    );
+            @Param("endDate") LocalDate endDate);
+
+    boolean existsByRoomNameAndHotel(String roomName, Hotel hotel);
 }
