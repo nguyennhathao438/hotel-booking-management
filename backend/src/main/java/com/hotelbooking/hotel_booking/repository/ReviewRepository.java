@@ -2,6 +2,8 @@ package com.hotelbooking.hotel_booking.repository;
 
 import com.hotelbooking.hotel_booking.entity.Hotel;
 import com.hotelbooking.hotel_booking.entity.Review;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,5 +17,5 @@ public interface ReviewRepository extends JpaRepository<Review,Integer> {
     double findByAvgStarByHotel_hotelId(int hotelId);
     Review findByInvoice_Id(int invoiceId);
     List<Review> findAllByHotel(Hotel hotel);
-
+    Page<Review> findByHotel_User_Id(Integer ownerId, Pageable pageable);
 }

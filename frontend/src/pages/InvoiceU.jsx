@@ -479,45 +479,47 @@ export default function InvoiceU() {
           </div>
 
           {/* Pagination */}
-          <div className="flex justify-center flex-wrap mt-4 space-x-1 sm:space-x-2">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setSearchParams({ page: currentPage - 1 })}
-              className={`px-3 py-1 rounded-md text-sm ${
-                currentPage === 1
-                  ? "bg-gray-200 text-gray-500"
-                  : "bg-blue-500 text-white hover:bg-blue-600"
-              }`}
-            >
-              Trước
-            </button>
-
-            {Array.from({ length: totalPages }, (_, i) => (
+          {invoiceListSearch.length > 0 && totalPages > 1 && (
+            <div className="flex justify-center flex-wrap mt-4 space-x-1 sm:space-x-2">
               <button
-                key={i}
-                onClick={() => setSearchParams({ page: i + 1 })}
+                disabled={currentPage === 1}
+                onClick={() => setSearchParams({ page: currentPage - 1 })}
                 className={`px-3 py-1 rounded-md text-sm ${
-                  currentPage === i + 1
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-100 hover:bg-blue-100"
+                  currentPage === 1
+                    ? "bg-gray-200 text-gray-500"
+                    : "bg-blue-500 text-white hover:bg-blue-600"
                 }`}
               >
-                {i + 1}
+                Trước
               </button>
-            ))}
 
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setSearchParams({ page: currentPage + 1 })}
-              className={`px-3 py-1 rounded-md text-sm ${
-                currentPage === totalPages
-                  ? "bg-gray-200 text-gray-500"
-                  : "bg-blue-500 text-white hover:bg-blue-600"
-              }`}
-            >
-              Sau
-            </button>
-          </div>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSearchParams({ page: i + 1 })}
+                  className={`px-3 py-1 rounded-md text-sm ${
+                    currentPage === i + 1
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 hover:bg-blue-100"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setSearchParams({ page: currentPage + 1 })}
+                className={`px-3 py-1 rounded-md text-sm ${
+                  currentPage === totalPages
+                    ? "bg-gray-200 text-gray-500"
+                    : "bg-blue-500 text-white hover:bg-blue-600"
+                }`}
+              >
+                Sau
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

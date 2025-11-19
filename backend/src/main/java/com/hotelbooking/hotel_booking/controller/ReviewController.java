@@ -2,6 +2,7 @@ package com.hotelbooking.hotel_booking.controller;
 
 import com.hotelbooking.hotel_booking.dto.request.ReviewRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
+import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
 import com.hotelbooking.hotel_booking.dto.response.ReviewResponse;
 import com.hotelbooking.hotel_booking.entity.Review;
 import com.hotelbooking.hotel_booking.service.ReviewService;
@@ -9,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +74,18 @@ public class ReviewController {
                 .code(1)
                 .message("Cập nhật feedback thành công")
                 .result(reviewService.updateReviewResponse(id, request))
+                .build());
+    }
+
+    @GetMapping("/all/page/{ownerId}")
+    public ResponseEntity<ApiResponse<Page<ReviewResponse>>> getReview(@PathVariable Integer ownerId,
+                                                                       @RequestParam(defaultValue = "1") int pageNo,
+                                                                       @RequestParam(defaultValue = "5") int pageSize){
+        Page<ReviewResponse> reviews = reviewService.getReviewPage(ownerId,pageNo,pageSize);
+        return ResponseEntity.ok(ApiResponse.<Page<ReviewResponse>>builder()
+                .code(1)
+                .message("Lấy danh sách phân trang feedback thành công")
+                .result(reviews)
                 .build());
     }
 }

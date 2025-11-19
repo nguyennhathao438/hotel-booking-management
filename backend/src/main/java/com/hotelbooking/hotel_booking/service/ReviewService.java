@@ -13,6 +13,9 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -90,6 +93,11 @@ public class ReviewService {
     public List<Review> getReviewByHotelId(int id){
         Hotel hotel = hotelRepository.findById(id).orElseThrow(()-> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         return reviewRepository.findAllByHotel(hotel);
+    }
+    public Page<ReviewResponse> getReviewPage(Integer ownerId, int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo - 1,pageSize);
+        Page<Review> reviewPage = reviewRepository.findByHotel_User_Id(ownerId,pageable);
+        return reviewPage.map(this::mapToReviewResponse);
     }
     public ReviewResponse mapToReviewResponse(Review review){
         User user = userRepository.findById(review.getUser().getId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));

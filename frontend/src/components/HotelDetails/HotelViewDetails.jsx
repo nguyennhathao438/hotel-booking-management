@@ -434,7 +434,7 @@ function DetailsHotelView() {
 
                                 <div className="pt-7 pb-5 px-4">
                                     {/* Tên khách sạn */}
-                                    <h2 className="text-lg font-semibold text-blue-700">
+                                    <h2 className="mt-5 text-lg font-semibold text-blue-700">
                                         {room.hotel?.hotelName || "Không có tên khách sạn"}
                                     </h2>
 

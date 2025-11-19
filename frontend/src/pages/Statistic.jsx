@@ -20,7 +20,7 @@ ChartJS.register(
   Legend
 );
 import { Bar, Doughnut } from "react-chartjs-2";
-import { BanknoteIcon, CalendarDaysIcon, ChartSplineIcon } from "lucide-react";
+import { BanknoteIcon, CalendarDaysIcon, ChartSplineIcon, MessageSquareIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../api";
 import RevenueLineChart from "../componentadmin/RevenueLineChart";
@@ -32,8 +32,13 @@ export default function Statistic() {
   const [doughnutChart, setDoughtnutChart] = useState({ labels: [], datasets:[]});
   const [invoicePayment, setInvoicePayment] = useState([]);
   const [invoiceStatus, setInvoiceStatus] = useState([]);
+  const [Review,SetReview] = useState([]);
+  const [expandedIndex, setExpandedIndex] = useState(null);  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
     fetchInvoice();
+    fetchReview(1);
   }, []);
   useEffect(() => {
     updateChartData();
@@ -46,6 +51,19 @@ export default function Statistic() {
     updatePaymentChart();
     }
   }, [invoicePayment]);
+  const fetchReview = async (page = 1) => {
+    try {
+      const resUser = await api.get("/users/myInfo");
+      const userId = resUser.data.result.id;
+      const res = await api.get(`/review/all/page/${userId}?pageNo=${page}&pageSize=5`);
+      console.log("du lieu reviewpage",res.data.result.content);
+      SetReview(res.data.result.content);
+      setTotalPages(res.data.result.totalPages);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const fetchInvoice = async () => {
     try {
       const resUser = await api.get("/users/myInfo");
@@ -260,7 +278,7 @@ export default function Statistic() {
 
  return (
     <div className="bg-gray-100 rounded-lg shadow-sm ml-[300px] p-5 w-full"> 
-      <div className="mt-[90px] flex flex-col space-y-5">
+      <div className="mt-[60px] flex flex-col space-y-5">
         <RevenueLineChart
           chartData={chartData}
           filter={filter}
@@ -327,6 +345,78 @@ export default function Statistic() {
 
         </div>
       </div>
+
+     <div className="bg-white rounded-xl shadow-md overflow-x-auto mt-5 p-5">
+      <h2 className="text-xl font-semibold mb-4 space-x-1">
+        <MessageSquareIcon className = "w-5 h-5 inline"/>
+        <span>Danh sách feedback</span>
+      </h2>
+      <table className="min-w-full text-sm text-gray-700">
+        <thead className="bg-gray-200 text-gray-800 text-left">
+          <tr>
+            <th className="py-3 px-4">Tên khách hàng</th>
+            <th className="py-3 px-4">Số sao đánh giá</th>
+            <th className="py-3 px-4">Nội dung</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Review.length === 0 ? (
+            <tr>
+              <td colSpan={3} className="text-center py-4">
+                Không có dữ liệu
+              </td>
+            </tr>
+          ) : (
+            Review.map((review) => (
+              <tr
+                key={review.id}
+                className="border-b hover:bg-gray-50 transition duration-150 text-left"
+              >
+                <td className="py-3 px-4 font-medium">
+                  {review.user.firstName} {review.user.lastName}
+                </td>
+                <td className="py-3 px-4">{review.star} ⭐</td>
+                <td className="py-3 px-4 max-w-xs">
+                  {expandedIndex === review.id
+                    ? review.feedback
+                    : review.feedback.length > 30
+                    ? review.feedback.slice(0, 30) + "..."
+                    : review.feedback}
+                    
+                  {review.feedback.length > 30 && (
+                    <button
+                      onClick={() =>
+                        setExpandedIndex(expandedIndex === review.id ? null : review.id)
+                      }
+                      className="text-amber-800 ml-1 hover:underline text-sm"
+                    >
+                      {expandedIndex === review.id ? "Ẩn bớt" : "Xem thêm"}
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+
+      {/* Pagination */}
+      <div className="flex justify-center mt-4 space-x-2">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            className={`px-3 py-1 border rounded-md ${
+              currentPage === i + 1
+                ? "bg-blue-500 text-white"
+                : "bg-white text-gray-700"
+            }`}
+            onClick={() => fetchReview(i + 1)}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
+    </div>
     </div>
   );
 }

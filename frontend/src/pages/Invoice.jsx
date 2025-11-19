@@ -374,6 +374,8 @@ export default function Invoice() {
             </tbody>
           </table>
         </div>
+
+        {invoiceListSearch.length > 0 && totalPages > 1 && (
         <div className="flex justify-center mt-4 space-x-2 flex-wrap">
           <button
             disabled={currentPage === 1}
@@ -390,6 +392,7 @@ export default function Invoice() {
           >
             Trước
           </button>
+
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i}
@@ -424,6 +427,8 @@ export default function Invoice() {
             Sau
           </button>
         </div>
+      )}
+
       </div>
       {openFormInvoice && (
         <ModelForm

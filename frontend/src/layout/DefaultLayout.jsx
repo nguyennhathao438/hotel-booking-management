@@ -6,12 +6,23 @@ import { ContextProvide } from "../components/RoomContext";
 function DefaultLayout() {
     return (
         <>
-            <ContextProvide>
-                <Header></Header>
-                <Outlet></Outlet>
-                <Footer></Footer>
-                <Toaster position="top-right" />
-            </ContextProvide>
+           <ContextProvide>
+      <div className="min-h-screen flex flex-col">
+
+        {/* Header */}
+        <Header />
+
+        {/* Content */}
+        <main className="flex-grow">
+          <Outlet />
+        </main>
+
+        {/* Footer */}
+        <Footer />
+
+        <Toaster position="top-right" />
+      </div>
+    </ContextProvide>
         </>
     )
 }

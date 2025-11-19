@@ -302,7 +302,7 @@ export default function HotelManager() {
                       {/* Số phòng & đánh giá */}
                       <div className="flex flex-wrap gap-4 text-sm md:text-base text-gray-700">
                         <span>
-                          <strong>⭐ {hotel.hotelRating}</strong> / 5
+                          <strong>⭐ {hotel.hotelRating ?? 0}</strong> / 5
                         </span>
                         <span>|</span>
                         <span>{hotel.hotelTotalRoom} phòng</span>
@@ -362,9 +362,6 @@ export default function HotelManager() {
           )}
         </div>
         <div>
-          <h3 className="w-full p-4 font-bold text-lg md:text-xl">
-            TẤT CẢ KHÁCH SẠN
-          </h3>
 
           {selectedHotel && (
             <ModelForm width="1150px" onClose={() => setSelectedHotel(null)}>
@@ -475,7 +472,7 @@ export default function HotelManager() {
 
                     <div className="flex items-center gap-2">
                       <span className="bg-green-600 text-white px-3 py-1 rounded-full font-semibold text-sm">
-                        {selectedHotel.hotelRating.toFixed(1)}
+                         {((selectedHotel?.hotelRating ?? 0)).toFixed(1)}
                       </span>
                       <span className="text-gray-600 text-sm">
                         {feedbacks.length} đánh giá
