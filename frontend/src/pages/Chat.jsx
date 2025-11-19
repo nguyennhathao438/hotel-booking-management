@@ -141,7 +141,7 @@ export default function Contact() {
             <div
               key={i}
               className={`flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-gray-100 ${
-                user.id === selectedUser?.id ? "bg-emerald-100" : ""
+                user.id === selectedUser?.id ? "bg-amber-100" : ""
               }`}
               onClick={() => {
                 setSelectedUser(user);
@@ -209,7 +209,7 @@ export default function Contact() {
                   <p
                     className={`inline-block px-3 py-2 rounded-xl max-w-xs break-words ${
                       msg.sender?.id === myId
-                        ? "bg-emerald-500 text-white"
+                        ? "bg-amber-800 text-white"
                         : "bg-gray-200 text-gray-800"
                     }`}
                   >
@@ -236,7 +236,7 @@ export default function Contact() {
                 }}
               />
               <button
-                className="p-3 bg-emerald-500 hover:bg-emerald-600 rounded-full text-white flex items-center justify-center"
+                className="p-3 bg-amber-800 hover:bg-amber-900 rounded-full text-white flex items-center justify-center"
                 onClick={() => sendMessage()}
               >
                 <PaperAirplaneIcon className="w-5 h-5" />

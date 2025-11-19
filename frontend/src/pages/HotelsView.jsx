@@ -1,65 +1,71 @@
-import { MapPinIcon, PhoneIcon, Star, StarHalf, StarIcon, StarOff } from "lucide-react";
-import { useEffect, useState } from "react";
+import {
+  MapPinIcon,
+  PhoneIcon,
+  Star,
+  StarHalf,
+  StarIcon,
+  StarOff,
+} from "lucide-react";
+import { useEffect, useState, useCallback } from "react";
 import api from "../api";
 import { Link } from "react-router-dom";
-import ImageSlider from "../components/Common/ImageSlider"
+import ImageSlider from "../components/Common/ImageSlider";
 export default function HotelsView() {
   const [hotelList, setHotelList] = useState([]);
   const [selectedRating, setSelectedRating] = useState(null);
-  const [active, setActive] = useState("top"); 
+  const [active, setActive] = useState("top");
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [hotelImages,setHotelImages] = useState([]);
-  const [keywords,setKeyWords] = useState("");
-  const getHotels = async (
-    page = 1,
-    rating = selectedRating,
-    sort = active
-  ) => {
-    try {
-      let sortByCost = null;
-      if (sort === "low") sortByCost = "asc";
-      else if (sort === "best") sortByCost = "desc";
-      const res = await api.get("hotels/all/get-page", {
-        params: {
-          pageNo: page,
-          pageSize: 7,
-          hotelRating: rating || undefined,
-          sortByCost: sortByCost || undefined,
-          keyword: keywords || undefined,
-        },
-      });
-      const hotels = res.data.result;
-      console.log("dữ liệu hotel", hotels);
-      const hotelArray = hotels.content || [];
-      setHotelList(hotelArray);
-      hotelArray.forEach((hotel) => getImg(hotel.hotelId));
-      setTotalPages(hotels.totalPages || 1);
-      setCurrentPage(hotels.number + 1 || 1);
-    } catch (err) {
-      console.error("Lỗi khi lấy danh sách khách sạn:", err);
-    }
-  };
-  
+  const [hotelImages, setHotelImages] = useState([]);
+  const [keywords, setKeyWords] = useState("");
+  const getHotels = useCallback(
+    async (page = 1, rating = selectedRating, sort = active) => {
+      try {
+        let sortByCost = null;
+        if (sort === "low") sortByCost = "asc";
+        else if (sort === "best") sortByCost = "desc";
+        const res = await api.get("hotels/all/get-page", {
+          params: {
+            pageNo: page,
+            pageSize: 7,
+            hotelRating: rating || undefined,
+            sortByCost: sortByCost || undefined,
+            keyword: keywords || undefined,
+          },
+        });
+        const hotels = res.data.result;
+        console.log("dữ liệu hotel", hotels);
+        const hotelArray = hotels.content || [];
+        setHotelList(hotelArray);
+        hotelArray.forEach((hotel) => getImg(hotel.hotelId));
+        setTotalPages(hotels.totalPages || 1);
+        setCurrentPage(hotels.number + 1 || 1);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh sách khách sạn:", err);
+      }
+    },
+    [selectedRating, active, keywords]
+  );
+
   const getImg = async (hotelId) => {
     try {
-    const res = await api.get(`images/hotel/${hotelId}`);
-    const imgList = res.data.result;
-    if (imgList && imgList.length > 0) {
-      // Lưu ảnh đầu tiên làm ảnh đại diện
-      setHotelImages((prev) => ({
-        ...prev,
-        [hotelId]: imgList,
-      }));
+      const res = await api.get(`images/hotel/${hotelId}`);
+      const imgList = res.data.result;
+      if (imgList && imgList.length > 0) {
+        // Lưu ảnh đầu tiên làm ảnh đại diện
+        setHotelImages((prev) => ({
+          ...prev,
+          [hotelId]: imgList,
+        }));
+      }
+    } catch (err) {
+      console.error("Lỗi khi lấy ảnh khách sạn:", err);
     }
-  } catch (err) {
-    console.error("Lỗi khi lấy ảnh khách sạn:", err);
-    }
-  }
+  };
   useEffect(() => {
     getHotels(1);
-  }, [keywords, selectedRating, active]);
+  }, [getHotels]);
   const buttons = [
     { id: "top", label: "Lựa chọn hàng đầu của chúng tôi" },
     { id: "low", label: "Giá thấp trước" },
@@ -87,13 +93,13 @@ export default function HotelsView() {
               {[5, 4, 3, 2, 1].map((rating) => (
                 <label
                   key={rating}
-                  className="flex items-center space-x-2 mb-2 cursor-pointer text-gray-700 hover:text-blue-600"
+                  className="flex items-center space-x-2 mb-2 cursor-pointer text-gray-700 hover:text-amber-800"
                 >
                   <input
                     type="checkbox"
                     checked={selectedRating === rating}
                     onChange={() => handleRatingChange(rating)}
-                    className="cursor-pointer accent-blue-500"
+                    className="cursor-pointer accent-amber-600"
                   />
                   <span>{rating} sao</span>
                 </label>
@@ -112,19 +118,19 @@ export default function HotelsView() {
                   className={`px-4 py-2 rounded-md border transition
                 ${
                   active === btn.id
-                    ? "bg-blue-500 text-white border-blue-500"
-                    : "bg-white hover:text-white border-gray-300 hover:bg-blue-500"
+                    ? "bg-amber-800 text-white border-amber-800"
+                    : "bg-white hover:text-white border-gray-300 hover:bg-amber-800"
                 }`}
                 >
                   {btn.label}
                 </button>
               ))}
-              <input 
-                  type="text"
-                  placeholder="Tìm kiếm theo tên và địa chỉ"
-                  className="w-96 border-2 border-gray-400 p-2"
-                  value={keywords}
-                  onChange={(e) => setKeyWords(e.target.value)}
+              <input
+                type="text"
+                placeholder="Tìm kiếm theo tên và địa chỉ"
+                className="w-96 border-2 border-gray-400 p-2"
+                value={keywords}
+                onChange={(e) => setKeyWords(e.target.value)}
               />
             </div>
             {/* Khu vực danh sách khách sạn */}
@@ -139,34 +145,46 @@ export default function HotelsView() {
                   >
                     <div className="p-3 sm:w-1/3 flex justify-center sm:justify-start">
                       <div className="w-full sm:w-44 md:w-48 lg:w-52 xl:w-100 h-48 sm:h-60 object-cover rounded-md">
-                        {hotelImages[hotel.hotelId] && hotelImages[hotel.hotelId].length > 0 ? (
-                        <ImageSlider sliders={hotelImages[hotel.hotelId]} className="w-full sm:w-44 md:w-48 lg:w-52 xl:w-100 h-48 sm:h-60 object-cover rounded-md"/>
-                      ) : (
-                        <div className="flex justify-center items-center h-full text-[#4b2e1f]/70">
-                          Chưa có hình ảnh
-                        </div>
-                      )}
+                        {hotelImages[hotel.hotelId] &&
+                        hotelImages[hotel.hotelId].length > 0 ? (
+                          <ImageSlider
+                            sliders={hotelImages[hotel.hotelId]}
+                            className="w-full sm:w-44 md:w-48 lg:w-52 xl:w-100 h-48 sm:h-60 object-cover rounded-md"
+                          />
+                        ) : (
+                          <div className="flex justify-center items-center h-full text-[#4b2e1f]/70">
+                            Chưa có hình ảnh
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="p-4 sm:px-5 flex-1">
                       <div className="text-xl sm:text-xl mb-2 flex justify-between">
-                        <span className="font-bold text-blue-700">{hotel.hotelName}</span>
+                        <span className="font-bold text-amber-800">
+                          {hotel.hotelName}
+                        </span>
                         <span className="space-x-1">
-                          <PhoneIcon className="text-blue-500 inline"/>
+                          <PhoneIcon className="text-amber-800 inline" />
                           <span>Liên hệ:</span>
                           <span>{hotel.hotelPhone}</span>
                         </span>
                       </div>
                       <p className="mb-1 flex items-center space-x-1">
-                        <StarIcon className = "text-yellow-400 fill-yellow-400"/>
+                        <StarIcon className="text-yellow-400 fill-yellow-400" />
                         <span className="text-sm text-gray-600 font-bold">
-                          {hotel.hotelRating ? hotel.hotelRating?.toFixed(1) : 0}
+                          {hotel.hotelRating
+                            ? hotel.hotelRating?.toFixed(1)
+                            : 0}
                         </span>
                         <span className="text-sm"> / 5</span>
                       </p>
                       <p className="mb-2 text-sm sm:text-base space-x-1">
                         <MapPinIcon className="text-red-500 inline" />
-                        <span> <span className="font-bold">Địa chỉ:</span> <span>{hotel.hotelAddress}</span></span>
+                        <span>
+                          {" "}
+                          <span className="font-bold">Địa chỉ:</span>{" "}
+                          <span>{hotel.hotelAddress}</span>
+                        </span>
                       </p>
                       <div className="mb-2 flex flex-wrap gap-2">
                         <span className="border border-gray-200 text-xs sm:text-sm font-semibold px-2 py-1 rounded">
@@ -191,7 +209,7 @@ export default function HotelsView() {
                             onClick={() =>
                               setExpandedIndex(expandedIndex === id ? null : id)
                             }
-                            className="text-blue-500 mt-1 text-sm hover:underline"
+                            className="text-amber-800 mt-1 text-sm hover:underline"
                           >
                             {expandedIndex === id ? <>Ẩn bớt</> : <>Xem thêm</>}
                           </button>
@@ -213,7 +231,7 @@ export default function HotelsView() {
                       <p className="text-emerald-600 text-xl sm:text-2xl font-bold text-right">
                         {hotel.hotelCost}đ/đêm
                       </p>
-                      <button className="bg-blue-500 w-full mt-9 py-2 rounded-lg hover:bg-blue-400 transition">
+                      <button className="bg-amber-800 w-full mt-9 py-2 rounded-lg hover:bg-amber-900 transition">
                         <Link to={`/detailshotel/${hotel.hotelId}`}>
                           <p className="text-white text-sm sm:text-base">
                             Xem phòng trống
@@ -235,7 +253,7 @@ export default function HotelsView() {
               className={`px-3 py-1 border rounded ${
                 currentPage === 1
                   ? "text-gray-400 border-gray-300"
-                  : "hover:bg-blue-500 hover:text-white"
+                  : "hover:bg-amber-800 hover:text-white"
               }`}
             >
               Trước
@@ -246,8 +264,8 @@ export default function HotelsView() {
                 onClick={() => handlePageChange(i + 1)}
                 className={`px-3 py-1 border rounded ${
                   currentPage === i + 1
-                    ? "bg-blue-500 text-white border-blue-500"
-                    : "hover:bg-blue-500 hover:text-white"
+                    ? "bg-amber-800 text-white border-amber-800"
+                    : "hover:bg-amber-800 hover:text-white"
                 }`}
               >
                 {i + 1}
@@ -260,7 +278,7 @@ export default function HotelsView() {
               className={`px-3 py-1 border rounded ${
                 currentPage === totalPages
                   ? "text-gray-400 border-gray-300"
-                  : "hover:bg-blue-500 hover:text-white"
+                  : "hover:bg-amber-800 hover:text-white"
               }`}
             >
               Sau
@@ -271,4 +289,3 @@ export default function HotelsView() {
     </>
   );
 }
-

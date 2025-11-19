@@ -37,7 +37,12 @@ export default function SideBar() {
 
   const firstHotelId = hotels[0]?.hotelId;
   return (
-    <div className="bg-black py-4 px-4 h-screen w-[300px] fixed z-10 ">
+    <div
+      className=" py-4 px-4 h-screen w-[300px] fixed z-10 "
+      style={{
+        background: "linear-gradient(to bottom, #4b2e1f, #a17f4f)",
+      }}
+    >
       <div className="px-4 mb-5 flex items-center gap-2">
         <HotelIcon className="text-green-400 w-6 h-6" />
         <h2 className="text-white font-bold pl-2 text-xl">OpenHotel</h2>
@@ -48,11 +53,14 @@ export default function SideBar() {
             to="/customer"
             end
             className={({ isActive }) =>
-              `flex items-center gap-2 p-2 rounded-md cursor-pointer
-     ${isActive ? "bg-gray-700" : "hover:bg-gray-400"}`
+              `flex items-center gap-2 p-2 rounded-md cursor-pointer transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
             }
           >
-            <HomeIcon className="w-6 h-6 text-gray-400" />
+            <HomeIcon className="w-6 h-6" />
             <p className=" text-white cursor-pointer pl-2">Trang chủ</p>
           </NavLink>
         )}
@@ -60,11 +68,14 @@ export default function SideBar() {
           <NavLink
             to={`/customer/my-hotel/${firstHotelId}`}
             className={({ isActive }) =>
-              `flex items-center gap-2 p-2 rounded-md cursor-pointer
-     ${isActive ? "bg-gray-700" : "hover:bg-gray-400"}`
+              `flex items-center gap-2 p-2 rounded-md cursor-pointer transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
             }
           >
-            <HotelIcon className="w-6 h-6 text-gray-400" />
+            <HotelIcon className="w-6 h-6" />
             <p className=" text-white cursor-pointer pl-2">Khách sạn của tôi</p>
           </NavLink>
         )}
@@ -73,11 +84,14 @@ export default function SideBar() {
           <NavLink
             to={`/customer/service/hotel/${firstHotelId}`}
             className={({ isActive }) =>
-              `flex items-center gap-2 p-2 rounded-md cursor-pointer
-     ${isActive ? "bg-gray-700" : "hover:bg-gray-400"}`
+              `flex items-center gap-2 p-2 rounded-md cursor-pointer transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
             }
           >
-            <LayersIcon className="w-6 h-6 text-gray-400" />
+            <LayersIcon className="w-6 h-6" />
             <p className=" text-white cursor-pointer pl-2">Dịch vụ khách sạn</p>
           </NavLink>
         )}
@@ -86,11 +100,14 @@ export default function SideBar() {
           <NavLink
             to={`/customer/room/hotel/${firstHotelId}`}
             className={({ isActive }) =>
-              `flex items-center gap-2 p-2 rounded-md cursor-pointer
-     ${isActive ? "bg-gray-700" : "hover:bg-gray-400"}`
+              `flex items-center gap-2 p-2 rounded-md cursor-pointer transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
             }
           >
-            <BedIcon className="w-6 h-6 text-gray-400" />
+            <BedIcon className="w-6 h-6" />
             <p className=" text-white cursor-pointer pl-2">Phòng của tôi</p>
           </NavLink>
         )}
@@ -98,11 +115,14 @@ export default function SideBar() {
           <NavLink
             to="/customer/invoice"
             className={({ isActive }) =>
-              `flex items-center gap-2 p-2 rounded-md cursor-pointer
-     ${isActive ? "bg-gray-700" : "hover:bg-gray-400"}`
+              `flex items-center gap-2 p-2 rounded-md cursor-pointer transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
             }
           >
-            <HandCoinsIcon className="w-6 h-6 text-gray-400" />
+            <HandCoinsIcon className="w-6 h-6" />
             <p className=" text-white cursor-pointer pl-2">Đơn hàng</p>
           </NavLink>
         )}
@@ -110,11 +130,14 @@ export default function SideBar() {
           <NavLink
             to="/customer/chat"
             className={({ isActive }) =>
-              `flex items-center gap-2 p-2 rounded-md cursor-pointer
-     ${isActive ? "bg-gray-700" : "hover:bg-gray-400"}`
+              `flex items-center gap-2 p-2 rounded-md cursor-pointer transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
             }
           >
-            <MessageCircleIcon className="w-6 h-6 text-gray-400" />
+            <MessageCircleIcon className="w-6 h-6" />
             <p className="text-white cursor-pointer pl-2 hidden lg:block">
               Tin nhắn
             </p>
@@ -122,9 +145,15 @@ export default function SideBar() {
         )}
         <NavLink
           to="/"
-          className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          className={({ isActive }) =>
+            `flex items-center gap-2 p-2 rounded-md cursor-pointer transition ${
+              isActive
+                ? "bg-amber-600 text-white"
+                : "text-gray-300 hover:bg-amber-700 hover:text-white"
+            }`
+          }
         >
-          <ArrowLeftFromLine className="w-6 h-6 text-gray-400" />
+          <ArrowLeftFromLine className="w-6 h-6" />
           <p className="text-white cursor-pointer pl-2 hidden lg:block">
             Quay lại trang web
           </p>

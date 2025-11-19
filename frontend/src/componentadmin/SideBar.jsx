@@ -18,9 +18,13 @@ import { NavLink } from "react-router-dom";
 export default function SideBar() {
   const userRoles = useSelector((state) => state.user.role);
   const hasRole = (roleName) => userRoles?.some((r) => r.name === roleName);
-
   return (
-    <div className="bg-black py-4 px-3 h-screen fixed z-10 w-[70px] lg:w-[300px] transition-all duration-300">
+    <div
+      className=" py-4 px-3 h-screen fixed z-10 w-[70px] lg:w-[300px] transition-all duration-300"
+      style={{
+        background: "linear-gradient(to bottom, #4b2e1f, #a17f4f)",
+      }}
+    >
       {/* Logo */}
       <div className="px-2 mb-6 flex items-center justify-center lg:justify-start">
         <ChartNoAxesCombinedIcon className="text-green-400 w-6 h-6" />
@@ -33,21 +37,32 @@ export default function SideBar() {
       <div className="space-y-4">
         <NavLink
           to="/admin"
-          className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          end
+          className={({ isActive }) =>
+            `flex items-center p-2 rounded-md transition ${
+              isActive
+                ? "bg-amber-600 text-white"
+                : "text-gray-300 hover:bg-amber-700 hover:text-white"
+            }`
+          }
         >
-          <LayoutGridIcon className="w-6 h-6 text-gray-400" />
-          <p className="text-white cursor-pointer pl-2 hidden lg:block">
-            Trang chủ
-          </p>
+          <LayoutGridIcon className="w-6 h-6" />
+          <p className="cursor-pointer pl-2 hidden lg:block">Trang chủ</p>
         </NavLink>
 
         {hasRole("INVOICE") && (
           <NavLink
             to="/admin/invoice"
-            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+            className={({ isActive }) =>
+              `flex items-center p-2 rounded-md transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
+            }
           >
-            <FileTextIcon className="w-6 h-6 text-gray-400" />
-            <p className="text-white cursor-pointer pl-2 hidden lg:block">
+            <FileTextIcon className="w-6 h-6" />
+            <p className="cursor-pointer pl-2 hidden lg:block">
               Quản lý hóa đơn
             </p>
           </NavLink>
@@ -56,10 +71,16 @@ export default function SideBar() {
         {hasRole("HOTEL") && (
           <NavLink
             to="/admin/hotelmanager"
-            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+            className={({ isActive }) =>
+              `flex items-center p-2 rounded-md transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
+            }
           >
-            <HotelIcon className="w-6 h-6 text-gray-400" />
-            <p className="text-white cursor-pointer pl-2 hidden lg:block">
+            <HotelIcon className="w-6 h-6" />
+            <p className="cursor-pointer pl-2 hidden lg:block">
               Quản lý khách sạn
             </p>
           </NavLink>
@@ -68,44 +89,62 @@ export default function SideBar() {
         {hasRole("USER") && (
           <NavLink
             to="/admin/user"
-            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+            className={({ isActive }) =>
+              `flex items-center p-2 rounded-md transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
+            }
           >
-            <UserLockIcon className="w-6 h-6 text-gray-400" />
-            <p className="text-white cursor-pointer pl-2 hidden lg:block">
-              Quản lý user
-            </p>
+            <UserLockIcon className="w-6 h-6" />
+            <p className="cursor-pointer pl-2 hidden lg:block">Quản lý user</p>
           </NavLink>
         )}
 
         {hasRole("ROLE") && (
           <NavLink
             to="/admin/permission"
-            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+            className={({ isActive }) =>
+              `flex items-center p-2 rounded-md transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
+            }
           >
-            <UserLockIcon className="w-6 h-6 text-gray-400" />
-            <p className="text-white cursor-pointer pl-2 hidden lg:block">
-              Phân quyền
-            </p>
+            <UserLockIcon className="w-6 h-6" />
+            <p className="cursor-pointer pl-2 hidden lg:block">Phân quyền</p>
           </NavLink>
         )}
         {hasRole("CHAT") && (
           <NavLink
             to="/admin/chat"
-            className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+            className={({ isActive }) =>
+              `flex items-center p-2 rounded-md transition ${
+                isActive
+                  ? "bg-amber-600 text-white"
+                  : "text-gray-300 hover:bg-amber-700 hover:text-white"
+              }`
+            }
           >
-            <MessageCircle className="w-6 h-6 text-gray-400" />
-            <p className="text-white cursor-pointer pl-2 hidden lg:block">
-              Tin nhắn
-            </p>
+            <MessageCircle className="w-6 h-6" />
+            <p className="cursor-pointer pl-2 hidden lg:block">Tin nhắn</p>
           </NavLink>
         )}
 
         <NavLink
           to="/"
-          className="flex items-center hover:bg-gray-700 p-2 rounded-md"
+          className={({ isActive }) =>
+            `flex items-center p-2 rounded-md transition ${
+              isActive
+                ? "bg-amber-600 text-white"
+                : "text-gray-300 hover:bg-amber-700 hover:text-white"
+            }`
+          }
         >
-          <ArrowLeftFromLine className="w-6 h-6 text-gray-400" />
-          <p className="text-white cursor-pointer pl-2 hidden lg:block">
+          <ArrowLeftFromLine className="w-6 h-6" />
+          <p className="cursor-pointer pl-2 hidden lg:block">
             Quay lại trang web
           </p>
         </NavLink>
