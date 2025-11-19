@@ -41,6 +41,19 @@ public class HotelController {
                 .build());
     }
 
+    @GetMapping("/filter/star/{star}")
+    public ResponseEntity<ApiResponse<List<HotelResponse>>> filterHotelByStar(
+            @PathVariable Double star) {
+        List<HotelResponse> hotelList = hotelService.getHotelsByStar(star);
+        return ResponseEntity.ok(
+                ApiResponse.<List<HotelResponse>>builder()
+                        .code(1)
+                        .message("Lọc khách sạn theo sao thành công")
+                        .result(hotelList)
+                        .build()
+        );
+    }
+
     @GetMapping("/{hotelID}")
     public ResponseEntity<ApiResponse<HotelResponse>> getHotelById(@PathVariable int hotelID) {
         HotelResponse hotelResponse = hotelService.getHotelById(hotelID);

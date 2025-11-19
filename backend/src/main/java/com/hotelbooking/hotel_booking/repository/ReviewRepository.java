@@ -15,5 +15,4 @@ public interface ReviewRepository extends JpaRepository<Review,Integer> {
     double findByAvgStarByHotel_hotelId(int hotelId);
     Review findByInvoice_Id(int invoiceId);
     List<Review> findAllByHotel(Hotel hotel);
-
 }

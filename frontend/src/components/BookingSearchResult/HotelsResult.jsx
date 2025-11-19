@@ -20,6 +20,24 @@ export default function HotelProvince() {
         fetchAllImgHotel()
     }, [])
 
+
+    const [selectedStar, setSelectedStar] = useState(null)
+    const [filterStar, setFilterStar] = useState(hotelProvince)
+
+    const handleFilterStar = async (e) => {
+        const valueStar = Number(e.target.value);
+        if (selectedStar === valueStar) {
+            setSelectedStar(null);
+            setFilterStar(hotelProvince);
+            return;
+        }
+        setSelectedStar(valueStar);
+        const result = hotelProvince.filter(
+            h => h.hotelRating >= valueStar
+        );
+        setFilterStar(result);
+    }
+
     return (
         <div className="h-auto ">
             <div className="w-[90%] border border-gray-300 rounded-xl mx-auto">
@@ -40,7 +58,8 @@ export default function HotelProvince() {
                                         <input
                                             type="checkbox"
                                             value={star}
-                                            // onChange={(e) => handleFilterStar(e)}
+                                            checked={selectedStar === star}
+                                            onChange={(e) => handleFilterStar(e)}
                                             className="w-4 h-4"
                                         />
                                         <span>{star} ⭐</span>
@@ -53,7 +72,7 @@ export default function HotelProvince() {
                     {/* DANH SÁCH KHÁCH SẠN BÊN PHẢI */}
                     <div className="w-full md:w-3/4">
                         <div className="grid grid-cols-1 gap-4 md:gap-6 p-2">
-                            {hotelProvince.map((item) => {
+                            {filterStar.map((item) => {
                                 const hotelImages = images.filter(
                                     (img) => img.hotel.hotelId === item.hotelId
                                 );
