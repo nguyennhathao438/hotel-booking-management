@@ -128,9 +128,7 @@ const AddHotel = () => {
       <h2 className="text-center font-medium text-xl">HÃY ĐĂNG KÝ KHÁCH SẠN CỦA BẠN</h2>
       {/* Tên khách sạn */}
       <div>
-        <label className="block font-semibold mb-2 text-gray-700">
-          Tên khách sạn
-        </label>
+        <label className="block font-semibold mb-2 text-gray-700">Tên khách sạn</label>
         <input
           placeholder="Nhập tên khách sạn"
           {...register("hotelName")}
@@ -140,9 +138,7 @@ const AddHotel = () => {
 
       {/* Địa chỉ khách sạn */}
       <div>
-        <label className="block font-semibold mb-2 text-gray-700">
-          Chọn địa chỉ khách sạn
-        </label>
+        <label className="block font-semibold mb-2 text-gray-700">Chọn địa chỉ khách sạn</label>
         <div className="flex flex-col sm:flex-row gap-3">
           <select
             className="border flex-1 border-gray-300 rounded-xl p-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
