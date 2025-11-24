@@ -245,7 +245,7 @@ export default function HistoryInvoice() {
 
     return (
         <div className="h-auto">
-            <div className="w-[95%] border border-gray-300 rounded-xl mx-auto h-full">
+            <div className="w-[95%] border border-gray-200 rounded-xl mx-auto h-full">
                 {/* <div className="flex gap-3 justify-center p-3">
                     <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Tất cả")}>Tất cả</button>
                     <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Chờ xác nhận")}>Chờ xác nhận</button>

@@ -118,6 +118,24 @@ function DetailsHotelView() {
         }
     };
 
+    const [firstRoomImages, setFirstRoomImages] = useState({});
+    useEffect(() => {
+        const fetchImages = async () => {
+            const temp = {};
+            for (let room of rooms) {
+                try {
+                    const res = await api.get(`/imageRoom/room/${room.roomId}`);
+                    temp[room.roomId] = res.data.result[0].imgUrl;
+                } catch (error) {
+                    console.log("loi khong the lay anh", error)
+                    temp[room.roomId] = null;
+                }
+            }
+            setFirstRoomImages(temp);
+        };
+        if (rooms.length > 0) fetchImages();
+    }, [rooms]);
+
     const disableBooking = (status, room) => {
         if (status === 3 || status === 1)
             return (<button></button>)
@@ -429,7 +447,11 @@ function DetailsHotelView() {
                             <div key={room.roomId} className="rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition bg-white">
                                 {/* Nếu bạn có ảnh room thì thay bằng room.imageUrls[0] */}
                                 <div className="h-48 w-full bg-gray-200 flex items-center justify-center text-gray-500">
-                                    <img src={banner2} alt="" />
+                                    <img
+                                        src={firstRoomImages[room.roomId]}
+                                        alt=""
+                                        className="w-full h-full object-cover hover:scale-105 transition"
+                                    />
                                 </div>
 
                                 <div className="pt-7 pb-5 px-4">

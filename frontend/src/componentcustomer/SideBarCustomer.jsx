@@ -33,6 +33,7 @@ export default function SideBar() {
     };
     fetchHotelByUserId();
   }, [userId]);
+  console.log("khach san cua toi la",hotels[0])
 
   const firstHotelId = hotels[0]?.hotelId;
   return (

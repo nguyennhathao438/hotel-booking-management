@@ -34,6 +34,7 @@ const AddHotel = () => {
   const [provinceCode, setProvinceCode] = useState("");
   const [listDistricts, setListDistricts] = useState([]);
   const [district, setDistrict] = useState("");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchProvince = async () => {
       try {
@@ -78,6 +79,7 @@ const AddHotel = () => {
   });
 
   const onSubmit = async (data) => {
+    setLoading(true)
     try {
       if (images.length > 0) {
         let fullAddress = "";
@@ -101,7 +103,6 @@ const AddHotel = () => {
         images.forEach((file) => formData.append("files", file));
         formData.append("hotelId", hotelId);
         await api.post("/images/upload", formData, {
-          // eslint-disable-line no-unused-vars
           headers: { "Content-Type": "multipart/form-data" },
         });
         toast.success("Thêm khách sạn thành công");
@@ -112,6 +113,8 @@ const AddHotel = () => {
       toast.error(
         error?.response?.data?.message || "Có lỗi xảy ra khi xóa vai trò"
       );
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -121,10 +124,8 @@ const AddHotel = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit, onError)}
-      className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-2xl space-y-5 border border-gray-100 sm:p-8"
-    >
+    <form onSubmit={handleSubmit(onSubmit, onError)} className="max-w-3xl my-2 mx-auto p-6 bg-white shadow-lg rounded-2xl space-y-5 border border-gray-100 sm:p-8">
+      <h2 className="text-center font-medium text-xl">HÃY ĐĂNG KÝ KHÁCH SẠN CỦA BẠN</h2>
       {/* Tên khách sạn */}
       <div>
         <label className="block font-semibold mb-2 text-gray-700">
@@ -264,10 +265,20 @@ const AddHotel = () => {
       {/* Nút submit */}
       <button
         type="submit"
-        className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl shadow-md transition-all duration-200 focus:ring-2 focus:ring-blue-400"
+        disabled={loading}
+        className={`w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl shadow-md transition-all duration-200 focus:ring-2 focus:ring-blue-400 
+    ${loading ? "opacity-70 cursor-not-allowed" : ""}`}
       >
-        Thêm khách sạn
+        {!loading ? (
+          "Thêm khách sạn"
+        ) : (
+          <span className="flex items-center justify-center gap-2">
+            <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            Đang thêm khách sạn...
+          </span>
+        )}
       </button>
+
     </form>
   );
 };
