@@ -22,17 +22,18 @@ export default function Contact() {
   const messageContainerRef = useRef(null);
   const stompClientRef = useRef(null);
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS(`http://localhost:8080/ws?userId=${myId}`);
     const client = over(socket);
     stompClientRef.current = client;
 
     client.connect({}, () => {
-      console.log("✅ WebSocket connected");
-      client.subscribe("/topic/messages", (payload) => {
+      console.log("WebSocket connected");
+
+      client.subscribe("/user/queue/messages", (payload) => {
         const msg = JSON.parse(payload.body);
         if (
-          msg.sender?.id === selectedUser?.id ||
-          msg.receiver?.id === selectedUser?.id
+          msg.senderId === selectedUser?.id ||
+          msg.receiverId === selectedUser?.id
         ) {
           setConversation((prev) => [...prev, msg]);
         }
@@ -42,11 +43,12 @@ export default function Contact() {
     return () => {
       if (stompClientRef.current?.connected) {
         stompClientRef.current.disconnect(() => {
-          console.log("✅ WebSocket disconnected");
+          console.log(" WebSocket disconnected");
         });
       }
     };
-  }, []);
+  }, [myId, selectedUser]);
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "auto" });
@@ -115,9 +117,9 @@ export default function Contact() {
     }
   };
   return (
-    <div className="p-6 bg-gray-100 min-h-screen w-full ml-[300px]">
+    <div className="p-4 bg-gray-100 min-h-screen w-full ml-[70px] lg:ml-[300px]">
       {/* Ô tìm kiếm */}
-      <div className="p-3 border-b mb-6 bg-gray-50 flex items-center gap-2 max-w-5xl rounded-lg shadow-sm">
+      <div className="p-3 border-b mb-6 bg-gray-50 flex items-center gap-2 rounded-lg shadow-sm">
         <input
           type="text"
           value={search}
@@ -132,14 +134,14 @@ export default function Contact() {
       </div>
 
       {/* Container chính */}
-      <div className="flex flex-col md:flex-row max-w-5xl border bg-white rounded-lg overflow-hidden shadow-md">
+      <div className="flex md:flex-row w-full h-[calc(100vh-180px)] border bg-white rounded-lg overflow-hidden shadow-md">
         {/* Danh sách user */}
-        <aside className="hidden md:block w-64 border-r overflow-y-auto h-[510px] bg-gray-50">
+        <aside className=" md:block w-64 border-r overflow-y-auto h-full bg-gray-50">
           {listUser.map((user, i) => (
             <div
               key={i}
               className={`flex items-center justify-between px-3 py-2 cursor-pointer hover:bg-gray-100 ${
-                user.id === selectedUser?.id ? "bg-emerald-100" : ""
+                user.id === selectedUser?.id ? "bg-amber-100" : ""
               }`}
               onClick={() => {
                 setSelectedUser(user);
@@ -162,7 +164,7 @@ export default function Contact() {
 
         {/* Chat main */}
         {selectedUser ? (
-          <main className="flex-1 flex flex-col h-[510px]">
+          <main className="flex-1 flex flex-col h-full">
             {/* Header */}
             <header className="flex items-center justify-between border-b p-3 bg-gray-50">
               <div className="flex items-center gap-2">
@@ -207,7 +209,7 @@ export default function Contact() {
                   <p
                     className={`inline-block px-3 py-2 rounded-xl max-w-xs break-words ${
                       msg.sender?.id === myId
-                        ? "bg-emerald-500 text-white"
+                        ? "bg-amber-800 text-white"
                         : "bg-gray-200 text-gray-800"
                     }`}
                   >
@@ -234,7 +236,7 @@ export default function Contact() {
                 }}
               />
               <button
-                className="p-3 bg-emerald-500 hover:bg-emerald-600 rounded-full text-white flex items-center justify-center"
+                className="p-3 bg-amber-800 hover:bg-amber-900 rounded-full text-white flex items-center justify-center"
                 onClick={() => sendMessage()}
               >
                 <PaperAirplaneIcon className="w-5 h-5" />

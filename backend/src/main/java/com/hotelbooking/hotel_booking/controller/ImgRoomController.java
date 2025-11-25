@@ -30,6 +30,20 @@ public class ImgRoomController {
                 .build());
     }
 
+    @GetMapping("/room/{roomId}/first")
+    public ResponseEntity<ApiResponse<ImgRoomResponse>> getFirstRoomImage(@PathVariable int roomId) {
+        ImgRoomResponse img = imgRoomService.findFirstImageByRoomId(roomId);
+
+        return ResponseEntity.ok(
+                ApiResponse.<ImgRoomResponse>builder()
+                        .code(1)
+                        .message("Lấy ảnh đầu tiên của phòng thành công")
+                        .result(img)
+                        .build()
+        );
+    }
+
+
     @DeleteMapping("/delete/{idImg}")
     public ResponseEntity<ApiResponse<String>> deleteImgRoomById(@PathVariable int idImg) {
         imgRoomService.deleteImgRoomById(idImg);

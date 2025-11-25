@@ -50,6 +50,14 @@ public class ImgRoomService {
                 .map(this::mapToImgRoomResponse)
                 .toList();
     }
+    public ImgRoomResponse findFirstImageByRoomId(int roomId) {
+        List<ImgRoom> listImg = imgRoomRepository.findByRoom_RoomId(roomId);
+        if (listImg.isEmpty()) {
+            return null;
+        }
+        return mapToImgRoomResponse(listImg.getFirst());
+    }
+
     public void deleteImgRoomById(int imgRoomId){
         imgRoomRepository.deleteById(imgRoomId);
     }
@@ -57,7 +65,7 @@ public class ImgRoomService {
         return ImgRoomResponse.builder()
                 .id(imgRoom.getId())
                 .imgUrl(imgRoom.getImgUrl())
-                .room(imgRoom.getRoom())
+                .roomId(imgRoom.getRoom().getRoomId())
                 .build();
     }
 }

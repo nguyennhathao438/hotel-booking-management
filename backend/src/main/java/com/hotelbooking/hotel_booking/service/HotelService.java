@@ -3,10 +3,12 @@ package com.hotelbooking.hotel_booking.service;
 import com.hotelbooking.hotel_booking.dto.request.HotelRequest;
 import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
+import com.hotelbooking.hotel_booking.entity.ImgHotel;
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
 import com.hotelbooking.hotel_booking.repository.HotelRepository;
+import com.hotelbooking.hotel_booking.repository.ImgHotelRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,8 +22,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.hotelbooking.hotel_booking.service.UserSevice.mapToUserResponse;
@@ -34,7 +38,8 @@ public class HotelService {
     HotelRepository hotelRepository;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    ImgHotelRepository imgHotelRepository;
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -52,6 +57,12 @@ public class HotelService {
     public HotelResponse createHotel(HotelRequest request) {
         if (hotelRepository.existsByHotelName(request.getHotelName())) {
             throw new AppException(ErrorCode.HOTEL_EXISTED);
+        }
+        if (request.getHotelName() == null || request.getHotelName().isBlank()
+                || request.getHotelTotalRoom() == null || request.getHotelTotalRoom() <= 0
+                || request.getHotelCost() == null || request.getHotelCost() < 0
+                || (request.getHotelRating() != null && request.getHotelRating() > 5)) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
         }
         User user = getCurrentUser();
         if(hotelRepository.existsByUser(user)){
@@ -71,6 +82,7 @@ public class HotelService {
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
+
 
     public List<HotelResponse> getAllHotels() {
         List<Hotel> hotels = hotelRepository.findByStatus(1);
@@ -95,20 +107,33 @@ public class HotelService {
         return mapToHotelResponse(hotel);
     }
 
-    public List<HotelResponse> getHotelsByStar(Double star) {
-        List<Hotel> hotels = hotelRepository.findByHotelRatingGreaterThanEqual(star);
-        return hotels.stream()
-                .map(this::mapToHotelResponse)
-                .toList();
-    }
+
     @PreAuthorize("hasAuthority('UPDATE_HOTEL')")
     public HotelResponse updateHotel(int hotelId, HotelRequest request) {
         Hotel hotel = hotelRepository.findById(hotelId)
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
 
-        if (request.getHotelName() != null && !request.getHotelName().isBlank()) {
-            hotel.setHotelName(request.getHotelName());
+        if (request.getHotelName() == null || request.getHotelName().isBlank()) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
         }
+
+        if (request.getHotelTotalRoom() != null && request.getHotelTotalRoom() <= 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        if (request.getHotelCost() != null && request.getHotelCost() < 0) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        if (request.getHotelRating() != null && (request.getHotelRating() < 0 || request.getHotelRating() > 5)) {
+            throw new AppException(ErrorCode.INVALID_INPUT);
+        }
+
+        if (hotelRepository.existsByHotelNameAndHotelIdNot(request.getHotelName(), hotelId)) {
+            throw new AppException(ErrorCode.HOTEL_EXISTED);
+        }
+
+        hotel.setHotelName(request.getHotelName());
         if (request.getHotelAddress() != null && !request.getHotelAddress().isBlank()) {
             hotel.setHotelAddress(request.getHotelAddress());
         }
@@ -130,9 +155,11 @@ public class HotelService {
         if (request.getStatus() != null) {
             hotel.setStatus(request.getStatus());
         }
+
         hotelRepository.save(hotel);
         return mapToHotelResponse(hotel);
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     public HotelResponse approveHotel(int hotelId) {
         Hotel hotel = hotelRepository.findById(hotelId)
@@ -144,7 +171,8 @@ public class HotelService {
         return mapToHotelResponse(hotel);
     }
 
-    public Page<HotelResponse> getAllHotelSearch(int pageNo, int pageSize, Double hotelRating, String sortByCost){
+    public Page<HotelResponse> getAllHotelSearch(int pageNo, int pageSize, Double hotelRating, String sortByCost,
+                                                 String keyword){
         Sort sort = Sort.unsorted();
         if ("asc".equalsIgnoreCase(sortByCost)) {
             sort = Sort.by("hotelCost").ascending();
@@ -153,16 +181,49 @@ public class HotelService {
         }
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize,sort);
         Page<Hotel> hotelPage;
+        List<Integer> statues = Arrays.asList(1);
         if(hotelRating != null){
             double minRating = hotelRating;
             double maxRating = Math.min(5.0, hotelRating + 0.9);
-            hotelPage = hotelRepository.findByHotelRatingBetweenAndStatus(minRating,maxRating,1,pageable);
+            hotelPage = hotelRepository.findByHotelRatingBetweenAndStatusIn(minRating,maxRating,statues,pageable);
+        } else if(keyword != null && !keyword.isEmpty()){
+            hotelPage = hotelRepository.findByStatusInAndHotelNameContainingIgnoreCaseOrStatusInAndHotelAddressContainingIgnoreCase(
+                    statues ,keyword, statues, keyword, pageable);
         } else {
-            hotelPage = hotelRepository.findByStatus(1,pageable);
+            hotelPage = hotelRepository.findByStatusIn(statues,pageable);
         }
         return hotelPage.map(this::mapToHotelResponse);
     }
-
+    public Page<HotelResponse> getAdminHotel(int pageNo, int pageSize, Double hotelRating, String sortByCost,
+                                             String keyword){
+        Sort sort = Sort.unsorted();
+        if ("asc".equalsIgnoreCase(sortByCost)) {
+            sort = Sort.by("hotelCost").ascending();
+        } else if ("desc".equalsIgnoreCase(sortByCost)) {
+            sort = Sort.by("hotelCost").descending();
+        }
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        Page<Hotel> hotelPage;
+        List<Integer> statues = Arrays.asList(0,1);
+        if(hotelRating != null){
+            double minRating = hotelRating;
+            double maxRating = Math.min(5.0, hotelRating + 0.9);
+            hotelPage = hotelRepository.findByHotelRatingBetweenAndStatusIn(minRating,maxRating,statues,pageable);
+        } else if(keyword != null && !keyword.isEmpty()){
+            hotelPage = hotelRepository.findByStatusInAndHotelNameContainingIgnoreCaseOrStatusInAndHotelAddressContainingIgnoreCase(
+                    statues ,keyword, statues, keyword, pageable);
+        } else {
+            hotelPage = hotelRepository.findByStatusIn(statues,pageable);
+        }
+        return hotelPage.map(this::mapToHotelResponse);
+    }
+    public HotelResponse banHotel(int id){
+        Hotel hotel = hotelRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        hotel.setStatus(2);
+        hotelRepository.save(hotel);
+        return mapToHotelResponse(hotel);
+    }
     private HotelResponse mapToHotelResponse(Hotel hotel) {
         return HotelResponse.builder()
                 .hotelId(hotel.getHotelId())
@@ -185,5 +246,18 @@ public class HotelService {
         }        return hotels.stream()
                 .map(this::mapToHotelResponse)
                 .toList();
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
+    public void deleteRequestAddHotel(int hotelId){
+        Hotel hotel = hotelRepository.findById(hotelId).orElseThrow(()->new AppException(ErrorCode.HOTEL_NOT_EXISTED));
+        if(hotel.getStatus() != 0){
+            throw new AppException(ErrorCode.REQUEST_HOTEL_NOT_DELETED);
+        }
+        List<ImgHotel> listImgHotel = imgHotelRepository.findImgHotelByHotel_HotelId(hotelId);
+        if(!listImgHotel.isEmpty()){
+            imgHotelRepository.deleteAllByHotel_HotelId(hotelId);
+        }
+        hotelRepository.delete(hotel);
     }
 }

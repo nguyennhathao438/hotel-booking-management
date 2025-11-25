@@ -1,10 +1,7 @@
 package com.hotelbooking.hotel_booking.service;
 
 import com.hotelbooking.hotel_booking.dto.request.InvoiceRequest;
-import com.hotelbooking.hotel_booking.dto.response.HotelResponse;
-import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
-import com.hotelbooking.hotel_booking.dto.response.RoomResponse;
-import com.hotelbooking.hotel_booking.dto.response.UserResponse;
+import com.hotelbooking.hotel_booking.dto.response.*;
 import com.hotelbooking.hotel_booking.entity.*;
 import com.hotelbooking.hotel_booking.exception.AppException;
 import com.hotelbooking.hotel_booking.exception.ErrorCode;
@@ -23,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,8 +49,13 @@ public class InvoiceService {
         if (request.getCheckOutDate().isBefore(request.getCheckInDate())) {
             throw new AppException(ErrorCode.INVOICE_FAILED);
         }
-        Room room = roomRepository.getReferenceById(roomId);
-//        List<Invoice> existInvoices = room.getInvoices();
+        // thay đổi từ getReferenceById trong service create invoice thành
+        // findByIdWithInvoices nếu có lỗi alo H
+
+        Room room = roomRepository.findByIdWithInvoices(roomId)
+                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
+        List<Invoice> existInvoices = room.getInvoices() != null ? room.getInvoices() : new ArrayList<>();
+
         User user = getCurrentUser();
         Invoice invoice = Invoice.builder()
                 .checkInDate(request.getCheckInDate())
@@ -63,17 +66,29 @@ public class InvoiceService {
                 .room(room)
                 .user(user)
                 .build();
-//        if (validateDates(request, existInvoices)) {
-//            room.addInvoice(invoice);
-//            invoiceRepository.save(invoice);
-//        } else
-//            throw new AppException(ErrorCode.ROOM_ALREADY_BOOKED);
+        // if (validateDates(request, existInvoices)) {
+        // room.addInvoice(invoice);
+        // invoiceRepository.save(invoice);
+        // } else
+        // throw new AppException(ErrorCode.ROOM_ALREADY_BOOKED);
         invoiceRepository.save(invoice);
         return mapToInvoiceResponse(invoice);
     }
 
     public List<InvoiceResponse> getAllInvoices() {
         List<Invoice> invoices = invoiceRepository.findAll();
+        return invoices.stream()
+                .map(this::mapToInvoiceResponse)
+                .toList();
+    }
+    public List<InvoiceResponse> getAllInvoiceByRoom_RoomId(int roomId) {
+        List<Invoice> invoices = invoiceRepository.getAllInvoicesByRoom_RoomId(roomId);
+        return invoices.stream()
+                .map(this::mapToInvoiceResponse)
+                .toList();
+    }
+    public List<InvoiceResponse> getAllInvoicesNoStatistic() {
+        List<Invoice> invoices = invoiceRepository.findAllByIsDeleteNot(1);
         return invoices.stream()
                 .map(this::mapToInvoiceResponse)
                 .toList();
@@ -103,11 +118,12 @@ public class InvoiceService {
     // InvoiceService
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST_(2)')")
     public List<InvoiceResponse> getInvoiceByHotelOwner(Integer userId) {
-        List<Invoice> invoices = invoiceRepository.findAllByRoom_Hotel_User_Id(userId);
+        List<Invoice> invoices = invoiceRepository.findAllByRoom_Hotel_User_IdAndIsDeleteNot(userId, 1);
         return invoices.stream()
                 .map(this::mapToInvoiceResponse)
                 .toList();
     }
+
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST_(2)')")
     public Page<InvoiceResponse> getInvoicesByHotelOwner(Integer userId,
             Integer status,
@@ -115,33 +131,36 @@ public class InvoiceService {
             LocalDate checkInDate,
             LocalDate checkOutDate,
             int pageNo, int pageSize) {
+
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
         Page<Invoice> invoicesPage;
         if (status != null && payment == null && checkInDate == null && checkOutDate == null) {
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatus(userId, status, pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndIsDeleteNot(userId, status, 1,
+                    pageable);
         } else if (status == null && payment != null && checkInDate == null && checkOutDate == null) {
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPayment(userId, payment, pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndPaymentAndIsDeleteNot(userId, payment, 1,
+                    pageable);
         } else if (status == null && payment == null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(userId,
-                            checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, checkInDate, checkOutDate, 1, pageable);
         } else if (status != null && payment == null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndStatusAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
-                            userId, status, checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndStatusAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, status, checkInDate, checkOutDate, 1, pageable);
         } else if (status == null && payment != null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
-                            userId, payment, checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, payment, checkInDate, checkOutDate, 1, pageable);
         } else if (status != null && payment != null && checkInDate == null && checkOutDate == null) {
-            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPayment(userId, status, payment,
-                    pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndIsDeleteNot(userId,
+                    status, payment, 1, pageable);
         } else if (status != null && payment != null && checkInDate != null && checkOutDate != null) {
             invoicesPage = invoiceRepository
-                    .findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqual(
-                            userId, status, payment, checkInDate, checkOutDate, pageable);
+                    .findAllByRoom_Hotel_User_IdAndStatusAndPaymentAndCheckInDateGreaterThanEqualAndCheckOutDateLessThanEqualAndIsDeleteNot(
+                            userId, status, payment, checkInDate, checkOutDate, 1, pageable);
         } else {
-            invoicesPage = invoiceRepository.findByHotelOwnerId(userId, pageable);
+            invoicesPage = invoiceRepository.findAllByRoom_Hotel_User_IdAndIsDeleteNot(userId, 1, pageable);
         }
         return invoicesPage.map(this::mapToInvoiceResponse);
     }
@@ -213,9 +232,10 @@ public class InvoiceService {
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public Page<InvoiceResponse> getAllInvoice(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Invoice> invoices = invoiceRepository.findAll(pageable);
+        Page<Invoice> invoices = invoiceRepository.findAllByIsDeleteNot(1, pageable);
         return invoices.map(this::mapToInvoiceResponse);
     }
+
     @PreAuthorize("hasAuthority('READ_INVOICE_LIST')")
     public Page<InvoiceResponse> filterInvoice(Integer status, Integer payment, LocalDate dateFrom, LocalDate dateTo,
             int pageNo, int pageSize) {
@@ -236,6 +256,24 @@ public class InvoiceService {
         return invoices.map(this::mapToInvoiceResponse);
     }
 
+    public void deleteInvoice(int invoiceId) {
+        Invoice invoices = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+        invoices.setIsDelete(1);
+        invoiceRepository.saveAndFlush(invoices);
+    }
+
+    public List<InvoiceProjectionResponse> hotelCount() {
+        List<Object[]> results = invoiceRepository.countInvoicesGroupedByHotelNative();
+        return results.stream()
+                .map(obj -> InvoiceProjectionResponse.builder()
+                        .hotelId((Integer) obj[0])
+                        .hotelName((String) obj[1])
+                        .invoiceCount(((Number) obj[2]).longValue())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
     private boolean validateDates(InvoiceRequest request, List<Invoice> exitsInvoices) {
         return exitsInvoices.stream()
                 .noneMatch(exitsInvoice -> request.getCheckInDate().isBefore(exitsInvoice.getCheckOutDate())
@@ -243,16 +281,20 @@ public class InvoiceService {
 
     }
 
-    //    public boolean invoiceCheck(LocalDate checkInDate, LocalDate checkOutDate, int roomId) {
-//        Room room = roomRepository.findById(roomId).orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-//        List<Invoice> existInvoices = room.getInvoices();
-//        return existInvoices.stream()
-//                .noneMatch(exitsInvoice -> checkInDate.isBefore(exitsInvoice.getCheckOutDate())
-//                        && checkOutDate.isAfter(exitsInvoice.getCheckInDate()));
-//    }
+    // public boolean invoiceCheck(LocalDate checkInDate, LocalDate checkOutDate,
+    // int roomId) {
+    // Room room = roomRepository.findById(roomId).orElseThrow(() -> new
+    // AppException(ErrorCode.ROOM_NOT_EXISTED));
+    // List<Invoice> existInvoices = room.getInvoices();
+    // return existInvoices.stream()
+    // .noneMatch(exitsInvoice ->
+    // checkInDate.isBefore(exitsInvoice.getCheckOutDate())
+    // && checkOutDate.isAfter(exitsInvoice.getCheckInDate()));
+    // }
 
-    public void changeStatusAfterPayment(int invoiceId, int status){
-        Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(()->new AppException(ErrorCode.INVOICE_NOT_EXISTED));
+    public void changeStatusAfterPayment(int invoiceId, int status) {
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new AppException(ErrorCode.INVOICE_NOT_EXISTED));
         invoice.setStatus(status);
         invoiceRepository.save(invoice);
     }
@@ -263,15 +305,12 @@ public class InvoiceService {
         List<Invoice> existInvoices = room.getInvoices().stream()
                 .filter(invoice -> invoice.getStatus() == 1)
                 .toList();
-        System.out.println("exitsInvoice"+existInvoices);
-        System.out.println("exitsInvoice"+existInvoices.size());
+        System.out.println("exitsInvoice" + existInvoices);
+        System.out.println("exitsInvoice" + existInvoices.size());
         return existInvoices.stream()
-                .noneMatch(existInvoice ->
-                        checkInDate.isBefore(existInvoice.getCheckOutDate()) &&
-                                checkOutDate.isAfter(existInvoice.getCheckInDate())
-                );
+                .noneMatch(existInvoice -> checkInDate.isBefore(existInvoice.getCheckOutDate()) &&
+                        checkOutDate.isAfter(existInvoice.getCheckInDate()));
     }
-
 
     private void validateDate(InvoiceRequest request) {
         if (request.getCheckInDate() != null && request.getCheckOutDate() != null) {

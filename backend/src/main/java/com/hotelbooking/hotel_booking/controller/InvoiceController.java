@@ -3,6 +3,7 @@ package com.hotelbooking.hotel_booking.controller;
 import com.cloudinary.Api;
 import com.hotelbooking.hotel_booking.dto.request.InvoiceRequest;
 import com.hotelbooking.hotel_booking.dto.response.ApiResponse;
+import com.hotelbooking.hotel_booking.dto.response.InvoiceProjectionResponse;
 import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
 import com.hotelbooking.hotel_booking.entity.Invoice;
 import com.hotelbooking.hotel_booking.service.InvoiceService;
@@ -40,6 +41,15 @@ public class InvoiceController {
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getAllInvoices() {
         List<InvoiceResponse> invoices = invoiceService.getAllInvoices();
+        return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
+                .code(1)
+                .message("Lấy danh sách hóa đơn thành công")
+                .result(invoices)
+                .build());
+    }
+    @GetMapping("/all1")
+    public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getAllInvoice() {
+        List<InvoiceResponse> invoices = invoiceService.getAllInvoicesNoStatistic();
         return ResponseEntity.ok(ApiResponse.<List<InvoiceResponse>>builder()
                 .code(1)
                 .message("Lấy danh sách hóa đơn thành công")
@@ -186,6 +196,14 @@ public class InvoiceController {
                 .result(invoices)
                 .build());
     }
+    @GetMapping("/count/hotel")
+    public ResponseEntity<ApiResponse<List<InvoiceProjectionResponse>>> getInvoiceCount(){
+        List<InvoiceProjectionResponse> invoices = invoiceService.hotelCount();
+        return ResponseEntity.ok(ApiResponse.<List<InvoiceProjectionResponse>>builder()
+                .message("Lấy tổng hoá đơn của các khách sạn thành công")
+                .result(invoices)
+                .build());
+    }
 
     @GetMapping("/checkouttoday")
     public ResponseEntity<ApiResponse<List<InvoiceResponse>>> getCheckoutToday() {
@@ -206,5 +224,11 @@ public class InvoiceController {
                 .result(invoiceResponse)
                 .build());
     }
-
+    @DeleteMapping("/ac/{invoiceId}")
+    public ResponseEntity<ApiResponse<Void>> deleteAdminInvoice(@PathVariable int invoiceId) {
+        invoiceService.deleteInvoice(invoiceId);
+        return ResponseEntity.ok(ApiResponse.<Void>builder()
+                .message("Xóa hóa đơn thành công")
+                .build());
+    }
 }

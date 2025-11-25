@@ -7,18 +7,20 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement
 } from "chart.js/auto";
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend
 );
-import { Bar } from "react-chartjs-2";
-import { ChartSplineIcon } from "lucide-react";
+import { Bar, Doughnut } from "react-chartjs-2";
+import { BanknoteIcon, CalendarDaysIcon, ChartSplineIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../api";
 import RevenueLineChart from "../componentadmin/RevenueLineChart";
@@ -27,9 +29,11 @@ export default function Statistic() {
   const [barFiler, setBarFilter] = useState("7-day-last");
   const [chartData, setChartData] = useState({ labels: [], data: [] });
   const [barChart, setBarChart] = useState({ labels: [], datasets: [] });
+  const [doughnutChart, setDoughtnutChart] = useState({ labels: [], datasets:[]});
+  const [invoicePayment, setInvoicePayment] = useState([]);
   const [invoiceStatus, setInvoiceStatus] = useState([]);
   useEffect(() => {
-    fetchInvoiceStatus();
+    fetchInvoice();
   }, []);
   useEffect(() => {
     updateChartData();
@@ -37,16 +41,29 @@ export default function Statistic() {
   useEffect(() => {
     updateBarChart();
   }, [barFiler]);
-  const fetchInvoiceStatus = async () => {
+  useEffect(() => {
+    if(invoicePayment.length){
+    updatePaymentChart();
+    }
+  }, [invoicePayment]);
+  const fetchInvoice = async () => {
     try {
       const resUser = await api.get("/users/myInfo");
       const userId = resUser.data.result.id;
       const res = await api.get(`/invoice/owner/noPage/${userId}`);
       const invoices = res.data.result || [];
       const invoiceStatus = invoices.filter(
-        (i) => i.status === 2 && i.checkOutDate
+        (i) => i.status === 3 && i.checkOutDate
       );
+      // tìm pttt đã hoàn thành 
+      const invoiceStatues = invoices.filter(
+        (i) => i.status === 3
+      );
+      const invoicePayment = invoiceStatues.map(
+        (i) => i.payment  
+      )
       console.log(invoiceStatus);
+      setInvoicePayment(invoicePayment);
       setInvoiceStatus(invoiceStatus);
     } catch (err) {
       console.error("Lỗi khi lấy invoice status da huy:", err);
@@ -139,8 +156,8 @@ export default function Statistic() {
           const d = new Date(i.checkOutDate);
           if (d >= startOfWeek && d <= endOfWeek) {
             const dayIdx = d.getDay();
-            if (i.status === 2) bookedData[dayIdx]++;
-            if (i.status === 3) canceledData[dayIdx]++;
+            if (i.status === 3) bookedData[dayIdx]++;
+            if (i.status === 4) canceledData[dayIdx]++;
           }
         });
       } else if (barFiler === "this-month") {
@@ -157,8 +174,8 @@ export default function Statistic() {
           const d = new Date(i.checkOutDate);
           if (d.getMonth() === month && d.getFullYear() === year) {
             const day = d.getDate() - 1;
-            if (i.status === 2) bookedData[day]++;
-            if (i.status === 3) canceledData[day]++;
+            if (i.status === 3) bookedData[day]++;
+            if (i.status === 4) canceledData[day]++;
           }
         });
       } else if (barFiler === "this-year") {
@@ -172,8 +189,8 @@ export default function Statistic() {
           const d = new Date(inv.checkOutDate);
           if (d.getFullYear() === y) {
             const month = d.getMonth(); // 0–11
-            if (inv.status === 2) bookedData[month]++;
-            if (inv.status === 3) canceledData[month]++;
+            if (inv.status === 3) bookedData[month]++;
+            if (inv.status === 4) canceledData[month]++;
           }
         });
       }
@@ -199,25 +216,66 @@ export default function Statistic() {
       console.error("Lỗi khi lấy dữ liệu cho biểu đồ Booking/Cancel:", err);
     }
   };
+  const updatePaymentChart = () => {
+    let cash = 0, transfer = 0, card = 0;
+    invoicePayment.forEach((p) => {
+      if(p === 1) cash++;
+      else if (p === 2 ) transfer++;
+      else if (p === 3 ) card++;
+    });
+      const total = cash + transfer + card;
+      const cashPercent = total ? (cash/total) * 100 : 0;
+      const transferPercent = total ? (transfer/total) * 100 : 0;
+      const cardPercent = total ? (card/total) * 100 : 0;
+      setDoughtnutChart({
+        labels: ["Tiền mặt", "Chuyển khoản", "Thẻ"],
+        datasets: [
+      {
+      data: [cashPercent,transferPercent,cardPercent], // ví dụ %
+      backgroundColor: ["#36A2EB", "#4BC0C0", "#FFCE56"],
+      hoverBackgroundColor: ["#36A2EB90", "#4BC0C090", "#FFCE5690"],
+      borderWidth: 1,
+      },
+  ],
+      })
+  }
+  const paymentOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        usePointStyle: true,
+        pointStyle: "circle",
+      },
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => `${context.label}: ${context.parsed}%`,
+      },
+    },
+  },
+  cutout: "30%", 
+  };
 
-  return (
-    <div className="bg-gray-100 rounded-lg shadow-sm p-5 ml-[300px]">
-      <div className="mt-[90px]">
-        {/* Biểu đồ Line */}
+ return (
+    <div className="bg-gray-100 rounded-lg shadow-sm ml-[300px] p-5 w-full"> 
+      <div className="mt-[90px] flex flex-col space-y-5">
         <RevenueLineChart
           chartData={chartData}
           filter={filter}
           setFilter={setFilter}
           title="Biểu đồ thống kê doanh thu"
-          className="ml-32"
+          className="w-full" 
         />
 
-        <div className="flex space-x-5 justify-center items-center">
-          {/* biểu đồ Bar */}
-          <div className="bg-white mb-4 h-max min-w-1/2 px-2 py-5">
-            <h2 className="text-xl font-semibold mb-2 border-b-3 border-b-gray-200">
-              Reservation
-            </h2>
+        <div className="flex flex-col lg:flex-row lg:space-x-5 space-y-5 lg:space-y-0 w-full justify-start items-start">
+          
+          <div className="bg-white h-max px-2 py-5 rounded-lg shadow w-full lg:w-4/6">
+            <div className="text-xl flex items-center gap-2 font-semibold mb-2 border-b-3 border-b-gray-200">
+              <CalendarDaysIcon className="text-blue-500" />
+              <h2 className="text-lg font-semibold">Total Bookings</h2>
+            </div>
             <select
               value={barFiler}
               onChange={(e) => setBarFilter(e.target.value)}
@@ -256,6 +314,17 @@ export default function Statistic() {
               }}
             />
           </div>
+          
+          <div className="bg-white h-max lg:h-[500px] px-4 py-5 rounded-lg shadow w-full lg:w-[350px]">
+            <div className="flex items-center gap-2  mb-4 border-b-2 border-gray-200">
+              <BanknoteIcon className="w-8 h-8"/>
+              <h2 className="text-xl font-semibold">
+              Thống kê theo thanh toán
+              </h2>
+            </div>
+            <Doughnut data={doughnutChart} options={paymentOptions} />
+          </div>
+
         </div>
       </div>
     </div>

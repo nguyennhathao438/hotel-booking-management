@@ -58,7 +58,7 @@ function DetailsHotelView() {
             const response = await api.get(`/service/hotel/${hotelId}`)
             setServices(response.data.result)
         } catch (error) {
-            console.log("Khong the lay dich vu khach san", error)
+            console.log("Không thể lấy dịch vụ khách sạn", error)
         }
     }
 
@@ -120,29 +120,27 @@ function DetailsHotelView() {
 
     const [firstRoomImages, setFirstRoomImages] = useState({});
     useEffect(() => {
-        const fetchImages = async () => {
+        const fetchImgsRoomFirst = async () => {
             const temp = {};
             for (let room of rooms) {
                 try {
-                    const res = await api.get(`/imageRoom/room/${room.roomId}`);
-                    temp[room.roomId] = res.data.result[0].imgUrl;
-                } catch (error) {
-                    console.log("loi khong the lay anh", error)
+                    const res = await api.get(`/imageRoom/room/${room.roomId}/first`);
+                    temp[room.roomId] = res.data?.result?.imgUrl ?? null;
+                } catch (err) {
+                    console.log("Lỗi", err)
                     temp[room.roomId] = null;
                 }
             }
             setFirstRoomImages(temp);
         };
-        if (rooms.length > 0) fetchImages();
+        if (rooms.length > 0) fetchImgsRoomFirst()
     }, [rooms]);
 
     const disableBooking = (status, room) => {
         if (status === 3 || status === 1)
             return (<button></button>)
         else
-            return (<button onClick={() => handleBooking(room.roomId, room)}
-                className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
-            >
+            return (<button onClick={() => handleBooking(room.roomId, room)} className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300">
                 Đặt phòng
             </button>)
     }
@@ -169,39 +167,6 @@ function DetailsHotelView() {
     };
 
 
-    // const checkRoomAvailable = async (roomId) => {
-    //     try {
-    //         const response = await api.get(`/invoice/check-room`, {
-    //             params: {
-    //                 checkInDate: formatDate(checkInDate),
-    //                 checkOutDate: formatDate(checkOutDate),
-    //                 roomId: roomId,
-    //             },
-    //         });
-    //         return response.data.result;
-    //     } catch (error) {
-    //         console.error("Lỗi khi kiểm tra phòng:", error);
-    //         return false;
-    //     }
-    // };
-
-    // const fetchRoomsByHotelId = async () => {
-    //     try {
-    //         const roomData = await api.get(`rooms/hotel/${hotelId}`);
-    //         const roomsWithStatus = await Promise.all(
-    //             roomData.data.result.map(async (room) => {
-    //                 const available = await checkRoomAvailable(room.roomId);
-    //                 return { ...room, available }; // thêm thuộc tính available
-    //             })
-    //         );
-    //         setRooms(roomsWithStatus);
-    //         const imageData = await api.get(`/images/hotel/${hotelId}`);
-    //         setImages(imageData.data.result);
-    //     } catch (error) {
-    //         console.error("Error when load data :", error);
-    //     }
-    // };
-
     useEffect(() => {
         fetchHotelById()
         fetchFeedBackByHotelId()
@@ -209,7 +174,6 @@ function DetailsHotelView() {
         fetchHotelServices()
     }, [hotelId])
 
-    console.log("danh sach room", rooms)
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -218,7 +182,6 @@ function DetailsHotelView() {
             prev === 0 ? feedbacks.length - 1 : prev - 1
         );
     };
-    console.log("danh sach phog", rooms)
 
     const handleNext = () => {
         setCurrentIndex((prev) =>

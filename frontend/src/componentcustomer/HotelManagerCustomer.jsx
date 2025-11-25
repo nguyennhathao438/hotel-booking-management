@@ -11,7 +11,7 @@ const EditHotelForm = ({ onUpdated }) => {
   const [hotelData, setHotelData] = useState({});
   const [images, setImages] = useState([]);
   const [listProvinces, setListProvinces] = useState([]);
-  const [listDistricts, setListDistricts] = useState([]);
+  // const [listDistricts, setListDistricts] = useState([]);
   const [provinceCode, setProvinceCode] = useState("");
   const [district, setDistrict] = useState("");
   const [isEdit, setIsEdit] = useState(false);
@@ -52,20 +52,20 @@ const EditHotelForm = ({ onUpdated }) => {
   }, [hotelId]);
 
   // Lấy quận/huyện theo tỉnh
-  useEffect(() => {
-    if (!provinceCode) {
-      setListDistricts([]);
-      setDistrict("");
-      return;
-    }
+  // useEffect(() => {
+  //   if (!provinceCode) {
+  //     setListDistricts([]);
+  //     setDistrict("");
+  //     return;
+  //   }
 
-    axios
-      .get(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`, {
-        withCredentials: false,
-      })
-      .then((res) => setListDistricts(res.data.districts || []))
-      .catch((err) => console.error("Lỗi lấy quận/huyện:", err));
-  }, [provinceCode]);
+  //   axios
+  //     .get(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`, {
+  //       withCredentials: false,
+  //     })
+  //     .then((res) => setListDistricts(res.data.districts || []))
+  //     .catch((err) => console.error("Lỗi lấy quận/huyện:", err));
+  // }, [provinceCode]);
 
   const handleChange = (e) =>
     setHotelData({ ...hotelData, [e.target.name]: e.target.value });
@@ -149,7 +149,7 @@ const EditHotelForm = ({ onUpdated }) => {
   };
 
   return (
-    <div className="w-[1700px] items-center justify-center min-h-scree ml-[300px]">
+    <div className="min-h-screen flex items-center justify-center pl-[300px]">
       <div className="flex bg-white rounded-2xl pb-4 px-4">
         {/* Form thông tin khách sạn */}
         <div className="flex-1 px-6 py-4 bg-white rounded-xl shadow-sm">
@@ -159,19 +159,27 @@ const EditHotelForm = ({ onUpdated }) => {
 
           {/* Tên khách sạn */}
           <div className="mb-4">
-            <label className="block font-semibold mb-1 text-gray-700">Tên khách sạn</label>
+
+            <label className="block font-semibold mb-1 text-gray-700">
+              Tên khách sạn
+            </label>
+
             <input
               name="hotelName"
               value={hotelData.hotelName || ""}
               onChange={handleChange}
               disabled={!isEdit}
-              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+
+              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
 
-          {/* Chọn địa chỉ */}
+          {/* Chọn địa chỉ
           <div className="mb-4">
-            <label className="block font-semibold mb-1 text-gray-700">Chọn địa chỉ khách sạn</label>
+            <label className="block font-semibold mb-1 text-gray-700">
+              Chọn địa chỉ khách sạn
+            </label>
+>>>>>>> a96cf6fa6d8e07ab285eb9e7216f18cf12b33317
 
             <div className="flex gap-4">
               <select
@@ -183,7 +191,9 @@ const EditHotelForm = ({ onUpdated }) => {
                   setDistrict("");
                 }}
                 disabled={!isEdit}
-                className="w-1/2 bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+
+                className="w-1/2 bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
+
               >
                 <option value="">-- Chọn tỉnh --</option>
                 {listProvinces.map((p) => (
@@ -197,7 +207,8 @@ const EditHotelForm = ({ onUpdated }) => {
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
                 disabled={!isEdit}
-                className="w-1/2 bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+
+                className="w-1/2 bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
               >
                 <option value="">-- Chọn quận --</option>
                 {listDistricts.map((d) => (
@@ -207,24 +218,28 @@ const EditHotelForm = ({ onUpdated }) => {
                 ))}
               </select>
             </div>
-          </div>
+          </div> */}
 
           {/* Địa chỉ */}
           <div className="mb-4">
-            <label className="block font-semibold mb-1 text-gray-700">Nhập tên đường</label>
+            <label className="block font-semibold mb-1 text-gray-700">
+              Tên đường
+            </label>
             <input
               name="hotelAddress"
               value={hotelData.hotelAddress || ""}
               onChange={handleChange}
-              disabled={!isEdit}
-              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              disabled={true}
+              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
 
           {/* Dòng sao + số phòng */}
           <div className="flex gap-4 mb-4">
             <div className="flex-1">
-              <label className="block font-semibold mb-1 text-gray-700">Số sao</label>
+              <label className="block font-semibold mb-1 text-gray-700">
+                Số sao
+              </label>
               <input
                 name="hotelRating"
                 type="number"
@@ -232,45 +247,55 @@ const EditHotelForm = ({ onUpdated }) => {
                 value={hotelData.hotelRating || ""}
                 onChange={handleChange}
                 disabled={!isEdit}
-                className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+
+                className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
+
               />
             </div>
 
             <div className="flex-1">
-              <label className="block font-semibold mb-1 text-gray-700">Tổng số phòng</label>
+
+              <label className="block font-semibold mb-1 text-gray-700">
+                Tổng số phòng
+              </label>
+
               <input
                 name="hotelTotalRoom"
                 type="number"
                 value={hotelData.hotelTotalRoom || ""}
                 onChange={handleChange}
                 disabled={!isEdit}
-                className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
               />
             </div>
           </div>
 
           {/* Điện thoại */}
           <div className="mb-4">
-            <label className="block font-semibold mb-1 text-gray-700">Điện thoại liên hệ</label>
+            <label className="block font-semibold mb-1 text-gray-700">
+              Điện thoại liên hệ
+            </label>
             <input
               name="hotelPhone"
               value={hotelData.hotelPhone || ""}
               onChange={handleChange}
               disabled={!isEdit}
-              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
 
           {/* Mô tả */}
           <div className="mb-4">
-            <label className="block font-semibold mb-1 text-gray-700">Mô tả khách sạn</label>
+            <label className="block font-semibold mb-1 text-gray-700">
+              Mô tả khách sạn
+            </label>
             <textarea
               name="hotelDescription"
               rows={4}
               value={hotelData.hotelDescription || ""}
               onChange={handleChange}
               disabled={!isEdit}
-              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-gray-100 rounded-lg py-2.5 px-4 focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
 
@@ -280,7 +305,7 @@ const EditHotelForm = ({ onUpdated }) => {
               <button
                 type="button"
                 onClick={() => setIsEdit(true)}
-                className="bg-blue-500 text-white px-8 py-2 rounded-lg hover:bg-blue-600"
+                className="bg-amber-600 text-white px-8 py-2 rounded-lg hover:bg-amber-700"
               >
                 Chỉnh sửa
               </button>
@@ -290,14 +315,14 @@ const EditHotelForm = ({ onUpdated }) => {
                 <button
                   type="button"
                   onClick={() => setIsEdit(false)}
-                  className="bg-red-500 text-white px-8 py-2 rounded-lg hover:bg-red-600"
+                  className="bg-amber-300 text-amber-900 px-8 py-2 rounded-lg hover:bg-amber-400"
                 >
                   Hủy
                 </button>
                 <button
                   type="button"
                   onClick={submitHotelUpdate}
-                  className="bg-blue-500 text-white px-8 py-2 rounded-lg ml-4 hover:bg-blue-600"
+                  className="bg-amber-600 text-white px-8 py-2 rounded-lg ml-4 hover:bg-amber-700"
                   disabled={loading}
                 >
                   {loading ? "Đang chỉnh sửa..." : "Xác nhận"}
@@ -307,29 +332,28 @@ const EditHotelForm = ({ onUpdated }) => {
           </div>
         </div>
 
-
         {/* Grid ảnh */}
-        <div className="grid grid-cols-3 gap-2 px-2 flex-1 max-h-[300px] overflow-y-auto">
+        <div className="grid grid-cols-2 gap-2 px-2 flex-1 max-h-[600px] overflow-y-auto">
           {images.map((item, idx) => (
-            <div key={idx} className="relative">
+            <div key={idx} className="relative w-full h-64">
               <button
                 type="button"
                 onClick={() => handleDeleteImage(idx)}
-                className="absolute top-1 right-1 bg-red-500/50 rounded-full w-6 h-6 flex items-center justify-center text-xl"
+                className="absolute top-1 right-1 bg-red-500/50 rounded-full w-6 h-6 flex items-center justify-center text-xl z-10"
               >
                 x
               </button>
               <img
                 src={item.imgUrl || defaultImg}
                 alt={`hotel-${idx}`}
-                className="object-center w-full h-full"
+                className="object-cover w-full h-full rounded"
               />
             </div>
           ))}
 
           {isEdit && (
-            <label className="border border-dashed flex items-center justify-center rounded h-32 cursor-pointer">
-              +
+            <label className="border-2 border-dashed border-gray-300 flex items-center justify-center rounded h-64 cursor-pointer hover:border-amber-600 hover:bg-amber-50 transition">
+              <span className="text-3xl text-gray-400">+</span>
               <input
                 type="file"
                 multiple

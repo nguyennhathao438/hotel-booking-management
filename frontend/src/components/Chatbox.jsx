@@ -18,22 +18,25 @@ export default function ChatBox({ onClose, hotelId }) {
   useEffect(() => {
     if (!customer) return;
 
-    const socket = new SockJS("http://localhost:8080/ws");
+    const socket = new SockJS(`http://localhost:8080/ws?userId=${myId}`);
     const client = over(socket);
     stompClientRef.current = client;
 
     client.connect({}, () => {
-      console.log("✅ WebSocket connected");
-      client.subscribe("/topic/messages", (payload) => {
+      console.log("WebSocket connected");
+
+      client.subscribe(`/user/queue/messages`, (payload) => {
         const msg = JSON.parse(payload.body);
-        setConversation((prev) => [...prev, msg]);
+        if (msg.senderId === customer.id || msg.receiverId === customer.id) {
+          setConversation((prev) => [...prev, msg]);
+        }
       });
     });
 
     return () => {
       if (stompClientRef.current?.connected) {
         stompClientRef.current.disconnect(() =>
-          console.log("✅ WebSocket disconnected")
+          console.log(" WebSocket disconnected")
         );
       }
     };
@@ -131,9 +134,9 @@ export default function ChatBox({ onClose, hotelId }) {
         className="flex-1 overflow-y-auto p-3 space-y-2 bg-white"
         ref={messageContainerRef}
       >
-        {conversation.map((msg) => (
+        {conversation.map((msg, id) => (
           <div
-            key={msg.id}
+            key={id}
             className={`flex ${
               msg.sender?.id === myId ? "justify-end" : "justify-start"
             }`}

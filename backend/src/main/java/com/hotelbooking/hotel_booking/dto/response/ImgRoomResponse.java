@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class ImgRoomResponse {
     int id;
     String imgUrl;
-    Room room;
+    int roomId;
 }

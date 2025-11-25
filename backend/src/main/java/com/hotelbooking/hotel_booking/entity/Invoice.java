@@ -30,6 +30,7 @@ public class Invoice {
     private Double totalAmount;
     private Integer payment;
     private Integer status;
+    private int isDelete;
 
     @ManyToOne
     @JoinColumn(name = "roomID", nullable = false)

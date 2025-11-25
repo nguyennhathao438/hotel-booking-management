@@ -3,6 +3,7 @@ import api from "../api";
 import ModelForm from "../components/Common/FormModel";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { BrickWallShieldIcon, DeleteIcon, PencilIcon, PlusIcon, SettingsIcon, ShieldUserIcon } from "lucide-react/dist/cjs/lucide-react";
 export default function PermissionManager() {
   // Các state cũ giữ nguyên
   const [roleList, setRoleList] = useState([]);
@@ -162,25 +163,33 @@ export default function PermissionManager() {
         <div className="flex justify-start mb-5 space-x-6">
           <div className="bg-white p-4 rounded-lg pl-9 pr-9">
             <p>Tổng vai trò</p>
-            <div className="flex justify-center items-center space-x-1">
-              <p className="text-blue-500">{totalRole}</p>
+            <div className="text-blue-500 flex justify-center items-center space-x-0.5">
+              <SettingsIcon className="w-5 h-5"/>
+              <p>{totalRole}</p>
             </div>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Vai trò hệ thống</p>
-            <p className="text-yellow-500">9</p>
+            <p className="text-yellow-500 space-x-0.5">
+              <ShieldUserIcon className="w-5 h-5 inline"/>
+              <span>9</span>
+            </p>
           </div>
           <div className="bg-white p-4 rounded-lg pl-9 pr-9 text-center">
             <p>Quyền hệ thống</p>
-            <p className="text-blue-500">{permissionList.length}</p>
+            <p className="text-blue-500 space-x-0.5">
+            <BrickWallShieldIcon className="w-5 h-5 inline"/>
+            <span>{permissionList.length}</span>
+            </p>
           </div>
         </div>
         <div className="ml-2 mb-6">
           <button
-            className="px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-700"
+            className="space-x-1 px-3 py-2 bg-blue-500 text-white rounded-md cursor-pointer hover:bg-blue-700"
             onClick={() => setOpenFormRole(true)}
           >
-            Thêm vai trò
+          <PlusIcon className="w-5 h-5 mb-1 inline"/>
+            <span>Thêm vai trò</span>
           </button>
         </div>
         <div className="bg-white rounded-xl shadow-md overflow-hidden mt-5">
@@ -224,19 +233,23 @@ export default function PermissionManager() {
                         )}
                       </ul>
                     </td>
-                    <td className="px-4 py-2 text-center border-b space-x-2">
-                      <button
-                        onClick={() => handleGetRole(role.name)}
-                        className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-700"
-                      >
-                        Sửa
-                      </button>
-                      <button
-                        onClick={() => handleDeleteRole(role.name)}
-                        className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700"
-                      >
-                        Xóa
-                      </button>
+                    <td className="px-4 py-2 text-center border-b">
+                      <div className="flex justify-center gap-2">
+                         <button
+                          onClick={() => handleGetRole(role.name)}
+                          className="bg-teal-500 hover:bg-teal-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
+                          >
+                          <PencilIcon size = {14}/>
+                          <span>Sửa</span>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteRole(role.name)}
+                            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md flex items-center space-x-1 text-xs"
+                          >
+                          <DeleteIcon size={14} />
+                          <span>Xóa</span>
+                          </button>
+                      </div>
                     </td>
                   </tr>
                 ))

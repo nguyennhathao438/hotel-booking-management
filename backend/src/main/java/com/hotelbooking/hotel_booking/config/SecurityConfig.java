@@ -29,109 +29,116 @@ import java.util.List;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-    @Autowired
-    CustomOAuth2UserService customOAuth2UserService;
-    @Autowired
-    CustomOAuth2FailureHandler customOAuth2FailureHandler;
-    @Autowired
-    CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
-    private final String[] PUBLIC_ENDPOINTS = { "/api/users/register", "/api/auth/login", "/api/auth/introspect",
-            "/api/hotels/all", "/api/auth/refresh", "/api/auth/login/google","/api/payment/vn-pay-callback" ,
-            "/ws/info","/api/hotels/all/get-page","/api/images/all","api/images/hotel/**","api/hotels/search/**"
-    };
-    @Value("${jwt.signerKey}")
-    private String signerKey;
-    // -------------------------
-    // --Cau hinh Spring Security
-    // -------------------------
-    @Autowired
-    CustomJwtDecoder customJwtDecoder;
+        @Autowired
+        CustomOAuth2UserService customOAuth2UserService;
+        @Autowired
+        CustomOAuth2FailureHandler customOAuth2FailureHandler;
+        @Autowired
+        CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+        private final String[] PUBLIC_ENDPOINTS = { "/api/users/register", "/api/auth/login", "/api/auth/introspect",
+                        "/api/hotels/all", "/api/auth/refresh", "/api/auth/login/google",
+                        "/api/payment/vn-pay-callback",
+                        "/ws/info", "/api/hotels/all/get-page", "/api/images/all", "api/images/hotel/**",
+                        "api/hotels/search/**"
+        };
+        @Value("${jwt.signerKey}")
+        private String signerKey;
+        // -------------------------
+        // --Cau hinh Spring Security
+        // -------------------------
+        @Autowired
+        CustomJwtDecoder customJwtDecoder;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers("/", "/login", "/oauth2/**").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/ws/**").permitAll()
-                        .requestMatchers("/topic/**").permitAll()
-                        .requestMatchers("/app/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS).permitAll()
-                        .anyRequest().authenticated())
-                // Kích hoạt xác thực Oath2
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService))
-                        .failureHandler(customOAuth2FailureHandler)
-                        .successHandler(customOAuth2SuccessHandler))
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
-                            response.setStatus(401);
-                            response.setContentType("application/json;charset=UTF-8");
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+                httpSecurity
+                                .cors(Customizer.withDefaults())
+                                .authorizeHttpRequests(request -> request
+                                                .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                                                .requestMatchers("/", "/login", "/oauth2/**").permitAll()
+                                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                                .requestMatchers("/ws/**").permitAll()
+                                                .requestMatchers("/topic/**").permitAll()
+                                                .requestMatchers("/app/**").permitAll()
+                                                .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS).permitAll()
+                                                .anyRequest().authenticated())
+                                // Kích hoạt xác thực Oath2
+                                .oauth2Login(oauth2 -> oauth2
+                                                .userInfoEndpoint(userInfo -> userInfo
+                                                                .userService(customOAuth2UserService))
+                                                .failureHandler(customOAuth2FailureHandler)
+                                                .successHandler(customOAuth2SuccessHandler))
+                                .exceptionHandling(ex -> ex
+                                                .authenticationEntryPoint((request, response, authException) -> {
+                                                        ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
+                                                        response.setStatus(401);
+                                                        response.setContentType("application/json;charset=UTF-8");
 
-                            ApiResponse<Object> apiResponse = new ApiResponse<>(
-                                    errorCode.getCode(),
-                                    errorCode.getMessage(),
-                                    null);
+                                                        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                                                                        errorCode.getCode(),
+                                                                        errorCode.getMessage(),
+                                                                        null);
 
-                            ObjectMapper mapper = new ObjectMapper();
-                            response.getWriter().write(mapper.writeValueAsString(apiResponse));
-                        })
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
-                            response.setStatus(403);
-                            response.setContentType("application/json;charset=UTF-8");
+                                                        ObjectMapper mapper = new ObjectMapper();
+                                                        response.getWriter()
+                                                                        .write(mapper.writeValueAsString(apiResponse));
+                                                })
+                                                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                                                        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+                                                        response.setStatus(403);
+                                                        response.setContentType("application/json;charset=UTF-8");
 
-                            ApiResponse<Object> apiResponse = new ApiResponse<>(
-                                    errorCode.getCode(),
-                                    errorCode.getMessage(),
-                                    null);
+                                                        ApiResponse<Object> apiResponse = new ApiResponse<>(
+                                                                        errorCode.getCode(),
+                                                                        errorCode.getMessage(),
+                                                                        null);
 
-                            ObjectMapper mapper = new ObjectMapper();
-                            response.getWriter().write(mapper.writeValueAsString(apiResponse));
-                        })
+                                                        ObjectMapper mapper = new ObjectMapper();
+                                                        response.getWriter()
+                                                                        .write(mapper.writeValueAsString(apiResponse));
+                                                })
 
-                );
-        // Đăng ký Authentication provider để decode JWT
-        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(customJwtDecoder)
-                .jwtAuthenticationConverter(jwtAuthenticationConverter())));
-        httpSecurity.csrf(AbstractHttpConfigurer::disable);
-        return httpSecurity.build();
-    }
+                                );
+                // Đăng ký Authentication provider để decode JWT
+                httpSecurity.oauth2ResourceServer(
+                                oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(customJwtDecoder)
+                                                .jwtAuthenticationConverter(jwtAuthenticationConverter())));
+                httpSecurity.csrf(AbstractHttpConfigurer::disable);
+                return httpSecurity.build();
+        }
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
+        @Bean
+        PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder(10);
+        }
 
-    // -------------------------
-    // --Converter scope
-    // -------------------------
-    @Bean
-    JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-        return jwtAuthenticationConverter;
+        // -------------------------
+        // --Converter scope
+        // -------------------------
+        @Bean
+        JwtAuthenticationConverter jwtAuthenticationConverter() {
+                JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+                jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
+                JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+                jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+                return jwtAuthenticationConverter;
 
-    }
+        }
 
-    // -------------------------
-    // --Setup CORS Cho frontend lấy dữ liệu
-    // -------------------------
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173","http://localhost:80","http://localhost"));
-        configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true);
+        // -------------------------
+        // --Setup CORS Cho frontend lấy dữ liệu
+        // -------------------------
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(
+                                List.of("http://localhost:5173", "http://localhost:80", "http://localhost"));
+                configuration.setAllowedMethods(List.of("*"));
+                configuration.setAllowedHeaders(List.of("*"));
+                configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
+        }
 }
