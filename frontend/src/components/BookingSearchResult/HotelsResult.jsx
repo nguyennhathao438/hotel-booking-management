@@ -522,6 +522,7 @@ export default function HotelProvince() {
     const [selectedDistrict, setSelectedDistrict] = useState("");
     const [filteredHotels, setFilteredHotels] = useState(hotelProvince);
     const { checkInDate, checkOutDate } = useContext(Context)
+    const [viewMode, setViewMode] = useState("Xem ngang")
 
     useEffect(() => {
         const fetchAllImgHotel = async () => {
@@ -570,6 +571,7 @@ export default function HotelProvince() {
         setSelectedDistrict(newDistrict);
         applyFilters(selectedStar, newDistrict);
     };
+
     const [showAllDistricts, setShowAllDistricts] = useState(false);
     const displayedDistricts = showAllDistricts
         ? districts
@@ -579,15 +581,28 @@ export default function HotelProvince() {
 
     return (
         <div className="h-auto ">
-            <div className="w-[90%] border border-gray-300 rounded-xl mx-auto">
+            <div className="w-[98%] border border-gray-300 rounded-xl mx-auto">
                 <div className="px-5 py-3">
                     <span className="font-bold text-center block py-2 text-xl">Tìm thấy {hotelProvince.length} chỗ nghỉ ở {province}</span>
                     <span className="font-light text-center py-2 block text-md">Click nút bên dưới để tìm phòng trống từ {checkInDate.toLocaleDateString()} đến {checkOutDate.toLocaleDateString()}</span>
+                    <div className="flex justify-end mb-4">
+                        <button className="px-4 py-1 border border-gray-200 gap-2 flex rounded-xl bg-gray-200">
+                            <button className={`px-3 py-1.5 cursor-pointer rounded-xl border transition ${viewMode === "Xem ngang" ? "bg-blue-500 text-white shadow-md" : "bg-white text-gray-700 hover:bg-blue-100"}`}
+                                onClick={() => setViewMode("Xem ngang")}>
+                                Xem ngang
+                            </button>
+                            <button className={`px-3 py-1.5 cursor-pointer rounded-xl border transition ${viewMode === "Xem dọc" ? "bg-blue-500 text-white shadow-md" : "bg-white text-gray-700 hover:bg-blue-100"}`}
+                                onClick={() => setViewMode("Xem dọc")}>
+                                Xem dọc
+                            </button>
+                        </button>
+                    </div>
+
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-5">
                     {/* SIDEBAR BÊN TRÁI */}
-                    <div className="flex flex-col gap-3 md:block md:w-1/4">
+                    <div className="flex flex-col gap-2 md:block md:w-1/5">
                         <div className="">
                             {/* Lọc theo sao */}
                             <div className="border border-gray-300 rounded-xl p-4 mb-5">
@@ -629,10 +644,7 @@ export default function HotelProvince() {
 
                                 {/* Nút xem thêm */}
                                 {districts.length > 8 && (
-                                    <button
-                                        onClick={() => setShowAllDistricts(!showAllDistricts)}
-                                        className="mt-2 text-black-600 cursor-pointer text-center underline"
-                                    >
+                                    <button onClick={() => setShowAllDistricts(!showAllDistricts)} className="mt-2 text-black-600 cursor-pointer text-center underline">
                                         {showAllDistricts ? "Ẩn bớt" : "Tải thêm kết quả"}
                                     </button>
                                 )}
@@ -643,93 +655,184 @@ export default function HotelProvince() {
 
 
                     {/* DANH SÁCH KHÁCH SẠN BÊN PHẢI */}
-                    <div className="w-full md:w-3/4">
-                        <div className="grid grid-cols-1 gap-4 md:gap-6 p-2">
-                            {filteredHotels.map((item) => {
-                                const hotelImages = images.filter(
-                                    (img) => img.hotel.hotelId === item.hotelId
-                                );
+                    {
+                        viewMode === "Xem ngang" && (
+                            <div className="w-full md:w-4/5">
+                                <div className="grid grid-cols-1 gap-4 md:gap-6 p-2">
+                                    {filteredHotels.map((item) => {
+                                        const hotelImages = images.filter(
+                                            (img) => img.hotel.hotelId === item.hotelId
+                                        );
 
-                                return (
-                                    <div
-                                        key={item.hotelId}
-                                        className="flex flex-col md:flex-row bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-                                    >
-                                        {/* Ảnh khách sạn */}
-                                        <div className="md:w-1/3 h-48 md:h-auto">
-                                            {hotelImages && hotelImages.length > 0 ? (
-                                                <ImageSlider sliders={hotelImages} />
-                                            ) : (
-                                                <div className="flex justify-center items-center h-full text-[#4b2e1f]/70">
-                                                    Chưa có hình ảnh
+                                        return (
+                                            <div
+                                                key={item.hotelId}
+                                                className="flex flex-col md:flex-row bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+                                            >
+                                                {/* Ảnh khách sạn */}
+                                                <div className="md:w-1/3 h-48 md:h-auto">
+                                                    {hotelImages && hotelImages.length > 0 ? (
+                                                        <ImageSlider sliders={hotelImages} />
+                                                    ) : (
+                                                        <div className="flex justify-center items-center h-full text-[#4b2e1f]/70">
+                                                            Chưa có hình ảnh
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
-                                        </div>
 
-                                        {/* Thông tin */}
-                                        <div className="flex-1 flex flex-col justify-between p-4">
-                                            <div>
-                                                {/* Tên khách sạn */}
-                                                <div className="flex">
-                                                    <div className="shrink-0">
+                                                {/* Thông tin */}
+                                                <div className="flex-1 flex flex-col justify-between p-4">
+                                                    <div>
+                                                        {/* Tên khách sạn */}
+                                                        <div className="flex">
+                                                            <div className="shrink-0">
+                                                                <Link to={`/detailshotel/${item.hotelId}`}>
+                                                                    <h2 className="text-2xl font-bold text-blue-600 mb-1">
+                                                                        {item.hotelName}
+                                                                    </h2>
+                                                                </Link>
+                                                            </div>
+                                                            <div className="flex justify-end w-full items-center">
+                                                                <Phone className="text-blue-500 mx-2" />
+                                                                <span>Liên hệ : {item.hotelPhone}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Địa chỉ */}
+                                                        <div className="flex items-start gap-2 mb-2">
+                                                            <FaMapMarkerAlt className="text-red-500 mt-1" />
+                                                            <p className="text-gray-700">
+                                                                <span className="font-semibold text-gray-800">
+                                                                    Địa chỉ:
+                                                                </span>{" "}
+                                                                {item.hotelAddress}
+                                                            </p>
+                                                        </div>
+
+                                                        {/* Mô tả */}
+                                                        <p className="text-gray-600 text-sm md:text-base mb-2 line-clamp-2">
+                                                            {item.hotelDescription}
+                                                        </p>
+
+                                                        {/* Rating + số phòng */}
+                                                        <div className="flex flex-wrap gap-4 text-sm md:text-base text-gray-700">
+                                                            <span>
+                                                                <strong>⭐ {item.hotelRating.toFixed(1)}</strong> / 5
+                                                            </span>
+                                                            <span>|</span>
+                                                            <span>{item.hotelTotalRoom} phòng</span>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Giá & nút */}
+                                                    <div className="flex justify-between items-center mt-4">
+                                                        <div>
+                                                            <span className="text-gray-600 text-sm">Giá từ</span>
+                                                            <p className="text-lg md:text-xl font-semibold text-green-600">
+                                                                {item.hotelCost.toLocaleString("vi-VN")}₫ / đêm
+                                                            </p>
+                                                        </div>
                                                         <Link to={`/detailshotel/${item.hotelId}`}>
-                                                            <h2 className="text-2xl font-bold text-blue-600 mb-1">
+                                                            <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-xl transition">
+                                                                Xem phòng trống
+                                                            </button>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    }
+
+                    {
+                        viewMode === "Xem dọc" && (
+                            <div className="w-full md:w-4/5 mx-auto">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-2">
+                                    {filteredHotels.map((item) => {
+                                        const hotelImages = images.filter(img => img.hotel.hotelId === item.hotelId);
+
+                                        return (
+                                            <div
+                                                key={item.hotelId}
+                                                className="flex flex-col h-full bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+                                            >
+                                                {/* Ảnh khách sạn */}
+                                                <div className="w-full h-56 relative">
+                                                    {hotelImages.length > 0 ? (
+                                                        <ImageSlider sliders={hotelImages} />
+                                                    ) : (
+                                                        <div className="flex justify-center items-center h-full text-[#4b2e1f]/70">
+                                                            Chưa có hình ảnh
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                {/* Nội dung */}
+                                                <div className="p-4 flex flex-col gap-2 grow">
+                                                    {/* Tên + liên hệ */}
+                                                    <div className="flex justify-between items-start">
+                                                        <Link to={`/detailshotel/${item.hotelId}`} className="flex-1">
+                                                            <h2 className="text-lg md:text-xl font-bold text-blue-600 line-clamp-2">
                                                                 {item.hotelName}
                                                             </h2>
                                                         </Link>
+                                                        <div className="flex items-center gap-1 mt-1 text-sm text-gray-700">
+                                                            <Phone className="text-blue-500 w-4 h-4" />
+                                                            <span>{item.hotelPhone}</span>
+                                                        </div>
                                                     </div>
-                                                    <div className="flex justify-end w-full items-center">
-                                                        <Phone className="text-blue-500 mx-2" />
-                                                        <span>Liên hệ : {item.hotelPhone}</span>
-                                                    </div>
-                                                </div>
 
-                                                {/* Địa chỉ */}
-                                                <div className="flex items-start gap-2 mb-2">
-                                                    <FaMapMarkerAlt className="text-red-500 mt-1" />
-                                                    <p className="text-gray-700">
-                                                        <span className="font-semibold text-gray-800">
-                                                            Địa chỉ:
-                                                        </span>{" "}
-                                                        {item.hotelAddress}
+                                                    {/* Địa chỉ */}
+                                                    <div className="flex items-start gap-2 text-gray-700 text-sm">
+                                                        <FaMapMarkerAlt className="text-red-500 mt-1" />
+                                                        <p className="line-clamp-2">
+                                                            <span className="font-semibold">Địa chỉ:</span> {item.hotelAddress}
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Mô tả */}
+                                                    <p className="text-gray-600 text-sm md:text-base line-clamp-3">
+                                                        {item.hotelDescription}
                                                     </p>
-                                                </div>
 
-                                                {/* Mô tả */}
-                                                <p className="text-gray-600 text-sm md:text-base mb-2 line-clamp-2">
-                                                    {item.hotelDescription}
-                                                </p>
+                                                    {/* Rating + số phòng */}
+                                                    <div className="flex gap-3 text-sm text-gray-700">
+                                                        <span>
+                                                            <strong>⭐ {item.hotelRating.toFixed(1)}</strong> / 5
+                                                        </span>
+                                                        <span>|</span>
+                                                        <span>{item.hotelTotalRoom} phòng</span>
+                                                    </div>
 
-                                                {/* Rating + số phòng */}
-                                                <div className="flex flex-wrap gap-4 text-sm md:text-base text-gray-700">
-                                                    <span>
-                                                        <strong>⭐ {item.hotelRating.toFixed(1)}</strong> / 5
-                                                    </span>
-                                                    <span>|</span>
-                                                    <span>{item.hotelTotalRoom} phòng</span>
+                                                    {/* Giá & nút */}
+                                                    <div className="flex justify-between items-center mt-auto">
+                                                        <div>
+                                                            <span className="text-gray-600 text-xs">Giá từ</span>
+                                                            <p className="text-lg md:text-lg font-semibold text-green-600">
+                                                                {item.hotelCost.toLocaleString("vi-VN")}₫ / đêm
+                                                            </p>
+                                                        </div>
+
+                                                        <Link to={`/detailshotel/${item.hotelId}`}>
+                                                            <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-3 py-2 rounded-xl transition">
+                                                                Xem phòng trống
+                                                            </button>
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    }
 
-                                            {/* Giá & nút */}
-                                            <div className="flex justify-between items-center mt-4">
-                                                <div>
-                                                    <span className="text-gray-600 text-sm">Giá từ</span>
-                                                    <p className="text-lg md:text-xl font-semibold text-green-600">
-                                                        {item.hotelCost.toLocaleString("vi-VN")}₫ / đêm
-                                                    </p>
-                                                </div>
-                                                <Link to={`/detailshotel/${item.hotelId}`}>
-                                                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-xl transition">
-                                                        Xem phòng trống
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
+
+
                 </div>
 
             </div>

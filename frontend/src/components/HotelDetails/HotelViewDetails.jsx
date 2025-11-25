@@ -18,7 +18,8 @@ import ChatBox from "../Chatbox";
 import { Context } from "../RoomContext";
 import ModelForm from "../Common/FormModel";
 function DetailsHotelView() {
-
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
     const scrollRef = useRef(null);
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -30,6 +31,7 @@ function DetailsHotelView() {
             });
         }
     };
+
 
     const formatDate = (date) => {
         const d = new Date(date);
@@ -135,6 +137,23 @@ function DetailsHotelView() {
         };
         if (rooms.length > 0) fetchImgsRoomFirst()
     }, [rooms]);
+
+    useEffect(() => {
+        const el = scrollRef.current;
+        if (!el) return;
+
+        const checkScroll = () => {
+            const { scrollLeft, scrollWidth, clientWidth } = el;
+
+            setCanScrollLeft(scrollLeft > 0);
+            setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
+        };
+
+        checkScroll();
+        el.addEventListener("scroll", checkScroll);
+
+        return () => el.removeEventListener("scroll", checkScroll);
+    }, [hotel]);
 
     const disableBooking = (status, room) => {
         if (status === 3 || status === 1)
@@ -372,10 +391,11 @@ function DetailsHotelView() {
                             <h2 ref={serviceRef} className="text-xl px-6 font-semibold pt-4">Danh sách tiện nghi nổi bật của khách sạn</h2>
                             <div className="relative py-2 px-4">
                                 {/* Vùng cuộn danh sách */}
-                                <button onClick={() => scroll("left")} className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                    </svg>
+                                <button onClick={() => scroll("left")}
+                                    className={`hidden cursor-pointer md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition
+                    ${!canScrollLeft ? "opacity-0 pointer-events-none" : ""}`}
+                                >
+                                    <ChevronLeft className="text-blue-600" />
                                 </button>
                                 <div ref={scrollRef} className="flex gap-4 overflow-x scroll-smooth scrollbar-hidden md:overflow-hidden px-2">
                                     {services.map((s) => (
@@ -388,10 +408,11 @@ function DetailsHotelView() {
                                         </div>
                                     ))}
                                 </div>
-                                <button onClick={() => scroll("right")} className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                    </svg>
+                                <button onClick={() => scroll("right")}
+                                    className={`hidden cursor-pointer md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition
+                    ${!canScrollRight ? "opacity-0 pointer-events-none" : ""}`}
+                                >
+                                    <ChevronRight className="text-blue-600" />
                                 </button>
                             </div>
                         </div>

@@ -14,7 +14,8 @@ import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
-    boolean existsByRoomName(String roomName);
+    @Query("SELECT r FROM Room r WHERE r.hotel.hotelId = :hotelId ORDER BY r.roomPrice ASC LIMIT 1")
+    Room findMinPriceByHotel_HotelId(int hotelId);
 
     List<Room> findAllByHotel_HotelId(Integer hotelHotelId);
 

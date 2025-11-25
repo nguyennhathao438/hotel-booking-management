@@ -12,6 +12,8 @@ function Hotels() {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
     const scrollRef = useRef(null);
+    const [minPrices, setMinPrices] = useState({});
+
 
 
     useEffect(() => {
@@ -74,6 +76,26 @@ function Hotels() {
             fetchImgsHotelFirst()
     }, [hotels]);
 
+
+    useEffect(() => {
+        const fetchMinPrices = async () => {
+            const temp = {};
+            for (let hotel of hotels) {
+                try {
+                    const res = await api.get(`/rooms/hotel/${hotel.hotelId}/min-price`);
+                    temp[hotel.hotelId] = res.data?.result?.roomPrice ?? null;
+                } catch (err) {
+                    console.log("Lỗi lấy giá min", err);
+                    temp[hotel.hotelId] = null;
+                }
+            }
+            setMinPrices(temp);
+        };
+
+        if (hotels.length > 0) fetchMinPrices();
+    }, [hotels]);
+
+
     return (
         <div className="p-4">
             <h3 className="w-full p-4 font-bold font-sans text-lg md:text-xl">
@@ -108,7 +130,7 @@ function Hotels() {
                                     <p className="hidden md:block text-sm text-gray-500 line-clamp-2 text-center">{hotel.hotelDescription}</p>
                                     <div className="flex justify-between items-center mt-2">
                                         <span className="font-semibold text-blue-600"> ⭐ {hotel.hotelRating && (hotel.hotelRating.toFixed(1))}</span>
-                                        <span className="font-semibold text-orange-600 text-sm">{hotel.hotelCost.toLocaleString()} VNĐ</span>
+                                        <span className="font-semibold text-orange-600 text-sm">Chỉ từ : {minPrices[hotel.hotelId]?.toLocaleString() || "—"} VNĐ</span>
                                     </div>
                                 </div>
                             </li>

@@ -87,7 +87,7 @@ public class RoomService {
         LocalDate today = LocalDate.now();
         for (Invoice inv : room.getInvoices()) {
             if (inv.getStatus() != 1 && inv.getStatus() != 2)
-                continue; // chỉ tính booking đã xác nhận
+                continue; // chỉ tính booking đã xác nhận và đã thanh toán
             // Khách đang ở
             // if (!today.isBefore(inv.getCheckInDate()) &&
             // today.isBefore(inv.getCheckOutDate())) {
@@ -112,6 +112,11 @@ public class RoomService {
         return rooms.stream()
                 .map(this::mapToRoomResponse)
                 .toList();
+    }
+
+    public RoomResponse findMinPriceByHotel_HotelId(int hotelId) {
+        Room room = roomRepository.findMinPriceByHotel_HotelId(hotelId);
+        return mapToRoomResponse(room);
     }
 
     public void setStatusRoom(int roomId, int status) {
