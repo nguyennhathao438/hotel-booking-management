@@ -1,6 +1,5 @@
 package com.hotelbooking.hotel_booking.service;
 
-
 import com.hotelbooking.hotel_booking.dto.request.ServiceRequest;
 import com.hotelbooking.hotel_booking.dto.response.ServiceResponse;
 import com.hotelbooking.hotel_booking.dto.response.UserResponse;
@@ -105,13 +104,12 @@ public class DichvuTest {
         assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.SERVICE_NOT_EXISTED);
     }
 
-
     @Test
     @DisplayName("Lấy danh sách dịch vụ theo hotel thành công")
     void getServicesByHotelId_Success() {
-        String[] names = {"Spa", "Gym", "Pool"};
-        String[] descriptions = {"Relaxing spa", "Fitness service", "Swimming pool"};
-        double[] prices = {100.0, 50.0, 150.0};
+        String[] names = { "Spa", "Gym", "Pool" };
+        String[] descriptions = { "Relaxing spa", "Fitness service", "Swimming pool" };
+        double[] prices = { 100.0, 50.0, 150.0 };
 
         for (int i = 0; i < names.length; i++) {
             ServiceRequest request = new ServiceRequest();
@@ -171,6 +169,39 @@ public class DichvuTest {
     }
 
     @Test
+    @DisplayName("Tạo dịch vụ với icon hoặc description null hoặc rỗng")
+    void createService_NullOrEmptyOptionalFields() {
+
+        ServiceRequest request1 = new ServiceRequest();
+        request1.setHotelID(testHotel.getHotelId());
+        request1.setServiceName("Valid Name Test 1");
+        request1.setDescription(null);
+        request1.setIcon("icon.png");
+
+        ServiceResponse response1 = dichvuService.createService(request1);
+        assertThat(response1.getDescription()).isNull();
+
+        ServiceRequest request2 = new ServiceRequest();
+        request2.setHotelID(testHotel.getHotelId());
+        request2.setServiceName("Valid Name Test 2");
+        request2.setDescription("Some desc");
+        request2.setIcon(null);
+
+        ServiceResponse response2 = dichvuService.createService(request2);
+        assertThat(response2.getIcon()).isNull();
+
+        ServiceRequest request3 = new ServiceRequest();
+        request3.setHotelID(testHotel.getHotelId());
+        request3.setServiceName("Valid Name Test 3");
+        request3.setDescription("");
+        request3.setIcon("");
+
+        ServiceResponse response3 = dichvuService.createService(request3);
+        assertThat(response3.getDescription()).isEqualTo("");
+        assertThat(response3.getIcon()).isEqualTo("");
+    }
+
+    @Test
     @DisplayName("getServicesByHotelId với hotel có user null")
     void getServicesByHotelId_HotelWithNullUser() {
         Hotel hotelWithoutUser = Hotel.builder()
@@ -211,6 +242,5 @@ public class DichvuTest {
         UserResponse userResponse = dichvu.mapToUserResponse(userWithoutRoles);
         assertThat(userResponse.getRoles()).isEmpty();
     }
-
 
 }

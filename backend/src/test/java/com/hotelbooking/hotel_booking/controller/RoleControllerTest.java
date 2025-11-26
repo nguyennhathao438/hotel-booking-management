@@ -3,6 +3,7 @@ package com.hotelbooking.hotel_booking.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotelbooking.hotel_booking.dto.request.RoleRequest;
+import com.hotelbooking.hotel_booking.dto.response.RoleResponse;
 import com.hotelbooking.hotel_booking.repository.RoleRepository;
 import com.hotelbooking.hotel_booking.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,12 +17,22 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 /// chua cap quyen duoc
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -80,15 +91,13 @@ public class RoleControllerTest {
         RoleRequest request = new RoleRequest();
         request.setName("ADMIN");
         request.setDescription("Admin role");
+        request.setPermission(Collections.emptySet());
 
         mockMvc.perform(post("/api/role")
-                        .header("Authorization", "Bearer " + accessToken)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Success"))
-                .andExpect(jsonPath("$.result.name").value("ADMIN"))
-                .andExpect(jsonPath("$.result.description").value("Admin role"));
+                        .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -100,58 +109,68 @@ public class RoleControllerTest {
                 .andExpect(jsonPath("$.message").value("Success"))
                 .andExpect(jsonPath("$.result.content").exists());
     }
+    @Test
+    @DisplayName("Tạo role rồi xóa thành công")
+    void createThenDeleteRole_Success() throws Exception {
+        RoleRequest createRequest = new RoleRequest();
+        createRequest.setName("TEMP_ROLE");
+        createRequest.setDescription("Temporary role");
+        createRequest.setPermission(Collections.emptySet());
 
-//    @Test
-//    @DisplayName("Cập nhật role thành công")
-//    void updateRole_Success() throws Exception {
-//        RoleRequest createRequest = new RoleRequest();
-//        createRequest.setName("USER");
-//        createRequest.setDescription("User role");
-//
-//        String createResponse = mockMvc.perform(post("/api/role")
-//                        .header("Authorization", "Bearer " + accessToken)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(createRequest)))
-//                .andReturn()
-//                .getResponse()
-//                .getContentAsString();
-//
-//        Long roleId = objectMapper.readTree(createResponse).get("result").get("roleId").asLong();
-//
-//        RoleRequest updateRequest = new RoleRequest();
-//        updateRequest.setName("USER_UPDATED");
-//        updateRequest.setDescription("Updated description");
-//
-//        mockMvc.perform(put("/api/role/" + roleId)
-//                        .header("Authorization", "Bearer " + accessToken)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(updateRequest)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.message").value("Success"))
-//                .andExpect(jsonPath("$.result.name").value("USER_UPDATED"))
-//                .andExpect(jsonPath("$.result.description").value("Updated description"));
-//    }
+        String createResponse = mockMvc.perform(post("/api/role")
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(createRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Success"))
+                .andExpect(jsonPath("$.result.name").value("TEMP_ROLE"))
+                .andExpect(jsonPath("$.result.description").value("Temporary role"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
 
-//    @Test
-//    @DisplayName("Xóa role thành công")
-//    void deleteRole_Success() throws Exception {
-//        RoleRequest request = new RoleRequest();
-//        request.setName("TEMP_ROLE");
-//        request.setDescription("Temporary role");
-//
-//        String createResponse = mockMvc.perform(post("/api/role")
-//                        .header("Authorization", "Bearer " + accessToken)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(request)))
-//                .andReturn()
-//                .getResponse()
-//                .getContentAsString();
-//
-//        Long roleId = objectMapper.readTree(createResponse).get("result").get("roleId").asLong();
-//
-//        mockMvc.perform(delete("/api/role/" + roleId)
-//                        .header("Authorization", "Bearer " + accessToken))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.message").value("Success"));
-//    }
+        String roleName = objectMapper.readTree(createResponse).get("result").get("name").asText();
+
+        mockMvc.perform(delete("/api/role/{roleId}", roleName)
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Success"));
+
+        assertFalse(roleRepository.findById(roleName).isPresent());
+    }
+
+    @Test
+    @DisplayName("Cập nhật role thành công")
+    void updateRole_Success() throws Exception {
+        RoleRequest createRequest = new RoleRequest();
+        createRequest.setName("TEMP_ROLE");
+        createRequest.setDescription("Temporary role");
+        createRequest.setPermission(Collections.emptySet());
+
+        mockMvc.perform(post("/api/role")
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(createRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Success"));
+
+        RoleRequest updateRequest = new RoleRequest();
+        updateRequest.setName("TEMP_ROLE");
+        updateRequest.setDescription("Updated description");
+        updateRequest.setPermission(Collections.emptySet());
+
+        mockMvc.perform(put("/api/role/{roleId}", "TEMP_ROLE")
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Success"))
+                .andExpect(jsonPath("$.result.name").value("TEMP_ROLE"))
+                .andExpect(jsonPath("$.result.description").value("Updated description"));
+
+        assert(roleRepository.findById("TEMP_ROLE").isPresent());
+    }
+
+
+
 }

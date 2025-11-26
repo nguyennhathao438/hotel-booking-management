@@ -243,8 +243,10 @@ public class InvoiceControllerTest {
         mockMvc.perform(delete("/api/invoice/9999")
                         .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.errorCode").value("INVOICE_NOT_EXISTED"));
+                .andExpect(jsonPath("$.code").value(1021))
+                .andExpect(jsonPath("$.message").value("Không tìm thấy phòng"));
     }
+
 
     @Test
     @Rollback

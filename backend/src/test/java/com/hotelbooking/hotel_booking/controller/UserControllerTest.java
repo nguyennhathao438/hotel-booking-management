@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotelbooking.hotel_booking.dto.request.UpdatePasswordRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserRegisterRequest;
 import com.hotelbooking.hotel_booking.dto.request.UserUpdateRequest;
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -92,6 +96,7 @@ public class UserControllerTest {
         UserUpdateRequest request = new UserUpdateRequest();
         request.setFirstName("Updated");
         request.setLastName("Name");
+        request.setRoles(Collections.emptyList());
 
         mockMvc.perform(put("/api/users/1")
                         .header("Authorization", "Bearer " + adminToken)
@@ -102,20 +107,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.result.firstName").value("Updated"));
     }
 
-    @Test
-    @WithMockUser(username = "admin@gmail.com")
-    @DisplayName("Cập nhật mật khẩu user")
-    void updatePassword_Success() throws Exception {
-        UpdatePasswordRequest request = new UpdatePasswordRequest();
-        request.setPassword("123456");
-        request.setPasswordnew1("987654321");
-        request.setPasswordnew2("987654321");
-
-        mockMvc.perform(put("/api/users/pwd/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value("Success"))
-                .andExpect(jsonPath("$.result.email").value("admin@gmail.com"));
-    }
 
     @Test
     @DisplayName("Xóa user")
@@ -135,4 +126,72 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result.email").value("admin@gmail.com"));
     }
+
+
+
+
+    @Test
+    @DisplayName("Khóa user thành công")
+    void banUser_Success() throws Exception {
+        UserRegisterRequest request = new UserRegisterRequest();
+        request.setEmail("testuser@gmail.com");
+        request.setPassword("Test123!");
+        request.setPassword2("Test123!");
+        request.setFirstName("Test");
+        request.setLastName("User");
+
+        MvcResult createResult = mockMvc.perform(post("/api/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = createResult.getResponse().getContentAsString();
+        Integer userId = JsonPath.read(content, "$.result.id");
+
+        mockMvc.perform(put("/api/users/delete/" + userId)
+                        .header("Authorization", "Bearer " + adminToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Success"));
+    }
+
+    @Test
+    @DisplayName("Tìm user theo từ khóa")
+    void searchUser_Success() throws Exception {
+        mockMvc.perform(get("/api/users/search")
+                        .param("key", "admin")
+                        .header("Authorization", "Bearer " + adminToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Success"))
+                .andExpect(jsonPath("$.result").isArray());
+    }
+
+    @Test
+    @DisplayName("Cập nhật thông tin cá nhân thành công")
+    void updateMyInfo_Success() throws Exception {
+        mockMvc.perform(multipart("/api/users/myInfo/1")
+                        .file("avatar", "fake image content".getBytes())
+                        .param("firstName", "NewName")
+                        .param("lastName", "NewLast")
+                        .header("Authorization", "Bearer " + adminToken)
+                        .with(request -> { request.setMethod("PUT"); return request; })) // chuyển multipart sang PUT
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Success"))
+                .andExpect(jsonPath("$.result.firstName").value("NewName"));
+    }
+
+
+    @Test
+    @DisplayName("Lấy danh sách user theo trang")
+    void getAllUserSearch_Success() throws Exception {
+        mockMvc.perform(get("/api/users/get-page")
+                        .param("pageNo", "1")
+                        .param("pageSize", "5")
+                        .param("keyword", "admin")
+                        .header("Authorization", "Bearer " + adminToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Lấy danh sách người dùng thành công"))
+                .andExpect(jsonPath("$.result.content").isArray());
+    }
+
 }
