@@ -523,6 +523,7 @@ export default function HotelProvince() {
     const [filteredHotels, setFilteredHotels] = useState(hotelProvince);
     const { checkInDate, checkOutDate } = useContext(Context)
     const [viewMode, setViewMode] = useState("Xem ngang")
+    const [minPrices, setMinPrices] = useState({})
 
     useEffect(() => {
         const fetchAllImgHotel = async () => {
@@ -542,6 +543,24 @@ export default function HotelProvince() {
         }
         fetchDistricts()
     }, [province])
+
+    useEffect(() => {
+        const fetchMinPrices = async () => {
+            const temp = {};
+            for (let hotel of filteredHotels) {
+                try {
+                    const res = await api.get(`/rooms/hotel/${hotel.hotelId}/min-price`);
+                    temp[hotel.hotelId] = res.data?.result?.roomPrice ?? null;
+                } catch (err) {
+                    console.log("Lỗi lấy giá min", err);
+                    temp[hotel.hotelId] = null;
+                }
+            }
+            setMinPrices(temp);
+        };
+
+        if (filteredHotels.length > 0) fetchMinPrices();
+    }, [filteredHotels]);
 
 
 
@@ -729,7 +748,7 @@ export default function HotelProvince() {
                                                         <div>
                                                             <span className="text-gray-600 text-sm">Giá từ</span>
                                                             <p className="text-lg md:text-xl font-semibold text-green-600">
-                                                                {item.hotelCost.toLocaleString("vi-VN")}₫ / đêm
+                                                                {minPrices[item.hotelId]?.toLocaleString()} ₫/đêm
                                                             </p>
                                                         </div>
                                                         <Link to={`/detailshotel/${item.hotelId}`}>
@@ -812,7 +831,7 @@ export default function HotelProvince() {
                                                         <div>
                                                             <span className="text-gray-600 text-xs">Giá từ</span>
                                                             <p className="text-lg md:text-lg font-semibold text-green-600">
-                                                                {item.hotelCost.toLocaleString("vi-VN")}₫ / đêm
+                                                                {minPrices[item.hotelId]?.toLocaleString()} ₫/đêm
                                                             </p>
                                                         </div>
 
