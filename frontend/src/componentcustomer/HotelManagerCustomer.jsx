@@ -177,6 +177,7 @@ const EditHotelForm = ({ onUpdated }) => {
             <label className="block font-semibold mb-1 text-gray-700">
               Chọn địa chỉ khách sạn
             </label>
+>>>>>>> origin/newhuy
 
             <div className="flex gap-4">
               <select

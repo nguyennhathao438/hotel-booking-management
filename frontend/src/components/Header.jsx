@@ -88,6 +88,13 @@ function Header() {
                   Lịch sử đặt phòng
                 </li>
               </Link>
+              {hasRole("ADMIN") && (
+                <Link to="/admin">
+                  <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">
+                    Trang quản trị
+                  </li>
+                </Link>
+              )}
               {hasRole("CUSTOMER") ? (
                 <Link to="/customer">
                   <li className="px-4 py-2 text-right whitespace-nowrap hover:scale-105 cursor-pointer">

@@ -39,6 +39,16 @@ public class ImgHotelController {
                 .build());
     }
 
+    @GetMapping("/hotel/{hotelId}/first")
+    public ResponseEntity<ApiResponse<ImgHotelRespone>> getImgHotelFirst(@PathVariable int hotelId) {
+        ImgHotelRespone imgHotelFirst = imgHotelService.getImgHotelFirst(hotelId);
+        return ResponseEntity.ok(ApiResponse.<ImgHotelRespone>builder()
+                .code(1)
+                .message("Lấy ảnh khách sạn đầu tien thành công")
+                .result(imgHotelFirst)
+                .build());
+    }
+
     @GetMapping("/hotel/{hotelId}")
     public ResponseEntity<ApiResponse<List<ImgHotelRespone>>> getImgHotelBy_HotelId(@PathVariable int hotelId) {
         List<ImgHotelRespone> listResponses = imgHotelService.getImgHotelsBy_HotelId(hotelId);

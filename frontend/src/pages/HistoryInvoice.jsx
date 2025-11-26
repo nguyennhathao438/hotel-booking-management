@@ -19,44 +19,66 @@ const reviewSchema = z.object({
     hotelId: z.string().nonempty("Thiếu thông tin khách sạn"),
 });
 export default function HistoryInvoice() {
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState([]) //user hiện tại
+    const [rating, setRating] = useState(0)
+    const [hotelSelect, setHotelSelect] = useState(); //chọn khách sạn nào
+    const [selectedFeedback, setSelectedFeedback] = useState(null);
+    const [openDetail, setOpenDetail] = useState(false) //modal xem chi tiết
+    const [openReview, setOpenReview] = useState(false) //modal review
+    const [invoiceSelect, setInvoiceSelect] = useState() //chọn hóa đơn nào
+    const [invoices, setInvoices] = useState([]) //hóa đơn của user hiện tại
+    const [iv, setIv] = useState(null)
+    const [imgsHotel, setImgsHotel] = useState([]) // ảnh khách sạn
+    const [imgsRoom, setImgsRoom] = useState([]) // ảnh phòng
+    const [night, setNight] = useState() //số đêm ở lại khách sạn
+    const navigate = useNavigate()
+
+    const { register, handleSubmit, reset, setValue } = useForm({
+        resolver: zodResolver(reviewSchema),
+    })
+
     const fetchUserLogin = async () => {
         try {
             const response = await api.get("/users/myInfo")
             setUser(response.data.result)
         } catch (error) {
-            console.error("Error when load data :", error);
+            console.error("Lỗi không thể lấy đc dữ liệu :", error);
         }
     }
     useEffect(() => {
         fetchUserLogin();
     }, [])
 
-    const [invoices, setInvoices] = useState([])
     const fetchInvoiceByUserId = async (userId) => {
         try {
             const response = await api.get(`/invoice/user/${userId}`)
             setInvoices(response.data.result)
         } catch (error) {
-            console.error("Error when load data :", error);
+            console.error("Lỗi không thể lấy đc dữ liệu :", error);
         }
     }
-    console.log("user", user.id)
     useEffect(() => {
         if (user.id != null)
             fetchInvoiceByUserId(user.id);
     }, [user.id])
-    // const [status, setStatus] = useState("Tất cả");
-    const [rating, setRating] = useState(0);
-    const [hotelSelect, setHotelSelect] = useState();
-    const [selectedFeedback, setSelectedFeedback] = useState(null);
-    const [openDetail, setOpenDetail] = useState(false);
-    const [openReview, setOpenReview] = useState(false)
-    const [invoiceSelect, setInvoiceSelect] = useState()
-    // const [urlVnpay, setUrlVnpay] = useState(null); // eslint-disable-line no-unused-vars
-    const { register, handleSubmit, reset, setValue } = useForm({
-        resolver: zodResolver(reviewSchema),
-    })
+
+    const fetchImgsByHotelId = async (hotelId, iv, roomId) => {
+        try {
+            const response = await api.get(`/images/hotel/${hotelId}`)
+            setImgsHotel(response.data.result)
+            const responseImgRoom = await api.get(`/imageRoom/room/${roomId}`)
+            setImgsRoom(responseImgRoom.data.result)
+            setIv(iv)
+            tinhSoDem(iv)
+        } catch (error) {
+            console.log("Lỗi không thể lấy đc dữ liệu", error)
+        }
+    }
+    useEffect(() => {
+        fetchFeedBack();
+    }, [])
+
+
     useEffect(() => {
         if (user?.id) setValue("userId", String(user.id));
     }, [user, setValue]);
@@ -68,6 +90,7 @@ export default function HistoryInvoice() {
     useEffect(() => {
         if (invoiceSelect) setValue("invoiceId", String(invoiceSelect));
     }, [invoiceSelect, setValue]);
+
 
     const onSubmit = async (data) => {
         if (!selectedFeedback) {
@@ -128,10 +151,6 @@ export default function HistoryInvoice() {
         setFeedBacks(response.data.result)
     }
 
-    const [iv, setIv] = useState(null)
-    const [imgs, setImgs] = useState([])
-    const [night, setNight] = useState()
-
     const tinhSoDem = (iv) => {
         if (iv) {
             const checkin = new Date(iv.checkInDate);
@@ -140,21 +159,7 @@ export default function HistoryInvoice() {
             setNight(soDem);
         }
     }
-    const fetchImgsByHotelId = async (hotelId, iv) => {
-        try {
-            const response = await api.get(`/images/hotel/${hotelId}`)
-            setImgs(response.data.result)
-            setIv(iv)
-            tinhSoDem(iv)
-        } catch (error) {
-            console.log("loi ko the lay du lieu dc", error)
-        }
-    }
-    useEffect(() => {
-        fetchFeedBack();
-    }, [])
 
-    const navigate = useNavigate()
     const confirmPay = async (p, totalAmount, roomId, hotelId, i) => {
         const result = await Swal.fire({
             title: "Xác nhận thanh toán?",
@@ -174,6 +179,7 @@ export default function HistoryInvoice() {
             });
         }
     }
+
     const renderPaymentButton = (payment, status, totalAmount, roomId, hotelId, i) => {
         // Thanh toán tại chỗ
         if (payment === 1) {
@@ -187,9 +193,7 @@ export default function HistoryInvoice() {
         // Nếu chưa active (status !== 1) thì không cho thanh toán online
         if (status === 0) {
             return (
-                <button
-                    className="bg-blue-500 text-white py-1 px-2 rounded-md"
-                >
+                <button className="bg-blue-500 text-white py-1 px-2 rounded-md">
                     Chờ thanh toán
                 </button>
             );
@@ -243,16 +247,24 @@ export default function HistoryInvoice() {
         )
     }
 
+    const reviewButtonClick = (i) => {
+        const fb = feedbacks.find(f => f.invoice.id === i.id);
+        if (fb) {
+            setSelectedFeedback(fb);
+            setRating(fb.star);
+            reset({
+                feedback: fb.feedback,
+                invoiceId: String(fb.invoice.id),
+                userId: String(fb.user.id),
+                hotelId: String(fb.hotel.hotelId),
+            });
+            setOpenReview(true);
+        }
+    }
+
     return (
         <div className="h-auto">
             <div className="w-[95%] border border-gray-200 rounded-xl mx-auto h-full">
-                {/* <div className="flex gap-3 justify-center p-3">
-                    <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Tất cả")}>Tất cả</button>
-                    <button className="bg-yellow-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Chờ xác nhận")}>Chờ xác nhận</button>
-                    <button className="bg-blue-200 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đang xác nhận")}>Đang xác nhận</button>
-                    <button className="bg-blue-500 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đã xác nhận")}>Đã xác nhận</button>
-                    <button className="bg-green-400 px-4 py-2 rounded-md cursor-pointer" onClick={() => setStatus("Đã hủy")}>Hoàn thành</button>
-                </div> */}
                 <h2 className="font-medium text-xl text-center py-4 px-6">THEO DÕI THÔNG TIN ĐẶT PHÒNG CỦA BẠN ĐỂ THỰC HIỆN THANH TOÁN</h2>
                 <table className="w-full p-2 ">
                     <thead>
@@ -281,49 +293,27 @@ export default function HistoryInvoice() {
                                 <td className="px-4 py-3">
                                     <div className="flex gap-3 justify-center">
                                         <button className="text-indigo-600 bg-blue-200 p-2 rounded-md cursor-pointer hover:text-indigo-800 font-medium"
-                                            onClick={() => { setOpenDetail(true); fetchImgsByHotelId(i.room.hotel.hotelId, i) }}>
+                                            onClick={() => { setOpenDetail(true); fetchImgsByHotelId(i.room.hotel.hotelId, i, i.room.roomId) }}>
                                             Chi tiết
                                         </button>
-                                        {console.log("trang thai la", i.status)}
-                                        {i.status === 1 || i.status === 2 ? (
+                                        {i.status === 1 || i.status === 2 || i.status === 3 ? (
                                             feedbacks.some(fb => fb.invoice.id === i.id) ? (
-                                                <button
-                                                    className="text-white px-2 cursor-pointer bg-green-400 rounded-md hover:text-indigo-800 font-medium"
-                                                    onClick={() => {
-                                                        const fb = feedbacks.find(f => f.invoice.id === i.id);
-                                                        if (fb) {
-                                                            setSelectedFeedback(fb);
-                                                            setRating(fb.star);
-                                                            reset({
-                                                                feedback: fb.feedback,
-                                                                invoiceId: String(fb.invoice.id),
-                                                                userId: String(fb.user.id),
-                                                                hotelId: String(fb.hotel.hotelId),
-                                                            });
-                                                            setOpenReview(true);
-                                                        }
-                                                    }}
-                                                >
+                                                <button onClick={() => { reviewButtonClick(i) }} className="text-white px-2 cursor-pointer bg-green-400 rounded-md hover:text-indigo-800 font-medium">
                                                     Đã đánh giá
                                                 </button>
                                             ) : (
-                                                <button
-                                                    className="text-indigo-600 cursor-pointer bg-blue-200 p-2 rounded-md hover:text-white font-medium"
+                                                <button className="text-indigo-600 cursor-pointer bg-blue-200 p-2 rounded-md hover:text-white font-medium"
                                                     onClick={() => {
                                                         setOpenReview(true);
                                                         setHotelSelect(i.room.hotel.hotelId);
                                                         setInvoiceSelect(i.id);
                                                         setSelectedFeedback(null)
-                                                    }}
-                                                >
+                                                    }}>
                                                     Đánh giá
                                                 </button>
                                             )
                                         ) : (
-                                            <button
-                                                disabled
-                                                className="text-gray-400 bg-gray-100 p-2 rounded-md cursor-not-allowed"
-                                            >
+                                            <button disabled className="text-gray-400 bg-gray-100 p-2 rounded-md cursor-not-allowed">
                                                 Đánh giá
                                             </button>
                                         )}
@@ -403,8 +393,8 @@ export default function HistoryInvoice() {
                             <div className="border border-gray-300 rounded-xl flex-1 flex flex-col bg-gray-50 overflow-hidden hover:shadow transition-shadow duration-300">
                                 {/* Ảnh khách sạn */}
                                 <div className="h-[45%] w-full rounded-t-xl overflow-hidden">
-                                    {imgs && imgs.length > 0 ? (
-                                        <ImageSlider sliders={imgs} />
+                                    {imgsHotel && imgsHotel.length > 0 ? (
+                                        <ImageSlider sliders={imgsHotel} />
                                     ) : (
                                         <div className="flex w-full h-full items-center justify-center text-gray-400 bg-gray-100 text-sm">
                                             Chưa có hình ảnh
@@ -431,8 +421,8 @@ export default function HistoryInvoice() {
                             <div className="border border-gray-300 rounded-xl flex-1 flex flex-col bg-gray-50 overflow-hidden hover:shadow transition-shadow duration-300">
                                 {/* Ảnh phòng */}
                                 <div className="h-[45%] w-full rounded-t-xl overflow-hidden">
-                                    {imgs && imgs.length > 0 ? (
-                                        <ImageSlider sliders={imgs} />
+                                    {imgsRoom && imgsRoom.length > 0 ? (
+                                        <ImageSlider sliders={imgsRoom} />
                                     ) : (
                                         <div className="flex w-full h-full items-center justify-center text-gray-400 bg-gray-100 text-sm">
                                             Chưa có hình ảnh

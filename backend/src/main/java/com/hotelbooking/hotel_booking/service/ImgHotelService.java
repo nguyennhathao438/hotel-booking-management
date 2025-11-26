@@ -40,12 +40,15 @@ public class ImgHotelService {
                     .hotel(hotel)
                     .build();
             imgHotelRepository.save(imgHotel);
-            responses.add(ImgHotelRespone.builder()
-                    .imgUrl(imageUrl)
-                    .hotel(hotel)
-                    .build());
+            responses.add(mapToImgHotelRespone(imgHotel));
         }
         return responses;
+    }
+    public ImgHotelRespone getImgHotelFirst(int hotelId){
+        List<ImgHotel> listImgHotel = imgHotelRepository.findImgHotelByHotel_HotelId(hotelId);
+        if(listImgHotel.isEmpty())
+            return null;
+        return mapToImgHotelRespone(listImgHotel.getFirst());
     }
     public void deleteImage(int imageId) {
         ImgHotel imgHotel = imgHotelRepository.findById(imageId)

@@ -37,9 +37,6 @@ public class dichvu {
             if (serviceRequest.getServiceName() == null || serviceRequest.getServiceName().isBlank()) {
                 throw new AppException(ErrorCode.INVALID_INPUT);
             }
-            if (serviceRequest.getPrice() == null || serviceRequest.getPrice() < 0) {
-                throw new AppException(ErrorCode.INVALID_INPUT);
-            }
             HotelService hotelService = HotelService.builder()
                     .serviceName(serviceRequest.getServiceName())
                     .icon(serviceRequest.getIcon())

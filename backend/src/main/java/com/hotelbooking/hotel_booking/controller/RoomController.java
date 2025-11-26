@@ -85,6 +85,17 @@ public class RoomController {
                 .result(roomResponses)
                 .build());
     }
+
+    @GetMapping("/hotel/{hotelId}/min-price")
+    public ResponseEntity<ApiResponse<RoomResponse>> findMinPriceByHotel_HotelId(@PathVariable int hotelId) {
+        RoomResponse roomResponse = roomService.findMinPriceByHotel_HotelId(hotelId);
+        return ResponseEntity.ok(ApiResponse.<RoomResponse>builder()
+                .code(1)
+                .message("Lấy phòng có giá min thành công")
+                .result(roomResponse)
+                .build());
+    }
+
     @DeleteMapping("/delete/{roomID}")
     public ResponseEntity<ApiResponse<Void>> deleteRoom(@PathVariable int roomID) {
         roomService.deleteRoom(roomID);

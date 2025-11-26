@@ -18,7 +18,8 @@ import ChatBox from "../Chatbox";
 import { Context } from "../RoomContext";
 import ModelForm from "../Common/FormModel";
 function DetailsHotelView() {
-
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
     const scrollRef = useRef(null);
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -30,6 +31,7 @@ function DetailsHotelView() {
             });
         }
     };
+
 
     const formatDate = (date) => {
         const d = new Date(date);
@@ -58,7 +60,7 @@ function DetailsHotelView() {
             const response = await api.get(`/service/hotel/${hotelId}`)
             setServices(response.data.result)
         } catch (error) {
-            console.log("Khong the lay dich vu khach san", error)
+            console.log("Không thể lấy dịch vụ khách sạn", error)
         }
     }
 
@@ -120,29 +122,44 @@ function DetailsHotelView() {
 
     const [firstRoomImages, setFirstRoomImages] = useState({});
     useEffect(() => {
-        const fetchImages = async () => {
+        const fetchImgsRoomFirst = async () => {
             const temp = {};
             for (let room of rooms) {
                 try {
-                    const res = await api.get(`/imageRoom/room/${room.roomId}`);
-                    temp[room.roomId] = res.data.result[0].imgUrl;
-                } catch (error) {
-                    console.log("loi khong the lay anh", error)
+                    const res = await api.get(`/imageRoom/room/${room.roomId}/first`);
+                    temp[room.roomId] = res.data?.result?.imgUrl ?? null;
+                } catch (err) {
+                    console.log("Lỗi", err)
                     temp[room.roomId] = null;
                 }
             }
             setFirstRoomImages(temp);
         };
-        if (rooms.length > 0) fetchImages();
+        if (rooms.length > 0) fetchImgsRoomFirst()
     }, [rooms]);
+
+    useEffect(() => {
+        const el = scrollRef.current;
+        if (!el) return;
+
+        const checkScroll = () => {
+            const { scrollLeft, scrollWidth, clientWidth } = el;
+
+            setCanScrollLeft(scrollLeft > 0);
+            setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
+        };
+
+        checkScroll();
+        el.addEventListener("scroll", checkScroll);
+
+        return () => el.removeEventListener("scroll", checkScroll);
+    }, [hotel]);
 
     const disableBooking = (status, room) => {
         if (status === 3 || status === 1)
             return (<button></button>)
         else
-            return (<button onClick={() => handleBooking(room.roomId, room)}
-                className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
-            >
+            return (<button onClick={() => handleBooking(room.roomId, room)} className=" bg-blue-400 text-white cursor-pointer font-semibold px-6 py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-indigo-700 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300">
                 Đặt phòng
             </button>)
     }
@@ -169,39 +186,6 @@ function DetailsHotelView() {
     };
 
 
-    // const checkRoomAvailable = async (roomId) => {
-    //     try {
-    //         const response = await api.get(`/invoice/check-room`, {
-    //             params: {
-    //                 checkInDate: formatDate(checkInDate),
-    //                 checkOutDate: formatDate(checkOutDate),
-    //                 roomId: roomId,
-    //             },
-    //         });
-    //         return response.data.result;
-    //     } catch (error) {
-    //         console.error("Lỗi khi kiểm tra phòng:", error);
-    //         return false;
-    //     }
-    // };
-
-    // const fetchRoomsByHotelId = async () => {
-    //     try {
-    //         const roomData = await api.get(`rooms/hotel/${hotelId}`);
-    //         const roomsWithStatus = await Promise.all(
-    //             roomData.data.result.map(async (room) => {
-    //                 const available = await checkRoomAvailable(room.roomId);
-    //                 return { ...room, available }; // thêm thuộc tính available
-    //             })
-    //         );
-    //         setRooms(roomsWithStatus);
-    //         const imageData = await api.get(`/images/hotel/${hotelId}`);
-    //         setImages(imageData.data.result);
-    //     } catch (error) {
-    //         console.error("Error when load data :", error);
-    //     }
-    // };
-
     useEffect(() => {
         fetchHotelById()
         fetchFeedBackByHotelId()
@@ -209,7 +193,6 @@ function DetailsHotelView() {
         fetchHotelServices()
     }, [hotelId])
 
-    console.log("danh sach room", rooms)
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -218,7 +201,6 @@ function DetailsHotelView() {
             prev === 0 ? feedbacks.length - 1 : prev - 1
         );
     };
-    console.log("danh sach phog", rooms)
 
     const handleNext = () => {
         setCurrentIndex((prev) =>
@@ -409,10 +391,11 @@ function DetailsHotelView() {
                             <h2 ref={serviceRef} className="text-xl px-6 font-semibold pt-4">Danh sách tiện nghi nổi bật của khách sạn</h2>
                             <div className="relative py-2 px-4">
                                 {/* Vùng cuộn danh sách */}
-                                <button onClick={() => scroll("left")} className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                    </svg>
+                                <button onClick={() => scroll("left")}
+                                    className={`hidden cursor-pointer md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition
+                    ${!canScrollLeft ? "opacity-0 pointer-events-none" : ""}`}
+                                >
+                                    <ChevronLeft className="text-blue-600" />
                                 </button>
                                 <div ref={scrollRef} className="flex gap-4 overflow-x scroll-smooth scrollbar-hidden md:overflow-hidden px-2">
                                     {services.map((s) => (
@@ -425,10 +408,11 @@ function DetailsHotelView() {
                                         </div>
                                     ))}
                                 </div>
-                                <button onClick={() => scroll("right")} className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 cursor-poiter text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                    </svg>
+                                <button onClick={() => scroll("right")}
+                                    className={`hidden cursor-pointer md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition
+                    ${!canScrollRight ? "opacity-0 pointer-events-none" : ""}`}
+                                >
+                                    <ChevronRight className="text-blue-600" />
                                 </button>
                             </div>
                         </div>

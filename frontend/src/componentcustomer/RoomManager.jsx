@@ -66,6 +66,14 @@ export default function RoomManager() {
     const [loading, setLoading] = useState(false)
     const [images, setImages] = useState([]);          // eslint-disable-line no-unused-vars
     const [previewUrls, setPreviewUrls] = useState([]);
+    const [room, setRoom] = useState(null)
+    const [rooms, setRooms] = useState([])
+    const [imgsRoom, setImgsRoom] = useState([])
+    const { hotelId } = useParams();
+    const [firstRoomImages, setFirstRoomImages] = useState({});
+    const [roomType, setRoomType] = useState("")
+
+
     const handleImageChange = (e) => {
         const newFiles = Array.from(e.target.files);
         setImages((prev) => {
@@ -76,9 +84,6 @@ export default function RoomManager() {
         setPreviewUrls((prev) => [...prev, ...newPreviews]);
     };
 
-
-    const { hotelId } = useParams();
-    const [rooms, setRooms] = useState([])
     const fetchRoomsByHotelId = async (hotelId) => {
         try {
             const response = await api.get(`/rooms/hotel/${hotelId}`)
@@ -87,34 +92,57 @@ export default function RoomManager() {
             console.log("Lỗi không thể lấy được danh sách", error)
         }
     }
-
     useEffect(() => {
         fetchRoomsByHotelId(hotelId)
     }, [hotelId])
 
-    const [firstRoomImages, setFirstRoomImages] = useState({});
     useEffect(() => {
-        const fetchImages = async () => {
+        const fetchFirstImages = async () => {
             const temp = {};
             for (let room of rooms) {
                 try {
-                    const res = await api.get(`/imageRoom/room/${room.roomId}`);
-                    temp[room.roomId] = res.data.result[0].imgUrl;
-                } catch (error) {
-                    console.log("loi khong the lay anh", error)
+                    const res = await api.get(`/imageRoom/room/${room.roomId}/first`);
+                    temp[room.roomId] = res.data?.result?.imgUrl ?? null;
+                } catch (err) {
+                    console.log("loi", err)
                     temp[room.roomId] = null;
                 }
             }
             setFirstRoomImages(temp);
         };
-        if (rooms.length > 0) fetchImages();
-    }, [rooms]);
+        if (rooms.length > 0)
+            fetchFirstImages()
+    }, [rooms])
+
+    const fullImgRoomByRoomId = async (roomId) => {
+        try {
+            const response = await api.get(`/imageRoom/room/${roomId}`)
+            if (response.data.code)
+                setImgsRoom(response.data.result)
+        } catch (error) {
+            console.log("khong the lay anh", error)
+        }
+    }
+
+
+    useEffect(() => {
+        const fetchRoomsByRoomType = async () => {
+            if (roomType === "")
+                fetchRoomsByHotelId(hotelId)
+            else {
+                const response = await api.get(`/rooms/hotel/${hotelId}/${roomType}`)
+                setRooms(response.data.result)
+            }
+        }
+        fetchRoomsByRoomType()
+    }, [roomType, hotelId])
+
+
 
     const { handleSubmit, register, reset } = useForm({
         resolver: zodResolver(roomSchema)
     })
 
-    const [room, setRoom] = useState(null)
     const defaultAdd = () => {
         setPreviewUrls([])
         setImgsRoom([])
@@ -143,17 +171,6 @@ export default function RoomManager() {
         })
     }
 
-    const [imgsRoom, setImgsRoom] = useState([])
-    const fullImgRoomByRoomId = async (roomId) => {
-        try {
-            const response = await api.get(`/imageRoom/room/${roomId}`)
-            if (response.data.code)
-                setImgsRoom(response.data.result)
-        } catch (error) {
-            console.log("khong the lay anh", error)
-        }
-    }
-
     const [idImgRoom, setIdImgRoom] = useState([])
     const deleteImageTemp = async (imgId) => {
         setImgsRoom(prev => prev.filter(img => img.id !== imgId));
@@ -174,7 +191,7 @@ export default function RoomManager() {
         if (!room) {
             setLoading(true)
             if (images.length === 0) {
-                toast.error("Vui long them anh phong")
+                toast.error("Vui lòng thêm ảnh phòng")
                 return
             }
             try {
@@ -231,21 +248,7 @@ export default function RoomManager() {
         }
     }
 
-    const [roomType, setRoomType] = useState("")
-    useEffect(() => {
-        const fetchRoomsByRoomType = async () => {
-            if (roomType === "")
-                fetchRoomsByHotelId(hotelId)
-            else {
-                const response = await api.get(`/rooms/hotel/${hotelId}/${roomType}`)
-                setRooms(response.data.result)
-            }
-        }
-        fetchRoomsByRoomType()
-    }, [roomType, hotelId])
-
-
-    // console.log("danh sach id anh ban muon xoa la", idImgRoom)
+ 
     const deleteRoom = async (roomId) => {
         const result = await Swal.fire({
             title: "Bạn có chắc muốn xóa?",
@@ -513,7 +516,7 @@ export default function RoomManager() {
 
                             <div>
                                 <label className="block font-semibold mb-2 text-gray-700">
-                                    Ảnh khách sạn
+                                    Ảnh phòng
                                 </label>
                                 <input
                                     type="file"

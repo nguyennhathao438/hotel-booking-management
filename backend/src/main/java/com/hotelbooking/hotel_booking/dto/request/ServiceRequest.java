@@ -18,9 +18,6 @@ public class ServiceRequest {
     String description;
     String icon;
 
-    @NotNull(message = "Giá dịch vụ không được null")
-    Double price;
-
     @NotNull(message = "HotelID không được null")
     Integer hotelID;
 }
