@@ -111,7 +111,7 @@ function Hotels() {
                 <ul ref={scrollRef} className="flex flex-row gap-4 overflow-x-auto scrollbar-hide scroll-smooth md:gap-6 md:overflow-hidden">
                     {hotelsTops.map((hotel) => {
                         return (
-                            <li key={hotel.hotelId} className="flex-shrink-0 w-[220px] md:w-[260px] lg:w-[280px] h-[360px] flex flex-col justify-between rounded-xl border shadow hover:shadow-lg transition bg-white cursor-pointer">
+                            <li key={hotel.hotelId} className="shrink-0 w-[220px] md:w-[260px] lg:w-[280px] h-[360px] flex flex-col justify-between rounded-xl border shadow hover:shadow-lg transition bg-white cursor-pointer">
                                 <div className="overflow-hidden h-[45%]">
                                     <Link to={`/detailshotel/${hotel.hotelId}`}>
                                         <img

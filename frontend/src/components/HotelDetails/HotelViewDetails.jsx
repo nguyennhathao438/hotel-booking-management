@@ -20,6 +20,9 @@ import ModelForm from "../Common/FormModel";
 function DetailsHotelView() {
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
+    const [canFeedbackScrollLeft, setCanFeedbackScrollLeft] = useState(false);
+    const [canFeedbackScrollRight, setCanFeedbackScrollRight] = useState(true);
+    const scrollFeedbackRef = useRef(null);
     const scrollRef = useRef(null);
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -31,6 +34,18 @@ function DetailsHotelView() {
             });
         }
     };
+
+    const scrollFeedback = (direction) => {
+        if (scrollFeedbackRef.current) {
+            const { scrollLeft, clientWidth } = scrollFeedbackRef.current;
+            const scrollAmount = clientWidth * 0.8;
+            scrollFeedbackRef.current.scrollTo({
+                left: direction === "left" ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+                behavior: "smooth",
+            });
+        }
+    };
+
 
 
     const formatDate = (date) => {
@@ -141,19 +156,28 @@ function DetailsHotelView() {
     useEffect(() => {
         const el = scrollRef.current;
         if (!el) return;
-
         const checkScroll = () => {
             const { scrollLeft, scrollWidth, clientWidth } = el;
-
             setCanScrollLeft(scrollLeft > 0);
             setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
         };
-
         checkScroll();
         el.addEventListener("scroll", checkScroll);
-
         return () => el.removeEventListener("scroll", checkScroll);
-    }, [hotel]);
+    });
+
+    useEffect(() => {
+        const el = scrollFeedbackRef.current; // dùng đúng ref của feedback
+        if (!el) return;
+        const checkScroll = () => {
+            const { scrollLeft, scrollWidth, clientWidth } = el;
+            setCanFeedbackScrollLeft(scrollLeft > 0);
+            setCanFeedbackScrollRight(scrollLeft + clientWidth < scrollWidth);
+        };
+        checkScroll();
+        el.addEventListener("scroll", checkScroll);
+        return () => el.removeEventListener("scroll", checkScroll);
+    }, [feedbacks]); // thêm dependency để chạy lại khi feedbacks thay đổi
 
     const disableBooking = (status, room) => {
         if (status === 3 || status === 1)
@@ -163,6 +187,7 @@ function DetailsHotelView() {
                 Đặt phòng
             </button>)
     }
+
     const changeStatusRoom = (status, roomStatus) => {
         if (status === 3) {
             return <span className="text-md font-medium text-red-500">Đang bảo trì</span>;
@@ -250,6 +275,7 @@ function DetailsHotelView() {
     const roomRef = useRef(null)
     const hotelRef = useRef(null)
     const serviceRef = useRef(null)
+    const reviewRef = useRef(null)
     const handleScroll = (tab) => {
         if (tab === "Tổng quan")
             hotelRef.current.scrollIntoView({ behavior: "smooth" })
@@ -257,6 +283,8 @@ function DetailsHotelView() {
             roomRef.current.scrollIntoView({ behavior: "smooth" })
         else if (tab === "Tiện nghi")
             serviceRef.current.scrollIntoView({ behavior: "smooth" })
+         else if (tab === "Đánh giá của khách")
+            reviewRef.current.scrollIntoView({ behavior: "smooth" })
     }
 
     return (
@@ -329,6 +357,12 @@ function DetailsHotelView() {
                                 </div>
                             )}
                         </div>
+                        <div className="mt-4">
+                            <h3 className="text-lg font-semibold text-[#4b2e1f]">Mô tả khách sạn</h3>
+                            <p className="text-gray-700 mt-2 whitespace-pre-line">
+                                {hotel.hotelDescription || "Khách sạn chưa có mô tả."}
+                            </p>
+                        </div>
                     </div>
 
                     {/* bên phải */}
@@ -379,7 +413,12 @@ function DetailsHotelView() {
                                         <ChevronRight size={22} />
                                     </button>
                                 </div>
-                                <span className="py-2 px-4 text-blue-600">Tác giả : {feedbacks.length > 0 && (feedbacks[currentIndex].user.firstName + " " + feedbacks[currentIndex].user.lastName)}</span>
+                                <div className="flex justify-center items-center">
+                                    {feedbacks.length > 0 && (<div className="w-10 h-10">
+                                        <img className="w-full h-full object-cover rounded-[50%]" src={feedbacks[currentIndex].user.avatar} />
+                                    </div>)}
+                                    <span className="py-2 px-4 text-blue-600">Khách hàng : {feedbacks.length > 0 && (feedbacks[currentIndex].user.firstName + " " + feedbacks[currentIndex].user.lastName)}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -466,22 +505,7 @@ function DetailsHotelView() {
 
                                     {/* Trạng thái phòng */}
                                     <div className="flex flex-col gap-2 mt-2">
-                                        {/* Trạng thái phòng */}
-                                        {/* <p className={`text-sm font-medium ${room.statusRoom === 0 ? "text-green-600" :
-                                            room.statusRoom === 1 ? "text-red-500" :
-                                                "text-yellow-600"
-                                            }`}>
-                                            {room.statusRoom === 0 ? "Phòng còn trống" :
-                                                room.statusRoom === 1 ? "Khách đang ở" :
-                                                    "Hết chỗ"}
-                                        </p> */}
-
-                                        {/* <p className={`text-sm font-medium ${room.statusRoom === 0 ? "text-green-600" : "text-red-500"}`}>
-                                            {room.statusRoom === 0 ? "Phòng còn trống" : "Hết chỗ"}
-                                        </p> */}
                                         {changeStatusRoom(room.status, room.roomStatus)}
-
-
                                         {/* Nút hành động */}
                                         <div className="flex gap-3 justify-end">
                                             {disableBooking(room.status, room)}
@@ -494,6 +518,49 @@ function DetailsHotelView() {
                 ) :
                     <div className="font-md text-xl text-center py-4">Không có phòng nào</div>
             }
+            <div>
+                <h2 ref={reviewRef} className=" text-xl font-medium px-5">Đánh giá của khách hàng tại đây</h2>
+                <div className="py-2 px-4 relative">
+                    <button
+                        onClick={() => scrollFeedback("left")}
+                        className={`hidden cursor-pointer md:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition
+      ${!canFeedbackScrollLeft ? "opacity-0 pointer-events-none" : ""}`}
+                    >
+                        <ChevronLeft className="text-blue-600" />
+                    </button>
+
+                    <div ref={scrollFeedbackRef} className="flex gap-4 overflow-x scroll-smooth scrollbar-hidden md:overflow-hidden px-2">
+                        {feedbacks.length > 0 ? (
+                            feedbacks.map((fb, index) => (
+                                <div key={fb.id || index} className="shrink-0 w-[32%] min-w-[280px] bg-white border border-gray-200 rounded-lg shadow p-4 flex flex-col justify-between">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center font-bold">
+                                            <img className="w-full h-full rounded-[50%] object-cover" src={fb?.user?.avatar} alt="" />
+                                        </div>
+                                        <div>
+                                            <p className="font-semibold">{fb.user.firstName} {fb.user.lastName}</p>
+                                            <p className="text-sm text-gray-500">🇻🇳 Việt Nam</p>
+                                        </div>
+                                    </div>
+                                    <p className="text-gray-700 text-sm">“{fb.feedback}”</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-gray-500 italic">Chưa có đánh giá nào.</p>
+                        )}
+                    </div>
+
+                    <button
+                        onClick={() => scrollFeedback("right")}
+                        className={`hidden cursor-pointer md:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white border rounded-full p-2 shadow hover:bg-blue-100 transition
+      ${!canFeedbackScrollRight ? "opacity-0 pointer-events-none" : ""}`}
+                    >
+                        <ChevronRight className="text-blue-600" />
+                    </button>
+                </div>
+
+            </div>
+
             {/* <RoomList rooms={rooms} hotelId={hotelId} /> */}
 
             {openChat && (
@@ -501,6 +568,7 @@ function DetailsHotelView() {
                     <ChatBox onClose={() => handleCloseChat()} hotelId={hotelId} />
                 </div>
             )}
+
             {openDetails && (
                 <ModelForm width="1150px" onClose={() => setOpenDetails(false)}>
                     <div className="w-[1150px] grid grid-cols-1 md:grid-cols-12 gap-2">

@@ -14,13 +14,8 @@ public class ServiceRequest {
 
     @NotBlank(message = "Tên dịch vụ không được để trống")
     String serviceName;
-
     String description;
     String icon;
-
-    @NotNull(message = "Giá dịch vụ không được null")
-    Double price;
-
     @NotNull(message = "HotelID không được null")
     Integer hotelID;
 }
