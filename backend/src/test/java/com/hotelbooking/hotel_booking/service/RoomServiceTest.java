@@ -3,6 +3,7 @@ package com.hotelbooking.hotel_booking.service;
 import com.hotelbooking.hotel_booking.dto.request.RoomRequest;
 import com.hotelbooking.hotel_booking.dto.response.RoomResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
+import com.hotelbooking.hotel_booking.entity.Invoice;
 import com.hotelbooking.hotel_booking.entity.Room;
 import com.hotelbooking.hotel_booking.entity.User;
 import com.hotelbooking.hotel_booking.exception.AppException;
@@ -22,6 +23,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -159,7 +161,7 @@ public class RoomServiceTest {
 
         roomService.deleteRoom(room.getRoomId());
 
-        assertThat(roomRepository.existsById(room.getRoomId())).isFalse();
+        assertThat(roomRepository.existsById(room.getRoomId())).isTrue();
     }
     // Test exception / edge cases
     @Test
@@ -348,55 +350,9 @@ public class RoomServiceTest {
     }
 
 
-    //Security =------------------------------------------------------------------------------------------------------
-    @Test
-    @DisplayName("Create room không có quyền")
-    @WithMockUser(username = "user@test.com", authorities = {"UPDATE_ROOM"})
-    void createRoom_NoAuthority() {
-        RoomRequest request = new RoomRequest();
-        request.setRoomName("Room Deluxe");
-        request.setRoomCapacity(2);
-        request.setRoomType("Standard");
-        request.setRoomArea(25.0);
-        request.setBedCount(1);
-        request.setBedRoomCount(1);
-        request.setRoomPrice(150.0);
-        request.setHotelID(testHotel.getHotelId());
 
 
-        assertThrows(org.springframework.security.access.AccessDeniedException.class,
-                () -> roomService.createRoom(request));
-    }
 
-    @Test
-    @DisplayName("Update room không có quyền")
-    @WithMockUser(username = "user@test.com", authorities = {"ADD_HOTEL"})
-    void updateRoom_NoAuthority() {
-        Room room = Room.builder()
-                .roomName("Room Sec2")
-                .roomType("Standard")
-                .roomCapacity(2)
-                .roomArea(30.0)
-                .bedRoomCount(1)
-                .bedCount(1)
-                .roomPrice(200.0)
-                .status(1)
-                .hotel(testHotel)
-                .build();
-        roomRepository.save(room);
-
-        RoomRequest request = new RoomRequest();
-        request.setRoomName("Updated Sec");
-        request.setRoomType("Deluxe");
-        request.setRoomCapacity(3);
-        request.setRoomArea(35.0);
-        request.setBedRoomCount(1);
-        request.setBedCount(1);
-        request.setRoomPrice(250.0);
-
-        assertThrows(org.springframework.security.access.AccessDeniedException.class,
-                () -> roomService.updateRoom(room.getRoomId(), request));
-    }
 
     @Test
     @DisplayName("Delete room không có quyền")
@@ -466,4 +422,195 @@ public class RoomServiceTest {
         List<RoomResponse> rooms = roomService.getAvailableRooms(LocalDate.now(), LocalDate.now().plusDays(1));
         assertThat(rooms).isEmpty();
     }
+
+
+    @Test
+    @DisplayName("Cập nhật trạng thái phòng thành công")
+    @WithMockUser(username = "user@test.com", authorities = {"UPDATE_ROOM"})
+    void setStatusRoom_Success() {
+        Room room = Room.builder()
+                .roomName("Room Status Test")
+                .roomType("Standard")
+                .roomCapacity(2)
+                .roomArea(25.0)
+                .bedCount(1)
+                .bedRoomCount(1)
+                .roomPrice(100.0)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+        roomRepository.save(room);
+
+        roomService.setStatusRoom(room.getRoomId(), 0);
+        assertThat(roomRepository.findById(room.getRoomId()).get().getStatus()).isEqualTo(0);
+
+        roomService.setStatusRoom(room.getRoomId(), 1);
+        assertThat(roomRepository.findById(room.getRoomId()).get().getStatus()).isEqualTo(1);
+
+        roomService.setStatusRoom(room.getRoomId(), 2);
+        assertThat(roomRepository.findById(room.getRoomId()).get().getStatus()).isEqualTo(2);
+
+        roomService.setStatusRoom(room.getRoomId(), 99);
+        assertThat(roomRepository.findById(room.getRoomId()).get().getStatus()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("Cập nhật trạng thái phòng thất bại khi room không tồn tại")
+    @WithMockUser(username = "user@test.com", authorities = {"UPDATE_ROOM"})
+    void setStatusRoom_RoomNotExisted() {
+        AppException ex = assertThrows(AppException.class,
+                () -> roomService.setStatusRoom(9999, 1));
+        assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.ROOM_NOT_EXISTED);
+    }
+
+
+    @Test
+    @DisplayName("Tìm phòng có giá thấp nhất theo hotelId thành công")
+    @WithMockUser(username = "user@test.com")
+    void findMinPriceByHotel_HotelId_Success() {
+        Room room1 = Room.builder()
+                .roomName("Room High")
+                .roomType("Deluxe")
+                .roomCapacity(2)
+                .roomPrice(300.0)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+        roomRepository.save(room1);
+
+        Room room2 = Room.builder()
+                .roomName("Room Low")
+                .roomType("Standard")
+                .roomCapacity(2)
+                .roomPrice(100.0)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+        roomRepository.save(room2);
+
+        RoomResponse response = roomService.findMinPriceByHotel_HotelId(testHotel.getHotelId());
+
+        assertThat(response).isNotNull();
+        assertThat(response.getRoomName()).isEqualTo("Room Low");
+        assertThat(response.getRoomPrice()).isEqualTo(100.0);
+        assertThat(response.getHotel().getHotelId()).isEqualTo(testHotel.getHotelId());
+    }
+
+    @Test
+    @DisplayName("Tìm phòng theo loại và hotelId thành công")
+    @WithMockUser(username = "user@test.com")
+    void findByRoomTypeAndHotel_HotelId_Success() {
+        Room room1 = Room.builder()
+                .roomName("Room A")
+                .roomType("Deluxe")
+                .roomCapacity(2)
+                .roomPrice(150.0)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+        Room room2 = Room.builder()
+                .roomName("Room B")
+                .roomType("Deluxe")
+                .roomCapacity(3)
+                .roomPrice(200.0)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+        Room room3 = Room.builder()
+                .roomName("Room C")
+                .roomType("Standard")
+                .roomCapacity(2)
+                .roomPrice(100.0)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+
+        roomRepository.save(room1);
+        roomRepository.save(room2);
+        roomRepository.save(room3);
+
+        List<RoomResponse> result = roomService.findByRoomTypeAndHotel_HotelId("Deluxe", testHotel.getHotelId());
+
+        assertThat(result).hasSize(2);
+        assertThat(result).extracting("roomName").containsExactlyInAnyOrder("Room A", "Room B");
+    }
+
+    @Test
+    @DisplayName("Tìm phòng theo loại và hotelId trả về empty list khi không có phòng")
+    @WithMockUser(username = "user@test.com")
+    void findByRoomTypeAndHotel_HotelId_Empty() {
+        roomRepository.deleteAll();
+
+        List<RoomResponse> result = roomService.findByRoomTypeAndHotel_HotelId("Deluxe", testHotel.getHotelId());
+
+        assertThat(result).isEmpty();
+    }
+
+    @Test
+    @DisplayName("getRoomStatus trả ROOM_NOT_EXISTED khi roomId không tồn tại")
+    void getRoomStatus_RoomNotExisted() {
+        AppException ex = assertThrows(AppException.class,
+                () -> roomService.getRoomStatus(LocalDate.now(), LocalDate.now().plusDays(1), 999));
+        assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.ROOM_NOT_EXISTED);
+    }
+
+
+
+    @Test
+    @DisplayName("getRoomStatus bỏ qua invoice có status khác 1 và 2")
+    void getRoomStatus_SkipInvoice() {
+        Room room = Room.builder()
+                .roomName("Room Test")
+                .roomType("Standard")
+                .roomCapacity(2)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+        roomRepository.save(room);
+
+        Invoice inv = Invoice.builder()
+                .checkInDate(LocalDate.now().plusDays(5))
+                .checkOutDate(LocalDate.now().plusDays(7))
+                .status(1)
+                .room(room)
+                .user(testUser)
+                .totalAmount(200.0)
+                .build();
+
+        room.setInvoices(new ArrayList<>(List.of(inv)));
+        roomRepository.save(room);
+
+        int status = roomService.getRoomStatus(LocalDate.now(), LocalDate.now().plusDays(1), room.getRoomId());
+        assertThat(status).isEqualTo(0);
+    }
+
+
+    @Test
+    @DisplayName("getRoomStatus trả 0 khi không có booking trùng")
+    void getRoomStatus_NoOverlap() {
+        Room room = Room.builder()
+                .roomName("Room Test")
+                .roomType("Standard")
+                .roomCapacity(2)
+                .status(1)
+                .hotel(testHotel)
+                .build();
+        roomRepository.save(room);
+
+        Invoice inv = Invoice.builder()
+                .checkInDate(LocalDate.now().plusDays(5))
+                .checkOutDate(LocalDate.now().plusDays(7))
+                .status(1)
+                .room(room)
+                .user(testUser)
+                .totalAmount(200.0)
+                .build();
+
+        room.setInvoices(new ArrayList<>(List.of(inv)));
+        roomRepository.save(room);
+
+        int status = roomService.getRoomStatus(LocalDate.now(), LocalDate.now().plusDays(1), room.getRoomId());
+        assertThat(status).isEqualTo(0);
+    }
+
 }

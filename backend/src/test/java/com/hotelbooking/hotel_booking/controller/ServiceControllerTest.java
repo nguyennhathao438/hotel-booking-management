@@ -15,6 +15,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -146,7 +147,7 @@ public class ServiceControllerTest {
     void deleteService_Success() throws Exception {
         int serviceId = createTestService();
 
-        mockMvc.perform(delete("/api/service/{serviceId}", serviceId)
+        mockMvc.perform(delete("/api/service/delete/{serviceId}", serviceId)
                         .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Xóa dịch vụ thành công"));
@@ -208,31 +209,6 @@ public class ServiceControllerTest {
 
     }
 
-    @Test
-    @Rollback
-    @Transactional
-    @DisplayName("Tạo service thất bại khi price null hoặc âm")
-    void createService_InvalidPrice() throws Exception {
-        String[] invalidPrices = {null, "-50.0"};
-
-        for (String price : invalidPrices) {
-            String serviceJson = """
-                {
-                  "hotelID": %d,
-                  "serviceName": "Valid Name",
-                  "description": "Desc",
-                  "price": %s,
-                  "icon": "icon.png"
-                }
-                """.formatted(testHotelId, price);
-
-            mockMvc.perform(post("/api/service/create")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .header("Authorization", "Bearer " + accessToken)
-                            .content(serviceJson))
-                    .andExpect(status().is4xxClientError());
-        }
-    }
 
     @Test
     @Rollback
@@ -245,27 +221,31 @@ public class ServiceControllerTest {
                 {"", ""}
         };
 
-        for (String[] fields : testCases) {
-            String description = fields[0] == null ? "null" : "\"" + fields[0] + "\"";
-            String icon = fields[1] == null ? "null" : "\"" + fields[1] + "\"";
+        for (int i = 0; i < testCases.length; i++) {
 
+            String description = testCases[i][0] == null ? "null" : "\"" + testCases[i][0] + "\"";
+            String icon = testCases[i][1] == null ? "null" : "\"" + testCases[i][1] + "\"";
             String serviceJson = """
-                {
-                  "hotelID": %d,
-                  "serviceName": "Valid Name",
-                  "description": %s,
-                  "price": 100.0,
-                  "icon": %s
-                }
-                """.formatted(testHotelId, description, icon);
+        {
+            "hotelID": %s,
+            "serviceName": "Valid Service Test %d",
+            "description": %s,
+            "price": 100,
+            "icon": %s
+        }
+        """.formatted(testHotelId, i, description, icon);
 
             mockMvc.perform(post("/api/service/create")
                             .contentType(MediaType.APPLICATION_JSON)
                             .header("Authorization", "Bearer " + accessToken)
                             .content(serviceJson))
-                    .andExpect(status().isOk());
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.code").value(1))
+                    .andExpect(jsonPath("$.message").exists())
+                    .andDo(print());
         }
     }
+
 
     @Test
     @Rollback

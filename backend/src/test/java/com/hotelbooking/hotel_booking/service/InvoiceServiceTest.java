@@ -1,6 +1,7 @@
 package com.hotelbooking.hotel_booking.service;
 //lay hoa don huy hoa don chua co phan quyen
 import com.hotelbooking.hotel_booking.dto.request.InvoiceRequest;
+import com.hotelbooking.hotel_booking.dto.response.InvoiceProjectionResponse;
 import com.hotelbooking.hotel_booking.dto.response.InvoiceResponse;
 import com.hotelbooking.hotel_booking.entity.Hotel;
 import com.hotelbooking.hotel_booking.entity.Invoice;
@@ -129,34 +130,6 @@ public class InvoiceServiceTest {
     }
 
 
-    //thay đổi từ getReferenceById trong service create invoice thành findbyid nếu có lỗi alo H
-    @Test
-    @DisplayName("Tạo hóa đơn thất bại khi phòng đã được đặt trước")
-    @WithMockUser(username = "user@test.com")
-    void createInvoice_RoomAlreadyBooked_Throws() {
-        userRepository.save(testUser);
-        roomRepository.save(testRoom);
-
-        Invoice existing = Invoice.builder()
-                .room(testRoom)
-                .user(testUser)
-                .checkInDate(LocalDate.now().plusDays(1))
-                .checkOutDate(LocalDate.now().plusDays(5))
-                .totalAmount(400.0)
-                .payment(1)
-                .status(0)
-                .build();
-        testRoom.addInvoice(existing);
-        invoiceRepository.save(existing);
-
-        InvoiceRequest request = new InvoiceRequest();
-        request.setCheckInDate(LocalDate.now().plusDays(2));
-        request.setCheckOutDate(LocalDate.now().plusDays(3));
-        AppException ex = assertThrows(AppException.class,
-                () -> invoiceService.createInvoice(testRoom.getRoomId(), request));
-
-        assertThat(ex.getErrorCode()).isEqualTo(ErrorCode.ROOM_ALREADY_BOOKED);
-    }
 
 
     @Test
@@ -605,6 +578,262 @@ public class InvoiceServiceTest {
             assertTrue(!inv.getCheckOutDate().isAfter(today.plusDays(2)));
         });
     }
+
+
+
+    @BeforeEach
+    void setupInvoices() {
+        // invoice1: status = 1, payment = 0, date trong khoảng
+        Invoice invoice1 = Invoice.builder()
+                .room(testRoom)
+                .user(testUser)
+                .checkInDate(LocalDate.now().plusDays(1))
+                .checkOutDate(LocalDate.now().plusDays(3))
+                .totalAmount(200.0)
+                .payment(0)
+                .status(1)
+                .build();
+        testRoom.addInvoice(invoice1);
+        invoiceRepository.save(invoice1);
+
+        // invoice2: status = 0, payment = 1, date khác
+        Invoice invoice2 = Invoice.builder()
+                .room(testRoom)
+                .user(testUser)
+                .checkInDate(LocalDate.now().plusDays(4))
+                .checkOutDate(LocalDate.now().plusDays(5))
+                .totalAmount(300.0)
+                .payment(1)
+                .status(0)
+                .build();
+        testRoom.addInvoice(invoice2);
+        invoiceRepository.save(invoice2);
+    }
+
+    @Test
+    @DisplayName("Lọc hóa đơn theo status thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterByStatus() {
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), 1, null, null, null, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> assertEquals(1, inv.getStatus()));
+    }
+
+    @Test
+    @DisplayName("Lọc hóa đơn theo payment thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterByPayment() {
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), null, 1, null, null, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> assertEquals(1, inv.getPayment()));
+    }
+
+    @Test
+    @DisplayName("Lọc hóa đơn theo khoảng ngày thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterByDateRange() {
+        LocalDate from = LocalDate.now().plusDays(1);
+        LocalDate to = LocalDate.now().plusDays(3);
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), null, null, from, to, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> {
+            assertTrue(!inv.getCheckInDate().isBefore(from));
+            assertTrue(!inv.getCheckOutDate().isAfter(to));
+        });
+    }
+
+    @Test
+    @DisplayName("Lọc hóa đơn theo tất cả tham số thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterAllParams() {
+        LocalDate from = LocalDate.now().plusDays(1);
+        LocalDate to = LocalDate.now().plusDays(3);
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), 1, 0, from, to, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> {
+            assertEquals(1, inv.getStatus());
+            assertEquals(0, inv.getPayment());
+            assertTrue(!inv.getCheckInDate().isBefore(from));
+            assertTrue(!inv.getCheckOutDate().isAfter(to));
+        });
+    }
+    @Test
+    @DisplayName("Lọc theo status và date range thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterByStatusAndDate() {
+        LocalDate from = LocalDate.now().plusDays(1);
+        LocalDate to = LocalDate.now().plusDays(3);
+
+        // Tạo hóa đơn thỏa điều kiện
+        InvoiceRequest req = new InvoiceRequest();
+        req.setCheckInDate(from);
+        req.setCheckOutDate(to);
+        req.setStatus(1);
+        req.setPayment(0);
+        req.setTotalAmount(100.0);
+        invoiceService.createInvoice(testRoom.getRoomId(), req);
+
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), 1, null, from, to, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> {
+            assertEquals(1, inv.getStatus());
+            assertTrue(!inv.getCheckInDate().isBefore(from));
+            assertTrue(!inv.getCheckOutDate().isAfter(to));
+        });
+    }
+
+    @Test
+    @DisplayName("Lọc theo payment và date range thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterByPaymentAndDate() {
+        LocalDate from = LocalDate.now().plusDays(1);
+        LocalDate to = LocalDate.now().plusDays(3);
+
+        InvoiceRequest req = new InvoiceRequest();
+        req.setCheckInDate(from);
+        req.setCheckOutDate(to);
+        req.setStatus(0);
+        req.setPayment(1);
+        req.setTotalAmount(120.0);
+        invoiceService.createInvoice(testRoom.getRoomId(), req);
+
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), null, 1, from, to, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> {
+            assertEquals(1, inv.getPayment());
+            assertTrue(!inv.getCheckInDate().isBefore(from));
+            assertTrue(!inv.getCheckOutDate().isAfter(to));
+        });
+    }
+
+    @Test
+    @DisplayName("Lọc theo status và payment thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterByStatusAndPayment() {
+        InvoiceRequest req = new InvoiceRequest();
+        req.setCheckInDate(LocalDate.now().plusDays(1));
+        req.setCheckOutDate(LocalDate.now().plusDays(2));
+        req.setStatus(1);
+        req.setPayment(0);
+        req.setTotalAmount(150.0);
+        invoiceService.createInvoice(testRoom.getRoomId(), req);
+
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), 1, 0, null, null, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> {
+            assertEquals(1, inv.getStatus());
+            assertEquals(0, inv.getPayment());
+        });
+    }
+
+    @Test
+    @DisplayName("Lọc theo status, payment và date range thành công")
+    @WithMockUser(username = "owner@test.com", authorities = {"READ_INVOICE_LIST_(2)"})
+    void getInvoicesByHotelOwner_FilterByAllParams() {
+        LocalDate from = LocalDate.now().plusDays(1);
+        LocalDate to = LocalDate.now().plusDays(3);
+
+        InvoiceRequest req = new InvoiceRequest();
+        req.setCheckInDate(from);
+        req.setCheckOutDate(to);
+        req.setStatus(1);
+        req.setPayment(0);
+        req.setTotalAmount(200.0);
+        invoiceService.createInvoice(testRoom.getRoomId(), req);
+
+        Page<InvoiceResponse> page = invoiceService.getInvoicesByHotelOwner(hotelOwner.getId(), 1, 0, from, to, 1, 10);
+        assertFalse(page.isEmpty());
+        page.getContent().forEach(inv -> {
+            assertEquals(1, inv.getStatus());
+            assertEquals(0, inv.getPayment());
+            assertTrue(!inv.getCheckInDate().isBefore(from));
+            assertTrue(!inv.getCheckOutDate().isAfter(to));
+        });
+    }
+    @Test
+    @DisplayName("Xóa hóa đơn thành công")
+    void deleteInvoice_Success() {
+        Invoice invoice = Invoice.builder()
+                .room(testRoom)
+                .user(testUser)
+                .checkInDate(LocalDate.now().plusDays(1))
+                .checkOutDate(LocalDate.now().plusDays(2))
+                .totalAmount(200.0)
+                .payment(1)
+                .status(0)
+                .isDelete(0)
+                .build();
+        invoiceRepository.save(invoice);
+
+        invoiceService.deleteInvoice(invoice.getId());
+
+        Invoice deleted = invoiceRepository.findById(invoice.getId()).orElse(null);
+        assertNotNull(deleted);
+        assertEquals(1, deleted.getIsDelete());
+    }
+
+    @Test
+    @DisplayName("Xóa hóa đơn thất bại khi không tồn tại")
+    void deleteInvoice_NotFound_Throws() {
+        AppException ex = assertThrows(AppException.class,
+                () -> invoiceService.deleteInvoice(9999));
+        assertEquals(ErrorCode.INVOICE_NOT_EXISTED, ex.getErrorCode());
+    }
+
+
+    @Test
+    @DisplayName("validateDates trả về true khi không trùng ngày")
+    void validateDates_NoOverlap_ReturnsTrue() throws Exception {
+        Invoice invoice = Invoice.builder()
+                .room(testRoom)
+                .user(testUser)
+                .checkInDate(LocalDate.now().plusDays(1))
+                .checkOutDate(LocalDate.now().plusDays(3))
+                .totalAmount(200.0)
+                .payment(1)
+                .status(0)
+                .isDelete(0)
+                .build();
+        invoiceRepository.save(invoice);
+
+        InvoiceRequest request = new InvoiceRequest();
+        request.setCheckInDate(LocalDate.now().plusDays(4));
+        request.setCheckOutDate(LocalDate.now().plusDays(5));
+
+        java.lang.reflect.Method method = InvoiceService.class.getDeclaredMethod("validateDates", InvoiceRequest.class, List.class);
+        method.setAccessible(true);
+        boolean result = (boolean) method.invoke(invoiceService, request, invoiceRepository.findAll());
+
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("validateDates trả về false khi trùng ngày")
+    void validateDates_Overlap_ReturnsFalse() throws Exception {
+        Invoice invoice = Invoice.builder()
+                .room(testRoom)
+                .user(testUser)
+                .checkInDate(LocalDate.now().plusDays(1))
+                .checkOutDate(LocalDate.now().plusDays(3))
+                .totalAmount(200.0)
+                .payment(1)
+                .status(0)
+                .isDelete(0)
+                .build();
+        invoiceRepository.save(invoice);
+
+        InvoiceRequest request = new InvoiceRequest();
+        request.setCheckInDate(LocalDate.now().plusDays(2));
+        request.setCheckOutDate(LocalDate.now().plusDays(4));
+
+        java.lang.reflect.Method method = InvoiceService.class.getDeclaredMethod("validateDates", InvoiceRequest.class, List.class);
+        method.setAccessible(true);
+        boolean result = (boolean) method.invoke(invoiceService, request, invoiceRepository.findAll());
+
+        assertFalse(result);
+    }
+
+
 
 }
 

@@ -198,4 +198,6 @@ public class ImgHotelServiceTest {
         ImgHotelRespone response = imgHotelService.getImgHotelById(imgHotel.getImgHotelId());
         assertThat(response.getImgHotelId()).isEqualTo(imgHotel.getImgHotelId());
     }
+
+
 }

@@ -235,7 +235,7 @@ public class RoomControllerTest {
     void deleteRoom_Success() throws Exception {
         int roomId = createTestRoom();
 
-        mockMvc.perform(delete("/api/rooms/{roomID}", roomId)
+        mockMvc.perform(delete("/api/rooms/delete/{roomID}", roomId)
                         .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Xóa phòng thành công"));
@@ -286,5 +286,58 @@ public class RoomControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.result").isArray());
     }
+    @Test
+    @Transactional
+    @Rollback
+    @DisplayName("Lấy danh sách phòng theo loại phòng và hotelId")
+    void findByRoomType_Success() throws Exception {
+        int roomId = createTestRoom();
+
+        mockMvc.perform(get("/api/rooms/hotel/{hotelId}/{roomType}", testHotelId, "Standard")
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(1))
+                .andExpect(jsonPath("$.message").value("Lấy danh sách phòng theo loại phòng thành công"))
+                .andExpect(jsonPath("$.result[0].roomId").value(roomId));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    @DisplayName("Lấy phòng có giá min theo hotelId")
+    void findMinPriceByHotel_Success() throws Exception {
+        int roomId = createTestRoom();
+
+        mockMvc.perform(get("/api/rooms/hotel/{hotelId}/min-price", testHotelId)
+                        .header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(1))
+                .andExpect(jsonPath("$.message").value("Lấy phòng có giá min thành công"))
+                .andExpect(jsonPath("$.result.roomId").exists());
+    }
+
+
+
+    @Test
+    @Transactional
+    @Rollback
+    @DisplayName("Cập nhật trạng thái phòng thành công")
+    void setStatusRoom_Success() throws Exception {
+        int roomId = createTestRoom();
+
+        String statusJson = """
+        {"status": 0}
+    """;
+
+        mockMvc.perform(put("/api/rooms/status/{roomId}", roomId)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(statusJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(1))
+                .andExpect(jsonPath("$.message").value("Cập nhật trạng thái thành công cho hóa đơn " + roomId))
+                .andExpect(jsonPath("$.result").value("Success"));
+    }
+
 
 }
