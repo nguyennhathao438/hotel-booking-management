@@ -3,7 +3,6 @@ import { Link, useParams, useSearchParams, useNavigate } from "react-router-dom"
 import ImageSlider from "../Common/ImageSlider";
 import api from "../../api";
 import { Context } from "../RoomContext";
-import momo from "../../assets/img/momo.png"
 import vnpay from "../../assets/img/vnpay.png"
 import thanhtoan from "../../assets/img/thanhToan.png"
 import { Mail, Phone } from "lucide-react";
@@ -49,12 +48,6 @@ export default function FormBooking() {
             "title": "Thanh toán tại chỗ",
             "text": "Thanh toán bằng tiền mặt tại khách sạn",
             "icon": thanhtoan
-        },
-        {
-            "id": 2,
-            "title": "Thanh toán qua MoMo",
-            "text": "Thanh toán nhanh chóng qua ví Momo",
-            "icon": momo
         },
         {
             "id": 3,
@@ -281,7 +274,6 @@ export default function FormBooking() {
                                     className={`flex items-center my-1 mx-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${selected === item.id
                                         ? "border-blue-500 bg-blue-50"
                                         : "border-gray-300 hover:border-blue-300"}`}>
-
                                     <input
                                         type="radio"
                                         name="payment"

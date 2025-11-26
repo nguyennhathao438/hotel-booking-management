@@ -1,8 +1,6 @@
 package com.hotelbooking.hotel_booking.entity;
 
 
-import com.hotelbooking.hotel_booking.entity.Room;
-import com.hotelbooking.hotel_booking.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

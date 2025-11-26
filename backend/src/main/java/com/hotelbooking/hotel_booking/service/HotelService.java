@@ -106,6 +106,13 @@ public class HotelService {
                 .orElseThrow(() -> new AppException(ErrorCode.HOTEL_NOT_EXISTED));
         return mapToHotelResponse(hotel);
     }
+
+    public List<HotelResponse> getHotelsByStar(Double star) {
+        List<Hotel> hotels = hotelRepository.findByHotelRatingGreaterThanEqual(star);
+        return hotels.stream()
+                .map(this::mapToHotelResponse)
+                .toList();
+    }
     @PreAuthorize("hasAuthority('UPDATE_HOTEL')")
     public HotelResponse updateHotel(int hotelId, HotelRequest request) {
         Hotel hotel = hotelRepository.findById(hotelId)

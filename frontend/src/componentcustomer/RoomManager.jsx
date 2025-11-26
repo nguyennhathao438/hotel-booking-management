@@ -8,8 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import api from "../api";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import banner2 from "../assets/img/banner2.jpg"
-import { Context } from "../components/RoomContext";
 const roomSchema = z.object({
     roomName: z
         .string()
@@ -37,7 +35,6 @@ const roomSchema = z.object({
     ]).refine(val => val !== "", {
         message: "Vui lòng chọn loại phòng hợp lệ",
     }),
-    // status: z.enum(["0", "1", "2", "3"]),
     roomArea: z
         .string()
         .trim()
@@ -66,7 +63,7 @@ const roomSchema = z.object({
 })
 export default function RoomManager() {
     const [openCreate, setOpenCreate] = useState(false)
-
+    const [loading, setLoading] = useState(false)
     const [images, setImages] = useState([]);          // eslint-disable-line no-unused-vars
     const [previewUrls, setPreviewUrls] = useState([]);
     const handleImageChange = (e) => {
@@ -78,7 +75,7 @@ export default function RoomManager() {
         const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
         setPreviewUrls((prev) => [...prev, ...newPreviews]);
     };
-    // const { checkInDate, checkOutDate } = useContext(Context)
+
 
     const { hotelId } = useParams();
     const [rooms, setRooms] = useState([])
@@ -90,57 +87,37 @@ export default function RoomManager() {
             console.log("Lỗi không thể lấy được danh sách", error)
         }
     }
-    // const formatDate = (date) => {
-    //     const d = new Date(date);
-    //     const year = d.getFullYear();
-    //     const month = String(d.getMonth() + 1).padStart(2, "0");
-    //     const day = String(d.getDate()).padStart(2, "0");
-    //     return `${year}-${month}-${day}`;
-    // };
 
-    // const checkRoomStatus = async (roomId, checkInDate, checkOutDate) => {
-    //     try {
-    //         const response = await api.get("/rooms/check-room-status", {
-    //             params: {
-    //                 roomId,
-    //                 checkInDate: formatDate(checkInDate),
-    //                 checkOutDate: formatDate(checkOutDate),
-    //             }
-    //         });
-    //         return response.data.result;
-    //     } catch (error) {
-    //         console.error("Lỗi khi kiểm tra trạng thái phòng:", error);
-    //         return 0;
-    //     }
-    // };
-
-    // const fetchRoomsByHotelId = async () => {
-    //     try {
-    //         const roomData = await api.get(`rooms/hotel/${hotelId}`);
-    //         const roomsWithStatus = await Promise.all(
-    //             roomData.data.result.map(async (room) => {
-    //                 const status = await checkRoomStatus(room.roomId, checkInDate, checkOutDate);
-    //                 return { ...room, status };
-    //             })
-    //         );
-    //         setRooms(roomsWithStatus);
-    //         const imageData = await api.get(`/images/hotel/${hotelId}`);
-    //         setImages(imageData.data.result);
-    //     } catch (error) {
-    //         console.error("Lỗi khi load phòng:", error);
-    //     }
-    // };
     useEffect(() => {
         fetchRoomsByHotelId(hotelId)
     }, [hotelId])
+
+    const [firstRoomImages, setFirstRoomImages] = useState({});
+    useEffect(() => {
+        const fetchImages = async () => {
+            const temp = {};
+            for (let room of rooms) {
+                try {
+                    const res = await api.get(`/imageRoom/room/${room.roomId}`);
+                    temp[room.roomId] = res.data.result[0].imgUrl;
+                } catch (error) {
+                    console.log("loi khong the lay anh", error)
+                    temp[room.roomId] = null;
+                }
+            }
+            setFirstRoomImages(temp);
+        };
+        if (rooms.length > 0) fetchImages();
+    }, [rooms]);
 
     const { handleSubmit, register, reset } = useForm({
         resolver: zodResolver(roomSchema)
     })
 
-
-    const [room, setRoom] = useState([])
+    const [room, setRoom] = useState(null)
     const defaultAdd = () => {
+        setPreviewUrls([])
+        setImgsRoom([])
         setRoom(null)
         reset({
             roomArea: "",
@@ -152,6 +129,8 @@ export default function RoomManager() {
         })
     }
     const defaultUpdate = (r) => {
+        setPreviewUrls([])
+        setImages([])
         setRoom(r)
         reset({
             roomArea: String(r.roomArea),
@@ -162,6 +141,23 @@ export default function RoomManager() {
             bedRoomCount: String(r.bedRoomCount),
             roomPrice: String(r.roomPrice)
         })
+    }
+
+    const [imgsRoom, setImgsRoom] = useState([])
+    const fullImgRoomByRoomId = async (roomId) => {
+        try {
+            const response = await api.get(`/imageRoom/room/${roomId}`)
+            if (response.data.code)
+                setImgsRoom(response.data.result)
+        } catch (error) {
+            console.log("khong the lay anh", error)
+        }
+    }
+
+    const [idImgRoom, setIdImgRoom] = useState([])
+    const deleteImageTemp = async (imgId) => {
+        setImgsRoom(prev => prev.filter(img => img.id !== imgId));
+        setIdImgRoom((prev) => [...prev, imgId])
     }
 
     const onError = (err) => {
@@ -176,28 +172,61 @@ export default function RoomManager() {
             hotelID: hotelId,
         }
         if (!room) {
+            setLoading(true)
+            if (images.length === 0) {
+                toast.error("Vui long them anh phong")
+                return
+            }
             try {
                 const response = await api.post("/rooms/create", dataNew)
-                if (response.data.code) {
+                const roomId = response.data.result.roomId;
+                const formData = new FormData();
+                images.forEach((file) => formData.append("files", file))
+                formData.append("roomId", roomId)
+                const responseImgRoom = await api.post("/imageRoom/upload", formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                if (responseImgRoom.data.code) {
                     toast.success("Thêm phòng thành công")
                     fetchRoomsByHotelId(hotelId)
                     setOpenCreate(false)
+                    setPreviewUrls([])
+                    setImages([])
                 }
             } catch (error) {
                 toast.error("Không thể thêm phòng")
                 console.log("Không thể thêm phòng", error)
+            } finally {
+                setLoading(false)
             }
         } else {
             try {
+                setLoading(true)
                 const response = await api.put(`rooms/${room.roomId}`, dataNew)
+                const formData = new FormData();
+                if (images.length != 0 && previewUrls) {
+                    images.forEach((file) => formData.append("files", file))
+                    formData.append("roomId", room.roomId)
+                    await api.post("/imageRoom/upload", formData, {
+                        headers: { "Content-Type": "multipart/form-data" },
+                    });
+                }
+                if (idImgRoom.length > 0) {
+                    await Promise.all(idImgRoom.map(id => api.delete(`/imageRoom/delete/${id}`)));
+                    setIdImgRoom([]);
+                }
                 if (response.data.code) {
                     toast.success("Cập nhật thành công")
                     fetchRoomsByHotelId(hotelId)
                     setOpenCreate(false)
+                    setImages([])
+                    setPreviewUrls([])
                 }
             } catch (error) {
                 toast.error("Không thể cập nhật")
                 console.log("Không thể cập nhật", error)
+            } finally {
+                setLoading(false)
             }
         }
     }
@@ -216,21 +245,7 @@ export default function RoomManager() {
     }, [roomType, hotelId])
 
 
-
-    // const handleChangeRoomStatus = async (roomId, newStatus) => {
-    //     try {
-    //         await api.put(`/rooms/${roomId}/status`, { status: newStatus });
-    //         toast.success("Cập nhật trạng thái phòng thành công");
-
-    //         // Cập nhật lại danh sách rooms tại chỗ (nếu không refetch)
-    //         setRooms((prev) =>
-    //             prev.map((r) => (r.roomId === roomId ? { ...r, status: newStatus } : r))
-    //         );
-    //     } catch (error) {
-    //         toast.error("Không thể cập nhật trạng thái phòng", error);
-    //     }
-    // };
-
+    // console.log("danh sach id anh ban muon xoa la", idImgRoom)
     const deleteRoom = async (roomId) => {
         const result = await Swal.fire({
             title: "Bạn có chắc muốn xóa?",
@@ -276,7 +291,7 @@ export default function RoomManager() {
     const setStatusRoom = async (status) => {
         try {
             if (roomSelected != null) {
-                const response = await api.put(`rooms/status/${roomSelected.roomId}`,{status})
+                const response = await api.put(`rooms/status/${roomSelected.roomId}`, { status })
                 if (response.data.code) {
                     toast.success("Cập nhật trạng thái phòng thành công")
                     fetchRoomsByHotelId(hotelId)
@@ -329,7 +344,11 @@ export default function RoomManager() {
                                     className="rounded-2xl shadow-md hover:shadow-xl transition-all bg-white overflow-hidden border border-gray-100">
                                     {/* Ảnh phòng */}
                                     <div className="h-48 w-full bg-gray-100 overflow-hidden">
-                                        <img src={banner2} alt="" className="w-full h-full object-cover hover:scale-105 transition" />
+                                        <img
+                                            src={firstRoomImages[room.roomId]}
+                                            alt=""
+                                            className="w-full h-full object-cover hover:scale-105 transition"
+                                        />
                                     </div>
 
                                     <div className="px-5 py-4">
@@ -360,12 +379,12 @@ export default function RoomManager() {
 
                                         {/* Nút hành động */}
                                         <div className="flex justify-end gap-2 mt-5">
-                                            <button onClick={() => { setOpenStatus(true), setRoomSelected(room),setSelected(room.status) }} className="flex cursor-pointer items-center gap-1 bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition">
+                                            <button onClick={() => { setOpenStatus(true), setRoomSelected(room), setSelected(room.status) }} className="flex cursor-pointer items-center gap-1 bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition">
                                                 Trạng thái
                                             </button>
                                             {/* Sửa */}
                                             <button
-                                                onClick={() => { setOpenCreate(true); defaultUpdate(room); }}
+                                                onClick={() => { setOpenCreate(true); defaultUpdate(room); fullImgRoomByRoomId(room.roomId) }}
                                                 className="flex cursor-pointer items-center gap-1 bg-yellow-500 text-white px-3 py-1.5 rounded-lg hover:bg-yellow-600 transition">
                                                 {/* <Edit size={16} /> */}
                                                 <span>Sửa</span>
@@ -449,25 +468,6 @@ export default function RoomManager() {
                                             {...register("roomArea")}
                                         />
                                     </div>
-
-                                    {/* {room && (
-                                        <div>
-                                            <label className="block text-sm font-medium">Trạng thái phòng</label>
-                                            <select
-                                                // value={room.status}
-                                                // onChange={(e) => handleChangeRoomStatus(room.roomId, Number(e.target.value))}
-                                                // disabled={room.status === 3} 
-                                                // className={`w-full border px-3 py-2 rounded-lg ${room.status === 3 ? "bg-gray-100 cursor-not-allowed" : "bg-white"}`}
-                                                className={`w-full border px-3 py-2 rounded-lg bg-gray-100 cursor-pointer`}
-                                                {...register("status")}
-                                            >
-                                                <option value={0}>Phòng còn trống</option>
-                                                <option value={1}>Khách đang ở</option>
-                                                <option value={2}>Hết chỗ</option>
-                                                <option value={3}>Bao tri</option>
-                                            </select>
-                                        </div>
-                                    )} */}
                                 </div>
 
 
@@ -523,7 +523,7 @@ export default function RoomManager() {
                                     className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                 />
                                 {previewUrls.length > 0 && (
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
+                                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-4">
                                         {previewUrls.map((url, idx) => (
                                             <div
                                                 key={idx}
@@ -538,11 +538,38 @@ export default function RoomManager() {
                                         ))}
                                     </div>
                                 )}
+                                {imgsRoom && (
+                                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-4">
+                                        {imgsRoom.map((img, index) => (
+                                            <div key={index} className="relative overflow-hidden rounded-xl border border-gray-200">
+                                                <button type="button"
+                                                    onClick={() => deleteImageTemp(img.id)}
+                                                    className="absolute top-1 right-1 bg-red-500 text-white w-6 h-6 flex items-center justify-center 
+                               rounded-full text-sm hover:bg-red-600 transition z-10">
+                                                    ✕
+                                                </button>
+                                                <img src={img.imgUrl} alt={`preview-${index}`}
+                                                    className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
                             </div>
 
                             {/* Preview ảnh */}
                             <div className="flex col-span-2 -mt-5 justify-center">
-                                <button type="submit" className="px-5 cursor-pointer text-white py-2 rounded-xl bg-green-600">{!room ? "Thêm" : "Cập nhật"}</button>
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className={`px-5 cursor-pointer text-white py-2 rounded-xl bg-green-600 flex items-center justify-center gap-2 ${loading ? "opacity-70 cursor-not-allowed" : ""}`}>
+                                    {loading && (<span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>)}
+                                    {!room
+                                        ? (loading ? "Đang thêm phòng..." : "Thêm")
+                                        : (loading ? "Đang cập nhật..." : "Cập nhật")}
+                                </button>
+
                             </div>
                         </form>
                     </ModelForm>
@@ -557,7 +584,7 @@ export default function RoomManager() {
                                     <button
                                         key={index}
                                         onClick={() => { setSelected(item.status) }}
-                                        className={`border py-2 rounded-lg w-full text-left cursor-pointer px-4 transition ${selected=== item.status
+                                        className={`border py-2 rounded-lg w-full text-left cursor-pointer px-4 transition ${selected === item.status
                                             ? "bg-gray-800 text-white"
                                             : "bg-gray-100 hover:bg-gray-200 text-black"}  `}>
                                         {item.label}
@@ -568,12 +595,10 @@ export default function RoomManager() {
                                 <span className="text-gray-700 font-medium text-lg">
                                     Trạng thái phòng:
                                 </span>
-
-                                {/* Ví dụ hiển thị trạng thái */}
                                 {renderStatus(selected)}
                             </div>
                         </div>
-                        <div className="flex justify-center"><button onClick={() => {setStatusRoom(selected),setOpenStatus(false)}} className="px-4 py-2 bg-green-500 rounded-md text-white cursor-pointer ">Cập nhật</button></div>
+                        <div className="flex justify-center"><button onClick={() => { setStatusRoom(selected), setOpenStatus(false) }} className="px-4 py-2 bg-green-500 rounded-md text-white cursor-pointer ">Cập nhật</button></div>
                     </ModelForm>
                 )
             }
