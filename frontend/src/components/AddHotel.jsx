@@ -29,6 +29,7 @@ const hotelSchema = z.object({
 });
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import myInfoBackground from "../assets/img/myinfo-background.jpg";
 const AddHotel = () => {
   const userId = useSelector((state) => state.user.userId);
   const navigator = useNavigate();
@@ -140,166 +141,176 @@ const AddHotel = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit, onError)}
-      className="max-w-3xl my-2 mx-auto p-6 bg-white shadow-lg rounded-2xl space-y-5 border border-gray-100 sm:p-8"
+    <div
+      className="flex items-center justify-center min-h-screen"
+      style={{
+        backgroundImage: `url(${myInfoBackground})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-      <h2 className="text-center font-medium text-xl">
-        HÃY ĐĂNG KÝ KHÁCH SẠN CỦA BẠN
-      </h2>
-      {/* Tên khách sạn */}
-      <div>
-        <label className="block font-semibold mb-2 text-gray-700">
-          Tên khách sạn
-        </label>
-        <input
-          placeholder="Nhập tên khách sạn"
-          {...register("hotelName")}
-          className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-        />
-      </div>
-
-      {/* Địa chỉ khách sạn */}
-      <div>
-        <label className="block font-semibold mb-2 text-gray-700">
-          Chọn địa chỉ khách sạn
-        </label>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <select
-            className="border flex-1 border-gray-300 rounded-xl p-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            name="province"
-            id="province"
-            value={provinceCode}
-            onChange={(e) => setProvinceCode(e.target.value)}
-          >
-            <option value="" disabled>
-              Chọn tỉnh thành
-            </option>
-            {listProvinces.map((item) => (
-              <option
-                key={item.code}
-                value={item.code}
-                className="text-gray-700"
-              >
-                {item.name}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="border flex-1 border-gray-300 rounded-xl p-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-          >
-            <option value="">Chọn quận huyện</option>
-            {listDistricts.map((d) => (
-              <option key={d.code} value={d.name}>
-                {d.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <label className="block font-semibold mt-4 mb-2 text-gray-700">
-          Nhập tên đường
-        </label>
-        <input
-          {...register("hotelAddress")}
-          placeholder="Nhập địa chỉ khách sạn"
-          className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-        />
-      </div>
-
-      {/* Tổng số phòng */}
-      <div className="grid sm:grid-cols-2 gap-4">
+      <form
+        onSubmit={handleSubmit(onSubmit, onError)}
+        className="bg-white shadow-lg rounded-2xl w-[800px] max-w-full p-8"
+        style={{ backgroundColor: "#fdf8f4", color: "#4b2e1f" }}
+      >
+        <h2 className="text-center font-medium text-xl">
+          HÃY ĐĂNG KÝ KHÁCH SẠN CỦA BẠN
+        </h2>
+        {/* Tên khách sạn */}
         <div>
           <label className="block font-semibold mb-2 text-gray-700">
-            Tổng số phòng
+            Tên khách sạn
           </label>
           <input
-            {...register("hotelTotalRoom", { valueAsNumber: true })}
-            placeholder="Nhập tổng số phòng"
-            type="number"
+            placeholder="Nhập tên khách sạn"
+            {...register("hotelName")}
             className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
           />
         </div>
 
-        {/* Số điện thoại */}
+        {/* Địa chỉ khách sạn */}
         <div>
           <label className="block font-semibold mb-2 text-gray-700">
-            Số điện thoại liên hệ
+            Chọn địa chỉ khách sạn
           </label>
-          <input
-            {...register("hotelPhone")}
-            placeholder="Nhập số điện thoại"
-            type="number"
-            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-          />
-        </div>
-      </div>
-
-      {/* Mô tả khách sạn */}
-      <div>
-        <label className="block font-semibold mb-2 text-gray-700">
-          Giới thiệu khách sạn
-        </label>
-        <textarea
-          {...register("hotelDescription")}
-          placeholder="Nhập mô tả chi tiết khách sạn"
-          rows={4}
-          className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-        />
-      </div>
-
-      {/* Ảnh khách sạn */}
-      <div>
-        <label className="block font-semibold mb-2 text-gray-700">
-          Ảnh khách sạn
-        </label>
-        <input
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageChange}
-          className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-        />
-      </div>
-
-      {/* Preview ảnh */}
-      {previewUrls.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
-          {previewUrls.map((url, idx) => (
-            <div
-              key={idx}
-              className="relative overflow-hidden rounded-xl border border-gray-200 shadow-sm"
+          <div className="flex flex-col sm:flex-row gap-3">
+            <select
+              className="border flex-1 border-gray-300 rounded-xl p-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              name="province"
+              id="province"
+              value={provinceCode}
+              onChange={(e) => setProvinceCode(e.target.value)}
             >
-              <img
-                src={url}
-                alt={`preview-${idx}`}
-                className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-          ))}
-        </div>
-      )}
+              <option value="" disabled>
+                Chọn tỉnh thành
+              </option>
+              {listProvinces.map((item) => (
+                <option
+                  key={item.code}
+                  value={item.code}
+                  className="text-gray-700"
+                >
+                  {item.name}
+                </option>
+              ))}
+            </select>
 
-      {/* Nút submit */}
-      <button
-        type="submit"
-        disabled={loading}
-        className={`
+            <select
+              className="border flex-1 border-gray-300 rounded-xl p-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+            >
+              <option value="">Chọn quận huyện</option>
+              {listDistricts.map((d) => (
+                <option key={d.code} value={d.name}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <label className="block font-semibold mt-4 mb-2 text-gray-700">
+            Nhập tên đường
+          </label>
+          <input
+            {...register("hotelAddress")}
+            placeholder="Nhập địa chỉ khách sạn"
+            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          />
+        </div>
+
+        {/* Tổng số phòng */}
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700">
+              Tổng số phòng
+            </label>
+            <input
+              {...register("hotelTotalRoom", { valueAsNumber: true })}
+              placeholder="Nhập tổng số phòng"
+              type="number"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            />
+          </div>
+
+          {/* Số điện thoại */}
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700">
+              Số điện thoại liên hệ
+            </label>
+            <input
+              {...register("hotelPhone")}
+              placeholder="Nhập số điện thoại"
+              type="number"
+              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+            />
+          </div>
+        </div>
+
+        {/* Mô tả khách sạn */}
+        <div>
+          <label className="block font-semibold mb-2 text-gray-700">
+            Giới thiệu khách sạn
+          </label>
+          <textarea
+            {...register("hotelDescription")}
+            placeholder="Nhập mô tả chi tiết khách sạn"
+            rows={4}
+            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          />
+        </div>
+
+        {/* Ảnh khách sạn */}
+        <div>
+          <label className="block font-semibold mb-2 text-gray-700">
+            Ảnh khách sạn
+          </label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+          />
+        </div>
+
+        {/* Preview ảnh */}
+        {previewUrls.length > 0 && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4">
+            {previewUrls.map((url, idx) => (
+              <div
+                key={idx}
+                className="relative overflow-hidden rounded-xl border border-gray-200 shadow-sm"
+              >
+                <img
+                  src={url}
+                  alt={`preview-${idx}`}
+                  className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Nút submit */}
+        <button
+          type="submit"
+          disabled={loading}
+          className={`
     w-full mt-6 text-white font-semibold py-2.5 rounded-xl shadow-md transition-all duration-200
     focus:ring-2 focus:ring-blue-400
     ${
       loading
         ? "bg-gray-400 cursor-not-allowed"
-        : "bg-blue-600 hover:bg-blue-700"
+        : "bg-[#4b2e1f] w-[150px] hover:bg-[#6b4a38] text-white"
     }
   `}
-      >
-        {loading ? "Yêu cầu đang được gửi ..." : "Thêm khách sạn"}
-      </button>
-    </form>
+        >
+          {loading ? "Yêu cầu đang được gửi ..." : "Thêm khách sạn"}
+        </button>
+      </form>
+    </div>
   );
 };
 

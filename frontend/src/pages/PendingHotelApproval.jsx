@@ -1,10 +1,24 @@
 import { ClockIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import myInfoBackground from "../assets/img/myinfo-background.jpg";
 export default function PendingHotelApproval() {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md">
+    <div
+      className="flex flex-col items-center justify-center h-screen bg-gray-100 px-4"
+      style={{
+        backgroundImage: `url(${myInfoBackground})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div
+        className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md"
+        style={{
+          backgroundColor: "#fdf8f4", // ⭐ Form trắng kem sang
+          color: "#4b2e1f",
+        }}
+      >
         <ClockIcon className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
 
         <h1 className="text-2xl font-bold text-gray-800 mb-3">
@@ -18,7 +32,7 @@ export default function PendingHotelApproval() {
 
         <button
           onClick={() => navigate("/")}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+          className="bg-[#4b2e1f] w-[180px] hover:bg-[#6b4a38] text-white px-6 py-2 rounded-lg transition"
         >
           Quay về trang chủ
         </button>

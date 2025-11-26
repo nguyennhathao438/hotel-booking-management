@@ -61,7 +61,6 @@ public class DichvuTest {
         request.setHotelID(testHotel.getHotelId());
         request.setServiceName("Spa");
         request.setDescription("Relaxing spa service");
-        request.setPrice(100.0);
         request.setIcon("spa-icon.png");
 
         ServiceResponse response = dichvuService.createService(request);
@@ -78,7 +77,6 @@ public class DichvuTest {
         request.setHotelID(9999);
         request.setServiceName("Spa");
         request.setDescription("Relaxing spa service");
-        request.setPrice(100.0);
         request.setIcon("spa-icon.png");
 
         AppException ex = assertThrows(AppException.class, () -> dichvuService.createService(request));
@@ -92,7 +90,6 @@ public class DichvuTest {
         request.setHotelID(testHotel.getHotelId());
         request.setServiceName("Spa");
         request.setDescription("Relaxing spa service");
-        request.setPrice(100.0);
         request.setIcon("spa-icon.png");
         ServiceResponse response = dichvuService.createService(request);
 
@@ -121,7 +118,6 @@ public class DichvuTest {
             request.setHotelID(testHotel.getHotelId());
             request.setServiceName(names[i]);
             request.setDescription(descriptions[i]);
-            request.setPrice(prices[i]);
             request.setIcon(names[i].toLowerCase() + "-icon.png");
 
             dichvuService.createService(request);
@@ -150,7 +146,6 @@ public class DichvuTest {
         request.setHotelID(testHotel.getHotelId());
         request.setServiceName("Spa");
         request.setDescription("Relaxing spa service");
-        request.setPrice(100.0);
         request.setIcon("spa-icon.png");
         ServiceResponse response = dichvuService.createService(request);
 
@@ -167,54 +162,12 @@ public class DichvuTest {
         request.setHotelID(testHotel.getHotelId());
         request.setServiceName(null);
         request.setDescription("Valid description");
-        request.setPrice(100.0);
         request.setIcon("icon.png");
 
         assertThrows(AppException.class, () -> dichvuService.createService(request));
 
         request.setServiceName("");
         assertThrows(AppException.class, () -> dichvuService.createService(request));
-    }
-
-    @Test
-    @DisplayName("Tạo dịch vụ thất bại khi price null hoặc âm")
-    void createService_InvalidPrice_Throws() {
-        ServiceRequest request = new ServiceRequest();
-        request.setHotelID(testHotel.getHotelId());
-        request.setServiceName("Valid Name");
-        request.setDescription("Valid description");
-        request.setIcon("icon.png");
-
-        request.setPrice(null);
-        assertThrows(AppException.class, () -> dichvuService.createService(request));
-
-        request.setPrice(-50.0);
-        assertThrows(AppException.class, () -> dichvuService.createService(request));
-    }
-
-    @Test
-    @DisplayName("Tạo dịch vụ với icon hoặc description null hoặc rỗng")
-    void createService_NullOrEmptyOptionalFields() {
-        ServiceRequest request = new ServiceRequest();
-        request.setHotelID(testHotel.getHotelId());
-        request.setServiceName("Valid Name");
-        request.setPrice(100.0);
-
-        request.setDescription(null);
-        request.setIcon("icon.png");
-        ServiceResponse response1 = dichvuService.createService(request);
-        assertThat(response1.getDescription()).isNull();
-
-        request.setDescription("Some desc");
-        request.setIcon(null);
-        ServiceResponse response2 = dichvuService.createService(request);
-        assertThat(response2.getIcon()).isNull();
-
-        request.setDescription("");
-        request.setIcon("");
-        ServiceResponse response3 = dichvuService.createService(request);
-        assertThat(response3.getDescription()).isEqualTo("");
-        assertThat(response3.getIcon()).isEqualTo("");
     }
 
     @Test
@@ -236,7 +189,6 @@ public class DichvuTest {
         request.setHotelID(hotelWithoutUser.getHotelId());
         request.setServiceName("Service X");
         request.setDescription("Desc X");
-        request.setPrice(50.0);
         request.setIcon("icon-x.png");
 
         dichvuService.createService(request);

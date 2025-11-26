@@ -14,7 +14,7 @@ services:
       - app-network
 
   app:
-    image: hao438/hotel_booking_be:0.0.2
+    image: hao438/hotel_booking_be:0.1.1
     container_name: hotel_booking_be
     ports:
       - "8080:8080"
@@ -32,7 +32,7 @@ services:
     build: ./frontend
     container_name: hotel_booking_fe
     ports:
-      - "80:80"
+      - "5173:80"
     depends_on:
       - app
     networks:

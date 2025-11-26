@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import backgroundImage from "../assets/img/login-background.jpg";
 import facebookIcon from "../assets/img/facebook-icon.png";
-import googleIcon from "../assets/img/google-icon.png";
+import googleIcon from "../assets/img/google-Icon.png";
 import loginImg from "../assets/img/login-register.jpg";
 export default function Login() {
   const location = useLocation();
@@ -24,7 +24,7 @@ export default function Login() {
     const error = params.get("error");
     if (error) {
       toast.error(decodeURIComponent(error));
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   }, [location]);
   if (user?.isLogin) {
@@ -62,11 +62,13 @@ export default function Login() {
       setLoading(false);
     }
   };
-  const handleLoginGoogle = () => {
+  const handleLoginGoogle = (e) => {
+    e.preventDefault();
     // URL chuẩn để Spring Security tự xử lý OAuth2 flow
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
-  const handleLoginFaceBook = () => {
+  const handleLoginFaceBook = (e) => {
+    e.preventDefault();
     // URL chuẩn để Spring Security tự xử lý OAuth2 flow
     window.location.href =
       "http://localhost:8080/oauth2/authorization/facebook";
@@ -147,7 +149,7 @@ export default function Login() {
              rounded-full font-medium text-[#4b2e1f]
              hover:bg-[#4b2e1f] hover:text-white hover:border-[#4b2e1f]
              transition-all duration-200 shadow-sm"
-                onClick={handleLoginGoogle}
+                onClick={(e) => handleLoginGoogle(e)}
               >
                 <img src={googleIcon} className="w-5 h-5" />
                 <span>Google</span>
@@ -159,7 +161,7 @@ export default function Login() {
              rounded-full font-medium text-[#4b2e1f]
              hover:bg-[#4b2e1f] hover:text-white hover:border-[#4b2e1f]
              transition-all duration-200 shadow-sm"
-                onClick={handleLoginFaceBook}
+                onClick={(e) => handleLoginFaceBook(e)}
               >
                 <img src={facebookIcon} className="w-5 h-5" />
                 <span>Facebook</span>

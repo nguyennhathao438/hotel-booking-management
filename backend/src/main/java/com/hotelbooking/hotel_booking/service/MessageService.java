@@ -37,7 +37,7 @@ public class MessageService {
         messageRepository.save(message);
         return mapToMessageResponse(message);
     }
-    @PreAuthorize("hasAuthority('READ_MESSAGES')")
+    @PreAuthorize("hasAuthority('CHAT')")
     public List<Message> getMessageTwoPerson(int senderId,int receiverId){
         List<Message> messageList = messageRepository.getConversation(senderId,receiverId);
         return messageList;

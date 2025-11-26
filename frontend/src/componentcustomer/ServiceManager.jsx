@@ -20,7 +20,9 @@ export default function ServiceManager() {
                 ...sv,
                 hotelID: hotelId
             }
+            console.log("dataService",dataService)
             const response = await api.post("/service/create", dataService)
+            console.log("response data",response.data.result)
             if(response.data.code){
                 toast.success("Thêm dịch vụ thành công")
                 fetchServicesByHotelId(hotelId)
