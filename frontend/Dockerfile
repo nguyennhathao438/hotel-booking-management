@@ -13,7 +13,7 @@ COPY . .
 ENV CI=true
 RUN npm run build
 
-# 2️⃣ Stage 2: Dùng Nginx để serve
+# Stage 2: Dùng Nginx để serve
 FROM nginx:alpine
 
 # Copy nginx.conf của bạn vào container

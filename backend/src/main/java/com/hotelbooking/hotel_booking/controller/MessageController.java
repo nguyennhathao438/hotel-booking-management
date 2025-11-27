@@ -30,7 +30,7 @@ public class MessageController {
     ResponseEntity<ApiResponse<MessageResponse>> createMessage(@RequestBody @Valid MessageRequest request){
         MessageResponse messageResponse = messageService.createMessage(request);
         String receiverId = String.valueOf(request.getReceiverId());
-        System.out.println("Sending message to user " + receiverId+"Message Response"+ messageResponse.getContent());
+//        System.out.println("Sending message to user " + receiverId+"Message Response"+ messageResponse.getContent());
         simpMessagingTemplate.convertAndSendToUser(
                 receiverId,
                 "/queue/messages",

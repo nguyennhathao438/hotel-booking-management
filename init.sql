@@ -106,227 +106,423 @@ INSERT INTO
     `hotel`
 VALUES (
         1,
-        '123 Nguyen Trai, Hanoi',
-        120,
-        '2025-09-24 03:18:11.092284',
-        'Khách sạn 4 sao gần trung tâm',
-        'Hello Hotel',
-        '0912345678',
-        5,
-        50,
-        '2025-11-05 15:25:58.733528',
+        '123 Nguyễn Trãi, Thành Phố Hà Nội Quận Tây Hồ',
+        450000,
+        '2025-09-20 10:15:11.000000',
+        'Khách sạn sang trọng tọa lạc tại trung tâm thủ đô, nội thất hiện đại và dịch vụ chuẩn 4 sao.',
+        'ADMIN HOTEL',
+        '0912000001',
+        4,
+        10,
+        '2025-11-27 04:04:17.511012',
         1,
         1
     ),
     (
         2,
-        '912 Nguyen Trai, TPHCM',
-        892,
-        '2025-10-06 13:55:42.123049',
-        'Phù hợp mọi lứa tuổi',
-        'Vip Hotel',
-        '0912325678',
+        '912 Nguyễn Huệ, Thành phố Hà Nội Quận Đống Đa',
+        520000,
+        '2025-10-01 09:12:41.000000',
+        'Khách sạn cao cấp với thiết kế tinh tế, gần các điểm vui chơi và trung tâm thương mại.',
+        'Grand Palace Saigon',
+        '0912000002',
         5,
-        50,
-        '2025-10-23 15:27:32.384594',
+        46,
+        '2025-10-04 11:32:10.000000',
         1,
-        1
+        2
     ),
     (
         3,
-        '388/19 ấp 2 long thới',
-        399000,
-        '2025-10-06 14:00:24.669437',
-        'Đẹp đẽ sang trọng',
-        'BÌNH MINH  hotel',
-        '0399793626',
+        '388/19 Ấp 2, Long Thới, Thành phố Hồ Chí Minh quận Gò Vấp',
+        65000,
+        '2025-10-02 14:05:33.000000',
+        'Không gian yên tĩnh, phù hợp nghỉ dưỡng, phòng nghỉ rộng rãi và sạch sẽ.',
+        'Sunrise Garden Resort',
+        '0912000003',
         3,
-        30,
-        '2025-10-06 14:00:24.669437',
-        0,
-        1
+        13,
+        '2025-10-03 10:00:32.000000',
+        1,
+        3
     ),
     (
         4,
-        '199 test ấp 5',
-        1239000,
-        '2025-10-06 14:38:15.024723',
-        'view biển',
-        'ABC Hotel',
-        '0978483762',
-        NULL,
-        20,
-        '2025-10-06 14:38:15.025299',
-        0,
-        52
-    ),
-    (
-        52,
-        'a',
-        232,
-        '2025-10-06 14:56:46.254990',
-        'ád',
-        'a',
-        '32151123232',
-        NULL,
-        21,
-        '2025-10-06 14:56:46.256002',
-        0,
-        52
-    ),
-    (
-        53,
-        'dsd',
-        232,
-        '2025-10-06 15:01:30.995978',
-        'đẹp',
-        'DSB hotel',
-        '123215121',
-        NULL,
-        32,
-        '2025-10-06 15:01:30.995978',
-        0,
-        52
-    ),
-    (
-        54,
-        '31 ẤP 9 ',
-        30,
-        '2025-10-06 15:04:07.082657',
-        'ngon',
-        'Test KS',
-        '097865232',
-        NULL,
-        21,
-        '2025-10-23 15:27:27.444440',
+        '199 Đường Biển, Tỉnh Bà Rịa Vũng Tàu ',
+        350000,
+        '2025-10-04 08:22:10.000000',
+        'Khách sạn view biển tuyệt đẹp, dịch vụ chuyên nghiệp, gần bãi tắm.',
+        'Ocean Pearl Hotel',
+        '0912000004',
+        4,
+        16,
+        '2025-10-05 08:30:00.000000',
         1,
-        52
+        4
     ),
     (
-        55,
-        '31 ẤP 9 ',
-        30,
-        '2025-10-06 15:05:04.157440',
-        'ngon',
-        'Test 2',
-        '097865232',
-        NULL,
-        21,
-        '2025-10-06 15:05:04.157963',
-        0,
-        52
-    ),
-    (
-        102,
-        '123',
-        32327,
-        '2025-10-06 15:15:00.426764',
-        'alo',
-        'AB hotel',
-        '51232152121',
-        NULL,
-        32,
-        '2025-10-23 15:27:24.695867',
+        5,
+        '21 Lê Duẩn, Thành phố Đà Nẵng',
+        330000,
+        '2025-10-06 10:11:58.000000',
+        'Khách sạn tiện nghi, gần sông Hàn, nội thất hiện đại và dịch vụ chất lượng.',
+        'Royal Danang Hotel',
+        '0912000005',
+        5,
+        19,
+        '2025-10-07 09:22:00.000000',
         1,
-        52
+        5
     ),
     (
-        103,
-        'sdas',
-        23251,
-        '2025-10-06 15:19:52.408593',
-        'alo',
-        'HS hotel',
-        '09321321232',
-        NULL,
-        40,
-        '2025-10-06 15:19:52.410122',
-        0,
-        52
+        6,
+        '31 Nguyễn Văn Cừ,Thành phố Cần Thơ',
+        310000,
+        '2025-10-07 12:14:10.000000',
+        'Không gian thoáng mát, thích hợp nghỉ dưỡng khi du lịch miền Tây.',
+        'Mekong Riverside Hotel',
+        '0912000006',
+        3,
+        24,
+        '2025-10-09 14:00:20.000000',
+        1,
+        6
     ),
     (
-        104,
-        '321 ấp 8',
-        38122200,
-        '2025-10-06 15:26:01.779608',
-        'test ',
-        'Final Hostel',
-        '09783262332',
+        7,
+        '52 Lạc Long Quân, Hội An,Tỉnh Quảng Nam',
+        360000,
+        '2025-10-08 11:22:45.000000',
+        'Khách sạn mang phong cách cổ điển, gần phố cổ Hội An, dịch vụ tận tâm.',
+        'Ancient Charm Boutique',
+        '0912000007',
         5,
-        20,
-        '2025-10-06 15:26:01.779608',
-        0,
-        52
+        24,
+        '2025-10-09 16:23:11.000000',
+        1,
+        7
     ),
     (
-        105,
-        'an dương vương',
-        12309322,
-        '2025-10-06 15:32:17.804011',
-        'aloalo',
-        'SGU hotel',
-        '03623921321',
-        5,
-        12,
-        '2025-10-06 15:32:17.804011',
-        0,
-        52
+        8,
+        '123 Phạm Văn Đồng, Thành phố Hồ Chí Minh quận 12',
+        300500,
+        '2025-09-29 13:00:00.000000',
+        'Khung cảnh biển đẹp, phù hợp du lịch nghỉ dưỡng và gia đình.',
+        'Blue Ocean Retreat',
+        '0912000008',
+        4,
+        23,
+        '2025-10-01 14:32:44.000000',
+        1,
+        8
     ),
     (
-        152,
-        '3323 ap2',
-        90323233,
-        '2025-10-07 14:48:16.615143',
-        'ngon bổ rẻ',
-        'UTH hotel',
-        '0901600561',
-        5,
         9,
-        '2025-10-07 14:48:16.615143',
-        0,
-        1
-    ),
-    (
-        202,
-        '1232',
-        2131,
-        '2025-10-10 11:07:22.155174',
-        'đẹp',
-        'alo ô la',
-        '09321232332',
-        2,
-        32,
-        '2025-10-10 11:07:22.155174',
-        0,
-        303
-    ),
-    (
-        252,
-        '21321',
-        132131,
-        '2025-10-10 12:42:49.605890',
-        'alo',
-        'Admin hotel',
-        '038231512',
+        '22 Hùng Vương,Thành phố Huế',
+        340000,
+        '2025-10-02 16:11:22.000000',
+        'Khách sạn mang phong cách hoàng gia, gần các di tích nổi tiếng của Huế.',
+        'Imperial Lotus Hotel',
+        '0912000009',
         5,
+        27,
+        '2025-10-04 16:40:00.000000',
         1,
-        '2025-10-10 12:42:49.605890',
-        0,
-        1
+        9
     ),
     (
-        302,
-        '388/19 ấp 2 , Huyện Phước Long, Tỉnh Bạc Liêu',
-        50000,
-        '2025-10-23 19:45:43.881551',
-        'rẻ nhất thị trường ',
-        'Nhật Hào hotel',
-        '0901600561',
-        5,
+        10,
+        '19 Trần Hưng Đạo, Tỉnh Khánh Hòa',
+        420000,
+        '2025-10-03 15:12:50.000000',
+        'Khách sạn gần biển, phòng view hướng biển cực đẹp, dịch vụ chất lượng.',
+        'Crystal Bay Resort',
+        '0912000010',
+        4,
+        21,
+        '2025-10-05 12:14:20.000000',
+        1,
+        10
+    ),
+    (
+        11,
+        '18 Phan Chu Trinh, Thành phố Hồ Chí Minh Quận 1',
+        310000,
+        '2025-10-04 08:22:14.000000',
+        'Không gian ấm cúng, phù hợp nghỉ chân khi khám phá Tây Nguyên.',
+        'Highland Retreat Hotel',
+        '0912000011',
+        3,
+        20,
+        '2025-10-05 13:41:11.000000',
+        1,
+        11
+    ),
+    (
         12,
-        '2025-10-23 19:46:33.929226',
+        '892 Trương Định,Tỉnh Hải Dương',
+        350000,
+        '2025-10-04 09:44:33.000000',
+        'Khách sạn hiện đại, tiện nghi, giá hợp lý, gần các khu công nghiệp.',
+        'Diamond Central Hotel',
+        '0912000012',
+        4,
+        26,
+        '2025-10-05 10:20:00.000000',
         1,
-        502
+        12
+    ),
+    (
+        13,
+        '44 Hai Bà Trưng,Thành phố Hà Nội Quận Hai Bà Trưng',
+        450000,
+        '2025-10-05 11:54:21.000000',
+        'Khách sạn đẳng cấp, tiện nghi sang trọng, ngay trung tâm thủ đô.',
+        'Golden Heritage Hotel',
+        '0912000013',
+        5,
+        22,
+        '2025-10-07 09:32:10.000000',
+        1,
+        13
+    ),
+    (
+        14,
+        '381 Lý Thái Tổ,Tỉnh Quảng Ngãi Huyện Ba Tơ',
+        301000,
+        '2025-10-06 10:11:22.000000',
+        'Khách sạn sạch sẽ, giá tốt, thích hợp cho du khách công tác.',
+        'Central Plaza Inn',
+        '0912000014',
+        3,
+        24,
+        '2025-10-07 15:00:20.000000',
+        1,
+        14
+    ),
+    (
+        15,
+        '92 Pasteur, Thành phố Hồ Chí Minh quận 5',
+        520000,
+        '2025-10-07 12:01:33.000000',
+        'Khách sạn cao cấp trung tâm Quận 1, tiện nghi sang trọng và dịch vụ chuẩn 4 sao.',
+        'Prestige Luxury Hotel',
+        '0912000015',
+        5,
+        21,
+        '2025-10-09 17:20:40.000000',
+        1,
+        15
+    ),
+    (
+        16,
+        '121 Bạch Đằng, Thành phố Đà Nẵng',
+        310000,
+        '2025-10-08 13:00:00.000000',
+        'View sông tuyệt đẹp, không gian thư giãn, phù hợp gia đình và cặp đôi.',
+        'Riverside Harmony Hotel',
+        '0912000016',
+        4,
+        18,
+        '2025-10-10 13:40:00.000000',
+        1,
+        16
+    ),
+    (
+        17,
+        '77 Lê Lợi, Thành phố Huế',
+        350000,
+        '2025-10-09 10:44:33.000000',
+        'Phong cách cổ kính, gần trung tâm và các điểm tham quan nổi tiếng.',
+        'Royal Garden Inn',
+        '0912000017',
+        3,
+        14,
+        '2025-10-11 07:55:00.000000',
+        1,
+        17
+    ),
+    (
+        18,
+        '53 Đinh Tiên Hoàng,Thành phố Hà Nội Quận Tây Hồ',
+        380000,
+        '2025-10-10 11:22:11.000000',
+        'Khách sạn hiện đại, tiện nghi, gần hồ Gươm.',
+        'Hanoi Opera Hotel',
+        '0912000018',
+        4,
+        22,
+        '2025-10-12 12:22:00.000000',
+        1,
+        18
+    ),
+    (
+        19,
+        '910 Phạm Ngũ Lão, Thành phố Hồ Chí Minh quận 1',
+        450000,
+        '2025-10-11 12:55:41.000000',
+        'Khách sạn dành cho khách du lịch nước ngoài, không gian trẻ trung.',
+        'CityLight Urban Hotel',
+        '0912000019',
+        5,
+        30,
+        '2025-10-13 15:22:00.000000',
+        1,
+        19
+    ),
+    (
+        20,
+        '122 Võ Văn Kiệt,Thành phố Hà Nội quận Ba Đình',
+        330000,
+        '2025-10-12 14:41:22.000000',
+        'Khách sạn gần trung tâm, giá hợp lý, dịch vụ tốt.',
+        'Lotus Riverside Inn',
+        '0912000020',
+        3,
+        13,
+        '2025-10-14 16:00:00.000000',
+        1,
+        20
+    ),
+    (
+        21,
+        '289 Lê Hồng Phong,Thành phố Hà Nội Quận Thanh Xuân',
+        420000,
+        '2025-10-13 10:10:01.000000',
+        'Phòng rộng rãi, view đẹp, gần biển.',
+        'SeaWind Resort Hotel',
+        '0912000021',
+        4,
+        18,
+        '2025-10-14 17:10:00.000000',
+        1,
+        21
+    ),
+    (
+        22,
+        '32 Cách Mạng Tháng 8, Thành phố Đà Lạt',
+        305000,
+        '2025-10-13 13:22:11.000000',
+        'Khách sạn hiện đại, phù hợp nghỉ dưỡng và công tác.',
+        'Harmony Central Hotel',
+        '0912000022',
+        3,
+        12,
+        '2025-10-15 09:30:00.000000',
+        1,
+        22
+    ),
+    (
+        23,
+        '18 Quang Trung, Thành phố Đà Lạt',
+        300500,
+        '2025-10-14 09:00:00.000000',
+        'Phòng tiện nghi, nhân viên thân thiện, giá cả phải chăng.',
+        'GreenField Hotel',
+        '0912000023',
+        3,
+        11,
+        '2025-10-15 10:10:00.000000',
+        1,
+        23
+    ),
+    (
+        24,
+        '67 Trần Quốc Toản, Thành phố Đà Lạt',
+        360000,
+        '2025-10-15 10:22:22.000000',
+        'Khách sạn đẹp, không gian thoải mái, gần trung tâm.',
+        'Royal Orchid Inn',
+        '0912000024',
+        4,
+        17,
+        '2025-10-16 08:00:00.000000',
+        1,
+        24
+    ),
+    (
+        25,
+        '199 Lê Duẩn, Thành phố Bà Rịa Vũng Tàu',
+        480000,
+        '2025-10-15 15:33:10.000000',
+        'Khách sạn sang trọng, gần biển Nhật Lệ, đầy đủ tiện nghi.',
+        'Crystal Sands Hotel',
+        '0912000025',
+        5,
+        29,
+        '2025-10-16 18:11:00.000000',
+        1,
+        25
+    ),
+    (
+        26,
+        '52 Nguyễn Trãi, Thành phố Hà Nội',
+        410000,
+        '2025-10-16 14:01:21.000000',
+        'Không gian mát mẻ, gần Đà Lạt, phong cách châu Âu.',
+        'Alpine Valley Resort',
+        '0912000026',
+        4,
+        20,
+        '2025-10-18 11:22:00.000000',
+        0,
+        26
+    ),
+    (
+        27,
+        '31 Tôn Đức Thắng, Tỉnh Khánh Hòa',
+        365000,
+        '2025-10-17 13:22:11.000000',
+        'Khách sạn gần biển, phòng đẹp, giá hợp lý.',
+        'Ocean Dream Hotel',
+        '0912000027',
+        4,
+        25,
+        '2025-10-19 10:00:00.000000',
+        0,
+        27
+    ),
+    (
+        28,
+        '102 Lê Thánh Tông, Tỉnh Thanh Hóa',
+        330000,
+        '2025-10-18 15:44:10.000000',
+        'Khách sạn tiện nghi, phòng sạch đẹp, giá dễ chịu.',
+        'Emerald Star Inn',
+        '0912000028',
+        3,
+        15,
+        '2025-10-20 13:10:00.000000',
+        0,
+        28
+    ),
+    (
+        29,
+        '12 Nguyễn Trãi, Thành phố Hà Nội Huyện Đông Anh',
+        305000,
+        '2025-10-19 10:55:22.000000',
+        'Không gian yên tĩnh, phù hợp khách công tác và gia đình.',
+        'Golden River Hotel',
+        '0912000029',
+        3,
+        12,
+        '2025-10-21 11:11:00.000000',
+        0,
+        29
+    ),
+    (
+        30,
+        '98 Hoàng Sa, Thành phố Đà Nẵng',
+        490000,
+        '2025-10-20 12:22:33.000000',
+        'Khách sạn view biển đẹp, dịch vụ chuyên nghiệp, gần biển Mỹ Khê.',
+        'Azure Coast Resort',
+        '0912000030',
+        5,
+        30,
+        '2025-10-22 09:00:00.000000',
+        0,
+        30
     );
 /*!40000 ALTER TABLE `hotel` ENABLE KEYS */
 ;
@@ -354,7 +550,7 @@ CREATE TABLE `hotel_seq` (
 LOCK TABLES `hotel_seq` WRITE;
 /*!40000 ALTER TABLE `hotel_seq` DISABLE KEYS */
 ;
-INSERT INTO `hotel_seq` VALUES (401);
+INSERT INTO `hotel_seq` VALUES (1);
 /*!40000 ALTER TABLE `hotel_seq` ENABLE KEYS */
 ;
 UNLOCK TABLES;
@@ -369,16 +565,15 @@ DROP TABLE IF EXISTS `hotel_service`;
 /*!50503 SET character_set_client = utf8mb4 */
 ;
 CREATE TABLE `hotel_service` (
-    `service_id` int NOT NULL,
+    `service_id` int NOT NULL AUTO_INCREMENT,
     `description` varchar(255) DEFAULT NULL,
     `icon` varchar(255) DEFAULT NULL,
-    `hotel_id` int DEFAULT NULL,
-    `price` double DEFAULT NULL,
     `service_name` varchar(255) NOT NULL,
+    `hotel_id` int NOT NULL,
     PRIMARY KEY (`service_id`),
     KEY `FKa94xlwpvda1q3kh1gvcrxxhfa` (`hotel_id`),
     CONSTRAINT `FKa94xlwpvda1q3kh1gvcrxxhfa` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`hotel_id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */
 ;
 
@@ -389,6 +584,92 @@ CREATE TABLE `hotel_service` (
 LOCK TABLES `hotel_service` WRITE;
 /*!40000 ALTER TABLE `hotel_service` DISABLE KEYS */
 ;
+INSERT INTO
+    `hotel_service`
+VALUES (
+        1,
+        'Giữ phòng của bạn luôn sạch sẽ và gọn gàng mỗi ngày.',
+        'https://cdn-icons-png.flaticon.com/128/5443/5443535.png',
+        'Dọn phòng hằng ngày',
+        1
+    ),
+    (
+        14,
+        'Giữ phòng của bạn luôn sạch sẽ và gọn gàng mỗi ngày.',
+        'https://cdn-icons-png.flaticon.com/128/5443/5443535.png',
+        'Dọn phòng hằng ngày',
+        2
+    ),
+    (
+        15,
+        'Giặt, sấy và ủi chuyên nghiệp cho khách lưu trú.',
+        'https://cdn-icons-png.flaticon.com/128/2990/2990631.png',
+        'Giặt ủi quần áo',
+        2
+    ),
+    (
+        16,
+        'Xe đưa đón tận nơi, an toàn và đúng giờ.',
+        'https://cdn-icons-png.flaticon.com/512/854/854878.png',
+        'Đưa đón sân bay',
+        2
+    ),
+    (
+        17,
+        'Đặt món ăn yêu thích và nhận ngay tại phòng.',
+        'https://cdn-icons-png.flaticon.com/512/562/562678.png',
+        'Giao đồ ăn tận phòng',
+        2
+    ),
+    (
+        18,
+        'Kết nối internet nhanh và ổn định trong toàn bộ khu vực khách sạn.',
+        'https://cdn-icons-png.flaticon.com/128/17902/17902763.png',
+        'Wi-Fi tốc độ cao',
+        2
+    ),
+    (
+        19,
+        'Gửi hành lý an toàn trước khi nhận hoặc sau khi trả phòng.',
+        'https://cdn-icons-png.flaticon.com/512/2331/2331970.png',
+        'Giữ hành lý',
+        2
+    ),
+    (
+        20,
+        'Thưởng thức bữa sáng đa dạng với món Á - Âu mỗi ngày.',
+        'https://cdn-icons-png.flaticon.com/512/3075/3075977.png',
+        'Buffet sáng',
+        2
+    ),
+    (
+        21,
+        'Thuê xe máy tiện lợi để khám phá thành phố.',
+        'https://cdn-icons-png.flaticon.com/128/7053/7053332.png',
+        'Thuê xe máy',
+        2
+    ),
+    (
+        22,
+        'Giặt, sấy và ủi chuyên nghiệp cho khách lưu trú.',
+        'https://cdn-icons-png.flaticon.com/128/2990/2990631.png',
+        'Giặt ủi quần áo',
+        3
+    ),
+    (
+        23,
+        'Đặt món ăn yêu thích và nhận ngay tại phòng.',
+        'https://cdn-icons-png.flaticon.com/512/562/562678.png',
+        'Giao đồ ăn tận phòng',
+        3
+    ),
+    (
+        24,
+        'Thưởng thức bữa sáng đa dạng với món Á - Âu mỗi ngày.',
+        'https://cdn-icons-png.flaticon.com/512/3075/3075977.png',
+        'Buffet sáng',
+        3
+    );
 /*!40000 ALTER TABLE `hotel_service` ENABLE KEYS */
 ;
 UNLOCK TABLES;
@@ -415,7 +696,7 @@ CREATE TABLE `hotel_service_seq` (
 LOCK TABLES `hotel_service_seq` WRITE;
 /*!40000 ALTER TABLE `hotel_service_seq` DISABLE KEYS */
 ;
-INSERT INTO `hotel_service_seq` VALUES (1);
+INSERT INTO `hotel_service_seq` VALUES (51);
 /*!40000 ALTER TABLE `hotel_service_seq` ENABLE KEYS */
 ;
 UNLOCK TABLES;
@@ -450,89 +731,229 @@ LOCK TABLES `img_hotel` WRITE;
 INSERT INTO
     `img_hotel`
 VALUES (
-        1,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1759738790/hotel_images/unp2tl5u4wz0exgsjqay.jpg',
-        103
-    ),
-    (
-        2,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1759739158/hotel_images/yazpruylpqptslgz92g2.jpg',
-        104
-    ),
-    (
-        3,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1759739534/hotel_images/tmt6xjquwcyzyuqckwfv.jpg',
-        105
-    ),
-    (
-        4,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1759739537/hotel_images/rlepe9vypicgwwwoq6fr.jpg',
-        105
-    ),
-    (
-        5,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1759739539/hotel_images/hcqzzznmyl0iztpwcsbo.jpg',
-        105
-    ),
-    (
         52,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760069238/hotel_images/gsrlqiwz4ipzgwjdtqdg.jpg',
-        202
-    ),
-    (
-        53,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760069241/hotel_images/jfbitx12bnjbqrjadmd4.jpg',
-        202
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203246/hotel_images/iu8p3qb91wopbkczstdq.jpg',
+        1
     ),
     (
         54,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760069244/hotel_images/eq7sxyt2nzqiesz0d2o5.jpg',
-        202
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203314/hotel_images/ushngl8zv1tfykeclvtb.jpg',
+        2
     ),
     (
         55,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760069248/hotel_images/zu5ksbrdsurjcahx17a7.webp',
-        202
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203318/hotel_images/ybsb9velw4kokti8wmk5.jpg',
+        2
+    ),
+    (
+        56,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203321/hotel_images/f75ivtubydnndfednicr.jpg',
+        2
+    ),
+    (
+        57,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203423/hotel_images/gjshhl63w1lp2jxilikf.jpg',
+        2
+    ),
+    (
+        58,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203427/hotel_images/yd7fmcjbklp4f1kbidqn.jpg',
+        2
+    ),
+    (
+        59,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203494/hotel_images/rhtnlvtihnig8heoukmd.jpg',
+        4
+    ),
+    (
+        60,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203605/hotel_images/qec5qfkip1yrexo4nyi4.jpg',
+        5
+    ),
+    (
+        61,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203609/hotel_images/h7gmc6nac0nkdlx16eha.jpg',
+        5
+    ),
+    (
+        62,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203672/hotel_images/ethwudjv82o7oobmso7c.jpg',
+        6
+    ),
+    (
+        63,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203807/hotel_images/wl4a6uol77nojckc0xrq.jpg',
+        7
+    ),
+    (
+        64,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203852/hotel_images/aus9p9wobn59rfldrdkd.jpg',
+        8
+    ),
+    (
+        65,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203855/hotel_images/yedgp7flrlgkg7on27mn.jpg',
+        8
+    ),
+    (
+        66,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203908/hotel_images/z2b8wvam1o8p5dlm2muk.jpg',
+        9
+    ),
+    (
+        67,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203913/hotel_images/ufgrhw8jl1hxi8wvsvrs.jpg',
+        9
+    ),
+    (
+        68,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203984/hotel_images/xijplu2ml555yelvqwco.jpg',
+        10
+    ),
+    (
+        69,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764203987/hotel_images/gu4hssqq1xscxjiyojos.jpg',
+        10
+    ),
+    (
+        70,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764204045/hotel_images/j1m9oyo2buoqg2p2mqsk.jpg',
+        11
+    ),
+    (
+        71,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764204102/hotel_images/xw9iu8wk6r9o5bt6vybl.jpg',
+        12
+    ),
+    (
+        72,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764204106/hotel_images/vd00civx9oyny4krlhdc.jpg',
+        12
+    ),
+    (
+        73,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764204227/hotel_images/z9yyuogqfze9m8aao2ef.jpg',
+        13
+    ),
+    (
+        74,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764204229/hotel_images/emrkxwvflqt6tv11bpob.jpg',
+        13
+    ),
+    (
+        75,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764204277/hotel_images/uifi7cmd7i4bzlrgjchl.jpg',
+        14
+    ),
+    (
+        76,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764204337/hotel_images/ujnc23qbaobzjexjewle.jpg',
+        15
     ),
     (
         102,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760074965/hotel_images/zrrzfjhp7gt7wngkyjrc.jpg',
-        252
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764205531/hotel_images/hpus85ld72hjcqqj1xth.jpg',
+        16
     ),
     (
         103,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760074967/hotel_images/zhcugfmwki29zhtefnsj.jpg',
-        252
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764205654/hotel_images/ime3jeao2ponlxeguwj9.jpg',
+        18
     ),
     (
         104,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760074970/hotel_images/lezvlyzcgf4xwogqko3o.jpg',
-        252
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764205845/hotel_images/n14y9ovkqmb0xirikhwz.jpg',
+        20
     ),
     (
         105,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1760074971/hotel_images/v0uvifbdo0uikbudmwbs.webp',
-        252
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764205941/hotel_images/bru5fp7zms1dvnmfjogu.jpg',
+        21
     ),
     (
-        152,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1761223535/hotel_images/eagnezxgaq9gnhny707n.jpg',
-        302
+        106,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764205992/hotel_images/najukfch500pqcxjdel0.jpg',
+        22
     ),
     (
-        153,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1761223538/hotel_images/ihmihufiyefk3wcfrnul.jpg',
-        302
+        107,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764205995/hotel_images/ahuroqb1eta7jdik2ucm.jpg',
+        22
     ),
     (
-        154,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1761223540/hotel_images/fyqhtmgltidxoodl6nmu.jpg',
-        302
+        108,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206074/hotel_images/trp6esly0j4ydduetabl.jpg',
+        23
     ),
     (
-        155,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1761223548/hotel_images/vwlglj2zbxtjwye0vwrs.webp',
-        302
+        109,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206145/hotel_images/d4nnjwlwtz7okwjnwmsf.jpg',
+        24
+    ),
+    (
+        110,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206248/hotel_images/tf1vuueyy3m9wklxjdyx.jpg',
+        19
+    ),
+    (
+        111,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206250/hotel_images/xxlae3ucfx2kjuasvbtm.jpg',
+        19
+    ),
+    (
+        112,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206319/hotel_images/cpumltr3uyzs08x4rwdk.jpg',
+        25
+    ),
+    (
+        113,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206321/hotel_images/zw7pdjqqz82oed5iuxbg.jpg',
+        25
+    ),
+    (
+        114,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206454/hotel_images/hgkdjafap7q0bzgzo6zm.jpg',
+        26
+    ),
+    (
+        115,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206528/hotel_images/vugjkmkdnr2moxhlutxh.jpg',
+        27
+    ),
+    (
+        116,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206586/hotel_images/hileiu7tgjggrfqgrvb7.jpg',
+        28
+    ),
+    (
+        117,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206588/hotel_images/a5bu122hcfdxgdxzrvmw.jpg',
+        28
+    ),
+    (
+        118,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206643/hotel_images/udugvgzmxmu2uhf1jpyz.jpg',
+        29
+    ),
+    (
+        119,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206645/hotel_images/p0srq4n2h7lvi0gg8dzp.jpg',
+        29
+    ),
+    (
+        120,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206791/hotel_images/kkwtzivkvgwan3gyopem.jpg',
+        30
+    ),
+    (
+        121,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764206792/hotel_images/hmgkjhmpbmhhjiyaiuga.jpg',
+        30
+    ),
+    (
+        122,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764208179/hotel_images/o1gk0dd58uolxkgozyu9.jpg',
+        3
     );
 /*!40000 ALTER TABLE `img_hotel` ENABLE KEYS */
 ;
@@ -560,8 +981,206 @@ CREATE TABLE `img_hotel_seq` (
 LOCK TABLES `img_hotel_seq` WRITE;
 /*!40000 ALTER TABLE `img_hotel_seq` DISABLE KEYS */
 ;
-INSERT INTO `img_hotel_seq` VALUES (251);
+INSERT INTO `img_hotel_seq` VALUES (201);
 /*!40000 ALTER TABLE `img_hotel_seq` ENABLE KEYS */
+;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `img_room`
+--
+
+DROP TABLE IF EXISTS `img_room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */
+;
+/*!50503 SET character_set_client = utf8mb4 */
+;
+CREATE TABLE `img_room` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `img_url` varchar(255) DEFAULT NULL,
+    `room_id` int DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `FKk8suu3s7e78hybm9eljr8vwsk` (`room_id`),
+    CONSTRAINT `FKk8suu3s7e78hybm9eljr8vwsk` FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 34 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */
+;
+
+--
+-- Dumping data for table `img_room`
+--
+
+LOCK TABLES `img_room` WRITE;
+/*!40000 ALTER TABLE `img_room` DISABLE KEYS */
+;
+INSERT INTO
+    `img_room`
+VALUES (
+        1,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210815/room_images/xbknazbs88htgrp2q6ug.jpg',
+        11
+    ),
+    (
+        2,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210823/room_images/kdi5icnt6edo0j30kk07.jpg',
+        12
+    ),
+    (
+        3,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210834/room_images/wv3vbzkanlscfuwrkod1.jpg',
+        13
+    ),
+    (
+        4,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210867/room_images/ssmc9wxjhznq1pprgfpz.jpg',
+        14
+    ),
+    (
+        5,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210883/room_images/jci9yhndajxtpxkfneve.jpg',
+        15
+    ),
+    (
+        6,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210895/room_images/ovnakvzbuczbdxfdxrep.jpg',
+        16
+    ),
+    (
+        7,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210907/room_images/zz7xi2strse2r15c3yaa.jpg',
+        17
+    ),
+    (
+        8,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210920/room_images/d7snhl845gw1cmh4vqjx.jpg',
+        18
+    ),
+    (
+        9,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210930/room_images/oqbilgynfko6sltihme8.jpg',
+        19
+    ),
+    (
+        10,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210946/room_images/was2fiue5lr7blklpegc.jpg',
+        20
+    ),
+    (
+        11,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210972/room_images/u4pnnqv8dkhhixv9evmc.jpg',
+        21
+    ),
+    (
+        12,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764210991/room_images/m1caofukcflzkcvobif4.jpg',
+        22
+    ),
+    (
+        13,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211004/room_images/ej2miha3rcyowmlcanyt.jpg',
+        23
+    ),
+    (
+        14,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211017/room_images/tf6a8izzjnbfxezao1az.jpg',
+        24
+    ),
+    (
+        15,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211029/room_images/yvkuqrvvm5mk4j0doi1t.jpg',
+        25
+    ),
+    (
+        16,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211111/room_images/fetxznl99a8ttwmlhd0r.jpg',
+        26
+    ),
+    (
+        17,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211121/room_images/tqt0zmuqe3smhrtjx2v6.jpg',
+        27
+    ),
+    (
+        18,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211147/room_images/j4nrgalnbvnzcfztez5b.jpg',
+        28
+    ),
+    (
+        19,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211156/room_images/dmhuvy6jj6e0xozdkrue.jpg',
+        29
+    ),
+    (
+        20,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211164/room_images/k177jduh9ozcnuimdgrz.jpg',
+        30
+    ),
+    (
+        21,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211175/room_images/qnhamjoic7sklulx9klz.jpg',
+        31
+    ),
+    (
+        22,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211196/room_images/wlsjdeewmlsv2jwkp0si.jpg',
+        32
+    ),
+    (
+        23,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211202/room_images/hcqhkacfc56wpcw9y06x.jpg',
+        33
+    ),
+    (
+        24,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211212/room_images/emsttdtjg8tvi33dsspg.jpg',
+        34
+    ),
+    (
+        25,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211230/room_images/kyzsftgqsibtxnsegryc.jpg',
+        35
+    ),
+    (
+        26,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211242/room_images/umlzltep9gjpddsdtiqy.jpg',
+        36
+    ),
+    (
+        27,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211251/room_images/xnw6e4elemfzgupqvqkc.jpg',
+        37
+    ),
+    (
+        28,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211261/room_images/aem9rwenjj03l3cq2uvg.jpg',
+        38
+    ),
+    (
+        29,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211279/room_images/ugd8qg7ejcy2f77qbirk.jpg',
+        39
+    ),
+    (
+        30,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211286/room_images/yta9klhc5rapqldrkq64.jpg',
+        40
+    ),
+    (
+        31,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211292/room_images/y0zsfvog3jljirkn4hlt.jpg',
+        41
+    ),
+    (
+        32,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211303/room_images/kcixuh2dqehnyaivbkuy.jpg',
+        42
+    ),
+    (
+        33,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764211316/room_images/o9yppjilh7mxr3qyeuix.jpg',
+        43
+    );
+/*!40000 ALTER TABLE `img_room` ENABLE KEYS */
 ;
 UNLOCK TABLES;
 
@@ -592,6152 +1211,972 @@ LOCK TABLES `invalidate_token` WRITE;
 INSERT INTO
     `invalidate_token`
 VALUES (
-        '007375e7-1e5e-431a-8233-4bfca4108f63',
-        '2025-11-08 17:29:38.000000'
+        '00279d26-e587-4ae7-96ac-cd7677bf07ec',
+        '2025-11-28 07:47:31.000000'
     ),
     (
-        '008586df-78f4-4a49-98a5-e9c12b688b57',
-        '2025-10-08 14:49:40.000000'
+        '003f8ff6-69df-414f-a1e0-56ce0fa6069c',
+        '2025-11-28 07:34:43.000000'
     ),
     (
-        '00b886ba-443c-4ab1-8a80-cd3750465e33',
-        '2025-11-08 17:50:34.000000'
+        '04ed4940-ac17-4c47-8204-4c63361c691e',
+        '2025-11-28 08:23:20.000000'
     ),
     (
-        '00c53e24-58e8-453b-9b24-ad361c5ede12',
-        '2025-11-06 15:25:36.000000'
+        '058e7aea-b8c8-464c-aa71-cdb38c969971',
+        '2025-11-28 07:58:47.000000'
     ),
     (
-        '00d42220-fc89-4e15-889b-3f348ddc8ddf',
-        '2025-10-26 20:13:45.000000'
+        '098c28ee-9d0c-4a8d-a2a7-5fcbe25345b4',
+        '2025-11-28 07:39:13.000000'
     ),
     (
-        '01138fd9-a7e8-4193-a8ad-81e471f738c9',
-        '2025-10-24 21:36:29.000000'
+        '0a1765b6-ba42-4950-b20a-432521696df2',
+        '2025-11-27 08:21:37.000000'
     ),
     (
-        '0175785a-a84c-4ec3-b828-6b06ed0a1951',
-        '2025-10-26 17:57:40.000000'
+        '0ab6c23e-f492-4986-b6da-df276232828e',
+        '2025-11-27 01:21:00.000000'
     ),
     (
-        '017a2183-6ff0-464b-8c13-8ed4e2bc1c0d',
-        '2025-11-06 18:53:42.000000'
+        '0c1d63a9-acc3-4401-8601-49369a76fb90',
+        '2025-11-27 08:25:57.000000'
     ),
     (
-        '017bdaa8-9580-4e49-91e0-bdbf14399e46',
-        '2025-11-06 18:50:04.000000'
+        '0efcebaf-7db1-4b88-9836-1fce69c1cca9',
+        '2025-11-27 00:39:28.000000'
     ),
     (
-        '01dfcad1-5011-4472-81a3-2ffbfd5c4097',
-        '2025-10-13 08:27:36.000000'
+        '10c3ae6d-65c5-4cea-a1b5-a51b41757edc',
+        '2025-11-27 07:55:14.000000'
     ),
     (
-        '02815e23-94bf-47dc-83c9-a543f82e91eb',
-        '2025-10-26 20:40:32.000000'
+        '10c604cc-e6c1-4e2b-816b-1ff5eae17a6b',
+        '2025-11-26 23:07:03.000000'
     ),
     (
-        '0290994f-a1bd-45ef-8147-b3634757fb2d',
-        '2025-11-06 16:21:32.000000'
+        '11fac08e-b9be-4942-9076-307fe18551be',
+        '2025-11-28 04:00:56.000000'
     ),
     (
-        '02bd40f1-917d-44aa-a321-c132e514c90e',
-        '2025-11-06 18:24:08.000000'
+        '1285d61c-5962-4230-a1a4-c79165f8357d',
+        '2025-11-27 23:04:07.000000'
     ),
     (
-        '02dbabba-ba39-464d-b45a-027ad48062bb',
-        '2025-11-08 18:58:21.000000'
+        '12ba0e61-70ce-470d-9d95-b4c085966ee6',
+        '2025-11-27 10:21:32.000000'
     ),
     (
-        '032e9285-3794-4b4b-ab5e-0c2c5bc817e9',
-        '2025-10-26 17:50:18.000000'
+        '17656f68-c0be-4524-8d58-3c82639f7e71',
+        '2025-11-27 08:38:27.000000'
     ),
     (
-        '033e5d75-4f17-4471-b031-c349e78b8d7c',
-        '2025-11-06 18:22:28.000000'
+        '177b77b0-82cb-4b43-8281-62332b7cd536',
+        '2025-11-26 23:59:14.000000'
     ),
     (
-        '03765fa8-4e87-4060-9923-f0c401e2c7bc',
-        '2025-10-08 10:08:23.000000'
+        '18f6744e-64a9-413d-914f-c03f1d5db800',
+        '2025-11-26 23:19:07.000000'
     ),
     (
-        '03837d6c-ba42-4e64-9332-625051dfe187',
-        '2025-11-08 09:57:42.000000'
+        '1a01f662-f594-4b6d-a4d4-7f22022974a9',
+        '2025-11-27 14:17:48.000000'
     ),
     (
-        '038fb931-c322-4d45-a6e6-c6813a4c8ebd',
-        '2025-10-31 16:20:20.000000'
+        '1a67d229-e601-463b-bc91-6c48bd30e53d',
+        '2025-11-27 23:53:05.000000'
     ),
     (
-        '03ad10be-2182-42cb-9577-2d8f8b5bc8a1',
-        '2025-10-08 20:11:05.000000'
+        '1abce598-bcb3-46ca-9176-545e14057264',
+        '2025-11-27 23:35:06.000000'
     ),
     (
-        '03bf51cc-577f-4db2-bedb-98da974ee3f4',
-        '2025-10-09 16:04:35.000000'
+        '1aefca2b-2276-4f16-b6bb-a34f55a36ff7',
+        '2025-11-28 07:37:52.000000'
     ),
     (
-        '03c938a1-364d-4c7a-ae25-c8d442b832b2',
-        '2025-11-07 17:20:39.000000'
+        '1afb6037-db82-46dc-9c08-a15b904c3eec',
+        '2025-11-28 09:02:17.000000'
     ),
     (
-        '03d59441-b193-4e09-9ebf-e1653391ee06',
-        '2025-10-08 10:10:57.000000'
+        '1b21402a-7dcd-49e6-97dc-cd3f87399e5b',
+        '2025-11-27 00:10:36.000000'
     ),
     (
-        '03de7a24-2e62-445c-b9b2-438cc02352e6',
-        '2025-11-08 18:59:32.000000'
+        '1c052b05-5db1-4732-a5ff-c61023c7b0ab',
+        '2025-11-28 00:55:05.000000'
     ),
     (
-        '0400aea9-853f-4716-a809-c118da391cae',
-        '2025-10-26 17:25:35.000000'
+        '1c055b7f-c6db-4d09-84f6-36f4f9b5ee37',
+        '2025-11-26 23:50:06.000000'
     ),
     (
-        '04080b0a-f374-4343-8715-881b6d6c3cff',
-        '2025-11-08 17:29:55.000000'
+        '1c831a6a-da77-4f41-9c1f-c43e69d5eaa6',
+        '2025-11-27 04:15:46.000000'
     ),
     (
-        '0440fd90-e557-4a6e-9052-9fa211501eb6',
-        '2025-11-08 17:14:23.000000'
+        '1cba9d63-8841-47a8-865c-9cfeed007368',
+        '2025-11-28 00:58:42.000000'
     ),
     (
-        '0458c2a9-dad2-4104-b2e5-375a50902420',
-        '2025-11-08 19:07:54.000000'
+        '1d3c47fa-4cd5-4e9c-9f1d-a06815682a0a',
+        '2025-11-27 00:12:21.000000'
     ),
     (
-        '047eef93-6d7a-40fb-97aa-32cc0542c3cf',
-        '2025-11-06 16:07:36.000000'
+        '1d6eceb0-e2e2-428e-8663-5ef36ddd29cf',
+        '2025-11-28 07:29:40.000000'
     ),
     (
-        '04aaa16a-ed91-4e9f-80e4-2928dd08893c',
-        '2025-10-08 15:02:40.000000'
+        '1e1497a1-996c-41ef-937e-b2d443bc5c69',
+        '2025-11-27 07:55:54.000000'
     ),
     (
-        '04c43d02-a19a-42e3-932e-4c3dbc7553a0',
-        '2025-11-06 17:40:03.000000'
+        '1fdd2cbf-31b1-40f2-9ade-1148a4429d3c',
+        '2025-11-28 00:00:07.000000'
     ),
     (
-        '04eb7b80-da15-4b3b-893f-d1a3e2509341',
-        '2025-11-06 17:45:22.000000'
+        '243bb324-1859-4172-861e-132dc111a55c',
+        '2025-11-27 01:14:25.000000'
     ),
     (
-        '04febdd4-fa26-4239-aa72-e7ee906077a3',
-        '2025-10-24 15:29:00.000000'
+        '248a81e3-9115-4faf-bc4c-ba0d6bc4fb9c',
+        '2025-11-27 01:25:49.000000'
     ),
     (
-        '05026aae-9b4f-4916-b9a6-6f75d0c32911',
-        '2025-11-07 17:40:01.000000'
+        '2548555e-805f-4782-b3ee-fccb9422805a',
+        '2025-11-28 07:40:54.000000'
     ),
     (
-        '050a86a0-2ecb-4763-8d96-c376f359e01c',
-        '2025-10-24 21:48:33.000000'
+        '2671c5c9-8280-4b2a-bf8c-70c79fc4d52a',
+        '2025-11-28 07:34:57.000000'
     ),
     (
-        '051b82e5-623c-4576-8fc1-523b62c5e159',
-        '2025-10-27 08:31:47.000000'
+        '2a0d2996-e6b4-40ef-9dcc-3e50ba4694d8',
+        '2025-11-27 00:46:58.000000'
     ),
     (
-        '055a245a-eb6a-49eb-9185-58d41105ff5d',
-        '2025-10-26 20:14:42.000000'
+        '2b8494b9-da95-44aa-a0df-e51774dfec3b',
+        '2025-11-28 01:05:21.000000'
     ),
     (
-        '055f5a3e-08c3-47ba-9123-8fcc03736e47',
-        '2025-11-06 16:12:59.000000'
+        '2d7b3896-3296-4238-86c9-88d2f57c6df2',
+        '2025-11-28 07:32:10.000000'
     ),
     (
-        '05a62b71-f49e-4aa8-b15a-70615d2fb447',
-        '2025-10-23 15:37:48.000000'
+        '3179a817-9cf8-4d34-9562-5cb69f16acac',
+        '2025-11-27 00:11:31.000000'
     ),
     (
-        '05dd4d5c-e347-47cd-9374-83a652504414',
-        '2025-10-10 12:52:00.000000'
+        '336ac062-26b0-4284-833e-a2248d15a286',
+        '2025-11-27 04:16:18.000000'
     ),
     (
-        '060f5fd8-208e-49cf-a2be-acc0a30bef1e',
-        '2025-11-06 18:30:28.000000'
+        '347f81b6-9453-4479-81e4-e486e2da0798',
+        '2025-11-27 02:03:05.000000'
     ),
     (
-        '062049f8-738e-4416-853e-df133b59441d',
-        '2025-11-06 17:35:39.000000'
+        '36bd63f4-c2a5-4415-84bf-f89d45c3671d',
+        '2025-11-28 04:03:13.000000'
     ),
     (
-        '06349e7e-8d03-440f-ad99-ceec0f187ec1',
-        '2025-11-08 10:20:27.000000'
+        '371a9a8d-bab4-4b72-b9a8-5b7ddf89b917',
+        '2025-11-27 00:35:41.000000'
     ),
     (
-        '0640c74f-fd16-415b-a3a9-3fe6d8148d87',
-        '2025-11-02 17:48:13.000000'
+        '3776d05a-9143-45de-8b5a-59b95da881c3',
+        '2025-11-28 01:00:19.000000'
     ),
     (
-        '0667a5c5-d149-45ec-8d55-c40d40314b89',
-        '2025-11-06 18:55:40.000000'
+        '381063de-4f1f-4fa8-930a-7b3a40d7f2d4',
+        '2025-11-27 01:24:57.000000'
     ),
     (
-        '06680006-1b39-40a4-85e5-adcd6e08a618',
-        '2025-11-06 18:11:45.000000'
+        '387ae603-5b65-4746-aab0-08830608e7cb',
+        '2025-11-27 08:29:42.000000'
     ),
     (
-        '06f1678e-f39b-4574-811e-5416d383bafb',
-        '2025-11-06 19:04:57.000000'
+        '3ad3449d-f21b-4c5e-9bd5-10b6d4a90ecb',
+        '2025-11-27 23:40:22.000000'
     ),
     (
-        '071bc003-75a1-426b-a8bc-dbd993e8a40c',
-        '2025-11-06 16:03:11.000000'
+        '3b23f69f-991d-4639-9572-03aa454c4ab4',
+        '2025-11-28 01:48:05.000000'
     ),
     (
-        '079110d2-523e-4e87-bef3-94042cda7b2f',
-        '2025-11-08 09:17:18.000000'
+        '3befed55-8d7d-4591-8d8e-343784d75805',
+        '2025-11-27 00:49:13.000000'
     ),
     (
-        '079eedef-0a2a-4866-bd79-8f2ff60ad7c9',
-        '2025-11-06 18:55:33.000000'
+        '3c63ede2-5899-4f8f-b9d1-c5302c328a86',
+        '2025-11-28 04:00:46.000000'
     ),
     (
-        '07aa647d-8338-4adb-8d19-8455f3534b90',
-        '2025-10-10 14:46:53.000000'
+        '3ce36164-99cd-4bec-ad1b-68d582f332e3',
+        '2025-11-28 07:45:46.000000'
     ),
     (
-        '07dffd46-623c-4c0e-8bce-c7bd9771bcaf',
-        '2025-10-11 12:18:35.000000'
+        '3d959c58-7d44-44fd-bd9f-01dfaf6754e3',
+        '2025-11-28 00:56:23.000000'
     ),
     (
-        '0800c24a-6653-4977-88aa-9b665767fa16',
-        '2025-11-06 15:33:33.000000'
+        '3ee1651a-2413-477b-a6d8-4d55e726b869',
+        '2025-11-27 00:30:38.000000'
     ),
     (
-        '080f7768-aad2-4b13-ac5d-c719443ee855',
-        '2025-11-06 18:55:34.000000'
+        '3f27414a-5528-4c8f-bde1-cfff0ccce8f5',
+        '2025-11-27 00:02:27.000000'
     ),
     (
-        '08374d33-d7fc-4400-be1e-b376952f5665',
-        '2025-10-26 20:01:20.000000'
+        '3f3f06db-3350-4d76-b592-b34067585118',
+        '2025-11-28 08:18:48.000000'
     ),
     (
-        '0847bf1b-d09e-4a68-a645-32dfc4fec52d',
-        '2025-11-06 18:15:49.000000'
+        '3fbeb015-377c-4aaf-943c-ff9396ae8ddb',
+        '2025-11-27 08:28:26.000000'
     ),
     (
-        '0857d683-6e9b-4573-b123-aa652d2f1e4e',
-        '2025-11-07 17:18:52.000000'
+        '4034936e-0244-4f88-a4d0-21d5233f7ef8',
+        '2025-11-27 07:54:13.000000'
     ),
     (
-        '0886b870-3bea-4dd5-b357-8c52fd4f0c4e',
-        '2025-11-08 09:39:50.000000'
+        '405cb8d2-cf4b-439f-b213-8aba0b583a41',
+        '2025-11-27 04:15:56.000000'
     ),
     (
-        '08a737e7-6865-476d-9209-de0f70a2b3ed',
-        '2025-10-11 14:23:27.000000'
+        '41da0b2c-50be-4e4d-8470-139babde9bc8',
+        '2025-11-27 08:30:53.000000'
     ),
     (
-        '09076fb5-e898-41e2-9f8c-797e7e55ce13',
-        '2025-10-27 10:32:09.000000'
+        '41e0567f-693c-4531-a2de-106eacd970a8',
+        '2025-11-27 01:11:23.000000'
     ),
     (
-        '0911b821-db8f-403b-a913-c60e19c5caf7',
-        '2025-11-06 18:15:42.000000'
+        '42a70b93-2e6a-439f-9199-44fa5b3d2d92',
+        '2025-11-27 01:21:46.000000'
     ),
     (
-        '0915835a-57c0-44e2-a62c-51c034ace901',
-        '2025-11-08 10:08:32.000000'
+        '42ce1068-d64d-4882-baf7-53e1467a15cd',
+        '2025-11-28 01:10:49.000000'
     ),
     (
-        '09210466-1055-4e6c-8a2d-9c79d92afc61',
-        '2025-10-27 09:36:30.000000'
+        '45c3ddbd-d813-4d6d-9d62-78064e54eb07',
+        '2025-11-28 00:24:28.000000'
     ),
     (
-        '09435335-f240-4af8-80d5-e0870d1fc79b',
-        '2025-10-26 17:35:02.000000'
+        '46dc418d-c3c6-4a48-b159-6649cdc49e34',
+        '2025-11-26 23:56:55.000000'
     ),
     (
-        '096184cc-d3d1-4b13-96e0-0b073ca0490e',
-        '2025-10-02 17:50:03.000000'
+        '4a740120-364f-47e0-9153-94b8f5ade439',
+        '2025-11-28 01:06:00.000000'
     ),
     (
-        '0989fd53-ffbc-433f-90eb-e80b178c69fb',
-        '2025-10-27 10:34:39.000000'
+        '4bdf13df-b894-4e62-9bd9-452918dd80e9',
+        '2025-11-27 08:36:49.000000'
     ),
     (
-        '09ca6596-147c-4dfd-9170-cb46a6712b33',
-        '2025-10-27 10:22:34.000000'
+        '4c08e516-895e-48b1-8173-777c1c3ebd79',
+        '2025-11-27 07:52:52.000000'
     ),
     (
-        '09d15144-b789-4395-b1dd-4377be745462',
-        '2025-11-06 16:18:59.000000'
+        '4cc4ffc8-d6de-4998-9db3-79d4b41080b2',
+        '2025-11-27 00:01:27.000000'
     ),
     (
-        '09da4118-b267-4aa1-b2ed-8d33c975bcb6',
-        '2025-11-08 18:56:11.000000'
+        '4d97d3b3-7bd6-468b-aa5a-93796db667e4',
+        '2025-11-28 00:36:20.000000'
     ),
     (
-        '0a1f4fca-9cc5-442c-82d9-239258053607',
-        '2025-10-24 20:55:47.000000'
+        '4e22a0f3-e025-4a86-97f2-73c1260bb211',
+        '2025-11-28 08:14:42.000000'
     ),
     (
-        '0a465cb2-7958-4901-a621-636cdd819308',
-        '2025-11-08 09:24:17.000000'
+        '4ebef041-bd19-44d2-a5db-574a8c42c626',
+        '2025-11-28 01:07:58.000000'
     ),
     (
-        '0a51c09e-0fac-4a8f-ad3a-66f96268bd67',
-        '2025-10-26 11:01:58.000000'
+        '4eeb9181-2662-4d75-9db7-cd54666bbbe5',
+        '2025-11-27 04:21:21.000000'
     ),
     (
-        '0a523ff5-23b7-4506-b28b-2fae5f97538c',
-        '2025-10-08 08:11:04.000000'
+        '50d1c82b-6cb9-4c69-b817-48ca5b0b4be2',
+        '2025-11-28 01:09:16.000000'
     ),
     (
-        '0a87df02-a80d-434a-b026-82dfa4504197',
-        '2025-11-08 09:48:48.000000'
+        '51d1f910-0388-474b-a40b-6eb5cad6dbb0',
+        '2025-11-26 23:51:10.000000'
     ),
     (
-        '0aaee7fd-ff83-4a99-9763-816409f1a021',
-        '2025-11-06 15:25:22.000000'
+        '5202f108-0a93-4a09-a161-6c5b4411c57e',
+        '2025-11-28 08:14:48.000000'
     ),
     (
-        '0abe5031-bab0-4747-8bc0-35c2de5eeaf8',
-        '2025-11-06 16:21:11.000000'
+        '52247012-ca9c-423a-96be-74f837122006',
+        '2025-11-27 08:39:21.000000'
     ),
     (
-        '0b106b14-824b-460b-b292-fdab22cabeb3',
-        '2025-10-10 11:39:42.000000'
+        '524f8757-c1ac-4c40-b3c6-7dc74b060b82',
+        '2025-11-27 00:51:20.000000'
     ),
     (
-        '0bb6981c-4f35-4a99-a784-8f1afa143829',
-        '2025-11-02 17:56:10.000000'
+        '558c09f5-4b6b-4ab6-90b8-b2f12a03478c',
+        '2025-11-27 08:37:17.000000'
     ),
     (
-        '0bef8253-4769-4a84-8084-0c2a3abdcd59',
-        '2025-11-06 18:55:22.000000'
+        '580fa096-25b8-4695-a9b7-c84ebdac1a11',
+        '2025-11-28 08:46:42.000000'
     ),
     (
-        '0c335046-e79e-4c6d-9bef-a3f6c6fee20a',
-        '2025-11-06 18:02:14.000000'
+        '58650e85-c2fc-4edd-8242-e6471a3563d8',
+        '2025-11-28 08:55:33.000000'
     ),
     (
-        '0c4b9c03-1d5a-4ce9-8547-54d9b374f277',
-        '2025-11-08 08:56:39.000000'
+        '5a492824-9141-472b-b424-ef28d4de106b',
+        '2025-11-27 01:29:48.000000'
     ),
     (
-        '0c5b8878-ea26-40c9-926c-7a4d47c06f9e',
-        '2025-10-08 14:42:08.000000'
+        '5a9eb234-00f8-4d92-b49f-90b0b9ce3fc7',
+        '2025-11-28 00:18:49.000000'
     ),
     (
-        '0c795912-f990-41f6-a7b7-a07dd82ef874',
-        '2025-10-27 10:26:33.000000'
+        '5b269328-5291-4cbd-b709-21c3a6f28435',
+        '2025-11-28 04:01:36.000000'
     ),
     (
-        '0cd491c8-3cfc-4134-9c1e-68ad0439a632',
-        '2025-11-02 17:42:34.000000'
+        '5c948e7d-bf76-4c77-ad7e-728f54d1b6d3',
+        '2025-11-28 00:19:45.000000'
     ),
     (
-        '0ce02064-51e1-423e-8a44-d8d327e66f2d',
-        '2025-11-06 18:19:21.000000'
+        '5fb02109-2624-46f6-82c7-beb0f0f4de79',
+        '2025-11-28 04:03:58.000000'
     ),
     (
-        '0d0de160-36a7-4810-9800-abd764db2d53',
-        '2025-11-06 18:18:02.000000'
+        '6096db06-ef79-429a-b981-5b1634ecb6d9',
+        '2025-11-27 07:52:43.000000'
     ),
     (
-        '0d4931ce-cbc7-4d8e-8c41-81e014f7089e',
-        '2025-11-07 15:14:09.000000'
+        '610bc84a-2981-4bb2-9bf6-a93663dda76b',
+        '2025-11-27 07:58:59.000000'
     ),
     (
-        '0d4fbf97-20d9-45d6-8ad3-45ef0acf641e',
-        '2025-10-08 14:42:42.000000'
+        '6141c7ac-668a-429e-a0c3-c90233a4cd76',
+        '2025-11-27 01:27:31.000000'
     ),
     (
-        '0d53d3c5-787a-4aa0-b59e-89affec8bd9a',
-        '2025-10-14 08:06:44.000000'
+        '636d71b9-5d94-465f-9779-b5a36c5ec61d',
+        '2025-11-27 09:12:14.000000'
     ),
     (
-        '0d641bbe-9a0c-4f64-9f72-d330aea0c506',
-        '2025-11-02 17:46:32.000000'
+        '654a4fec-65ab-425f-ad55-03de35cf4432',
+        '2025-11-28 00:23:59.000000'
     ),
     (
-        '0d870221-2941-4179-af43-79adc16cba88',
-        '2025-10-10 14:22:31.000000'
+        '67346aff-ed77-4725-ac7e-93aade53d676',
+        '2025-11-27 00:48:17.000000'
     ),
     (
-        '0d92c8d3-e0fe-4421-8711-6a39648be886',
-        '2025-11-08 10:06:27.000000'
+        '68c5f16e-7fa3-44e3-ad79-7dd3e5b5cec7',
+        '2025-11-28 10:08:27.000000'
     ),
     (
-        '0d947ac6-06a8-490f-b878-8f30fe710fdd',
-        '2025-11-07 15:16:04.000000'
+        '693e725e-bdab-4c2b-9289-79df21cd2755',
+        '2025-11-27 01:26:45.000000'
     ),
     (
-        '0d961419-20ca-4de7-bb89-75ac11384458',
-        '2025-10-15 14:08:31.000000'
+        '6982c646-4d44-45f4-80d5-67b3f3386d1d',
+        '2025-11-27 23:17:00.000000'
     ),
     (
-        '0d9b3a7e-d42d-4dcb-8919-7f770e2c8863',
-        '2025-10-14 14:57:47.000000'
+        '6c309213-1f52-40c2-8131-f167e6bac390',
+        '2025-11-27 08:32:52.000000'
     ),
     (
-        '0da17ed0-54ba-41a8-a97b-377ed7f16a76',
-        '2025-11-08 17:37:06.000000'
+        '6c3b8345-01dc-4f9e-af97-b8d1bd2d15c5',
+        '2025-11-27 23:55:36.000000'
     ),
     (
-        '0dc57639-4012-47fd-af24-85d14f0280cc',
-        '2025-11-06 16:21:34.000000'
+        '6d78bb0c-13e2-4771-956c-cc37c481c51d',
+        '2025-11-27 07:48:59.000000'
     ),
     (
-        '0dc6bff4-2589-4ca9-86b0-945c578a3f71',
-        '2025-11-02 17:55:46.000000'
+        '6e70c429-5b45-4028-b692-0eac0473db2f',
+        '2025-11-27 23:39:09.000000'
     ),
     (
-        '0e0877ed-835d-4ace-b28c-db483442e368',
-        '2025-11-07 20:16:50.000000'
+        '6f6a850e-62fb-4473-af29-88ab29f68ef2',
+        '2025-11-27 07:59:47.000000'
     ),
     (
-        '0e501af7-0278-476f-b92a-c9592d2ab01c',
-        '2025-10-27 08:21:22.000000'
+        '72f53487-2cc6-4019-bda3-e2dc03ab1dd3',
+        '2025-11-27 01:22:20.000000'
     ),
     (
-        '0e7360bd-e432-4878-a6ff-515f0e2098b7',
-        '2025-11-08 10:22:14.000000'
+        '74fa873a-fc2c-41ef-8bab-9d5645540b87',
+        '2025-11-27 22:52:04.000000'
     ),
     (
-        '0e895022-3277-45a6-bc60-15447c22528d',
-        '2025-11-08 10:23:34.000000'
+        '753600ec-df8a-40ec-be41-823d63650dfd',
+        '2025-11-28 01:07:20.000000'
     ),
     (
-        '0e8bd538-b900-49f7-9461-9a84f56c8e0f',
-        '2025-10-31 16:20:11.000000'
+        '76570653-804d-4e49-84c3-7f4792480b20',
+        '2025-11-26 23:47:38.000000'
     ),
     (
-        '0ec9b7b4-ad7f-4727-813c-23de2d6d6262',
-        '2025-10-06 15:30:37.000000'
+        '766ff191-4ca8-4d79-b020-1f56706207fa',
+        '2025-11-26 23:52:56.000000'
     ),
     (
-        '0ee4eaa2-8cb2-4e2a-ac3a-13661e32df67',
-        '2025-11-02 17:43:14.000000'
+        '76d6765e-431d-4c72-9f16-90ddbd4fea76',
+        '2025-11-27 01:28:07.000000'
     ),
     (
-        '0f036bee-af75-4010-ae55-3713e09abd02',
-        '2025-11-06 15:33:07.000000'
+        '7817219d-a907-4e56-9912-34490edcfd12',
+        '2025-11-27 01:23:38.000000'
     ),
     (
-        '0fa615cd-102c-4b98-9365-a8f50fc14820',
-        '2025-10-08 15:00:49.000000'
+        '7a816896-2c2f-4f82-b8e8-4ae1877b6fe3',
+        '2025-11-28 09:17:17.000000'
     ),
     (
-        '0fe0b303-9a11-4100-a31e-ca61ae3a75ff',
-        '2025-10-26 19:17:21.000000'
+        '7b08085a-a064-44bb-9689-5bc707a91837',
+        '2025-11-27 23:44:14.000000'
     ),
     (
-        '1005e1c9-1a91-49da-ae9d-c23a73af289d',
-        '2025-11-08 17:45:35.000000'
+        '7c330185-3946-42c8-b77c-6fa3f6e95ee4',
+        '2025-11-27 10:23:27.000000'
     ),
     (
-        '10571c05-d3d8-4907-b762-bc01fd4ba899',
-        '2025-11-08 10:19:04.000000'
+        '7e650eee-eee4-498f-872c-d9ae68d0ed6d',
+        '2025-11-27 23:57:21.000000'
     ),
     (
-        '1109724c-2309-42d4-83e0-bd70b84cac2c',
-        '2025-11-08 09:57:53.000000'
+        '7ed3c513-5d76-4c8b-975e-f04ab6acb28f',
+        '2025-11-27 08:02:31.000000'
     ),
     (
-        '113776c0-602b-4063-8b1d-160ad9cc8605',
-        '2025-11-02 17:42:47.000000'
+        '7fd820d7-5087-4d71-bad1-4f81d58291b4',
+        '2025-11-26 23:32:00.000000'
     ),
     (
-        '113fe607-9598-49ff-a5ed-b1ac7037b88a',
-        '2025-10-24 20:58:23.000000'
+        '808bc869-0358-418d-aa25-4725a3a2df46',
+        '2025-11-28 08:24:21.000000'
     ),
     (
-        '11406b79-122a-4702-ad48-77452b3af83f',
-        '2025-10-11 08:25:24.000000'
+        '82023143-e6c3-4146-8b1b-b6316d6ba4ca',
+        '2025-11-28 01:11:45.000000'
     ),
     (
-        '11521778-c65d-4d77-a848-dcb3ce36c0bc',
-        '2025-11-08 10:03:58.000000'
+        '83a38603-f6d6-4a4d-affc-ec1679086eb6',
+        '2025-11-28 08:54:36.000000'
     ),
     (
-        '11690d06-3f92-4b81-b013-470c176aa52d',
-        '2025-11-06 15:26:45.000000'
+        '84b7c709-2a1c-4a8f-a9f6-cc8411ad40eb',
+        '2025-11-27 00:28:50.000000'
     ),
     (
-        '117d57e9-eff2-49e6-95f4-058d54e69fb7',
-        '2025-10-10 14:21:01.000000'
+        '84cc862d-ebb8-4f95-a3c2-b70b02a331e6',
+        '2025-11-27 21:05:24.000000'
     ),
     (
-        '118d5df1-3458-4571-a67b-af856c423125',
-        '2025-11-06 18:22:58.000000'
+        '855509aa-8d1a-4e4a-9c69-2aa879c9f5eb',
+        '2025-11-28 01:06:46.000000'
     ),
     (
-        '119c6797-d420-47d3-958b-f3734321436d',
-        '2025-10-13 08:37:20.000000'
+        '86fe66ce-c8e2-4785-aae1-37359aa1a30b',
+        '2025-11-27 21:58:28.000000'
     ),
     (
-        '122c8251-f486-4786-b41b-683c306fca20',
-        '2025-10-11 08:25:27.000000'
+        '8752ebec-3dfa-4566-bbf0-bd1a72baa8ca',
+        '2025-11-28 07:26:58.000000'
     ),
     (
-        '123e4489-cf53-4307-a92c-38353c82bab2',
-        '2025-10-26 21:39:38.000000'
+        '883e4fee-7dbc-4a24-9be1-3a31474fd4fd',
+        '2025-11-28 10:06:32.000000'
     ),
     (
-        '124e226c-c0ad-4a44-b7cf-51ae56e67bdc',
-        '2025-11-08 09:12:58.000000'
+        '88a56e31-1374-41f0-83c9-d2de207ba2d5',
+        '2025-11-27 07:49:43.000000'
     ),
     (
-        '125ecb8e-33f5-40df-8a3d-ca027e093ed0',
-        '2025-10-24 21:02:05.000000'
+        '88d78846-4b86-44f3-961d-d40ff9359619',
+        '2025-11-27 23:41:55.000000'
     ),
     (
-        '127dfd25-df98-49b4-bbae-126d57ae2109',
-        '2025-11-02 17:55:58.000000'
+        '89ab9e34-651a-4799-aca5-749d2b268b56',
+        '2025-11-28 00:42:59.000000'
     ),
     (
-        '1293939f-c1b0-4eeb-b1c7-7eb6a9efb186',
-        '2025-11-07 15:21:25.000000'
+        '89b396b9-0794-4b71-b3d9-d68e593ca1aa',
+        '2025-11-27 07:56:58.000000'
     ),
     (
-        '12a8461f-1622-4e42-b153-1ce420d2f46a',
-        '2025-11-08 18:41:57.000000'
+        '8adb0461-2efc-433c-a9d5-50c009d6db00',
+        '2025-11-27 01:28:42.000000'
     ),
     (
-        '12b66987-3f98-4f1a-81bc-56016d9c14a1',
-        '2025-10-10 14:21:29.000000'
+        '8c3aa4f0-f170-45d8-aa28-4efe09c9bb85',
+        '2025-11-28 07:37:43.000000'
     ),
     (
-        '12f26310-6d56-47a8-a540-22303477786a',
-        '2025-11-06 17:46:32.000000'
+        '8cbc5220-a230-47f8-bfdf-ad5e8d9b3449',
+        '2025-11-27 00:33:16.000000'
     ),
     (
-        '12f6cfd0-f639-48eb-9f45-399c5beba664',
-        '2025-11-08 18:31:18.000000'
+        '8d80fd0a-3227-4da8-b956-ac884196459e',
+        '2025-11-27 00:08:05.000000'
     ),
     (
-        '12fdbc0a-8144-4053-ade9-f0672ac0156e',
-        '2025-11-02 17:43:21.000000'
+        '8eed87de-8dd8-42e2-9306-0ef9af4f50f2',
+        '2025-11-28 10:10:04.000000'
     ),
     (
-        '131087a0-3089-49bc-9e3e-f8592d6420b8',
-        '2025-10-14 08:29:12.000000'
+        '8f0adc40-9cdc-40a3-bab4-0b69ac191516',
+        '2025-11-27 23:56:31.000000'
     ),
     (
-        '134c9b4c-b65c-43db-8263-7988ca732e12',
-        '2025-11-08 10:03:49.000000'
+        '8f526b0f-df2f-450e-914e-25dbc2201df6',
+        '2025-11-27 09:10:33.000000'
     ),
     (
-        '135fd4f5-8a6c-4178-9ff2-c2575651e836',
-        '2025-10-08 15:23:17.000000'
+        '90702bbb-f6c3-41c9-a1a0-4de078aa8be2',
+        '2025-11-28 00:57:08.000000'
     ),
     (
-        '137ff9da-4bb0-4b4c-af57-d30669a4687b',
-        '2025-11-08 17:30:08.000000'
+        '9162630e-d890-42f2-afe1-cb3b6ad64d1c',
+        '2025-11-27 08:13:47.000000'
     ),
     (
-        '13bc2244-b940-4b72-be5a-962071e2f3cc',
-        '2025-10-26 21:34:05.000000'
+        '91f7f0e3-4333-4976-8065-c231de61ec63',
+        '2025-11-27 03:59:32.000000'
     ),
     (
-        '13d8f866-14c0-4e9f-b1de-1cccefe211af',
-        '2025-10-09 09:54:32.000000'
+        '9200c6ca-84ee-4c68-ab9d-cdb3ed9b19c2',
+        '2025-11-28 00:22:19.000000'
     ),
     (
-        '13e526af-c7f0-4957-9196-b97ae0d99e4d',
-        '2025-10-10 10:38:32.000000'
+        '92b87876-c315-40a1-9359-1fbd1bf8a79a',
+        '2025-11-27 04:16:36.000000'
     ),
     (
-        '13ea3d37-fb39-4b25-a3c0-68fb72d6f6c7',
-        '2025-10-26 17:57:48.000000'
+        '92d6e5ba-7974-4090-a680-d6bc7992f1d1',
+        '2025-11-27 09:32:17.000000'
     ),
     (
-        '142879ac-c9c1-4669-b9f5-e1a98bd952f1',
-        '2025-10-27 10:14:59.000000'
+        '93d4af9a-cbae-4b3b-a3a6-bbebc11b0eab',
+        '2025-11-27 20:46:58.000000'
     ),
     (
-        '1432ba0b-5522-49f6-8a1c-f33956d995c6',
-        '2025-10-09 12:58:11.000000'
+        '947c4984-ddcc-4554-95de-da63d030b800',
+        '2025-11-27 01:12:08.000000'
     ),
     (
-        '1469f028-a0d8-43a6-815d-a023ee3795f1',
-        '2025-11-08 18:31:18.000000'
+        '94e32ca1-e0b1-4f05-9260-f17fac2545dd',
+        '2025-11-28 00:31:58.000000'
     ),
     (
-        '14ac67f4-d748-481b-a41d-cec3a35e3d98',
-        '2025-11-08 10:03:48.000000'
+        '955c187d-16a7-4d78-82df-77638071619b',
+        '2025-11-27 01:22:58.000000'
     ),
     (
-        '14b13903-ecd5-413a-a790-db4e7bcb69a0',
-        '2025-10-15 14:14:13.000000'
+        '96ad29f0-7808-426d-a2b6-519d7f3a72c9',
+        '2025-11-27 01:15:19.000000'
     ),
     (
-        '14dada2d-58f2-4f9d-9ed3-2a952b1d8b8c',
-        '2025-10-24 21:22:54.000000'
+        '979c81a5-f932-436a-a01a-3aaa3e717dff',
+        '2025-11-28 03:44:32.000000'
     ),
     (
-        '14f2409f-0187-436d-a120-962855de6be9',
-        '2025-10-06 20:24:19.000000'
+        '97bda2cf-438f-4214-a771-eedb7d552ca3',
+        '2025-11-28 00:33:17.000000'
     ),
     (
-        '155977e3-8a4f-4032-a912-cf00d6fb0ddb',
-        '2025-11-06 17:39:32.000000'
+        '9804a578-5514-4987-8f9d-1a73dfe4992d',
+        '2025-11-26 23:54:09.000000'
     ),
     (
-        '156ad915-1751-434c-92cb-34097d339780',
-        '2025-11-08 17:50:17.000000'
+        '9b2350ab-8827-467d-86f9-14193ebeea64',
+        '2025-11-27 07:45:55.000000'
     ),
     (
-        '15948a22-0714-4955-a664-4aba13adc963',
-        '2025-11-06 18:14:46.000000'
+        '9c3e334d-b5a3-4586-aec5-fe7ebc0fac86',
+        '2025-11-27 23:47:27.000000'
     ),
     (
-        '15de6d62-564d-4cda-8657-2096a09944f0',
-        '2025-10-26 17:25:40.000000'
+        'a00b490c-2984-442a-be9c-9966a4d27c55',
+        '2025-11-27 23:32:38.000000'
     ),
     (
-        '16110118-0a94-41e2-88f7-897771bf80dc',
-        '2025-11-06 18:11:48.000000'
+        'a2062d8f-3fdc-4dd7-b4f0-241521d5a6dd',
+        '2025-11-27 01:13:42.000000'
     ),
     (
-        '1638fd28-19fd-432f-8b49-c973c0cf9957',
-        '2025-11-07 15:15:31.000000'
+        'a23b2e85-979c-4209-b8ed-055777ab8518',
+        '2025-11-28 10:18:39.000000'
     ),
     (
-        '163a8d3d-b6e6-4475-85de-7ead02941404',
-        '2025-11-06 18:33:19.000000'
+        'a285525e-5e4c-4214-9962-00aceb4cb63a',
+        '2025-11-27 08:00:46.000000'
     ),
     (
-        '165a4297-8392-4f8a-991a-9cc706a1b041',
-        '2025-10-15 14:07:17.000000'
+        'a2e04f69-6e7c-46b2-9b98-8d10517035a7',
+        '2025-11-28 07:40:14.000000'
     ),
     (
-        '166fc7c9-f568-40c6-92ea-22629a04c75f',
-        '2025-10-26 19:53:12.000000'
+        'a317b449-9a91-450f-ae5d-73bfc7219f3a',
+        '2025-11-27 00:50:04.000000'
     ),
     (
-        '16ddfd98-01f1-42af-bbca-c666af826a01',
-        '2025-11-08 17:29:55.000000'
+        'a5c54052-0052-4e1e-bbb7-9020ef693047',
+        '2025-11-27 10:33:39.000000'
     ),
     (
-        '172f9a45-fc14-4825-9f83-82183b87b3b6',
-        '2025-10-27 08:30:10.000000'
+        'a69db48c-81d7-43da-8563-936a7dc10186',
+        '2025-11-28 00:13:50.000000'
     ),
     (
-        '17adb9d7-627f-47c7-af34-6fc1977e4d6b',
-        '2025-11-07 15:14:13.000000'
+        'a750c9bf-eec3-4d55-8559-19fe3054e7eb',
+        '2025-11-27 20:17:53.000000'
     ),
     (
-        '17d84a6f-e982-4210-bfdb-0bb3dc85d5ce',
-        '2025-11-08 09:23:42.000000'
+        'a8bab959-6ac6-409e-bd7e-6cebe44155b6',
+        '2025-11-28 08:23:27.000000'
     ),
     (
-        '17e0468f-979d-4958-902b-2c0b98036945',
-        '2025-11-08 18:31:32.000000'
+        'a908637e-12af-4086-9f52-f6b4fe7254ec',
+        '2025-11-28 08:13:26.000000'
     ),
     (
-        '17fa4bc8-1dd8-4cb4-89db-c21c8b5a2070',
-        '2025-10-26 19:17:54.000000'
+        'aab7b41e-3b6d-4524-a280-4c49e57c9b3b',
+        '2025-11-27 09:03:57.000000'
     ),
     (
-        '18357d59-3ede-466b-9ffd-3d147c6b30e9',
-        '2025-11-08 10:00:12.000000'
+        'ac7be0cd-37ed-4567-8d91-3eb0f420e18b',
+        '2025-11-27 08:33:48.000000'
     ),
     (
-        '183d3e58-caab-4e88-bddd-ec799d3dd312',
-        '2025-11-06 17:44:07.000000'
+        'aca6ca7c-cfde-4d06-bcb4-dacdc5ae25ce',
+        '2025-11-27 09:56:02.000000'
     ),
     (
-        '18448a85-f4b0-4d0b-8d16-0bb12642d561',
-        '2025-10-26 21:38:22.000000'
+        'adb43fde-39e1-4673-92a3-479177ef72b6',
+        '2025-11-28 04:01:18.000000'
     ),
     (
-        '18625fc4-5a1e-4e7e-b6f3-965fd1cbf241',
-        '2025-10-26 19:09:03.000000'
+        'af66569e-e54a-4788-9319-e6c31dd5709f',
+        '2025-11-27 09:01:42.000000'
     ),
     (
-        '18b8b92b-bd6f-4b30-a085-c62ec19c7121',
-        '2025-10-23 21:18:37.000000'
+        'b029175e-d07b-4b5d-83f8-10ba59f94735',
+        '2025-11-28 08:10:57.000000'
     ),
     (
-        '18ef70df-6550-429e-a713-6ea1d33a1467',
-        '2025-11-06 18:22:34.000000'
+        'b3f8e145-bd15-41a5-9cab-8ceff11c6e75',
+        '2025-11-28 08:12:31.000000'
     ),
     (
-        '18fd77fa-b065-441c-ae10-1ed78dc3a330',
-        '2025-10-24 19:43:03.000000'
+        'b6060bad-9ff5-4f12-890c-08b187ec9c7e',
+        '2025-11-27 07:47:10.000000'
     ),
     (
-        '190cb5c8-f785-45f2-8e40-be0452e20c64',
-        '2025-10-27 10:33:25.000000'
+        'b63f7c9e-9c31-42d5-9f92-89de872c7fc7',
+        '2025-11-28 08:17:52.000000'
     ),
     (
-        '19662a74-5fd7-4f38-8492-0ac619eca554',
-        '2025-10-26 17:55:07.000000'
+        'b681a5fd-c5fb-4c85-9752-a03cd7fad7b5',
+        '2025-11-28 01:48:20.000000'
     ),
     (
-        '19a052cd-54ab-4f8e-896d-5d66b911cf59',
-        '2025-10-13 09:55:53.000000'
+        'b7aebd47-112a-4575-a85b-ee6c44e40f69',
+        '2025-11-28 00:20:41.000000'
     ),
     (
-        '19c49f24-69f3-4b47-8cc9-be71340d4508',
-        '2025-10-26 16:12:34.000000'
+        'b869e512-1c59-470e-a946-1ca928ab67d2',
+        '2025-11-27 00:37:19.000000'
     ),
     (
-        '19c96204-c8bc-4704-8e97-384d2c466045',
-        '2025-11-08 18:58:33.000000'
+        'b8c3d8f7-fb15-4696-acb9-951b3705ef62',
+        '2025-11-27 00:33:49.000000'
     ),
     (
-        '19ccccec-a5f7-4a99-84e7-63193c013738',
-        '2025-11-08 09:49:07.000000'
+        'b9a8ecc1-ead4-4a78-bcac-7cfcf26fe598',
+        '2025-11-27 00:34:45.000000'
     ),
     (
-        '1a02b0f5-fc18-4a19-9ce7-86fe088bf737',
-        '2025-10-26 10:49:38.000000'
+        'ba30eb9e-08e9-470a-9526-58756ddcce2e',
+        '2025-11-27 23:46:27.000000'
     ),
     (
-        '1a0bef91-9501-4176-9fe2-beb56a2bbfa1',
-        '2025-10-24 21:02:06.000000'
+        'bdb5d181-b74c-4c50-9cda-9a6278cbef86',
+        '2025-11-27 23:31:38.000000'
     ),
     (
-        '1a167488-df1d-4622-87ce-93a8734ca928',
-        '2025-11-08 17:31:40.000000'
+        'bded2af3-a788-4871-9aca-26a98f62f3e9',
+        '2025-11-28 01:13:07.000000'
     ),
     (
-        '1a1f0e6b-36d3-45ec-86ab-9d8e982076fd',
-        '2025-10-09 15:02:18.000000'
+        'be785092-59cd-4b42-ba07-c4d7ab099a9e',
+        '2025-11-28 00:34:13.000000'
     ),
     (
-        '1a3a8420-a1d0-4131-a01a-d4a9db697056',
-        '2025-10-15 14:13:41.000000'
+        'bf4564c8-d19f-4b31-b8b1-06d20972c1e3',
+        '2025-11-28 07:44:47.000000'
     ),
     (
-        '1a5f4f0e-de2d-4471-8c47-e649fa71848d',
-        '2025-10-14 07:31:17.000000'
+        'c2244127-51b0-4238-8b73-76d17e4a7c11',
+        '2025-11-28 04:06:21.000000'
     ),
     (
-        '1a7bb9d2-041c-42f5-80af-8313a8573aab',
-        '2025-11-06 17:44:10.000000'
+        'c2262214-a22e-4f1b-bd52-b98160cbe137',
+        '2025-11-27 07:51:59.000000'
     ),
     (
-        '1a8806e3-aa95-4d9f-b6d5-9fd2e16cec8e',
-        '2025-11-06 16:48:00.000000'
+        'c3776887-58f6-4826-ad57-5bc0cbaaf285',
+        '2025-11-28 03:50:53.000000'
     ),
     (
-        '1b280417-de02-427b-8c50-9993263bcfb8',
-        '2025-11-06 17:36:25.000000'
+        'c4b4aadf-afe9-4a8e-9455-1cc42a524512',
+        '2025-11-28 01:09:57.000000'
     ),
     (
-        '1b6c7627-dc4d-4ee2-8d69-54dd5e287bd2',
-        '2025-10-26 20:33:34.000000'
+        'c4b68fac-33bb-43db-ad01-13bf4a170a09',
+        '2025-11-27 23:37:56.000000'
     ),
     (
-        '1b8d351a-b028-403d-b29e-d1a77a896c24',
-        '2025-10-27 10:32:38.000000'
+        'c573e6f2-e7a3-461e-8536-13023019b12e',
+        '2025-11-27 08:38:20.000000'
     ),
     (
-        '1b9c0554-664b-4a40-8b9b-d3f99bd61e8e',
-        '2025-10-08 14:45:47.000000'
+        'c7fe7b0c-0dce-4f21-89e0-cf51aaf41ba9',
+        '2025-11-27 01:12:44.000000'
     ),
     (
-        '1bcbab38-ae8b-47eb-9e34-147e8885195d',
-        '2025-11-08 09:59:42.000000'
+        'c8271f89-d023-44d9-ad46-987a6b3d4c0a',
+        '2025-11-28 07:36:59.000000'
     ),
     (
-        '1bd05277-c75c-469b-be05-c97440eaf239',
-        '2025-10-26 16:41:59.000000'
+        'c86bf2e3-c63e-438c-89ba-8de383fa415a',
+        '2025-11-27 00:15:07.000000'
     ),
     (
-        '1bd6c834-3b49-45a3-af94-0054f3c9234c',
-        '2025-10-26 17:41:36.000000'
+        'c97f8d2b-f273-474a-964a-44caa47b9050',
+        '2025-11-28 08:06:37.000000'
     ),
     (
-        '1c1b91b0-2fc0-4970-ad33-e5cf71348ae2',
-        '2025-11-07 17:47:04.000000'
+        'ca134a1d-5112-44d0-9564-627854c3f99e',
+        '2025-11-28 03:48:04.000000'
     ),
     (
-        '1c7fef31-17a6-4123-8085-ac18e96d28b3',
-        '2025-11-08 09:50:27.000000'
+        'ca1b4b5b-ac1f-468b-bde3-a3de41adaa56',
+        '2025-11-28 08:22:18.000000'
     ),
     (
-        '1c8a65f7-9a2d-41ad-904a-952b4e4a8954',
-        '2025-11-08 19:25:45.000000'
+        'ca270a05-92e2-4b18-b8df-22b32ce34cce',
+        '2025-11-28 09:26:02.000000'
     ),
     (
-        '1c8fc8f5-7ce7-42e1-9efb-542db3d10fa9',
-        '2025-10-14 08:18:54.000000'
+        'ca9685db-4d9b-4c18-be58-6533fd094796',
+        '2025-11-27 04:03:04.000000'
     ),
     (
-        '1cc4e587-5a38-4ec6-b2c8-0fb38eb3ba0a',
-        '2025-11-07 16:39:21.000000'
+        'cb0e6eaf-6112-406f-b1a4-2e580d2444ed',
+        '2025-11-28 09:41:02.000000'
     ),
     (
-        '1d011619-f1b0-4bbf-b3c1-5d766d410fa0',
-        '2025-11-07 15:16:05.000000'
+        'cbb74e03-a5d9-434c-ae37-26d9598bffbc',
+        '2025-11-28 01:12:31.000000'
     ),
     (
-        '1d643bea-9a2e-48b4-8dc6-2a271b5489ed',
-        '2025-11-08 10:06:24.000000'
+        'cd55f176-7e96-42f5-b265-f6dc101f73d5',
+        '2025-11-27 00:57:59.000000'
     ),
     (
-        '1d6f4d76-ad7a-4d68-bed6-cae2ab4769d9',
-        '2025-10-10 15:55:51.000000'
+        'ce6d6de5-187b-4b1f-8ab0-72dfc305ef36',
+        '2025-11-27 14:26:08.000000'
     ),
     (
-        '1da86c28-95ff-4dbd-a2fb-d0ff55ccd44e',
-        '2025-11-08 18:58:11.000000'
+        'cf6b67f4-669e-4e73-a83e-d53d57bac197',
+        '2025-11-27 00:13:39.000000'
     ),
     (
-        '1db3d917-58a9-415d-8b60-d568c6890dc3',
-        '2025-10-24 22:21:19.000000'
+        'd052ee87-c304-4744-9652-36a92a70abe7',
+        '2025-11-27 04:05:53.000000'
     ),
     (
-        '1dbc8a3c-6f30-4992-b94b-c9868e93e8e3',
-        '2025-11-08 18:58:49.000000'
+        'd08b1f23-6aef-4e78-a910-a75aa85d40fe',
+        '2025-11-27 10:25:04.000000'
     ),
     (
-        '1de52299-f78f-4d30-8089-72c1d0f3a28c',
-        '2025-10-26 10:31:42.000000'
+        'd0bb4692-f561-4706-bae7-abc4059bc143',
+        '2025-11-26 23:46:38.000000'
     ),
     (
-        '1e03bc33-0d5e-4848-b587-78626894996e',
-        '2025-11-07 16:23:45.000000'
+        'd0bfc477-e536-4908-aaf9-242cb061e167',
+        '2025-11-28 08:48:57.000000'
     ),
     (
-        '1e2b99e5-a1b0-4372-bf7d-9660764a2052',
-        '2025-11-08 18:41:14.000000'
+        'd1feb516-bdeb-4a44-841d-2c50c712c1fb',
+        '2025-11-27 01:24:16.000000'
     ),
     (
-        '1e365a48-bc7b-4f42-890a-595a3631c07a',
-        '2025-10-26 17:11:44.000000'
+        'd48050e0-2d17-4c2a-a8dc-9f20cfb55486',
+        '2025-11-28 01:13:42.000000'
     ),
     (
-        '1e434ba0-78b4-4e1b-bcad-b83d1c12f39f',
-        '2025-11-02 17:52:34.000000'
+        'd6122a19-b803-4947-8904-db6e26c548dc',
+        '2025-11-27 08:20:05.000000'
     ),
     (
-        '1e53ee78-91fe-4b3b-81ec-c5c166fe451f',
-        '2025-11-06 18:18:10.000000'
+        'd68c41f8-9ca9-4a12-8b28-dee5fcebf585',
+        '2025-11-28 07:41:58.000000'
     ),
     (
-        '1e7a4b8c-2760-48c5-9ebc-72c4fc05c202',
-        '2025-11-08 10:22:49.000000'
+        'd8ed805f-62a4-4d6e-9377-d40bdef7b38d',
+        '2025-11-28 01:14:48.000000'
     ),
     (
-        '1ebbbf4b-05cc-425a-9e03-7d5152173019',
-        '2025-10-14 08:06:23.000000'
+        'd90ff833-0eb9-4248-9811-38c948b072da',
+        '2025-11-28 07:33:59.000000'
     ),
     (
-        '1ec580cf-ffe4-4e43-b5e5-a57366eb6347',
-        '2025-10-26 20:13:38.000000'
+        'db52cbec-cd83-46ee-a3c9-cca53c460e18',
+        '2025-11-28 00:59:25.000000'
     ),
     (
-        '1ed9627b-a292-4f22-b35f-b5eb9ecd3edd',
-        '2025-10-27 10:26:04.000000'
+        'db68b26b-8d0c-4adf-bfd6-9dad04c56b9c',
+        '2025-11-28 08:07:53.000000'
     ),
     (
-        '1f4e0521-3831-4624-b80b-52b91f4a9542',
-        '2025-11-08 18:41:54.000000'
+        'dd7d12e1-70ef-482f-b9d7-5e68b3541870',
+        '2025-11-27 00:36:25.000000'
     ),
     (
-        '1f984686-557e-4223-8938-e95c9e0d41b1',
-        '2025-11-08 19:34:12.000000'
+        'df7b3c75-3158-4a84-af4a-acee101ad2da',
+        '2025-11-27 00:37:04.000000'
     ),
     (
-        '1fa9d4fe-d0aa-489d-860c-368c7108313b',
-        '2025-10-09 11:54:42.000000'
+        'e0b9a858-8822-4a29-99f2-995a5e07c43d',
+        '2025-11-28 08:57:14.000000'
     ),
     (
-        '1fb02710-2a46-446d-ac24-2bbdc63a5489',
-        '2025-10-10 14:20:52.000000'
+        'e13b40da-b910-47f4-a50f-0d65a94bfbd8',
+        '2025-11-28 08:05:05.000000'
     ),
     (
-        '1fb6f0de-75a7-4042-a7b1-a01ef3d3b466',
-        '2025-10-27 08:21:19.000000'
+        'e1888813-9008-4a4d-9c3e-1b67f289c074',
+        '2025-11-28 00:57:44.000000'
     ),
     (
-        '207e2c4a-6333-454f-9ff0-15004198d607',
-        '2025-11-08 10:17:35.000000'
+        'e1f1c068-43c7-4480-a437-97de51caa238',
+        '2025-11-27 23:58:39.000000'
     ),
     (
-        '207e3f6c-37ea-4420-b026-1d851e87d6a3',
-        '2025-11-08 09:59:54.000000'
+        'e23075d8-fd6b-4cd5-b058-3e50cfd88b3f',
+        '2025-11-28 10:09:19.000000'
     ),
     (
-        '20e86a1c-7dc2-4e86-a815-9e6b0c20d64d',
-        '2025-10-09 16:05:06.000000'
+        'e37135e0-c4b6-4b13-95c9-a35d62f7be92',
+        '2025-11-27 01:10:05.000000'
     ),
     (
-        '212de347-64f9-4e10-b940-1c9ee3579824',
-        '2025-11-02 17:55:34.000000'
+        'e3a9aa42-5d6e-4a1b-86ac-58648bab8335',
+        '2025-11-27 07:41:58.000000'
     ),
     (
-        '21477c8b-622e-40e6-8193-60400c11c713',
-        '2025-10-27 09:34:30.000000'
+        'e49e925d-c0f6-4b8c-ab0a-42e618d9833a',
+        '2025-11-28 07:30:55.000000'
     ),
     (
-        '22042cd3-0096-4d7b-a99e-a7250972608c',
-        '2025-11-08 20:01:51.000000'
+        'e87a434e-5401-4c1c-ba4e-b1ecebf647cd',
+        '2025-11-27 01:20:21.000000'
     ),
     (
-        '221d8f43-7079-4b1a-888e-56eef4702d2e',
-        '2025-10-27 08:29:31.000000'
+        'e8990518-29d2-4b7b-a905-1ad1aa6519ef',
+        '2025-11-27 23:36:10.000000'
     ),
     (
-        '222c2688-7acf-4201-a2ca-03496798297c',
-        '2025-10-26 17:53:07.000000'
+        'e8bf1cad-434f-4dec-8365-88d37c83715f',
+        '2025-11-27 08:29:48.000000'
     ),
     (
-        '224edeee-a71f-4ecd-bfa0-8eb1bbb77bb2',
-        '2025-10-23 21:17:59.000000'
+        'e97efc73-7a2f-405b-aed8-2298791d3ed9',
+        '2025-11-28 00:22:04.000000'
     ),
     (
-        '2257a2dd-37e7-4c31-b673-4bc58741cfe3',
-        '2025-10-26 19:17:55.000000'
+        'eb5b4cb0-07c8-4426-9696-6c9ffb53db86',
+        '2025-11-28 01:08:38.000000'
     ),
     (
-        '227cd597-828e-4393-aac4-8d58b5b38321',
-        '2025-10-15 14:07:50.000000'
+        'eba3b423-842a-4376-b930-5b962b1f8c8a',
+        '2025-11-28 00:35:04.000000'
     ),
     (
-        '23113728-49b4-427a-95c6-b6c4e16a8fae',
-        '2025-11-06 17:44:06.000000'
+        'ec34013a-f0dc-4425-b650-5cfe4487b122',
+        '2025-11-27 08:22:53.000000'
     ),
     (
-        '237bf46e-7dc5-4c9f-8e7a-429c9e5ae26d',
-        '2025-11-06 18:19:54.000000'
+        'ee882dbe-d311-456b-890f-5d676c305acf',
+        '2025-11-27 08:27:31.000000'
     ),
     (
-        '23ee72ba-3597-4fd4-8114-2b235aac7056',
-        '2025-10-15 14:13:11.000000'
+        'efdecbc2-632a-4e1a-a030-bb4ec765a687',
+        '2025-11-27 00:38:59.000000'
     ),
     (
-        '241dc0f4-9298-4b4f-bc29-b426b3fec55d',
-        '2025-11-08 17:40:17.000000'
+        'f1d8b1cf-a33f-4cd0-9bf9-31430acc362f',
+        '2025-11-28 00:21:25.000000'
     ),
     (
-        '2497f24d-41f2-4659-a802-2722a89462b5',
-        '2025-10-14 07:48:57.000000'
+        'f25b3b96-1185-459a-b5d4-7c76b45bddde',
+        '2025-11-28 08:31:07.000000'
     ),
     (
-        '24b285f4-a1bf-43f7-9c58-8319675791cd',
-        '2025-11-06 18:11:35.000000'
+        'f2c77676-3aba-44dd-b135-3e6603af676c',
+        '2025-11-27 07:49:57.000000'
     ),
     (
-        '24e5cf20-136d-4b20-a120-52b6c093a2c1',
-        '2025-10-24 20:12:20.000000'
+        'f44219d2-fa8d-42fc-ad41-1c6a7c46219c',
+        '2025-11-28 08:21:49.000000'
     ),
     (
-        '25bdc5fe-0b53-4f99-8fc6-00fe8afd66cc',
-        '2025-10-11 08:25:20.000000'
+        'f4b5e9b1-190e-4ef5-b843-680c333b958c',
+        '2025-11-27 10:24:19.000000'
     ),
     (
-        '25d9e201-fd4a-4cad-9d65-2377eaf1a8fb',
-        '2025-10-26 20:33:42.000000'
+        'f4d510d6-7cc8-4d95-8e71-0d1c4acb4ebd',
+        '2025-11-28 00:15:38.000000'
     ),
     (
-        '26301d87-dd1e-4371-bc1f-982f0c1381a0',
-        '2025-11-02 17:55:53.000000'
+        'f5e119f7-b4e9-40bf-a0f0-41eeacf7c592',
+        '2025-11-28 07:43:59.000000'
     ),
     (
-        '26a07bc3-a22b-40a0-9419-734a8bf0e128',
-        '2025-11-08 10:22:30.000000'
+        'f921e386-e6a4-4581-b693-77a9547b204a',
+        '2025-11-27 22:35:55.000000'
     ),
     (
-        '27255f95-6a01-4c63-86bc-6024bbc90798',
-        '2025-11-08 10:05:55.000000'
+        'f9bfb751-599c-4f8e-97b0-57f8b01f6e61',
+        '2025-11-27 07:44:40.000000'
     ),
     (
-        '27afb7fd-2247-412b-82c6-c8407a8d9c1d',
-        '2025-11-08 09:13:01.000000'
+        'fbcc1680-9638-4cfd-a65d-bf769e3e45a4',
+        '2025-11-28 08:15:53.000000'
     ),
     (
-        '27e62826-8ab3-4f89-9d40-683f17a52283',
-        '2025-11-02 17:45:16.000000'
+        'fc0cd108-761c-4940-8266-53b7f1954edd',
+        '2025-11-26 23:55:22.000000'
     ),
     (
-        '28496b84-1023-4302-a706-c80b4ca0d8bb',
-        '2025-11-02 17:55:41.000000'
+        'ff191023-059e-4bdc-a8d7-e9a2bd091803',
+        '2025-11-27 04:18:13.000000'
     ),
     (
-        '28591d7b-9904-4957-9941-8b787c3b74ac',
-        '2025-10-27 10:14:56.000000'
+        'ff5c7775-e079-4a4f-829e-cf4238484b3f',
+        '2025-11-28 00:18:16.000000'
     ),
     (
-        '286ecd54-d532-4121-bfb4-b6968b1a6617',
-        '2025-10-27 10:27:55.000000'
-    ),
-    (
-        '288e70b4-08b5-4a43-b42b-67221a67369b',
-        '2025-10-26 17:55:04.000000'
-    ),
-    (
-        '2898f297-a42d-4690-a655-2f013e37b5e4',
-        '2025-10-08 14:52:27.000000'
-    ),
-    (
-        '28a9afda-aea3-42ca-8fae-b54aafbef76b',
-        '2025-10-26 17:53:05.000000'
-    ),
-    (
-        '28d164a1-f517-4aae-8336-ef239cb2ba1d',
-        '2025-11-08 18:58:23.000000'
-    ),
-    (
-        '2917d972-9825-4e42-9ae5-308a40c218a5',
-        '2025-11-08 10:23:42.000000'
-    ),
-    (
-        '29183eb8-fff6-4d96-bb11-489d1a9aaff8',
-        '2025-11-06 15:29:07.000000'
-    ),
-    (
-        '297b724b-abc3-4fd7-b25a-ab0962047150',
-        '2025-11-06 18:19:23.000000'
-    ),
-    (
-        '29808937-bdc6-48b0-ac45-260a291f3481',
-        '2025-11-02 17:56:11.000000'
-    ),
-    (
-        '29916b5f-f91c-42ff-a806-6090a078ba0f',
-        '2025-10-26 21:38:13.000000'
-    ),
-    (
-        '29c84748-bcb0-46bb-9f6a-1862e3a244d5',
-        '2025-10-09 09:52:10.000000'
-    ),
-    (
-        '29e67dc4-0019-44c2-93ba-3906c7b65150',
-        '2025-11-08 18:41:55.000000'
-    ),
-    (
-        '29f7e77e-8ef6-4ccc-b09e-0ccdc4658beb',
-        '2025-11-08 08:57:39.000000'
-    ),
-    (
-        '2a1774cd-2bc8-4844-9c1c-53b1652345fe',
-        '2025-11-08 17:37:06.000000'
-    ),
-    (
-        '2a59d631-dc3d-4e2c-a953-ec0b89295663',
-        '2025-10-15 14:14:48.000000'
-    ),
-    (
-        '2ac28805-a382-46bd-be24-312072c9900e',
-        '2025-10-24 20:58:07.000000'
-    ),
-    (
-        '2ae57072-7a5e-46fc-9f81-fb0343334473',
-        '2025-10-08 13:29:06.000000'
-    ),
-    (
-        '2afa7615-ef80-4ed2-963c-fcf7759fb5c4',
-        '2025-11-08 09:57:44.000000'
-    ),
-    (
-        '2b3bdda4-9a52-4735-9ff9-d4ffeb7a12fb',
-        '2025-10-27 09:37:18.000000'
-    ),
-    (
-        '2bf0a489-efad-44a5-9790-d44263d56756',
-        '2025-11-06 16:18:08.000000'
-    ),
-    (
-        '2c0eb6cc-a646-41df-ac76-04be3ee2ae06',
-        '2025-10-27 08:32:53.000000'
-    ),
-    (
-        '2c11da12-11cf-4a51-84b8-04f8d133c169',
-        '2025-11-06 16:11:15.000000'
-    ),
-    (
-        '2c1a30cf-41a5-4116-b846-e8bda4ce2b9e',
-        '2025-11-06 17:45:28.000000'
-    ),
-    (
-        '2c3745c7-8598-4da7-a9d6-de74ba2e36f8',
-        '2025-10-14 09:20:49.000000'
-    ),
-    (
-        '2c486635-7148-41a8-be05-de60f8bc5cbf',
-        '2025-10-27 09:01:14.000000'
-    ),
-    (
-        '2c4a3a22-15c9-4b2b-b9e8-9d2ca988fe03',
-        '2025-10-14 09:40:53.000000'
-    ),
-    (
-        '2c613d42-309a-4c6d-9853-9c7223c5f110',
-        '2025-11-06 16:14:45.000000'
-    ),
-    (
-        '2c661787-ba98-4872-948e-010052bcd571',
-        '2025-11-08 18:58:26.000000'
-    ),
-    (
-        '2c6ef346-7915-42b9-8a25-290a9864ea8d',
-        '2025-10-26 17:49:49.000000'
-    ),
-    (
-        '2c98981a-438a-4bd9-ac65-fd8e75a7b91d',
-        '2025-10-14 08:08:28.000000'
-    ),
-    (
-        '2cc4b133-b7af-4587-a9fb-5b496d3522f6',
-        '2025-11-06 16:07:35.000000'
-    ),
-    (
-        '2d0949d8-a169-40a6-978e-3bc890a505d5',
-        '2025-11-02 17:46:59.000000'
-    ),
-    (
-        '2d307809-599e-4f5a-bfb5-100fe96bdf7d',
-        '2025-10-26 20:15:31.000000'
-    ),
-    (
-        '2d3cd8b8-df59-4686-b8f7-94b440198c89',
-        '2025-11-08 10:00:04.000000'
-    ),
-    (
-        '2d5ca3f4-d6e5-48fe-b8fe-cc230762f6a6',
-        '2025-10-26 16:41:46.000000'
-    ),
-    (
-        '2e2185aa-c49c-4f86-9b3e-c7488cca51b6',
-        '2025-11-08 10:06:37.000000'
-    ),
-    (
-        '2e3212a8-4d5f-4ab1-b483-95576e2d598f',
-        '2025-10-11 12:37:01.000000'
-    ),
-    (
-        '2e871297-5274-4f95-bd2f-3dccc655ed8d',
-        '2025-11-08 10:21:52.000000'
-    ),
-    (
-        '2e90b34d-2fee-4306-bc6f-0be7ba93e4d7',
-        '2025-10-09 15:04:24.000000'
-    ),
-    (
-        '2ebdccfc-e306-4068-8eae-a2382fea8aa7',
-        '2025-11-08 19:00:47.000000'
-    ),
-    (
-        '2ef30240-2bc5-406a-af92-4822eccd3411',
-        '2025-10-15 14:29:55.000000'
-    ),
-    (
-        '2f0df781-fec2-4374-bdc5-f522eea18716',
-        '2025-11-07 19:49:51.000000'
-    ),
-    (
-        '2f3a7aa1-6e34-4484-8bfa-41d607882d3e',
-        '2025-10-26 16:41:40.000000'
-    ),
-    (
-        '2f432fc4-24ee-4a6a-9190-0234542ac156',
-        '2025-11-08 10:22:40.000000'
-    ),
-    (
-        '2f43647d-6596-4f2a-8654-d37ae7952c2e',
-        '2025-10-26 20:37:46.000000'
-    ),
-    (
-        '2f46c8ff-f953-45d9-a5cc-6b718cae8cd8',
-        '2025-10-26 17:24:15.000000'
-    ),
-    (
-        '2f735dff-f38d-4cb1-b76c-9777ecb7ee1b',
-        '2025-10-14 14:51:23.000000'
-    ),
-    (
-        '2f75010a-c245-4ca5-8895-46055a12f497',
-        '2025-11-06 18:55:27.000000'
-    ),
-    (
-        '2f891e58-574f-45e8-94ce-ef5828775917',
-        '2025-10-26 21:37:45.000000'
-    ),
-    (
-        '2fe76b93-b337-4d44-bd56-973e0f998794',
-        '2025-10-26 21:38:17.000000'
-    ),
-    (
-        '302d7f60-884d-4bb6-adba-221cd2286f86',
-        '2025-10-26 17:38:27.000000'
-    ),
-    (
-        '306408ab-1af2-4bba-836a-26a9e90cf5fb',
-        '2025-10-08 09:39:50.000000'
-    ),
-    (
-        '30bb0dc5-891d-4ce8-88cb-4c2712fc7de6',
-        '2025-11-06 18:02:04.000000'
-    ),
-    (
-        '30bbdcce-aa98-4dfb-8bcd-24aeca0357ba',
-        '2025-11-08 19:34:51.000000'
-    ),
-    (
-        '30eec1fd-e68e-46d1-9bcd-e1b1c4cd3b59',
-        '2025-11-06 18:49:45.000000'
-    ),
-    (
-        '3117f734-86ed-4d06-9e04-763a7141e8d7',
-        '2025-10-27 08:47:55.000000'
-    ),
-    (
-        '3120a806-62d5-4617-bcc0-cdadd7e633a2',
-        '2025-11-06 18:15:49.000000'
-    ),
-    (
-        '3122c966-782f-4937-9cc8-06a7a1c152af',
-        '2025-11-06 17:46:37.000000'
-    ),
-    (
-        '3147bbc6-0e78-45cb-9485-915d9016091a',
-        '2025-10-08 15:01:10.000000'
-    ),
-    (
-        '3198e725-1413-419d-b9a8-bd2a1d449762',
-        '2025-11-06 17:36:40.000000'
-    ),
-    (
-        '32213ff7-a2fe-47b3-97c8-9757bf508140',
-        '2025-11-02 17:55:55.000000'
-    ),
-    (
-        '3221c42b-33f5-4b55-9e54-7cdc2a720914',
-        '2025-11-02 17:23:45.000000'
-    ),
-    (
-        '327bc981-bf01-4b11-a5c5-b7e7b85240c6',
-        '2025-11-06 18:32:21.000000'
-    ),
-    (
-        '328e9a98-f9d4-469b-ae17-b3ddd9fdb646',
-        '2025-10-10 12:33:52.000000'
-    ),
-    (
-        '32d0cc04-c98f-4b15-9d61-2882b872cdbb',
-        '2025-10-14 14:57:07.000000'
-    ),
-    (
-        '33357817-cdd0-4985-9a86-ea9c0131e1d5',
-        '2025-11-06 17:36:41.000000'
-    ),
-    (
-        '33647f9b-c1b8-47d8-9e7c-dbe1c5f54f6c',
-        '2025-10-11 14:23:15.000000'
-    ),
-    (
-        '33c6a920-ef00-4243-8979-2f3292f6ceb1',
-        '2025-10-24 20:45:43.000000'
-    ),
-    (
-        '348f0d5a-96fd-4eba-934d-41eb3452e063',
-        '2025-10-27 09:30:18.000000'
-    ),
-    (
-        '3499be04-9d4c-4fa7-82f5-7b81773a1fba',
-        '2025-11-06 18:53:42.000000'
-    ),
-    (
-        '34b28080-445b-4153-9798-68aaeb465dea',
-        '2025-10-26 21:38:24.000000'
-    ),
-    (
-        '34e22172-cfdb-44d1-a183-469c9a91e353',
-        '2025-10-24 20:12:46.000000'
-    ),
-    (
-        '34eab7f8-7afc-4525-b8df-e486dea78c17',
-        '2025-10-10 11:01:31.000000'
-    ),
-    (
-        '34fb0409-3ed9-4ee1-a0e0-787b51f617c7',
-        '2025-10-27 08:29:31.000000'
-    ),
-    (
-        '35578c7f-443a-403d-b1f1-b07259c8b2b9',
-        '2025-10-27 10:31:04.000000'
-    ),
-    (
-        '355bb5b1-39c8-45a9-9420-d6fdfd6923ad',
-        '2025-10-08 10:57:19.000000'
-    ),
-    (
-        '35b088d8-9029-47bf-a42b-9cec4c40b39a',
-        '2025-10-15 14:30:05.000000'
-    ),
-    (
-        '360b3d7a-7faf-4619-9aec-4cc0c521f96c',
-        '2025-11-08 18:41:56.000000'
-    ),
-    (
-        '364a8075-a79d-43b5-af46-b25fa38e0436',
-        '2025-11-08 17:42:50.000000'
-    ),
-    (
-        '367f2cf2-eeac-49d0-9cbd-2bd2173d36ce',
-        '2025-10-23 21:20:03.000000'
-    ),
-    (
-        '36adfc5e-b48b-41f0-a408-d11b506eee4f',
-        '2025-10-24 20:49:32.000000'
-    ),
-    (
-        '36dfc4a5-b4e3-455c-93b3-f470b196e614',
-        '2025-10-08 15:24:01.000000'
-    ),
-    (
-        '36e67751-42b6-4b8b-bf70-51dddf28f5f1',
-        '2025-10-26 19:24:47.000000'
-    ),
-    (
-        '372ee5ca-a3ee-4410-a078-61c52114ef89',
-        '2025-11-08 09:13:04.000000'
-    ),
-    (
-        '37b42201-20aa-404e-9682-71b665cb37bc',
-        '2025-10-24 21:02:01.000000'
-    ),
-    (
-        '37df30f8-2a65-4cf8-95f0-345220d33e38',
-        '2025-10-08 14:48:56.000000'
-    ),
-    (
-        '3804045a-221a-4635-8515-be1f8fa95f41',
-        '2025-11-06 18:15:53.000000'
-    ),
-    (
-        '388fe809-e1bf-45fa-8b8b-bed759c3d787',
-        '2025-11-07 15:16:06.000000'
-    ),
-    (
-        '38b0f764-7a03-4ddc-b918-7ce718450d91',
-        '2025-11-08 17:47:23.000000'
-    ),
-    (
-        '38c385ba-bea2-42d9-b541-daf70ba4a940',
-        '2025-11-06 15:29:45.000000'
-    ),
-    (
-        '392b505f-72c2-4de1-b607-04742494c06e',
-        '2025-10-09 14:07:39.000000'
-    ),
-    (
-        '39516f4b-c802-44f8-9de0-ddf895a3430a',
-        '2025-11-08 10:00:10.000000'
-    ),
-    (
-        '395bc432-ded6-4241-b2c5-14edd3e4525a',
-        '2025-10-27 10:33:27.000000'
-    ),
-    (
-        '3962efb0-0e4e-4081-a8aa-ad617ed5ffb1',
-        '2025-10-26 20:00:24.000000'
-    ),
-    (
-        '396b4fd5-113f-4271-9f33-0f3f033e6e43',
-        '2025-11-08 17:50:49.000000'
-    ),
-    (
-        '39704f9b-ebfe-4d2b-97a6-0e3cf5c98938',
-        '2025-10-15 14:19:40.000000'
-    ),
-    (
-        '3989c7ef-87d3-40d3-9bd8-a4c271bfafb7',
-        '2025-10-26 20:02:25.000000'
-    ),
-    (
-        '39f31a86-bddd-40b1-9ce6-fe8f7b33a891',
-        '2025-11-08 09:06:37.000000'
-    ),
-    (
-        '39f6459f-42da-4bcd-ab26-2d6937dcd3f0',
-        '2025-11-08 17:31:31.000000'
-    ),
-    (
-        '3a0516af-3fbc-4859-a0ec-477217805501',
-        '2025-11-06 18:15:50.000000'
-    ),
-    (
-        '3a3f620e-030c-4f17-ae24-a55fc1eddbf2',
-        '2025-10-27 08:31:41.000000'
-    ),
-    (
-        '3a4c7c7d-4330-4352-992a-4ae2da337a7f',
-        '2025-10-08 15:23:59.000000'
-    ),
-    (
-        '3a722e56-6dd4-4769-809d-381c24f256bd',
-        '2025-10-13 09:38:07.000000'
-    ),
-    (
-        '3a8908cb-6dc0-495e-8e4f-8592da9c9f50',
-        '2025-11-08 09:05:34.000000'
-    ),
-    (
-        '3aa84a73-bd39-43aa-8c65-7c9c61cf385b',
-        '2025-10-10 14:19:07.000000'
-    ),
-    (
-        '3ab24f94-c5b4-49a3-adbe-0df58ef8b4ed',
-        '2025-10-10 09:43:33.000000'
-    ),
-    (
-        '3ac6fa39-86da-4330-8dc5-78c8e3da657f',
-        '2025-10-24 20:58:07.000000'
-    ),
-    (
-        '3ad500ac-e938-48d7-8be8-353add020b05',
-        '2025-11-02 17:52:35.000000'
-    ),
-    (
-        '3adf0e8b-ee85-44d4-9d25-79219e7bc5a4',
-        '2025-11-06 17:35:59.000000'
-    ),
-    (
-        '3ae5157f-293b-44a3-8429-a373fe641b18',
-        '2025-10-23 22:04:28.000000'
-    ),
-    (
-        '3b043b67-9424-499b-ab21-2b05d200bb9d',
-        '2025-11-06 15:25:35.000000'
-    ),
-    (
-        '3b2d4dfa-5697-4a86-94fd-2efc6807b706',
-        '2025-10-15 14:22:52.000000'
-    ),
-    (
-        '3b39414b-d8d6-41df-be7c-ae248e713748',
-        '2025-11-08 09:41:15.000000'
-    ),
-    (
-        '3b66bef3-311f-42cf-a7ae-29446c13b668',
-        '2025-10-02 16:09:51.000000'
-    ),
-    (
-        '3b69817d-61b6-46a0-ab5c-491a92b80f80',
-        '2025-10-26 21:37:34.000000'
-    ),
-    (
-        '3b852a72-571e-4bbe-8b43-525e586942bb',
-        '2025-10-26 17:24:15.000000'
-    ),
-    (
-        '3bddfbd1-e2c8-463d-b02f-1050ca6ea10d',
-        '2025-11-08 09:43:43.000000'
-    ),
-    (
-        '3c2c540a-5f3d-46dd-9bfe-7d26f09e41dc',
-        '2025-11-08 18:41:26.000000'
-    ),
-    (
-        '3c3964f6-0a7c-42f9-aaf7-c11ab2706163',
-        '2025-10-26 20:09:13.000000'
-    ),
-    (
-        '3c452b37-e9b8-4779-ab82-e6b1b62eb0a9',
-        '2025-10-31 16:19:56.000000'
-    ),
-    (
-        '3c698be0-7d84-4266-bbc1-c711ee6ea5a7',
-        '2025-11-08 17:30:00.000000'
-    ),
-    (
-        '3d1c2c12-301b-4e27-87b7-3f067adf996b',
-        '2025-10-26 16:32:49.000000'
-    ),
-    (
-        '3d1f2b03-3490-474d-a4c4-cefa0a6e7469',
-        '2025-09-26 04:03:46.000000'
-    ),
-    (
-        '3d7b99fb-b708-46d5-8f29-591014a286a4',
-        '2025-10-08 15:02:58.000000'
-    ),
-    (
-        '3d8ddeb4-89ab-4924-96e0-d548cefb4538',
-        '2025-10-26 19:18:03.000000'
-    ),
-    (
-        '3da99b4c-2de5-4c10-91cf-2317225ee370',
-        '2025-11-08 17:47:23.000000'
-    ),
-    (
-        '3dbf7764-6fb1-410b-8e69-564fe1753f8c',
-        '2025-10-14 08:32:05.000000'
-    ),
-    (
-        '3dcf17aa-51a9-481c-8a7b-9f40c5fcd123',
-        '2025-10-23 21:37:54.000000'
-    ),
-    (
-        '3e11d34f-07d5-499a-902a-1b0501d03f65',
-        '2025-10-14 08:21:41.000000'
-    ),
-    (
-        '3e5dcde6-6273-4d23-8223-a14fbaa8e786',
-        '2025-10-31 16:20:04.000000'
-    ),
-    (
-        '3f00d058-f51e-47ff-8030-153a4a927b5a',
-        '2025-11-06 16:11:29.000000'
-    ),
-    (
-        '3f044d81-f1d4-44d7-a734-37e6248d9d6e',
-        '2025-10-08 14:38:39.000000'
-    ),
-    (
-        '3f266095-111a-4451-b795-0587a936466e',
-        '2025-10-26 20:02:16.000000'
-    ),
-    (
-        '3f50bc70-268c-4aeb-9297-a62b75919079',
-        '2025-10-08 15:11:16.000000'
-    ),
-    (
-        '3f55aaf1-8b49-4a97-ac8a-2797fda2c9a1',
-        '2025-11-08 19:24:40.000000'
-    ),
-    (
-        '3f6fc6da-8a84-437d-aa86-ec265ec3bcdc',
-        '2025-10-14 07:32:31.000000'
-    ),
-    (
-        '3fc41ac8-b7c7-499a-965d-78c1b8a0d36b',
-        '2025-10-10 14:47:38.000000'
-    ),
-    (
-        '3fed32b5-93c0-456b-ac7e-e846c0cc107e',
-        '2025-11-06 18:19:26.000000'
-    ),
-    (
-        '3ff69d38-8454-482a-a050-76df8a56b8eb',
-        '2025-11-08 17:47:29.000000'
-    ),
-    (
-        '3ff77b8a-4d0d-48a5-b19b-07cce54f54c8',
-        '2025-11-08 18:56:14.000000'
-    ),
-    (
-        '3ffc0e88-095f-45cf-ad81-0f82f6d1ca28',
-        '2025-11-08 18:58:46.000000'
-    ),
-    (
-        '40b5b0b7-3b62-495e-95eb-897d7907abba',
-        '2025-11-06 18:55:17.000000'
-    ),
-    (
-        '40ed8d6b-b508-42a4-a04a-823a19073c8f',
-        '2025-11-08 09:17:39.000000'
-    ),
-    (
-        '41560563-69f3-4af2-9488-fcfc6594d85a',
-        '2025-09-30 10:15:36.000000'
-    ),
-    (
-        '41ac8b4a-3ad4-4297-8357-a3b64df74a88',
-        '2025-11-06 18:18:34.000000'
-    ),
-    (
-        '41fbd7cc-7992-481a-b151-0c12a52e9ab5',
-        '2025-10-24 20:46:45.000000'
-    ),
-    (
-        '42115baa-843d-400e-a37f-a0a8d1294f04',
-        '2025-10-24 20:45:08.000000'
-    ),
-    (
-        '4257d0a7-c883-40b3-9d02-ff34eb808e13',
-        '2025-11-06 18:11:42.000000'
-    ),
-    (
-        '42620b86-44c4-4e71-bf97-1458ed3e1763',
-        '2025-11-08 10:06:56.000000'
-    ),
-    (
-        '426a11e0-5301-46cd-9416-697fd8f61e5e',
-        '2025-11-06 15:29:17.000000'
-    ),
-    (
-        '42979940-3da9-4d22-a2ea-894c095f1d6b',
-        '2025-11-08 08:56:33.000000'
-    ),
-    (
-        '42abdd85-6461-4113-8577-c40315a1af9a',
-        '2025-10-08 10:07:10.000000'
-    ),
-    (
-        '42e72e8c-7bbd-4c2d-9fcb-9e48da036191',
-        '2025-10-14 07:31:23.000000'
-    ),
-    (
-        '430ee94a-4ad6-4ff0-b0cf-816553baa6fd',
-        '2025-10-24 21:50:21.000000'
-    ),
-    (
-        '43354cf3-e785-4443-a5ee-0945a79863eb',
-        '2025-11-02 17:55:36.000000'
-    ),
-    (
-        '436b24a2-cfc0-4984-8f17-244a84e6676d',
-        '2025-11-08 10:20:25.000000'
-    ),
-    (
-        '437105bb-e98e-4dbe-a78a-4853ada8f93c',
-        '2025-10-24 20:58:22.000000'
-    ),
-    (
-        '43880ead-2f15-4d56-981a-557a492228ae',
-        '2025-11-06 15:29:45.000000'
-    ),
-    (
-        '43d93870-b0b4-4862-8620-2f3345e64455',
-        '2025-10-08 14:48:16.000000'
-    ),
-    (
-        '43e62a1e-7ad4-4a99-bbfb-21b4a1761466',
-        '2025-10-09 14:09:30.000000'
-    ),
-    (
-        '442d6f26-796b-434e-8c80-7bee6959c101',
-        '2025-10-26 17:57:35.000000'
-    ),
-    (
-        '44361a04-3adb-4f1a-9316-7f2f7a93dbf1',
-        '2025-11-06 18:21:58.000000'
-    ),
-    (
-        '4448a065-453f-4f69-9120-43422efa1c3b',
-        '2025-11-06 17:33:51.000000'
-    ),
-    (
-        '4451ab25-5569-4e03-9e6c-787656c034aa',
-        '2025-10-26 20:14:56.000000'
-    ),
-    (
-        '446af924-7224-4cdf-9910-ede85a03cb09',
-        '2025-11-06 18:19:52.000000'
-    ),
-    (
-        '44a80358-3eca-4834-99ab-a1ef25e99e52',
-        '2025-11-08 09:59:14.000000'
-    ),
-    (
-        '44b17c5d-a999-43c5-baa7-8ee85651dff0',
-        '2025-11-08 17:56:28.000000'
-    ),
-    (
-        '44cd782e-5070-4dae-b5c4-9f6d1c48384e',
-        '2025-10-24 20:14:05.000000'
-    ),
-    (
-        '44d82a78-9a0b-441b-b82b-0674d343e923',
-        '2025-10-09 13:14:06.000000'
-    ),
-    (
-        '450024c3-b91d-4881-b728-8140038ddbc5',
-        '2025-11-02 17:55:50.000000'
-    ),
-    (
-        '455dac06-ce42-4eda-8603-065cd68e9204',
-        '2025-11-06 15:25:25.000000'
-    ),
-    (
-        '455ee692-664d-4efe-b55e-bf00723cad0c',
-        '2025-11-08 10:06:20.000000'
-    ),
-    (
-        '45806508-72c7-44e9-a30b-a96a5566ef2e',
-        '2025-11-08 08:57:47.000000'
-    ),
-    (
-        '45b8c3e4-af13-4316-aee3-f4b2da58553c',
-        '2025-11-06 16:09:36.000000'
-    ),
-    (
-        '46069640-7d66-4df0-b51a-43c6229e4d25',
-        '2025-11-06 18:15:42.000000'
-    ),
-    (
-        '46203e24-989f-4a15-b3c1-8b1842621ec2',
-        '2025-11-08 10:08:21.000000'
-    ),
-    (
-        '463a37e4-4d61-4088-b4ce-42b7eb3696de',
-        '2025-11-08 17:29:37.000000'
-    ),
-    (
-        '464aabb9-1562-4cd2-94e5-00f31df6c1f2',
-        '2025-11-02 17:42:33.000000'
-    ),
-    (
-        '46502ea8-9dab-4173-8220-4cb16fa41310',
-        '2025-11-08 19:58:11.000000'
-    ),
-    (
-        '46995143-880b-4423-bf4e-8bd4bfb0d737',
-        '2025-10-24 20:49:37.000000'
-    ),
-    (
-        '4699f6fc-580b-4c6a-935f-ae8f003793f5',
-        '2025-11-08 10:04:02.000000'
-    ),
-    (
-        '46ac287f-f595-4bb7-88a2-4be4772b2a1c',
-        '2025-11-06 16:47:43.000000'
-    ),
-    (
-        '46ffdef4-644e-44a9-ab9d-3a43a91eecb0',
-        '2025-11-06 17:40:01.000000'
-    ),
-    (
-        '47602af8-8947-4bb0-90f3-80be48beef44',
-        '2025-10-26 19:17:52.000000'
-    ),
-    (
-        '47d8fd70-09a9-4853-b889-93ab48015cf9',
-        '2025-11-08 17:42:51.000000'
-    ),
-    (
-        '47de0bda-fded-42ba-bc48-1caa5cf1b096',
-        '2025-10-27 09:36:30.000000'
-    ),
-    (
-        '4846c684-9c57-4474-a6d3-8468d3efb2c1',
-        '2025-10-27 09:15:03.000000'
-    ),
-    (
-        '48772e3d-e6f1-400d-9b58-d463d27d0338',
-        '2025-10-31 16:21:41.000000'
-    ),
-    (
-        '48a99a35-71ed-407e-a920-f01a5eff0aa7',
-        '2025-10-26 17:57:52.000000'
-    ),
-    (
-        '48aa99f7-c7ef-4551-972e-359f5fe3fc7c',
-        '2025-11-08 18:56:39.000000'
-    ),
-    (
-        '48cd1baa-5f85-4aaf-aacf-a83b5ffa6e67',
-        '2025-10-08 15:07:32.000000'
-    ),
-    (
-        '48d97164-b8c9-49d4-acdb-861e23e477b6',
-        '2025-10-26 17:57:44.000000'
-    ),
-    (
-        '48e91c29-1a1b-4e96-80a5-925d2ccfc373',
-        '2025-11-06 17:37:39.000000'
-    ),
-    (
-        '48f56f43-2ba1-4cd2-b8c6-6dc3bec144a8',
-        '2025-10-14 07:33:11.000000'
-    ),
-    (
-        '498b7505-a7f3-4aee-b83c-6d17dfe4384e',
-        '2025-11-08 18:56:12.000000'
-    ),
-    (
-        '49d1a2b6-9d56-4bd6-94ba-6300891fa191',
-        '2025-11-08 10:00:05.000000'
-    ),
-    (
-        '49eb007d-357f-4534-a80d-7f08b2eac4b1',
-        '2025-11-08 18:31:31.000000'
-    ),
-    (
-        '49fb9917-240d-4c4e-a58e-248863e2d851',
-        '2025-10-24 22:21:17.000000'
-    ),
-    (
-        '4a0a5773-7098-41d5-9681-1ce6b338881a',
-        '2025-11-06 17:40:03.000000'
-    ),
-    (
-        '4a44d6e4-8df7-4706-8099-9e43ec4d1bc6',
-        '2025-11-06 16:47:43.000000'
-    ),
-    (
-        '4a4a1220-0816-49f7-ac66-454930e56e8b',
-        '2025-10-26 20:32:36.000000'
-    ),
-    (
-        '4a4f8147-2f73-4d83-88bc-3442a83876ed',
-        '2025-11-08 18:31:34.000000'
-    ),
-    (
-        '4a52d4b4-75de-4d98-9166-f807c47d493c',
-        '2025-11-08 10:17:16.000000'
-    ),
-    (
-        '4a67073b-5fae-48d1-a988-cccf89682710',
-        '2025-11-06 18:13:05.000000'
-    ),
-    (
-        '4a6b60cd-6007-45d4-ad6b-0014ae564b16',
-        '2025-11-08 09:17:04.000000'
-    ),
-    (
-        '4af5fb4c-8ab5-4b13-9205-9fd4a7d9b703',
-        '2025-11-06 18:19:21.000000'
-    ),
-    (
-        '4b20fc40-8ab6-4f13-9ecc-1be1aab66889',
-        '2025-11-02 17:55:57.000000'
-    ),
-    (
-        '4b8b2b6a-d576-456a-a378-9bda33a0b866',
-        '2025-11-06 16:33:30.000000'
-    ),
-    (
-        '4b9b77ad-490b-40c3-9e64-d9b96a5c1d28',
-        '2025-10-26 19:27:51.000000'
-    ),
-    (
-        '4bb3e96d-a46e-4ece-9dff-65d2f76138a6',
-        '2025-11-07 15:13:35.000000'
-    ),
-    (
-        '4bd55ce9-6ade-41db-8ca7-741e7068bf87',
-        '2025-11-06 18:22:01.000000'
-    ),
-    (
-        '4c0c425a-973e-4867-8cdb-58576745ffa6',
-        '2025-10-14 08:31:06.000000'
-    ),
-    (
-        '4c173d5f-77c2-4206-bdea-403067956ef3',
-        '2025-11-07 16:18:30.000000'
-    ),
-    (
-        '4c455a69-7be7-4252-9051-b16a82b55687',
-        '2025-10-26 20:02:13.000000'
-    ),
-    (
-        '4c6166c3-214d-42de-ab29-7a65e7217e56',
-        '2025-11-08 19:25:50.000000'
-    ),
-    (
-        '4c68c371-bc5e-4415-8701-901af571bd66',
-        '2025-11-08 17:40:18.000000'
-    ),
-    (
-        '4c861738-e13c-4ac1-a097-049608d8bad1',
-        '2025-10-24 20:45:46.000000'
-    ),
-    (
-        '4ca7be3e-6f8d-4227-9d69-a70c5e8cb1d0',
-        '2025-10-14 07:50:52.000000'
-    ),
-    (
-        '4cdb8208-ccfd-4295-82d0-63ff8b10d2ef',
-        '2025-10-14 09:58:30.000000'
-    ),
-    (
-        '4cdcedef-99d8-442c-9550-c72af8ceca8e',
-        '2025-10-24 21:44:13.000000'
-    ),
-    (
-        '4d3173c6-2de9-42ea-af5b-4dee16a0e910',
-        '2025-11-08 10:00:13.000000'
-    ),
-    (
-        '4d3296ee-d23a-4a7d-80cd-e390d7a7323a',
-        '2025-10-26 21:38:23.000000'
-    ),
-    (
-        '4d421e5f-9bcf-451b-98ca-ef2450158439',
-        '2025-11-02 17:56:41.000000'
-    ),
-    (
-        '4d582701-e8fa-45f7-9b64-afad091d6a42',
-        '2025-11-06 15:29:41.000000'
-    ),
-    (
-        '4d76317e-65cf-4be4-813f-8ddb24f69bc0',
-        '2025-10-08 15:01:25.000000'
-    ),
-    (
-        '4daf7808-1455-404e-ab1d-fef4de6d9f43',
-        '2025-10-14 08:15:15.000000'
-    ),
-    (
-        '4dbc60fd-2a04-441d-ba28-a773095c3c81',
-        '2025-11-08 17:45:36.000000'
-    ),
-    (
-        '4e0a9a59-2cc1-4477-b9ba-bb077aff24cd',
-        '2025-10-24 21:44:08.000000'
-    ),
-    (
-        '4e3ec6c6-111b-4119-8778-62c97848afde',
-        '2025-10-27 10:46:58.000000'
-    ),
-    (
-        '4e435160-77ff-4e4b-a8c0-9fc8c819df52',
-        '2025-11-08 18:59:23.000000'
-    ),
-    (
-        '4e9195ca-5cc7-46b6-a75e-2beb34296abc',
-        '2025-10-26 17:34:57.000000'
-    ),
-    (
-        '4ebbad15-e361-4ec4-b9b8-2c179280866e',
-        '2025-11-06 18:19:55.000000'
-    ),
-    (
-        '4f105bd2-893d-4245-8e3d-8436011f188e',
-        '2025-11-06 17:44:09.000000'
-    ),
-    (
-        '4f551d30-720f-4ea6-9eed-555bdbef1d8c',
-        '2025-11-07 15:15:32.000000'
-    ),
-    (
-        '4f59a23b-13e4-46be-8bc1-cc3352f462f0',
-        '2025-10-11 12:42:15.000000'
-    ),
-    (
-        '4f797ea4-7d77-4818-bcdf-a78c8372fa15',
-        '2025-10-08 14:45:22.000000'
-    ),
-    (
-        '4fa63c11-147c-45ce-9f63-fe357bc0fdc8',
-        '2025-10-26 17:56:14.000000'
-    ),
-    (
-        '4fdf4ce9-9ee6-4525-8831-be791995d4c8',
-        '2025-11-06 17:45:49.000000'
-    ),
-    (
-        '50092b31-4ef2-4568-a2f4-7128de8a287a',
-        '2025-11-08 18:41:50.000000'
-    ),
-    (
-        '5024981a-adc3-4361-a50b-bb82843b5189',
-        '2025-10-14 07:50:48.000000'
-    ),
-    (
-        '5024b0ee-3176-47c0-9e1f-a2ed6af29f9a',
-        '2025-11-06 18:18:08.000000'
-    ),
-    (
-        '506aed09-25de-4441-80fc-52693a44ca77',
-        '2025-10-26 17:41:36.000000'
-    ),
-    (
-        '508a76cc-0f51-4dd5-9459-7238676e964d',
-        '2025-10-10 14:18:46.000000'
-    ),
-    (
-        '50e3f717-950e-41e1-8156-c2d69d5d57eb',
-        '2025-11-06 17:39:32.000000'
-    ),
-    (
-        '5101b966-771f-4518-a975-9ae8a7d37d0a',
-        '2025-10-10 14:20:55.000000'
-    ),
-    (
-        '5127400d-f2d6-4c46-87ff-51cf035066ea',
-        '2025-11-08 19:03:01.000000'
-    ),
-    (
-        '51520183-9bfd-4545-98f0-059978152fa8',
-        '2025-10-09 14:31:47.000000'
-    ),
-    (
-        '517635f5-b263-4255-a809-6927cf9bcc5e',
-        '2025-10-24 20:40:12.000000'
-    ),
-    (
-        '518508cb-776e-423c-af94-e84b3cd9d3c6',
-        '2025-10-14 09:51:18.000000'
-    ),
-    (
-        '51a814b0-7ef1-415a-bf0f-912f77ee8d79',
-        '2025-11-08 10:17:50.000000'
-    ),
-    (
-        '51b3c421-4edc-43d6-b882-01f4f3416f1d',
-        '2025-11-06 18:13:54.000000'
-    ),
-    (
-        '51c66fa1-dbea-4fcf-b609-b02d4986f550',
-        '2025-11-08 09:05:33.000000'
-    ),
-    (
-        '526dff0f-8902-4046-8986-bfbb9e311772',
-        '2025-10-11 14:46:44.000000'
-    ),
-    (
-        '52aadc42-0441-4866-ab18-6855b254b8db',
-        '2025-10-26 20:01:48.000000'
-    ),
-    (
-        '52fd9155-b103-4d45-9697-3fdaf6ed240c',
-        '2025-10-08 15:23:09.000000'
-    ),
-    (
-        '531c2bba-10fa-459a-9f95-4d3958842b5f',
-        '2025-11-07 19:49:12.000000'
-    ),
-    (
-        '5334c634-37df-4f36-a478-b527a381d489',
-        '2025-10-10 11:39:18.000000'
-    ),
-    (
-        '533d2965-03e5-4bca-b5c8-1acecbb7484f',
-        '2025-11-06 18:53:44.000000'
-    ),
-    (
-        '53468a56-5cc1-4859-ba43-9ce7b01cc5b4',
-        '2025-10-08 14:47:10.000000'
-    ),
-    (
-        '534a6d0a-4ba4-43ce-8d97-8a2573dd6b2c',
-        '2025-11-06 18:55:39.000000'
-    ),
-    (
-        '534aebba-8487-4c2b-9207-f791426b6b3e',
-        '2025-11-06 18:13:55.000000'
-    ),
-    (
-        '5357c9af-1bd8-4b74-8fff-2a13ca406727',
-        '2025-10-24 20:58:20.000000'
-    ),
-    (
-        '53a6369b-dbe4-4f33-9a04-aaca15fd519e',
-        '2025-11-06 15:25:58.000000'
-    ),
-    (
-        '53d09f41-d8e5-4351-8213-bf974859243c',
-        '2025-10-26 19:28:19.000000'
-    ),
-    (
-        '5439f2cc-7bc0-48aa-9996-03ca083bd85e',
-        '2025-10-24 20:40:32.000000'
-    ),
-    (
-        '54cd0428-a289-451e-869c-0e1d58cd6cb3',
-        '2025-11-08 17:36:36.000000'
-    ),
-    (
-        '54df1906-c66a-439f-8e9a-1c95eca8eeeb',
-        '2025-10-26 17:59:35.000000'
-    ),
-    (
-        '54e0f38e-fa32-474f-80fa-891314e78564',
-        '2025-10-27 10:26:33.000000'
-    ),
-    (
-        '54e474a3-6aad-41c0-b275-a0540b66eca8',
-        '2025-11-06 15:25:36.000000'
-    ),
-    (
-        '54e7fd42-56ba-4ba5-a078-660513998c7e',
-        '2025-11-01 17:36:25.000000'
-    ),
-    (
-        '54ebc4b3-2114-4b61-8614-32a4651b9520',
-        '2025-10-24 20:55:51.000000'
-    ),
-    (
-        '5501c247-1b69-4f3d-b315-fc92452f8a25',
-        '2025-10-27 09:01:17.000000'
-    ),
-    (
-        '558a29cb-6311-4cef-8ef8-bf2b39718dc2',
-        '2025-10-26 20:41:01.000000'
-    ),
-    (
-        '55ae176b-1b28-411e-acd9-95eed81cc247',
-        '2025-11-07 16:39:15.000000'
-    ),
-    (
-        '55ddb0f3-d057-40dc-a6fc-5448f43b4fa7',
-        '2025-11-08 19:08:01.000000'
-    ),
-    (
-        '55dfac06-a63e-4fc1-8b4f-9153a6c35482',
-        '2025-11-02 17:56:00.000000'
-    ),
-    (
-        '562048b2-9e44-41b0-ae32-f5dd1698b3f9',
-        '2025-10-27 10:32:30.000000'
-    ),
-    (
-        '566500cc-80c0-49c3-a114-148b1870a6e0',
-        '2025-11-06 15:25:59.000000'
-    ),
-    (
-        '567a27c9-de11-43fc-86af-02a2e371fd4c',
-        '2025-10-26 16:41:59.000000'
-    ),
-    (
-        '56b936ac-92e2-418f-b700-9b7569694422',
-        '2025-11-08 19:00:53.000000'
-    ),
-    (
-        '56fc659b-cab2-4140-a1a8-151b4c5d7ef9',
-        '2025-11-08 18:41:11.000000'
-    ),
-    (
-        '57002106-7cc3-4917-a9fa-bb6f8148872d',
-        '2025-11-08 10:23:32.000000'
-    ),
-    (
-        '57097a8b-2245-4c25-80fc-39ff9f3c2a6d',
-        '2025-11-08 09:59:44.000000'
-    ),
-    (
-        '572d0e02-30b9-4ffc-b05f-420e72de268f',
-        '2025-11-06 16:15:25.000000'
-    ),
-    (
-        '57375373-545e-489f-a7ce-64c410155ba0',
-        '2025-10-24 20:13:55.000000'
-    ),
-    (
-        '573ae75d-6e4b-48b6-a1ad-10afc8fddcfb',
-        '2025-11-08 09:40:05.000000'
-    ),
-    (
-        '57836891-286d-444d-9331-d55e1435a06d',
-        '2025-11-08 08:58:05.000000'
-    ),
-    (
-        '57d894ec-1850-46d4-abf3-8c3ad6763a11',
-        '2025-11-07 15:15:27.000000'
-    ),
-    (
-        '57e18d16-7f8f-4361-81a4-90a6321dd068',
-        '2025-11-08 17:31:51.000000'
-    ),
-    (
-        '58a639c6-b2c6-4e7d-bf49-a60f713f6ec9',
-        '2025-10-26 21:38:25.000000'
-    ),
-    (
-        '58cecd27-5d5c-40d1-abdd-c45dbc3afef2',
-        '2025-11-06 18:55:47.000000'
-    ),
-    (
-        '58e912fd-b9b5-4907-ac78-ef1bd13fbdff',
-        '2025-11-06 17:45:06.000000'
-    ),
-    (
-        '58e9ba25-66a5-4455-b052-b56a576b4ac2',
-        '2025-10-24 20:58:09.000000'
-    ),
-    (
-        '59620553-cbc6-47c6-bcdc-05f2f7faad6e',
-        '2025-10-26 16:45:05.000000'
-    ),
-    (
-        '59ac012f-508e-4e09-afc1-6e5e71ed78d4',
-        '2025-10-08 15:01:22.000000'
-    ),
-    (
-        '59b18792-6b37-4ae9-9ea0-e4724d8b8c1c',
-        '2025-11-07 16:39:13.000000'
-    ),
-    (
-        '59ea4c83-73c1-4341-abfe-2717e7978691',
-        '2025-10-09 15:01:29.000000'
-    ),
-    (
-        '5a015c23-b22b-4238-b3be-bfe21c36c387',
-        '2025-10-08 09:38:03.000000'
-    ),
-    (
-        '5a08d05e-95ce-4ac9-a024-30e32657797b',
-        '2025-11-08 18:31:29.000000'
-    ),
-    (
-        '5a3d6d20-0591-4319-a3be-c812a025b7eb',
-        '2025-11-08 17:46:12.000000'
-    ),
-    (
-        '5aa7b416-1e52-424e-8487-5fd04a731433',
-        '2025-10-10 11:29:33.000000'
-    ),
-    (
-        '5aca9be1-ff33-4eca-8301-9b1070e9c42e',
-        '2025-11-06 18:15:47.000000'
-    ),
-    (
-        '5acbc7dc-4774-4671-8c20-d40d52e01ec3',
-        '2025-11-08 17:50:41.000000'
-    ),
-    (
-        '5ad0ea3c-8d8b-47c7-84e6-6378507ac16c',
-        '2025-10-08 10:52:35.000000'
-    ),
-    (
-        '5af88af2-5fca-47b5-8f56-7993c298cad9',
-        '2025-11-08 09:40:31.000000'
-    ),
-    (
-        '5afa90f0-4337-4949-881d-127f6817a4bd',
-        '2025-10-14 07:37:24.000000'
-    ),
-    (
-        '5b068d84-8566-4f76-b2db-4f3755749257',
-        '2025-11-08 09:09:47.000000'
-    ),
-    (
-        '5b0cac9d-b233-4d5e-bf38-1171f74eaa7b',
-        '2025-10-08 15:23:12.000000'
-    ),
-    (
-        '5b42e5a3-2c81-4fff-9f40-0ca5fcf3349b',
-        '2025-10-31 16:19:55.000000'
-    ),
-    (
-        '5b49b234-3dd8-431f-9c20-5f58f1701a51',
-        '2025-11-07 15:50:22.000000'
-    ),
-    (
-        '5bc02551-c743-4f48-80e4-01947240b777',
-        '2025-11-08 09:24:21.000000'
-    ),
-    (
-        '5bcc1e1f-7d04-4663-8eff-91af262bcc91',
-        '2025-10-27 08:47:54.000000'
-    ),
-    (
-        '5bd561b5-549b-4c77-acc9-00d15319dc84',
-        '2025-11-08 08:58:09.000000'
-    ),
-    (
-        '5c3cc922-0e39-4ed9-a70b-5499e7550203',
-        '2025-11-06 19:05:02.000000'
-    ),
-    (
-        '5c66fe99-ea1e-4513-9955-d346cf6d6e28',
-        '2025-10-08 15:01:51.000000'
-    ),
-    (
-        '5c8bdc1f-2604-4852-8032-d8eacdb924b1',
-        '2025-10-26 16:45:30.000000'
-    ),
-    (
-        '5c9a6220-bb09-4010-8be6-601b93825347',
-        '2025-11-06 18:15:36.000000'
-    ),
-    (
-        '5d00478d-887b-4ddd-9a95-dda7b8cc9c2d',
-        '2025-11-02 17:45:20.000000'
-    ),
-    (
-        '5d029c8e-4048-4fff-9b68-fe64f7f94db8',
-        '2025-10-26 17:50:18.000000'
-    ),
-    (
-        '5d3c4f70-0405-463b-906c-b223ed57d92b',
-        '2025-11-07 15:13:48.000000'
-    ),
-    (
-        '5d3c5256-743a-4135-bf23-25350f5b2c80',
-        '2025-11-02 17:55:56.000000'
-    ),
-    (
-        '5d6f31a2-c6a4-454d-b240-a0dfceefc591',
-        '2025-10-26 21:38:20.000000'
-    ),
-    (
-        '5d6f4d49-6891-439b-b68e-f206f3e6e300',
-        '2025-10-27 09:55:50.000000'
-    ),
-    (
-        '5d9ceb6f-186d-4058-83dd-c91b680e33cd',
-        '2025-10-14 14:50:40.000000'
-    ),
-    (
-        '5dd40958-2268-48a6-9742-81da2aea6d30',
-        '2025-11-06 16:11:29.000000'
-    ),
-    (
-        '5dd8e866-87c6-4b0b-88c7-f192de9807e3',
-        '2025-10-27 09:01:46.000000'
-    ),
-    (
-        '5dfd10d4-e434-4721-8e22-9df0e889216b',
-        '2025-11-08 18:57:41.000000'
-    ),
-    (
-        '5dfe33f5-60cb-4bf9-8441-900e58e92c75',
-        '2025-10-26 19:39:19.000000'
-    ),
-    (
-        '5e25e8be-ddf2-492c-ae1f-daf02793a43b',
-        '2025-10-26 19:14:00.000000'
-    ),
-    (
-        '5e7156df-e7bb-430c-bc83-1edab2c7e79e',
-        '2025-11-08 10:08:24.000000'
-    ),
-    (
-        '5ed29bfc-7e6c-446d-8060-95183cd7a066',
-        '2025-10-14 14:34:16.000000'
-    ),
-    (
-        '5f297740-d00c-4dbe-a209-422352946674',
-        '2025-10-26 19:28:29.000000'
-    ),
-    (
-        '5f2eb71a-3252-4e4d-aaa9-feedcfb79f52',
-        '2025-10-27 10:33:21.000000'
-    ),
-    (
-        '5f492dcc-908c-4ef1-94d7-89ede3841ff9',
-        '2025-11-02 17:45:18.000000'
-    ),
-    (
-        '5f773683-73ea-4416-983e-10b0398427ef',
-        '2025-10-26 20:02:34.000000'
-    ),
-    (
-        '5fe7dc2e-045c-4a14-883c-e5363b5603e3',
-        '2025-10-09 11:29:29.000000'
-    ),
-    (
-        '606a6f6e-9b36-4c8d-9af7-e27a0801173f',
-        '2025-10-10 11:14:29.000000'
-    ),
-    (
-        '60787ac9-bf91-44ad-9f42-27849149d609',
-        '2025-10-31 16:05:34.000000'
-    ),
-    (
-        '608b78fc-06d8-425a-8664-43f3819782e4',
-        '2025-10-26 17:50:34.000000'
-    ),
-    (
-        '609684a3-be02-4e73-b627-f11229123ac9',
-        '2025-10-26 21:38:14.000000'
-    ),
-    (
-        '60a46517-3e28-4594-827c-e3acc06f6293',
-        '2025-10-08 14:42:43.000000'
-    ),
-    (
-        '60ae5b59-ecb0-4318-bb16-7f8e20e9f2b8',
-        '2025-11-08 09:39:50.000000'
-    ),
-    (
-        '60c26caf-6244-4784-ad24-6956838652db',
-        '2025-11-08 10:04:16.000000'
-    ),
-    (
-        '61347872-d429-4dd1-bf49-6163309582f7',
-        '2025-10-08 12:28:07.000000'
-    ),
-    (
-        '6216c251-271b-46be-9df3-45e380d94f4b',
-        '2025-10-08 14:12:14.000000'
-    ),
-    (
-        '62226445-a0eb-4013-9cd2-ee675cab92fd',
-        '2025-11-08 19:24:33.000000'
-    ),
-    (
-        '624bdbe7-9d40-459d-a8a7-79b1da42cf68',
-        '2025-10-09 10:25:29.000000'
-    ),
-    (
-        '6301ccae-010c-4c0e-b4d6-e974e697df85',
-        '2025-10-14 07:14:14.000000'
-    ),
-    (
-        '631252e6-38e0-462a-9540-6be19cb528bf',
-        '2025-11-06 16:09:57.000000'
-    ),
-    (
-        '63245cf3-a1b7-4bd4-92c3-c56026bcb97e',
-        '2025-11-08 10:17:49.000000'
-    ),
-    (
-        '6380ede1-ad3f-4bcc-b73a-6981f2b1cb57',
-        '2025-10-24 21:01:58.000000'
-    ),
-    (
-        '6397af32-b0c2-45d3-9c49-c554aa2f66e9',
-        '2025-11-08 18:56:16.000000'
-    ),
-    (
-        '63cf4e57-3675-489f-a65a-9ac5903ee28c',
-        '2025-10-08 14:46:52.000000'
-    ),
-    (
-        '63ea7937-4986-4be0-bc0a-72e345af751b',
-        '2025-10-10 14:18:52.000000'
-    ),
-    (
-        '64570184-6e99-4a21-84a0-262bb5d2fe88',
-        '2025-10-26 19:28:28.000000'
-    ),
-    (
-        '647c4244-9fe1-4f0d-b43e-9591f2b692fe',
-        '2025-10-26 20:00:10.000000'
-    ),
-    (
-        '64b77602-00eb-438f-b568-fb50b1d56e88',
-        '2025-11-06 17:35:58.000000'
-    ),
-    (
-        '64ef3148-4c94-4624-89bb-99ff19b5e01b',
-        '2025-11-06 17:40:05.000000'
-    ),
-    (
-        '64ef53e6-dbc2-4fc5-9c8f-dcd1cb7cb6f4',
-        '2025-11-08 18:56:32.000000'
-    ),
-    (
-        '64faa2ae-9487-4552-9100-d618fc612441',
-        '2025-10-27 10:33:31.000000'
-    ),
-    (
-        '651f9d0a-439f-4a5e-a15a-5f3edfd89399',
-        '2025-11-08 18:57:40.000000'
-    ),
-    (
-        '6523bc23-4189-4108-ab56-0b9049f88bd1',
-        '2025-11-06 18:22:40.000000'
-    ),
-    (
-        '653eec1b-42a5-4445-a9dc-5a72c3b0fbe5',
-        '2025-10-09 16:05:32.000000'
-    ),
-    (
-        '6552c492-2ad8-4877-9387-842a3a1d40b3',
-        '2025-11-06 18:30:38.000000'
-    ),
-    (
-        '6568339a-f903-4e14-9b03-25b0972293f0',
-        '2025-11-08 17:56:29.000000'
-    ),
-    (
-        '657b3f9f-cefc-459c-acc5-b9d1c7328779',
-        '2025-10-11 15:33:43.000000'
-    ),
-    (
-        '659003f6-af6a-4597-bca1-e090ac7efe4a',
-        '2025-11-06 18:14:04.000000'
-    ),
-    (
-        '65be75b0-7e8e-43ff-bb2a-ddb4d141e5ae',
-        '2025-11-08 08:57:07.000000'
-    ),
-    (
-        '66a882bb-6d00-4235-9548-7f4547a55583',
-        '2025-10-10 11:01:20.000000'
-    ),
-    (
-        '66c27ffb-af5f-4fae-8cde-8818cec6871c',
-        '2025-10-26 17:56:12.000000'
-    ),
-    (
-        '6731b1de-4338-4fea-b7f8-3fb814f86572',
-        '2025-10-09 11:57:52.000000'
-    ),
-    (
-        '677248da-dcfe-44ae-8fc2-9bb4a2de512f',
-        '2025-11-02 17:43:12.000000'
-    ),
-    (
-        '67810c64-c7e8-4b95-89ac-6584d81a204b',
-        '2025-10-15 14:10:27.000000'
-    ),
-    (
-        '67b6b070-63e7-49b6-bb0b-51ea99326137',
-        '2025-11-07 15:13:52.000000'
-    ),
-    (
-        '67c95402-a2c7-414f-a3da-d43b148743ad',
-        '2025-10-26 20:33:36.000000'
-    ),
-    (
-        '67d6b473-3422-4733-b96d-6f7780ccd681',
-        '2025-11-08 18:31:20.000000'
-    ),
-    (
-        '67ff0478-e33d-4378-887b-7ec13c37db37',
-        '2025-11-06 18:22:00.000000'
-    ),
-    (
-        '680e274b-7585-44fe-839d-f88b90035abb',
-        '2025-10-08 14:46:04.000000'
-    ),
-    (
-        '680fb0aa-64b0-4fc2-ba5a-16d39f021422',
-        '2025-11-07 15:16:04.000000'
-    ),
-    (
-        '68295c46-c66c-42bd-8e3e-b482cbdbde6b',
-        '2025-10-24 19:43:38.000000'
-    ),
-    (
-        '68336d27-358d-4554-8961-608af2aae30a',
-        '2025-11-07 15:13:20.000000'
-    ),
-    (
-        '684d6ee1-dcf1-4b3e-b792-6be0764d2c27',
-        '2025-11-08 17:36:27.000000'
-    ),
-    (
-        '68684c9e-6c9c-48eb-b2ff-77b713e8037c',
-        '2025-11-08 17:54:14.000000'
-    ),
-    (
-        '6902785a-16c1-4453-941b-db1469ae8025',
-        '2025-11-02 17:55:27.000000'
-    ),
-    (
-        '6925fa56-ec19-4ff6-961f-8eb9fab42909',
-        '2025-11-08 18:56:05.000000'
-    ),
-    (
-        '69310ce5-c529-4741-a7eb-fb574d134f0f',
-        '2025-10-26 19:14:10.000000'
-    ),
-    (
-        '695ab8ca-d62f-4266-ba14-28359ead99a0',
-        '2025-11-08 17:50:32.000000'
-    ),
-    (
-        '69d87a0d-7650-4748-8ead-bfaf261cd1d3',
-        '2025-10-11 15:33:26.000000'
-    ),
-    (
-        '6a429dd3-ed1e-478c-bb3a-0bdfde4f89a0',
-        '2025-11-06 16:19:10.000000'
-    ),
-    (
-        '6a484ae5-e13e-4ccc-8789-ea5e92c74ef5',
-        '2025-11-08 18:41:57.000000'
-    ),
-    (
-        '6a9b5242-9299-46c9-bfb9-e42566f00d43',
-        '2025-10-26 20:34:00.000000'
-    ),
-    (
-        '6ab0e6de-f62b-44f6-a593-69e9267e3596',
-        '2025-11-08 18:56:03.000000'
-    ),
-    (
-        '6b314045-efd2-4ad0-a0be-7c17d09e97a4',
-        '2025-11-08 18:56:56.000000'
-    ),
-    (
-        '6b45b4f0-576b-4276-b0ac-304bfc59f9ff',
-        '2025-11-08 19:19:24.000000'
-    ),
-    (
-        '6b588fb4-6103-40e6-890c-b88d28f490de',
-        '2025-11-08 10:22:04.000000'
-    ),
-    (
-        '6b8a999c-60b0-4d3f-89f4-86902e019207',
-        '2025-11-08 18:41:48.000000'
-    ),
-    (
-        '6bcf682d-88fb-45ba-ba52-031656843e9a',
-        '2025-10-27 08:31:55.000000'
-    ),
-    (
-        '6bef920e-67cb-49b2-b96b-402e03d594d8',
-        '2025-10-10 14:56:16.000000'
-    ),
-    (
-        '6c0a5b9a-54c9-458d-afcd-02767bf72042',
-        '2025-11-08 09:40:37.000000'
-    ),
-    (
-        '6c311def-580c-472f-b075-bdd92ad76118',
-        '2025-10-26 17:07:41.000000'
-    ),
-    (
-        '6cc0e1b5-2058-4e21-9edb-faed4f1772b1',
-        '2025-11-08 09:44:06.000000'
-    ),
-    (
-        '6cc27613-0559-4a55-bdff-1bddb8d2e39b',
-        '2025-10-08 11:04:06.000000'
-    ),
-    (
-        '6cc7a0b0-3997-40ca-9f85-b7b3b628907b',
-        '2025-11-08 18:41:51.000000'
-    ),
-    (
-        '6d355a98-f84d-464a-8ce4-e216b4eee587',
-        '2025-10-08 15:06:17.000000'
-    ),
-    (
-        '6d4ec77f-b9cd-42c3-ad86-4710f703e49f',
-        '2025-10-24 20:40:33.000000'
-    ),
-    (
-        '6d64c026-bd00-4771-b6d0-b949de81c81e',
-        '2025-10-26 19:50:34.000000'
-    ),
-    (
-        '6e23faf8-425d-44ef-8bed-c829eb2a6765',
-        '2025-10-09 14:16:09.000000'
-    ),
-    (
-        '6e3ac17f-90df-451d-87c6-ad133c209ce8',
-        '2025-11-06 19:05:04.000000'
-    ),
-    (
-        '6e6b8681-9699-40e4-97dc-7980a7b39f63',
-        '2025-10-26 18:00:41.000000'
-    ),
-    (
-        '6e7ea787-4c6e-4980-828f-ac24d3688faa',
-        '2025-10-24 20:56:06.000000'
-    ),
-    (
-        '6ead3e4d-7763-4d66-9c6c-41b6cfaee2cf',
-        '2025-11-07 16:06:11.000000'
-    ),
-    (
-        '6ee94f6b-0f39-4b62-b64e-0872b62b0731',
-        '2025-10-27 09:52:39.000000'
-    ),
-    (
-        '6f0a1b36-2a00-4e0a-8d86-1d244274c02d',
-        '2025-11-06 17:44:06.000000'
-    ),
-    (
-        '6f4dc9e4-95f0-4b29-a715-edaada3e9395',
-        '2025-10-26 17:01:51.000000'
-    ),
-    (
-        '6fab5105-100e-4dba-bc7d-e1f2d1274fa4',
-        '2025-10-08 15:22:58.000000'
-    ),
-    (
-        '6fc176e1-8111-49e7-910c-76d2fcb360d9',
-        '2025-11-06 18:19:54.000000'
-    ),
-    (
-        '6fc93ae6-6195-421b-97e1-3b2f3f5fa2ae',
-        '2025-10-08 10:09:32.000000'
-    ),
-    (
-        '6fcae128-29a9-46c9-af97-8a2e5825ad58',
-        '2025-11-02 17:46:59.000000'
-    ),
-    (
-        '6fe4f586-6d03-4e4b-9c8b-5c7be6cf20f3',
-        '2025-11-06 18:15:36.000000'
-    ),
-    (
-        '6feedf22-268d-441a-8c40-ea9419c7ab0a',
-        '2025-11-08 17:45:21.000000'
-    ),
-    (
-        '700043f4-6fcc-40bc-99f1-1c7d49157e8c',
-        '2025-10-11 09:28:33.000000'
-    ),
-    (
-        '7042ba74-c8ed-40ee-96aa-d1aec1d6b83f',
-        '2025-11-08 10:24:03.000000'
-    ),
-    (
-        '70492af1-0eb1-4683-974e-df93592dc9d3',
-        '2025-11-08 09:59:33.000000'
-    ),
-    (
-        '704f8f29-29c3-46ba-9f6e-cd4303bfdfb9',
-        '2025-10-26 21:37:17.000000'
-    ),
-    (
-        '708c14e4-40bc-4c8f-b7bd-ecf5de317c3b',
-        '2025-11-08 19:01:37.000000'
-    ),
-    (
-        '70d64a44-2e7e-4827-8562-1e69923cc981',
-        '2025-10-24 19:44:45.000000'
-    ),
-    (
-        '70df38ab-149d-47e3-b45d-19519ded817e',
-        '2025-10-24 20:12:59.000000'
-    ),
-    (
-        '70fee30c-5f19-499a-a320-564db1013df6',
-        '2025-11-06 18:15:51.000000'
-    ),
-    (
-        '71202520-cfed-4da5-9929-925c48c2b431',
-        '2025-11-08 10:19:04.000000'
-    ),
-    (
-        '7120bcc9-68e3-4856-afe2-bd787d6c2288',
-        '2025-11-06 17:40:12.000000'
-    ),
-    (
-        '712a1777-a5f7-4f09-91c6-6ca9b87ad889',
-        '2025-11-08 18:41:21.000000'
-    ),
-    (
-        '7180a531-bc97-4335-90ea-69ae4c8c1f50',
-        '2025-11-06 18:29:25.000000'
-    ),
-    (
-        '719d7d95-205c-498f-9eb8-acdb9f712db7',
-        '2025-11-08 17:50:46.000000'
-    ),
-    (
-        '71c8e770-f4e3-4e61-ba0b-52bfceffce55',
-        '2025-10-10 10:10:29.000000'
-    ),
-    (
-        '7202eb9d-784a-4a81-9ca5-7eaa3b4b9b88',
-        '2025-11-06 17:40:01.000000'
-    ),
-    (
-        '7288d619-26ff-47cd-9b9d-4bda80eabcc9',
-        '2025-10-08 15:00:41.000000'
-    ),
-    (
-        '72d6b1a0-c002-44bb-a875-5cee7da9054b',
-        '2025-11-06 18:22:12.000000'
-    ),
-    (
-        '72ec364a-cb70-4c47-bab3-c2b6a8f79261',
-        '2025-11-02 17:52:36.000000'
-    ),
-    (
-        '72ecccaf-c8bc-4fe9-9b0d-95142c81bbfb',
-        '2025-10-26 17:31:19.000000'
-    ),
-    (
-        '730c2525-907c-42f9-a3e1-e72d933e1bb5',
-        '2025-10-26 19:54:58.000000'
-    ),
-    (
-        '733d2739-aa5c-4049-b332-a6a21d946f73',
-        '2025-10-26 19:17:06.000000'
-    ),
-    (
-        '733f0e35-96df-4a27-ad57-f00be58f3b72',
-        '2025-11-08 09:48:24.000000'
-    ),
-    (
-        '74043482-4cab-4af7-b3aa-4423de0af0cd',
-        '2025-10-31 16:19:55.000000'
-    ),
-    (
-        '74107f31-5c50-4908-9fd6-b6907b98f648',
-        '2025-10-10 14:47:31.000000'
-    ),
-    (
-        '74412b2e-0593-453d-bac8-377de633412f',
-        '2025-11-06 18:55:28.000000'
-    ),
-    (
-        '744c6552-a5b8-4541-8b2c-9718bad5233d',
-        '2025-11-06 18:27:39.000000'
-    ),
-    (
-        '7461de0e-1f13-4cf1-bb78-70c41804dd36',
-        '2025-10-27 09:52:39.000000'
-    ),
-    (
-        '74cf15f8-eed1-45ea-b09a-e95c38e6d0fa',
-        '2025-11-08 18:58:33.000000'
-    ),
-    (
-        '74f68117-88cb-487e-9b89-8405437d3712',
-        '2025-11-06 18:15:50.000000'
-    ),
-    (
-        '750d7fa5-abf1-4b5a-afcf-2181f624ddb5',
-        '2025-10-26 20:09:11.000000'
-    ),
-    (
-        '752ba0cd-c1bd-45d3-a759-5f61818dc283',
-        '2025-10-26 19:18:01.000000'
-    ),
-    (
-        '75352105-cbed-4bcf-b666-9270a06ffd6f',
-        '2025-10-24 21:36:46.000000'
-    ),
-    (
-        '754cd060-cc60-40b5-957c-269ab9c0d656',
-        '2025-11-06 18:18:45.000000'
-    ),
-    (
-        '7579f1c6-b68d-4ff0-ae57-3a800f326598',
-        '2025-11-06 16:06:54.000000'
-    ),
-    (
-        '758abc6b-43d8-455d-9a35-60de1680dfb8',
-        '2025-11-02 17:52:32.000000'
-    ),
-    (
-        '7598ade0-7664-40e5-8433-5fe4134aee8c',
-        '2025-10-08 14:45:51.000000'
-    ),
-    (
-        '75b8f41e-bc96-45bb-a8ce-7b1e8ac99536',
-        '2025-10-08 15:26:48.000000'
-    ),
-    (
-        '766060f6-6ddc-483c-82e6-30779d26c318',
-        '2025-11-08 18:57:28.000000'
-    ),
-    (
-        '768a93b9-a261-4999-8243-4a5359d3bb53',
-        '2025-10-26 18:53:05.000000'
-    ),
-    (
-        '768dfef9-4bc3-46c6-b531-8837708be0bf',
-        '2025-10-08 14:49:37.000000'
-    ),
-    (
-        '76af6409-92d7-463b-a1d6-effcc9a47026',
-        '2025-10-31 16:19:56.000000'
-    ),
-    (
-        '76b07a16-dec2-4d32-9f58-8a17582b8632',
-        '2025-11-08 20:03:57.000000'
-    ),
-    (
-        '76c74f89-068c-491b-9223-0d4d37cbe9f0',
-        '2025-11-07 16:38:52.000000'
-    ),
-    (
-        '76c75782-d3ca-43e7-b02c-517091d1cbcb',
-        '2025-10-26 17:31:20.000000'
-    ),
-    (
-        '76cb34db-b03d-4a64-8bee-a3da7ac18128',
-        '2025-11-06 18:02:14.000000'
-    ),
-    (
-        '76f1bf41-8cdf-4705-bb0a-db4816bf34a0',
-        '2025-11-08 10:00:10.000000'
-    ),
-    (
-        '77048685-1ed8-4fb6-9f9d-aa183fabeecf',
-        '2025-11-06 15:26:45.000000'
-    ),
-    (
-        '77095fec-d966-40d3-be91-3fd90ee39195',
-        '2025-10-26 21:37:39.000000'
-    ),
-    (
-        '770f017c-090e-4c72-802d-78f93351f0fd',
-        '2025-10-26 19:18:07.000000'
-    ),
-    (
-        '773f63e7-d2cf-4d15-8e8c-d7780b76e366',
-        '2025-11-06 17:44:07.000000'
-    ),
-    (
-        '776ac68b-718c-4e29-8e40-3d915888e1e4',
-        '2025-10-27 08:20:18.000000'
-    ),
-    (
-        '779af4fb-22f0-41b6-8665-3158d97719ce',
-        '2025-11-06 16:15:25.000000'
-    ),
-    (
-        '77a486e4-348e-4b89-88bd-53234459ae83',
-        '2025-10-13 08:44:12.000000'
-    ),
-    (
-        '77d2f0c5-30b9-4f8b-80f2-7ff837a15806',
-        '2025-10-31 16:20:12.000000'
-    ),
-    (
-        '7813062b-517b-4f65-bff3-2176d8ad9cd8',
-        '2025-11-06 18:53:44.000000'
-    ),
-    (
-        '7981971f-3cea-4800-a77a-333e806f0f9c',
-        '2025-10-26 21:38:20.000000'
-    ),
-    (
-        '79afabad-51cd-47b2-9581-98e5795433ff',
-        '2025-11-08 08:58:06.000000'
-    ),
-    (
-        '79d62687-bfb3-4275-91eb-86cb69eaf48e',
-        '2025-10-24 21:51:38.000000'
-    ),
-    (
-        '79ddfc24-39d5-48e3-8b74-1a7f5b4a1709',
-        '2025-10-08 15:06:26.000000'
-    ),
-    (
-        '79e0dfe6-8407-4f00-9549-3bcbc5fd9249',
-        '2025-10-26 19:18:01.000000'
-    ),
-    (
-        '79e38c1c-aa38-4f49-8968-4c43767a0ed2',
-        '2025-11-06 17:45:05.000000'
-    ),
-    (
-        '7a0c7ded-3a2a-4122-8c75-81f223526def',
-        '2025-11-07 15:13:55.000000'
-    ),
-    (
-        '7a113d48-416b-4472-a63f-027c7b9f5b0c',
-        '2025-11-08 19:24:38.000000'
-    ),
-    (
-        '7a26f008-ec2e-4e52-b016-07d642ca0568',
-        '2025-11-08 17:49:21.000000'
-    ),
-    (
-        '7a778742-0807-46f4-b982-2a61fba0f898',
-        '2025-10-31 16:20:05.000000'
-    ),
-    (
-        '7a96153f-a044-477f-88f1-cc5aaa3b0931',
-        '2025-11-02 17:45:20.000000'
-    ),
-    (
-        '7abd85f1-baef-4319-a90c-bfcb3c52045d',
-        '2025-10-26 19:55:11.000000'
-    ),
-    (
-        '7ad2835f-10a0-4fbe-95ca-d9362ff1f617',
-        '2025-11-06 15:29:39.000000'
-    ),
-    (
-        '7adf71ca-e089-4b22-b041-bec046af46b3',
-        '2025-11-08 19:01:24.000000'
-    ),
-    (
-        '7b043f19-b679-4c52-9e79-84c8e3e5cafd',
-        '2025-09-26 03:55:55.000000'
-    ),
-    (
-        '7b4e13d5-848c-4389-bd86-f98d56de1c35',
-        '2025-10-06 15:51:36.000000'
-    ),
-    (
-        '7b6d6835-976e-4bc4-bb24-105d5f880d36',
-        '2025-10-26 19:39:27.000000'
-    ),
-    (
-        '7b73804f-fc3e-44a0-8b71-11318f9738b5',
-        '2025-11-07 17:47:14.000000'
-    ),
-    (
-        '7ba5329d-6aa8-4942-a12e-1946fe723b05',
-        '2025-11-08 09:50:30.000000'
-    ),
-    (
-        '7bc545ad-186a-4368-a07b-e3016dbc06cd',
-        '2025-11-06 16:21:38.000000'
-    ),
-    (
-        '7be1d14a-7d0b-4b6f-be67-b6f81a214505',
-        '2025-10-26 19:15:00.000000'
-    ),
-    (
-        '7c00e551-f709-461b-9448-4702570b2dc5',
-        '2025-10-27 10:14:58.000000'
-    ),
-    (
-        '7c5147c9-4462-45a5-bcc6-957beb859597',
-        '2025-11-08 10:19:01.000000'
-    ),
-    (
-        '7c78cf0b-f240-41b3-837d-bfcfc756d84b',
-        '2025-10-26 19:27:27.000000'
-    ),
-    (
-        '7c8a83b2-ae5e-4e5c-b32b-17635f06d32f',
-        '2025-10-26 19:27:29.000000'
-    ),
-    (
-        '7ca047bb-eaf5-4b1c-929c-eba418bd0858',
-        '2025-10-14 14:34:23.000000'
-    ),
-    (
-        '7cbc90f2-ccb1-4d59-857c-5140934843af',
-        '2025-11-08 10:06:36.000000'
-    ),
-    (
-        '7ccbd925-5b5c-4007-8472-1372abb10420',
-        '2025-11-08 09:59:54.000000'
-    ),
-    (
-        '7ccd1db3-6a94-4b9d-944e-60963d846496',
-        '2025-11-08 19:19:23.000000'
-    ),
-    (
-        '7d665362-12cd-452b-8a82-8ec9f2986aff',
-        '2025-11-02 17:43:21.000000'
-    ),
-    (
-        '7d9e89d4-e001-4630-b85d-29ca7e7b0e73',
-        '2025-11-08 09:18:02.000000'
-    ),
-    (
-        '7dcbfc41-136a-44ad-b5d5-53f002faaa56',
-        '2025-11-08 18:41:48.000000'
-    ),
-    (
-        '7dcd2d51-2177-4c68-9169-ea859cbd4228',
-        '2025-11-06 17:45:49.000000'
-    ),
-    (
-        '7dddd275-5f5d-474d-b120-d31e889d38d3',
-        '2025-11-08 18:58:36.000000'
-    ),
-    (
-        '7dea519b-ec66-4e17-8af8-bd613642e577',
-        '2025-10-24 20:56:20.000000'
-    ),
-    (
-        '7e00038a-18c9-4864-9997-19ab6ff4b1bd',
-        '2025-10-08 15:02:36.000000'
-    ),
-    (
-        '7e83aafe-7eee-4dea-b3bd-474312e9967a',
-        '2025-10-15 14:28:24.000000'
-    ),
-    (
-        '7e88a6b9-567c-49d4-9eb6-71c8fd9f9412',
-        '2025-11-06 15:29:07.000000'
-    ),
-    (
-        '7ec9af00-3fa9-4b38-9ddf-1cf0c4494412',
-        '2025-10-31 16:20:16.000000'
-    ),
-    (
-        '7f195c8c-a766-4598-950a-83cddd9c7c5e',
-        '2025-11-08 18:58:36.000000'
-    ),
-    (
-        '7f2fb20f-c00b-4a46-984c-fdfc314fe16d',
-        '2025-11-06 18:24:46.000000'
-    ),
-    (
-        '7f3df4cb-8ca0-4ca0-8702-1306d71c5fbc',
-        '2025-11-08 09:17:15.000000'
-    ),
-    (
-        '7f60e686-36e7-4a08-a95d-eeca794a34cc',
-        '2025-10-26 17:01:09.000000'
-    ),
-    (
-        '7f8a3bf6-34b9-49bb-82e1-6c9492ef1bf2',
-        '2025-11-08 18:41:50.000000'
-    ),
-    (
-        '7f9ad118-4048-42c5-aae1-c8ed11bfcf86',
-        '2025-10-26 20:13:43.000000'
-    ),
-    (
-        '7fc1bbbf-72a3-4e86-b20e-f35e932a5287',
-        '2025-11-08 17:56:24.000000'
-    ),
-    (
-        '7fd250f7-bd9e-42bc-96f7-2f4b3084c448',
-        '2025-10-09 15:02:38.000000'
-    ),
-    (
-        '7fdb21a8-1e65-4b1d-874c-67af1a723405',
-        '2025-09-26 04:16:40.000000'
-    ),
-    (
-        '7ffea343-cf7d-4553-b30b-02397c9d3868',
-        '2025-10-26 16:41:35.000000'
-    ),
-    (
-        '80841164-2520-40cd-a53f-c2efa30c36fe',
-        '2025-11-06 16:22:32.000000'
-    ),
-    (
-        '808b2bb0-3c31-4fef-a06c-4d75359479c3',
-        '2025-10-24 20:56:06.000000'
-    ),
-    (
-        '80937516-1ca2-4af6-a74c-873ddacf6d6e',
-        '2025-10-11 15:33:17.000000'
-    ),
-    (
-        '81051bb3-ff44-4009-b260-3582cfdfad7a',
-        '2025-10-27 09:38:47.000000'
-    ),
-    (
-        '813fd987-bc07-4eff-b5ab-365fa34eb9bb',
-        '2025-10-31 16:04:37.000000'
-    ),
-    (
-        '81549c17-9966-4fd7-8aa9-034922a0d35e',
-        '2025-11-06 18:22:14.000000'
-    ),
-    (
-        '817380ee-2080-4efa-a829-fcab5ec7df3f',
-        '2025-11-06 17:46:08.000000'
-    ),
-    (
-        '81e1c0f9-e658-4300-a871-de8cfc8c32c3',
-        '2025-11-06 18:15:52.000000'
-    ),
-    (
-        '826798cc-508e-4537-9d8b-5ad7d72920f4',
-        '2025-11-08 19:00:37.000000'
-    ),
-    (
-        '8314a988-64c8-4bd2-9750-b55fc2a207ad',
-        '2025-11-06 16:03:12.000000'
-    ),
-    (
-        '832c4530-0c1d-4555-8bc2-ebea1752852f',
-        '2025-10-24 21:49:28.000000'
-    ),
-    (
-        '8396849c-ad6f-49ef-a71f-70de2cfaf42a',
-        '2025-11-06 16:18:59.000000'
-    ),
-    (
-        '83a74eaa-7cda-47fc-bd2c-3f8438cee231',
-        '2025-11-08 10:06:57.000000'
-    ),
-    (
-        '83b68fe0-f269-49c2-8f73-359ef717ee3e',
-        '2025-10-27 10:33:31.000000'
-    ),
-    (
-        '83c60921-128b-43d6-8e35-6514701c2458',
-        '2025-10-26 19:39:20.000000'
-    ),
-    (
-        '841d96e9-a27c-4bbc-9dc7-0c6cb5ecebe2',
-        '2025-10-11 09:28:44.000000'
-    ),
-    (
-        '84490885-b316-4015-bbc1-47cd8dc4b8bc',
-        '2025-10-26 17:48:43.000000'
-    ),
-    (
-        '84b016f0-47b7-4d28-8540-799cbe75656d',
-        '2025-11-08 09:05:08.000000'
-    ),
-    (
-        '84b98e45-856c-4436-982f-1a878c08534b',
-        '2025-10-26 21:38:13.000000'
-    ),
-    (
-        '84c8d843-55fd-4e27-866b-4ac96f6ddc1f',
-        '2025-10-26 16:33:00.000000'
-    ),
-    (
-        '851e6dc4-b557-4a79-bcc1-8365e9569405',
-        '2025-11-06 18:21:59.000000'
-    ),
-    (
-        '852dd593-37b6-48a5-a62a-39ac9cec42f2',
-        '2025-11-06 17:46:08.000000'
-    ),
-    (
-        '8551f230-bdde-4c58-9316-af8cfa1dd153',
-        '2025-11-06 17:55:01.000000'
-    ),
-    (
-        '85b05942-7709-4033-a163-a7a6e536c268',
-        '2025-10-27 09:32:23.000000'
-    ),
-    (
-        '85f04c87-b4da-4870-a0b8-4ee37263886f',
-        '2025-10-24 20:58:16.000000'
-    ),
-    (
-        '85fe9d51-e5a7-43a7-ae78-d9729272332e',
-        '2025-11-06 18:31:09.000000'
-    ),
-    (
-        '8603e494-27d7-471a-a678-61e91f35ad76',
-        '2025-10-26 19:14:00.000000'
-    ),
-    (
-        '8605bc23-f354-41d0-b6e1-c632d34c76cd',
-        '2025-10-09 09:48:50.000000'
-    ),
-    (
-        '8611a822-e182-4b03-bd1e-2a05d29b652d',
-        '2025-11-06 17:45:22.000000'
-    ),
-    (
-        '8618d75c-d63f-47fc-9f73-73fbe0afcd21',
-        '2025-11-08 09:57:32.000000'
-    ),
-    (
-        '861f3d0f-7359-4417-a301-b9038ebeeae5',
-        '2025-10-14 07:32:59.000000'
-    ),
-    (
-        '863da0da-05db-4697-84e3-001e543c79b4',
-        '2025-10-10 15:49:35.000000'
-    ),
-    (
-        '86b1e950-32ff-487c-93b1-6a757e18d24b',
-        '2025-10-27 08:21:38.000000'
-    ),
-    (
-        '86c48cbc-573a-4a80-b5de-e0f30b8229b5',
-        '2025-11-06 17:46:32.000000'
-    ),
-    (
-        '86cd59aa-cb4b-4734-944f-a8978317d080',
-        '2025-10-26 20:02:44.000000'
-    ),
-    (
-        '86f27600-7db4-46fb-b349-af1fb2f92ee0',
-        '2025-10-26 19:55:10.000000'
-    ),
-    (
-        '878874ca-b432-4478-bc09-052430ab731b',
-        '2025-10-14 06:55:42.000000'
-    ),
-    (
-        '87937cf1-d4d2-43ea-a0f6-70f1ff2b6d9b',
-        '2025-10-26 16:45:27.000000'
-    ),
-    (
-        '87a90cc6-7ad1-41f7-b6f6-909f094fa779',
-        '2025-10-31 16:20:04.000000'
-    ),
-    (
-        '87bac3ee-6d43-457a-8f7a-91b5a6cbb1af',
-        '2025-11-06 18:15:52.000000'
-    ),
-    (
-        '87eef9d2-8ddb-4c50-bd52-68d57b17872d',
-        '2025-11-08 08:58:02.000000'
-    ),
-    (
-        '87f3bd54-174a-4d2f-ba8b-02df67711362',
-        '2025-11-06 16:21:59.000000'
-    ),
-    (
-        '87f4c032-fd5d-46c6-ab55-2bfcdccf0a6d',
-        '2025-11-08 10:17:17.000000'
-    ),
-    (
-        '8808faea-9f18-4053-924f-04eb42d24d07',
-        '2025-11-06 18:22:28.000000'
-    ),
-    (
-        '881825e4-94ab-4ee0-803f-c052fdda4af4',
-        '2025-10-14 14:54:23.000000'
-    ),
-    (
-        '8853e1a1-9411-4ed8-9699-1a903fad6686',
-        '2025-10-13 08:36:41.000000'
-    ),
-    (
-        '886c6ac6-53f4-4781-a131-75d75638f9ed',
-        '2025-11-06 18:55:19.000000'
-    ),
-    (
-        '8897827a-0e1c-4e1f-9552-3678a4e1c99d',
-        '2025-10-24 20:49:53.000000'
-    ),
-    (
-        '889a5962-11e3-4bba-8447-53c86a1ef609',
-        '2025-11-08 09:57:56.000000'
-    ),
-    (
-        '88a090ad-f4f8-478b-846a-63e209c02865',
-        '2025-11-08 10:08:56.000000'
-    ),
-    (
-        '88d6660d-d578-4f48-b823-a719a776afed',
-        '2025-11-06 19:04:54.000000'
-    ),
-    (
-        '8902cd1b-5dd6-4444-9bf3-b24d46d4e07b',
-        '2025-10-10 08:40:26.000000'
-    ),
-    (
-        '89094ad4-8625-43df-98f7-75664f05b1f2',
-        '2025-10-11 10:46:21.000000'
-    ),
-    (
-        '8959ff83-471b-4766-a177-5c89c8612ce4',
-        '2025-11-08 09:24:18.000000'
-    ),
-    (
-        '89f73c3d-2580-4769-9762-e471b0a53a85',
-        '2025-11-08 10:06:56.000000'
-    ),
-    (
-        '8a078210-11ef-411f-a7bc-fafef62eb56e',
-        '2025-11-08 19:24:48.000000'
-    ),
-    (
-        '8a319fc9-6e11-4c6a-8a8a-a817e4d50f0b',
-        '2025-11-06 16:22:00.000000'
-    ),
-    (
-        '8ab0189f-7fdc-4a2e-b719-c6df46ed3844',
-        '2025-11-06 16:15:40.000000'
-    ),
-    (
-        '8ac5f3c8-e8aa-40a6-8c3b-fcd1ca454cb3',
-        '2025-10-08 15:01:30.000000'
-    ),
-    (
-        '8af0f974-0925-4031-bb67-3133607bcf1f',
-        '2025-10-26 17:39:19.000000'
-    ),
-    (
-        '8b497812-3c61-4c6f-bdd5-12a12e524ee4',
-        '2025-10-27 10:33:04.000000'
-    ),
-    (
-        '8b9f32e4-50b5-4dd0-ae6a-b9a853e45641',
-        '2025-11-08 17:14:24.000000'
-    ),
-    (
-        '8bbdf2cb-fbcf-4ce9-83c2-0a47efb23a96',
-        '2025-11-08 08:56:19.000000'
-    ),
-    (
-        '8bca5244-682d-4739-b75b-a667ac900882',
-        '2025-10-31 16:21:40.000000'
-    ),
-    (
-        '8c37f30d-f4f2-42f9-9f3f-fe4c914917cc',
-        '2025-11-06 18:22:00.000000'
-    ),
-    (
-        '8c87d656-e00d-4cdd-9175-f4a6a596a156',
-        '2025-10-27 09:37:18.000000'
-    ),
-    (
-        '8c91707e-565a-4553-938b-8730b6eeaec4',
-        '2025-10-26 17:38:28.000000'
-    ),
-    (
-        '8cb97de1-f016-4fc2-8e04-a2cf8a0bef64',
-        '2025-11-08 09:57:35.000000'
-    ),
-    (
-        '8cc8c653-dbd0-4e56-b869-2606b091417d',
-        '2025-10-10 14:21:22.000000'
-    ),
-    (
-        '8cdc0055-6f91-4bf4-8072-89d47ce827ab',
-        '2025-10-24 20:40:13.000000'
-    ),
-    (
-        '8ceb97b6-d3af-4da7-8aa6-97a9fd9959d3',
-        '2025-10-14 14:33:43.000000'
-    ),
-    (
-        '8cf7232c-19be-4c2c-bb46-06d5bb8602bd',
-        '2025-10-24 20:48:06.000000'
-    ),
-    (
-        '8d08607c-e842-4aa2-96ea-727251970d9a',
-        '2025-10-14 08:13:26.000000'
-    ),
-    (
-        '8d150a45-e4d7-4fc9-bb5f-369ed66128a9',
-        '2025-11-06 18:22:12.000000'
-    ),
-    (
-        '8d4b04f8-3ba5-4f78-9a41-991516713bd4',
-        '2025-11-08 10:18:04.000000'
-    ),
-    (
-        '8d519b56-b9d2-487b-a545-6d4a114d3cfa',
-        '2025-10-08 15:01:07.000000'
-    ),
-    (
-        '8d69abda-cc5e-4c22-a965-b4ffb5223480',
-        '2025-10-08 15:11:13.000000'
-    ),
-    (
-        '8d9c68aa-65cd-4bad-a42b-9a7aa3ed8608',
-        '2025-10-27 10:15:01.000000'
-    ),
-    (
-        '8db39fb8-7c60-436b-8525-498d823750e9',
-        '2025-10-08 15:23:19.000000'
-    ),
-    (
-        '8dd6bfac-c53c-4646-a194-9f7b3fc63d56',
-        '2025-11-08 09:06:24.000000'
-    ),
-    (
-        '8e078005-3eaa-487f-be42-81bb343c4df5',
-        '2025-10-26 16:41:31.000000'
-    ),
-    (
-        '8e38346f-abdf-47eb-a230-6c57542fe624',
-        '2025-10-10 13:52:41.000000'
-    ),
-    (
-        '8e4e289d-ce8a-4954-96b9-37698837c14b',
-        '2025-11-08 09:59:42.000000'
-    ),
-    (
-        '8e576027-31e1-40f3-b745-4815b56a582e',
-        '2025-10-27 10:16:22.000000'
-    ),
-    (
-        '8e9ddc2a-1e5d-4bb3-88da-95ac1a44617a',
-        '2025-10-11 10:50:19.000000'
-    ),
-    (
-        '8e9fe4ea-b628-4adb-b8df-de5660c24dbd',
-        '2025-10-08 14:48:38.000000'
-    ),
-    (
-        '8eae2f1c-69c4-449b-a599-079bbc2b8e98',
-        '2025-10-27 10:26:35.000000'
-    ),
-    (
-        '8eeaf172-911a-4357-aca0-bcfd30a6f521',
-        '2025-10-26 19:54:47.000000'
-    ),
-    (
-        '8f32d8ca-b253-497f-aa30-994e90df3d90',
-        '2025-10-26 17:07:36.000000'
-    ),
-    (
-        '8f5018e7-5749-4727-bcb5-b5b6ffdeaac2',
-        '2025-11-06 18:18:02.000000'
-    ),
-    (
-        '8fd039bb-e69b-4061-82ab-b39002fc6cf5',
-        '2025-11-06 18:14:46.000000'
-    ),
-    (
-        '8fd848b7-a5e7-4b3f-873f-ad519836c3e5',
-        '2025-11-07 17:41:52.000000'
-    ),
-    (
-        '8fd8ae0c-992a-4904-b9ae-8d34588add76',
-        '2025-10-26 21:37:33.000000'
-    ),
-    (
-        '900adeb2-0dfd-4586-86bb-7b83b25d0393',
-        '2025-11-08 10:08:25.000000'
-    ),
-    (
-        '9013b153-21d9-4946-9a00-9665612b1b71',
-        '2025-11-08 09:48:19.000000'
-    ),
-    (
-        '907b2f09-2e80-4bae-bc84-ddca3091aa78',
-        '2025-11-06 16:09:37.000000'
-    ),
-    (
-        '90d9cbd6-d753-4a14-a905-1086ee69a1cd',
-        '2025-10-10 14:46:30.000000'
-    ),
-    (
-        '91117520-a6bc-4650-a181-5fd1e4d04781',
-        '2025-11-06 16:06:27.000000'
-    ),
-    (
-        '91192f32-d471-45de-85ec-c1244680d10a',
-        '2025-10-08 15:26:47.000000'
-    ),
-    (
-        '91348f29-a17e-4b22-8513-f575e2aaf848',
-        '2025-11-08 17:42:58.000000'
-    ),
-    (
-        '9139735a-c092-4d38-a59b-47b523e64e4a',
-        '2025-11-08 09:57:38.000000'
-    ),
-    (
-        '917e549d-2125-4733-90d4-66f00d1ea3e4',
-        '2025-11-06 17:45:41.000000'
-    ),
-    (
-        '91aed76b-17a1-4ef2-826f-1468ebc97439',
-        '2025-10-26 19:14:09.000000'
-    ),
-    (
-        '91ba366a-7097-4304-84a0-606d72578d51',
-        '2025-11-06 18:19:26.000000'
-    ),
-    (
-        '91c6673d-d759-4072-8f00-aabb5ec28261',
-        '2025-10-26 19:27:24.000000'
-    ),
-    (
-        '921c0020-23e9-4d59-825b-6e6eba1f08fe',
-        '2025-11-02 17:42:43.000000'
-    ),
-    (
-        '9227499b-6ee8-4580-a643-5a67be94feb1',
-        '2025-11-06 18:19:54.000000'
-    ),
-    (
-        '9256522b-628e-4a86-8357-1e32f051e63c',
-        '2025-10-10 15:48:25.000000'
-    ),
-    (
-        '9273affb-9dbf-4121-abcd-d77ad65f962f',
-        '2025-11-08 19:07:53.000000'
-    ),
-    (
-        '92b3c00d-0ba1-4ab7-8591-6bb00266fb13',
-        '2025-10-10 14:41:34.000000'
-    ),
-    (
-        '92d058d3-e264-44eb-a805-b5a9227e76b2',
-        '2025-11-06 18:11:35.000000'
-    ),
-    (
-        '92fd2126-dda3-4cac-a616-b16edff4ff4c',
-        '2025-10-08 15:02:05.000000'
-    ),
-    (
-        '9305c3c8-c1b3-47a8-b5f1-ead3cf17ab5b',
-        '2025-10-08 14:49:46.000000'
-    ),
-    (
-        '9314f0bd-5c70-4565-998a-46b939f597c9',
-        '2025-10-14 14:51:03.000000'
-    ),
-    (
-        '93237cd0-1710-4df4-a63a-a8957f4f5f6f',
-        '2025-11-02 17:45:18.000000'
-    ),
-    (
-        '9349e977-2ac7-45e7-8dad-6c9977867870',
-        '2025-11-07 20:18:57.000000'
-    ),
-    (
-        '93848873-58f6-4c12-b315-3a3ec39fe67b',
-        '2025-11-07 15:13:53.000000'
-    ),
-    (
-        '93a586ff-7614-4c5a-b981-419f700697d4',
-        '2025-11-06 16:12:59.000000'
-    ),
-    (
-        '943a168c-b4ac-4b8f-9ed9-d89dfed62bfa',
-        '2025-10-14 14:34:26.000000'
-    ),
-    (
-        '94509a8c-2cf8-4b35-8a72-26a56da29f7e',
-        '2025-11-06 16:11:15.000000'
-    ),
-    (
-        '945202a4-c834-4aa0-beac-560e76b1c5ec',
-        '2025-10-26 17:57:37.000000'
-    ),
-    (
-        '947ac96a-aee7-4f06-9102-88b6d35e18bb',
-        '2025-10-27 09:55:22.000000'
-    ),
-    (
-        '947dda3b-8372-424c-9975-5c35f5fbfc25',
-        '2025-10-26 10:37:34.000000'
-    ),
-    (
-        '94bb0f5c-d904-42ba-b0b7-086b807a99bb',
-        '2025-11-08 09:44:19.000000'
-    ),
-    (
-        '94d29fe0-f18e-4d97-a437-65a880fe81e1',
-        '2025-10-24 20:57:58.000000'
-    ),
-    (
-        '94fcf511-e753-4de8-9174-4aa642e96c2b',
-        '2025-11-08 10:08:13.000000'
-    ),
-    (
-        '9504507c-dc21-45dd-afe0-ff198eb99e14',
-        '2025-10-14 14:04:52.000000'
-    ),
-    (
-        '950d1bc7-4585-4470-b99e-0f675ab57940',
-        '2025-11-06 17:45:28.000000'
-    ),
-    (
-        '950dcc9b-942d-4b23-a074-fd93e4cb3b66',
-        '2025-10-10 14:18:10.000000'
-    ),
-    (
-        '9519d3aa-375c-44b9-acf5-eec6055dc917',
-        '2025-11-02 17:52:34.000000'
-    ),
-    (
-        '958c82d4-a59a-4dca-97c2-e1cb92fb6ebd',
-        '2025-11-06 16:22:21.000000'
-    ),
-    (
-        '959d10e4-492e-4912-9fbc-a1fd8c099549',
-        '2025-11-08 08:56:32.000000'
-    ),
-    (
-        '9682bcf3-7525-4ea3-968e-f33d2db10cba',
-        '2025-11-06 15:59:24.000000'
-    ),
-    (
-        '96aeb17c-fec0-484a-abab-ba7b53ee34e5',
-        '2025-11-08 09:08:31.000000'
-    ),
-    (
-        '970bd4f4-cb8d-44bc-90c6-e5291e8cebc5',
-        '2025-11-08 09:48:48.000000'
-    ),
-    (
-        '971e5200-a285-463a-a2dc-249d81ba2d28',
-        '2025-11-08 09:57:34.000000'
-    ),
-    (
-        '97335090-c18f-400d-ba2f-8cf2a5b56dc2',
-        '2025-11-06 17:19:10.000000'
-    ),
-    (
-        '973b675f-4154-4aee-801e-7a13febe65f5',
-        '2025-10-09 14:56:32.000000'
-    ),
-    (
-        '974ac88e-c108-4096-b913-2daadd74335c',
-        '2025-10-27 08:31:47.000000'
-    ),
-    (
-        '9796936c-48d8-4246-9b51-c923b20cc7f8',
-        '2025-11-06 18:19:27.000000'
-    ),
-    (
-        '97a27e14-03c7-490e-8155-47b9303fe28a',
-        '2025-10-24 15:22:49.000000'
-    ),
-    (
-        '98208c87-4481-421e-abef-5c84247ba175',
-        '2025-11-06 17:40:06.000000'
-    ),
-    (
-        '98211b3c-b696-4bf7-9f93-69c58c298074',
-        '2025-10-09 13:14:18.000000'
-    ),
-    (
-        '982c03f6-512a-4e9d-bca4-8660b3fb6f3e',
-        '2025-11-08 10:06:53.000000'
-    ),
-    (
-        '984fd5c0-7739-4812-b900-b108e3e03548',
-        '2025-11-07 20:12:19.000000'
-    ),
-    (
-        '98b605fc-eebe-4fac-9e9f-f4870b929646',
-        '2025-11-02 17:55:32.000000'
-    ),
-    (
-        '98edf706-24f0-40ce-af47-784ac2518402',
-        '2025-11-06 15:59:45.000000'
-    ),
-    (
-        '992884fb-101a-44e6-885e-2d3aaf02179d',
-        '2025-10-24 20:12:46.000000'
-    ),
-    (
-        '99411ee2-7ac4-46df-8944-678aeb3a69eb',
-        '2025-11-06 18:22:01.000000'
-    ),
-    (
-        '994428f6-55f7-417c-91ec-60178bb4acec',
-        '2025-11-06 17:45:31.000000'
-    ),
-    (
-        '99472022-2737-41d5-94a9-6dd3152193cc',
-        '2025-11-07 20:11:39.000000'
-    ),
-    (
-        '99492d23-4b2e-4d5d-b6de-121e10d0749b',
-        '2025-11-07 15:28:07.000000'
-    ),
-    (
-        '994ec23b-49f4-4282-be63-23fbee88170f',
-        '2025-10-26 21:37:37.000000'
-    ),
-    (
-        '99571108-d5de-4ff1-8f1c-bb126fd1e609',
-        '2025-11-08 09:58:01.000000'
-    ),
-    (
-        '997034f3-d3a1-4a0b-9d11-efcf9189c91a',
-        '2025-11-08 08:58:28.000000'
-    ),
-    (
-        '99c19302-0522-43d5-b0ba-d8d73bb60be9',
-        '2025-11-08 19:01:23.000000'
-    ),
-    (
-        '99d91e01-fb48-4731-9a73-5431e99829d1',
-        '2025-11-08 18:58:57.000000'
-    ),
-    (
-        '99f236ec-2395-4b71-9773-1eedf1a0c14a',
-        '2025-10-24 20:49:52.000000'
-    ),
-    (
-        '9a5baed0-1a8b-4772-9a33-fd991585b32c',
-        '2025-10-08 15:26:30.000000'
-    ),
-    (
-        '9ac83499-8eaf-4f4e-972c-07db1715f5e3',
-        '2025-10-14 14:51:20.000000'
-    ),
-    (
-        '9ad769d5-141c-4cdb-a046-112b7f77cd08',
-        '2025-11-07 16:54:28.000000'
-    ),
-    (
-        '9b1e4606-3179-4db4-b9e8-cadba39af090',
-        '2025-11-06 16:01:00.000000'
-    ),
-    (
-        '9b4bc041-bc1d-4f5b-ac7e-025ebf9f7817',
-        '2025-10-26 20:10:33.000000'
-    ),
-    (
-        '9b57f213-0970-4190-b99b-106c92b5ee8d',
-        '2025-10-24 21:54:38.000000'
-    ),
-    (
-        '9b7c1f76-2d4d-49ab-b4a1-0670f5b829ee',
-        '2025-11-06 15:59:22.000000'
-    ),
-    (
-        '9b916b85-0ccb-4b55-9041-a9d5b1ad24c7',
-        '2025-11-06 15:25:24.000000'
-    ),
-    (
-        '9b95573d-39b3-471e-8052-8bdc0016984f',
-        '2025-10-26 19:09:08.000000'
-    ),
-    (
-        '9bf05ec0-f019-4714-b544-701eea196909',
-        '2025-11-02 17:56:06.000000'
-    ),
-    (
-        '9c895ccb-e2e4-446e-8dd3-473e6c1c057f',
-        '2025-11-06 16:19:21.000000'
-    ),
-    (
-        '9c955a54-fd42-44cb-b4eb-78b4977a2c34',
-        '2025-10-06 17:14:26.000000'
-    ),
-    (
-        '9ca9336a-048b-43b4-9def-416857218f40',
-        '2025-10-05 13:45:08.000000'
-    ),
-    (
-        '9caade1c-7274-4e74-9b62-ce48bd0fae02',
-        '2025-10-31 16:20:19.000000'
-    ),
-    (
-        '9cab33a5-c9ba-438b-9891-95faac2ff8ff',
-        '2025-11-08 10:17:15.000000'
-    ),
-    (
-        '9cb1b632-25f8-40e4-b377-a1ada6d32fef',
-        '2025-10-26 20:34:00.000000'
-    ),
-    (
-        '9cf2c64e-4ab9-4bec-a395-d11c0c536211',
-        '2025-10-14 08:07:40.000000'
-    ),
-    (
-        '9d326546-c0bd-4643-bf6e-f6d7cb811478',
-        '2025-10-26 19:39:30.000000'
-    ),
-    (
-        '9d474be6-0081-42be-8725-e6b38fb7d54d',
-        '2025-10-08 15:01:39.000000'
-    ),
-    (
-        '9d4c3c63-76f4-4646-9284-0c068fef13e1',
-        '2025-11-06 18:19:22.000000'
-    ),
-    (
-        '9da15844-5e22-43d1-abdd-1a70bc5b2ed5',
-        '2025-10-08 15:06:32.000000'
-    ),
-    (
-        '9db9e30e-2bb4-46ec-929e-f73fce0b1f9f',
-        '2025-10-14 09:31:49.000000'
-    ),
-    (
-        '9ddbfe67-3d4f-40dd-987f-5cec2ab1585a',
-        '2025-11-07 15:28:06.000000'
-    ),
-    (
-        '9e0ff849-450f-4313-b619-13f97fd357c7',
-        '2025-11-08 18:57:27.000000'
-    ),
-    (
-        '9e255bcc-39b0-40ff-85ed-41a1f33abb89',
-        '2025-11-08 17:29:36.000000'
-    ),
-    (
-        '9e4d8fea-088e-4a99-bad9-a16d97115d63',
-        '2025-11-06 18:18:00.000000'
-    ),
-    (
-        '9e615cc9-b1c2-4cf3-8963-694514a6aeac',
-        '2025-10-27 09:01:13.000000'
-    ),
-    (
-        '9e6e54fe-3cb7-4dad-ba80-092bcca2a7b7',
-        '2025-10-15 14:12:26.000000'
-    ),
-    (
-        '9ea3702e-5b02-450c-be40-e213526cb256',
-        '2025-11-08 17:50:46.000000'
-    ),
-    (
-        '9f03d38a-e5f5-427f-9acd-6553d3cb7f02',
-        '2025-11-08 09:23:41.000000'
-    ),
-    (
-        '9f058ff7-7184-417f-8ef2-9ecbe1b71def',
-        '2025-10-23 19:58:35.000000'
-    ),
-    (
-        '9f27eed4-c2df-41e3-847f-e999310e8640',
-        '2025-10-11 09:11:29.000000'
-    ),
-    (
-        '9f299742-2910-42b3-a8b0-409555717f78',
-        '2025-11-08 18:41:49.000000'
-    ),
-    (
-        '9f39cc91-8fe5-4caa-bc76-4d595d2f6898',
-        '2025-11-08 10:06:29.000000'
-    ),
-    (
-        '9f3a2dd9-d844-498f-84a7-ba1673638fce',
-        '2025-10-24 20:49:40.000000'
-    ),
-    (
-        '9f62dbb4-5a93-4515-844c-f5aaffcd852f',
-        '2025-09-24 04:03:53.000000'
-    ),
-    (
-        '9f998453-a991-46b2-80ea-dda9be6e622f',
-        '2025-11-08 09:03:23.000000'
-    ),
-    (
-        '9fa02c85-9992-44a6-8b0a-66887c58c939',
-        '2025-10-08 10:53:02.000000'
-    ),
-    (
-        'a02ef341-41d0-48b7-9fdd-a9361c950c0e',
-        '2025-10-10 11:05:16.000000'
-    ),
-    (
-        'a064b45b-8579-42c2-86bc-12e43410e111',
-        '2025-10-27 08:21:37.000000'
-    ),
-    (
-        'a08db01b-96bb-491a-b32c-0a7bdc88c251',
-        '2025-10-27 09:38:47.000000'
-    ),
-    (
-        'a0d1f022-6a5c-47e7-adde-b430ac75335b',
-        '2025-11-06 18:18:22.000000'
-    ),
-    (
-        'a0eb5667-54ad-421c-a049-3e3719230c69',
-        '2025-11-06 17:37:38.000000'
-    ),
-    (
-        'a0fa8930-e3b2-404b-91c5-86d349df77db',
-        '2025-10-07 14:45:37.000000'
-    ),
-    (
-        'a116e105-4930-4830-b275-5ed67d2f8955',
-        '2025-11-08 10:23:24.000000'
-    ),
-    (
-        'a1175a92-59c0-47f0-9f02-80862ecc5407',
-        '2025-11-08 09:57:55.000000'
-    ),
-    (
-        'a1520eaf-1c18-4265-a784-f1a1eecd7bbd',
-        '2025-10-14 08:22:20.000000'
-    ),
-    (
-        'a170508a-b4c1-4cfd-905f-950d1d26d7b2',
-        '2025-11-08 17:45:22.000000'
-    ),
-    (
-        'a18601af-699a-4d08-94a7-2a699e3af594',
-        '2025-10-14 07:49:22.000000'
-    ),
-    (
-        'a1b413da-9c61-4114-983f-f9122509ee7a',
-        '2025-10-23 22:03:31.000000'
-    ),
-    (
-        'a1b5024a-0320-443c-be6e-f7c66bf36c0f',
-        '2025-10-26 16:29:01.000000'
-    ),
-    (
-        'a1c456e0-34d0-4de0-90d5-f7885fb09b26',
-        '2025-11-08 09:57:50.000000'
-    ),
-    (
-        'a22b19e5-5cd3-49fd-bdd9-af79a0673e11',
-        '2025-10-26 19:08:57.000000'
-    ),
-    (
-        'a2534e14-6c04-477b-9b46-ff2f73cb399d',
-        '2025-10-24 20:12:15.000000'
-    ),
-    (
-        'a2543f16-46a0-47c2-8c46-ccb3cbd7712c',
-        '2025-11-06 18:14:56.000000'
-    ),
-    (
-        'a25480d6-875a-49ed-8e98-b876583b4759',
-        '2025-11-06 18:15:39.000000'
-    ),
-    (
-        'a2619299-7d85-48bf-a95c-0661c4fa7fb4',
-        '2025-10-08 15:01:38.000000'
-    ),
-    (
-        'a26ba7f9-a9f8-4253-bef3-dbe7ef167e92',
-        '2025-10-08 10:53:22.000000'
-    ),
-    (
-        'a29b9c32-51d4-491d-8b33-273f4f77c713',
-        '2025-11-08 17:31:35.000000'
-    ),
-    (
-        'a2f79a14-7ffa-4127-a57a-79f70377e989',
-        '2025-11-06 18:28:43.000000'
-    ),
-    (
-        'a32bce97-cae4-4a4f-97b0-39068006fa25',
-        '2025-10-14 08:21:56.000000'
-    ),
-    (
-        'a33900ae-50f1-4a21-b9cc-d16076881fcd',
-        '2025-10-08 14:49:04.000000'
-    ),
-    (
-        'a3692baa-b702-41b9-af48-76a22b50325b',
-        '2025-10-09 16:00:52.000000'
-    ),
-    (
-        'a3746bbb-9886-42d0-8458-2c7829251816',
-        '2025-11-02 17:42:20.000000'
-    ),
-    (
-        'a37c03e5-acc9-45fe-838b-3b8fc8d94a05',
-        '2025-09-26 04:15:28.000000'
-    ),
-    (
-        'a384cb2f-d93a-40d6-9af7-c4a233812cf2',
-        '2025-10-15 14:13:05.000000'
-    ),
-    (
-        'a385cc74-27bb-4617-833b-30812141d771',
-        '2025-10-26 17:07:41.000000'
-    ),
-    (
-        'a3944bf9-2343-4eb8-a310-400ee07879c1',
-        '2025-10-27 10:16:42.000000'
-    ),
-    (
-        'a3a4762d-a903-43f9-9751-88fd9a969263',
-        '2025-11-08 19:24:29.000000'
-    ),
-    (
-        'a3b7b604-8006-454c-8412-10286a39ec77',
-        '2025-10-14 07:50:36.000000'
-    ),
-    (
-        'a3b824e4-7e56-4e8e-8dba-0dc83251e96e',
-        '2025-10-13 08:30:13.000000'
-    ),
-    (
-        'a406bf2f-581d-4771-bc84-c2aa60b097cb',
-        '2025-10-10 11:42:52.000000'
-    ),
-    (
-        'a43699aa-6df7-4a0e-8ba5-b3dc7045fcfb',
-        '2025-10-08 15:05:34.000000'
-    ),
-    (
-        'a479d0ca-45b9-4b31-a3c6-11aa1ab35c0a',
-        '2025-10-09 11:45:48.000000'
-    ),
-    (
-        'a4b44ac8-56f5-46cc-97c9-83be477af007',
-        '2025-11-06 17:35:59.000000'
-    ),
-    (
-        'a4b4c9cf-41eb-40f9-bf17-080c08c6e6af',
-        '2025-09-26 04:23:05.000000'
-    ),
-    (
-        'a4c0dc45-c309-4ba7-87b6-02f313823adc',
-        '2025-10-14 08:05:53.000000'
-    ),
-    (
-        'a4cd1fc2-0064-4641-bd5a-884961bdb266',
-        '2025-10-24 21:03:37.000000'
-    ),
-    (
-        'a4e255f4-f2f5-41e8-b18b-d371cea9e512',
-        '2025-11-02 17:52:31.000000'
-    ),
-    (
-        'a54b7891-114f-440f-837c-f6471dbdb25e',
-        '2025-10-27 10:25:08.000000'
-    ),
-    (
-        'a55e5229-5248-42ca-85c0-a801276fb8c8',
-        '2025-11-06 17:39:46.000000'
-    ),
-    (
-        'a57c5795-24d8-4702-8b4c-ef8c40560070',
-        '2025-11-07 15:15:30.000000'
-    ),
-    (
-        'a622b21d-cf0d-4ed4-a028-44f1a9cb0988',
-        '2025-11-06 16:01:00.000000'
-    ),
-    (
-        'a66edda2-aecf-4c11-ae2e-3588189f2e2b',
-        '2025-10-26 19:15:00.000000'
-    ),
-    (
-        'a685029a-e535-4bfb-b3a0-d7aac7bcbcef',
-        '2025-11-06 18:22:05.000000'
-    ),
-    (
-        'a687f7c6-4edd-42da-8c44-1d2222e15448',
-        '2025-11-06 17:46:43.000000'
-    ),
-    (
-        'a68c9243-3299-4886-8ee3-f40d902632b0',
-        '2025-10-26 17:39:14.000000'
-    ),
-    (
-        'a6a0ec83-c7c5-4a3a-b044-2dead8750fe9',
-        '2025-11-08 10:23:13.000000'
-    ),
-    (
-        'a6db080f-d554-4e31-ab3f-0b701a335832',
-        '2025-10-13 10:06:18.000000'
-    ),
-    (
-        'a705724c-2385-414e-8882-d3b9fe389ddf',
-        '2025-10-10 09:43:11.000000'
-    ),
-    (
-        'a70c2ec0-e92e-4b29-908b-431c325c80bf',
-        '2025-10-15 14:14:09.000000'
-    ),
-    (
-        'a719fde9-c099-42dc-94fc-009e2e2131e2',
-        '2025-10-26 20:12:32.000000'
-    ),
-    (
-        'a723b325-4375-43a3-bd8c-c3d02d31f22b',
-        '2025-10-26 17:04:31.000000'
-    ),
-    (
-        'a72ef99c-4916-4cf1-9c54-987f11b62b3a',
-        '2025-10-08 14:42:30.000000'
-    ),
-    (
-        'a732aa1b-70d6-4003-9245-99a6445f0a83',
-        '2025-10-26 19:50:30.000000'
-    ),
-    (
-        'a78aa047-9397-490c-96eb-4f3a2f99a157',
-        '2025-10-26 19:39:27.000000'
-    ),
-    (
-        'a79e2671-d5de-4b9b-84fc-ea034d9ee3b3',
-        '2025-10-24 20:46:45.000000'
-    ),
-    (
-        'a7cd0a0e-c7ab-4bf8-a177-f53f076e9652',
-        '2025-10-10 14:47:18.000000'
-    ),
-    (
-        'a8013046-5208-49b2-8282-eaac8e6a4f3a',
-        '2025-11-06 16:22:21.000000'
-    ),
-    (
-        'a83610ba-00b4-4af0-90b1-133fc34af38d',
-        '2025-11-06 17:46:29.000000'
-    ),
-    (
-        'a8908bbc-452f-4150-b0fa-b7249f41d954',
-        '2025-11-08 10:22:50.000000'
-    ),
-    (
-        'a95e5c6f-a922-4bb2-a0e9-3c88aabb4c5d',
-        '2025-10-31 16:20:06.000000'
-    ),
-    (
-        'a960a971-8b8a-4864-91b7-40c2535bc7f3',
-        '2025-10-27 10:26:04.000000'
-    ),
-    (
-        'a96a3170-ffdb-4dc7-8774-5d44dff87dfe',
-        '2025-10-11 09:28:12.000000'
-    ),
-    (
-        'a96fe81b-2a6f-47c6-b458-211384a36df0',
-        '2025-10-08 15:02:00.000000'
-    ),
-    (
-        'a9bb47df-b476-4ca5-a883-43c022aa4a91',
-        '2025-11-08 08:57:16.000000'
-    ),
-    (
-        'aa099b18-5db0-486f-b05a-c6540a048a35',
-        '2025-10-09 10:53:32.000000'
-    ),
-    (
-        'aa51936d-b5c1-4fe5-9c65-ee94215baec1',
-        '2025-10-14 07:34:12.000000'
-    ),
-    (
-        'aa79264c-312d-41fd-80be-361066b95c74',
-        '2025-11-08 18:58:07.000000'
-    ),
-    (
-        'aa7a8533-7cbd-4dfe-87c2-679c9ffc8aa0',
-        '2025-11-08 09:40:36.000000'
-    ),
-    (
-        'aac45f45-86a1-4acb-8548-bd1bbf40da12',
-        '2025-10-06 17:34:16.000000'
-    ),
-    (
-        'aadbbbae-f024-4f45-a13a-8ba3896a8120',
-        '2025-11-08 18:41:19.000000'
-    ),
-    (
-        'abbc9550-5585-4b0c-9925-6f49a46ec9b9',
-        '2025-11-08 18:56:43.000000'
-    ),
-    (
-        'abd4f51e-f21b-4bd9-af0d-d77b9e3e36bf',
-        '2025-11-06 18:30:41.000000'
-    ),
-    (
-        'abed8a35-ac01-4f07-a26d-0c6468e82c8d',
-        '2025-10-15 14:30:03.000000'
-    ),
-    (
-        'acb22fcf-7463-4bf5-aab6-ae40ea812085',
-        '2025-10-14 14:45:05.000000'
-    ),
-    (
-        'ace78de0-8d41-4299-8912-08e6ff70bdf1',
-        '2025-11-06 18:22:14.000000'
-    ),
-    (
-        'ad173e38-a9f5-4467-8781-b6013346e85e',
-        '2025-11-08 10:22:15.000000'
-    ),
-    (
-        'ad174c30-368d-489a-82f5-239e35abba90',
-        '2025-10-09 10:24:38.000000'
-    ),
-    (
-        'ad989248-c0b7-41b3-9df5-b6cd1a2c6262',
-        '2025-11-06 18:30:46.000000'
-    ),
-    (
-        'ae0fc289-e119-4587-be1e-2818f4246b00',
-        '2025-10-26 20:14:36.000000'
-    ),
-    (
-        'ae1088e8-07e5-4b22-a24b-9244c28f6dd1',
-        '2025-10-08 15:01:52.000000'
-    ),
-    (
-        'ae152fa7-b39e-47f6-bc28-c823d643f4b0',
-        '2025-11-06 18:14:08.000000'
-    ),
-    (
-        'ae56e9f7-e183-4cf6-8b42-6b55471554c8',
-        '2025-10-08 15:23:30.000000'
-    ),
-    (
-        'aef0e92a-a6aa-4d42-8f00-d251de2e5d28',
-        '2025-11-02 17:56:27.000000'
-    ),
-    (
-        'af16c53d-46a7-4821-95a8-38456c6227ae',
-        '2025-10-27 10:26:32.000000'
-    ),
-    (
-        'af3cae24-b377-4fa9-a818-45a868494442',
-        '2025-11-06 16:21:35.000000'
-    ),
-    (
-        'af4ad313-e991-45e1-838d-28b2a885e0cd',
-        '2025-11-06 18:18:10.000000'
-    ),
-    (
-        'b00fea27-f41e-46aa-a7af-3f5c367e4828',
-        '2025-10-24 21:36:38.000000'
-    ),
-    (
-        'b0245175-ed59-4335-b8d2-c0631d697ed3',
-        '2025-11-08 18:58:43.000000'
-    ),
-    (
-        'b0299c86-dff7-4130-8a3f-7f06081779b7',
-        '2025-11-08 19:57:22.000000'
-    ),
-    (
-        'b033ed82-7e99-4191-b9ca-d048f1a3ecad',
-        '2025-10-15 14:14:32.000000'
-    ),
-    (
-        'b06758d7-1166-442f-8760-21fd964e63ef',
-        '2025-11-06 16:18:18.000000'
-    ),
-    (
-        'b075eee3-3024-4c83-9e73-e08d8b35be2f',
-        '2025-10-08 14:42:54.000000'
-    ),
-    (
-        'b07f44c5-6f31-4549-92d1-68e7e5d10932',
-        '2025-11-06 19:04:59.000000'
-    ),
-    (
-        'b0ad2c24-eaed-4539-a397-9f76e2ff4c7d',
-        '2025-10-26 20:37:29.000000'
-    ),
-    (
-        'b0b7625c-9c79-42e9-b45d-626ea5aa8a33',
-        '2025-10-31 16:20:16.000000'
-    ),
-    (
-        'b0e2db11-bbc1-491c-adfe-cc2ab66b9ea9',
-        '2025-11-08 09:59:16.000000'
-    ),
-    (
-        'b0fd7530-3ec7-442b-9573-f0a0a9bfef9e',
-        '2025-11-06 16:21:37.000000'
-    ),
-    (
-        'b140cf5a-e300-41c2-a246-32cef384ced5',
-        '2025-11-07 15:15:29.000000'
-    ),
-    (
-        'b1547829-ac6b-4a54-ba75-32ad11e0c708',
-        '2025-10-27 08:20:12.000000'
-    ),
-    (
-        'b172548a-1771-46ac-b654-33ee5530e6ea',
-        '2025-10-26 16:41:11.000000'
-    ),
-    (
-        'b1a2d3c2-5c07-4dd1-9c11-bbdc1714a6f8',
-        '2025-11-08 18:41:16.000000'
-    ),
-    (
-        'b1c0a86f-151f-4b06-ae44-eb5142a529be',
-        '2025-10-08 14:46:12.000000'
-    ),
-    (
-        'b1c3f3d1-1b4d-48e7-9173-2b1bb7431619',
-        '2025-11-08 10:00:04.000000'
-    ),
-    (
-        'b1e73fde-54e8-4aeb-ae53-a58107103c92',
-        '2025-11-06 18:14:08.000000'
-    ),
-    (
-        'b2019f03-a4d0-4d28-8482-3f19b7b6c1d9',
-        '2025-10-26 19:27:16.000000'
-    ),
-    (
-        'b21b12ab-bd87-4b70-90e5-9467d1b024aa',
-        '2025-11-06 15:29:42.000000'
-    ),
-    (
-        'b237e8b0-72a4-40c2-8069-026597ca6294',
-        '2025-10-26 16:45:25.000000'
-    ),
-    (
-        'b293c0ec-2f35-4dfb-a134-30007ae6e3ac',
-        '2025-11-06 17:40:12.000000'
-    ),
-    (
-        'b29adf03-7140-4a6f-b73d-619174604d4f',
-        '2025-10-08 10:52:53.000000'
-    ),
-    (
-        'b2d49e38-318e-4e06-ac81-618a67dbecee',
-        '2025-11-08 09:39:48.000000'
-    ),
-    (
-        'b2d5514d-56ef-4498-8b02-89085e577cba',
-        '2025-10-26 21:37:36.000000'
-    ),
-    (
-        'b32a7338-f774-4a20-b0c8-f69fa2ebdc00',
-        '2025-10-26 17:50:12.000000'
-    ),
-    (
-        'b33254ea-e0e7-44ea-966f-9d15bf06aea5',
-        '2025-11-06 18:21:59.000000'
-    ),
-    (
-        'b34ab119-1c24-419b-9690-5cfc0ad77778',
-        '2025-10-26 19:09:16.000000'
-    ),
-    (
-        'b3f4170c-ae7c-4e09-bafb-0250842da2e1',
-        '2025-11-07 16:54:16.000000'
-    ),
-    (
-        'b3f7112a-cae3-44ca-9219-6ed9e1e6bbc0',
-        '2025-11-08 19:35:55.000000'
-    ),
-    (
-        'b4082ad8-abfd-42c3-9ac5-7fc92b93f3a0',
-        '2025-11-07 15:28:10.000000'
-    ),
-    (
-        'b409bfb7-6b85-4405-bfa3-c2c77be91e30',
-        '2025-10-10 14:38:15.000000'
-    ),
-    (
-        'b45e0c87-7574-4703-976a-c8ecc98a1f4f',
-        '2025-11-06 18:30:26.000000'
-    ),
-    (
-        'b48f4a3b-977e-4735-ac48-dc57ad486c08',
-        '2025-11-06 17:44:03.000000'
-    ),
-    (
-        'b4d2090b-6011-40d4-b9f0-c0f8c358ee72',
-        '2025-10-08 14:47:31.000000'
-    ),
-    (
-        'b4e9705b-de6a-443d-86dd-a18d50274899',
-        '2025-11-08 18:41:57.000000'
-    ),
-    (
-        'b50d21ef-6c94-46ef-a839-a93431ef867c',
-        '2025-10-24 20:48:51.000000'
-    ),
-    (
-        'b51f26da-2d02-48d1-87a8-c688520012f9',
-        '2025-11-08 10:04:04.000000'
-    ),
-    (
-        'b536637b-4b4e-419b-89dd-34b5cc80b152',
-        '2025-10-09 18:40:17.000000'
-    ),
-    (
-        'b55b3bc1-d000-4556-965e-0fb6a97c15eb',
-        '2025-10-26 20:40:33.000000'
-    ),
-    (
-        'b561592e-b02c-4fc2-8de0-52a2281340ee',
-        '2025-10-26 21:16:36.000000'
-    ),
-    (
-        'b5898c85-7ff4-46e0-98a2-9001c8cefc3d',
-        '2025-11-07 20:13:11.000000'
-    ),
-    (
-        'b5a96e9a-3373-49b2-ac1c-c73369a8b85d',
-        '2025-11-08 10:06:05.000000'
-    ),
-    (
-        'b5b4cc27-ade8-4079-9ffc-39f3f17e47f2',
-        '2025-10-26 17:35:03.000000'
-    ),
-    (
-        'b5d1474e-a76b-46a3-83fd-32cd4d03900e',
-        '2025-11-08 08:57:48.000000'
-    ),
-    (
-        'b6396933-5cb2-4eef-9e02-dc388a426924',
-        '2025-11-02 17:45:16.000000'
-    ),
-    (
-        'b66a8393-bb98-4bde-97c7-a55bd942ddc3',
-        '2025-11-07 15:21:17.000000'
-    ),
-    (
-        'b678f86c-f852-4d54-8883-10e5f160258c',
-        '2025-10-11 15:33:20.000000'
-    ),
-    (
-        'b6b62c05-13e7-470e-bdd0-af2d1a0afda8',
-        '2025-10-26 10:31:22.000000'
-    ),
-    (
-        'b6be7d56-1f7a-4c36-afd8-f0cfc55e4f79',
-        '2025-10-14 09:23:07.000000'
-    ),
-    (
-        'b6e7e18b-4c92-4b5c-b310-ebf381b3ab69',
-        '2025-10-10 14:38:26.000000'
-    ),
-    (
-        'b6f25cea-7ff1-441c-9d24-cd70ffb8d60b',
-        '2025-11-06 15:26:42.000000'
-    ),
-    (
-        'b739d7e3-ab8a-4032-88a1-08c64df514ab',
-        '2025-10-26 17:57:41.000000'
-    ),
-    (
-        'b73c3eaa-a187-4115-846c-36d50af1f396',
-        '2025-10-08 14:12:09.000000'
-    ),
-    (
-        'b74b0cff-fa50-447f-82d8-577d6923e2a2',
-        '2025-10-26 19:27:25.000000'
-    ),
-    (
-        'b75c8d4f-cc5a-4adf-b92b-5b6830815986',
-        '2025-10-26 17:56:13.000000'
-    ),
-    (
-        'b76b74a9-a58d-47af-8587-2a841d017d60',
-        '2025-10-09 10:52:42.000000'
-    ),
-    (
-        'b7716fc1-75d1-434e-b6d1-1ae154623b28',
-        '2025-10-27 10:17:46.000000'
-    ),
-    (
-        'b7c17278-65c2-4c7e-9aa3-ab19cb08c656',
-        '2025-10-10 15:50:34.000000'
-    ),
-    (
-        'b7e2f758-6a4e-4fbc-862f-bbdaf605e6e3',
-        '2025-11-08 17:47:31.000000'
-    ),
-    (
-        'b7eb58b8-1318-40b4-9f83-1493f2c70e90',
-        '2025-11-08 09:04:59.000000'
-    ),
-    (
-        'b7f01981-8682-4318-853c-f63489c0b440',
-        '2025-11-07 17:49:32.000000'
-    ),
-    (
-        'b805b221-e2e8-45fc-923b-9509aeb9a8e6',
-        '2025-10-26 21:38:18.000000'
-    ),
-    (
-        'b8076144-d82e-4fad-b435-bf4bcfb0cfc2',
-        '2025-11-06 16:21:40.000000'
-    ),
-    (
-        'b80bea3c-7fe5-4e69-83b8-90d2ca0c40e1',
-        '2025-11-08 18:56:17.000000'
-    ),
-    (
-        'b8804e37-7105-49ac-92a8-fe827e6f1db3',
-        '2025-11-02 17:43:13.000000'
-    ),
-    (
-        'b8be1242-ec9c-4cd3-914d-004bb02b0a99',
-        '2025-11-08 09:44:06.000000'
-    ),
-    (
-        'b8f0654e-fcdc-4a5f-b6aa-280dc741aeaf',
-        '2025-11-08 10:06:05.000000'
-    ),
-    (
-        'b8fa93c5-ddb4-4625-be1c-02cc804b65a9',
-        '2025-11-02 17:21:25.000000'
-    ),
-    (
-        'b9069e39-f69b-4818-b741-c63376afe61d',
-        '2025-10-26 17:39:20.000000'
-    ),
-    (
-        'b91998bf-7a11-450a-905b-a03a838b44d7',
-        '2025-10-10 14:38:42.000000'
-    ),
-    (
-        'b9bd6edf-7f7f-4c3a-8ae3-2f4a82d7dc35',
-        '2025-10-08 18:55:17.000000'
-    ),
-    (
-        'b9e302fd-a1aa-4911-97a7-ec4a3941b525',
-        '2025-10-24 20:56:03.000000'
-    ),
-    (
-        'b9f01857-3789-4b69-b0dd-8d9fbe7bda2a',
-        '2025-10-11 14:41:16.000000'
-    ),
-    (
-        'ba1b599c-87d9-4b06-91b4-1e8b3d19bc74',
-        '2025-11-06 16:22:28.000000'
-    ),
-    (
-        'ba2a9a6b-2780-4b83-a066-3b9e558a7ed1',
-        '2025-11-02 17:55:50.000000'
-    ),
-    (
-        'ba35f496-68ed-4118-ab8e-6689e09ed92e',
-        '2025-11-02 17:56:02.000000'
-    ),
-    (
-        'ba3ef8c1-8581-40de-b652-17cfd53529df',
-        '2025-10-13 09:46:49.000000'
-    ),
-    (
-        'ba85f5df-3232-49b7-9fab-37945a186340',
-        '2025-11-06 17:51:12.000000'
-    ),
-    (
-        'ba90c53e-3fd8-4a9f-88c4-8ea622701c73',
-        '2025-11-06 18:02:18.000000'
-    ),
-    (
-        'ba9ffc85-054e-48c0-893c-f4d56dc8cf7d',
-        '2025-11-07 15:15:30.000000'
-    ),
-    (
-        'baa1140c-5d66-4b6a-a383-1a15c6a9cae8',
-        '2025-10-27 08:30:09.000000'
-    ),
-    (
-        'bacf4405-7e74-4490-8afc-23fb35afcea8',
-        '2025-10-26 18:00:43.000000'
-    ),
-    (
-        'badc8d4e-d6ad-40ef-b942-9257d901d35f',
-        '2025-10-27 09:39:02.000000'
-    ),
-    (
-        'bb05f950-a968-41e5-8e00-369c7ed7a7ce',
-        '2025-11-06 15:59:25.000000'
-    ),
-    (
-        'bb483a2a-98af-4a29-beb7-2a9296bcd05a',
-        '2025-10-26 16:41:12.000000'
-    ),
-    (
-        'bbea8982-e626-4c9e-b9dd-eb3124ef5301',
-        '2025-10-26 20:01:48.000000'
-    ),
-    (
-        'bbf83cb4-4978-42ae-9bef-ba34ed7d17c3',
-        '2025-11-06 17:39:46.000000'
-    ),
-    (
-        'bc2fdb02-ded0-4371-9e1e-96ce3ffa231f',
-        '2025-11-08 08:57:20.000000'
-    ),
-    (
-        'bc5522be-fdbd-49d8-91b0-d60e5b33353b',
-        '2025-10-23 22:05:21.000000'
-    ),
-    (
-        'bc847163-b100-4b02-8483-e72267c0f2c0',
-        '2025-11-06 18:13:01.000000'
-    ),
-    (
-        'bce2805a-7a4d-4a3d-9461-f4e93f1ddb5c',
-        '2025-10-13 08:28:24.000000'
-    ),
-    (
-        'bd4d5e45-cb15-400a-8f67-f5681fc2c6f5',
-        '2025-11-06 17:44:08.000000'
-    ),
-    (
-        'bdc85ce5-a1e7-4cfe-883e-0fcd39aa3832',
-        '2025-10-26 17:50:21.000000'
-    ),
-    (
-        'be3b5e5a-c5cc-4ab5-a726-c15f38678f07',
-        '2025-10-27 10:30:43.000000'
-    ),
-    (
-        'be3cebd9-24cd-4425-81ee-936ccc3f6a5e',
-        '2025-10-24 21:02:02.000000'
-    ),
-    (
-        'bea13323-7aa4-47be-b479-3d9d64ac11bb',
-        '2025-11-06 17:44:08.000000'
-    ),
-    (
-        'beb348c1-feaa-4829-930e-4ac06fc0e889',
-        '2025-11-08 17:31:36.000000'
-    ),
-    (
-        'bebb24e5-aa90-42a2-8be6-ac44cd0550e7',
-        '2025-10-15 14:09:49.000000'
-    ),
-    (
-        'bf195cc1-cf4c-4446-9628-23acba78abc2',
-        '2025-10-15 14:10:02.000000'
-    ),
-    (
-        'bf1af00c-10b8-4bcc-8a37-cad78670abbd',
-        '2025-10-26 20:33:47.000000'
-    ),
-    (
-        'bf5dc2ca-3856-4342-b8cd-2550d8eb3752',
-        '2025-11-08 17:30:04.000000'
-    ),
-    (
-        'bf93e872-4a58-4dab-97d5-ff424585a395',
-        '2025-10-27 09:01:09.000000'
-    ),
-    (
-        'bfa99bec-4bd1-47b5-b972-7c5d6fee582f',
-        '2025-11-06 17:39:38.000000'
-    ),
-    (
-        'bfb5b371-e20e-4598-a1c1-75767df9976d',
-        '2025-10-26 19:18:08.000000'
-    ),
-    (
-        'bfc4079f-45f4-4088-a439-1e0d3dd2e6be',
-        '2025-10-08 13:13:11.000000'
-    ),
-    (
-        'c0274be4-3d93-4987-bdec-bf82a3c64f65',
-        '2025-11-07 15:28:08.000000'
-    ),
-    (
-        'c04f29cb-f1b8-4486-915f-536a3fe3d9ea',
-        '2025-10-26 21:37:45.000000'
-    ),
-    (
-        'c062f2ed-b6b0-49f8-9c9d-aeef3aa0451a',
-        '2025-10-15 14:10:41.000000'
-    ),
-    (
-        'c06c5a38-8f69-4bb8-9666-e0157a3c9ee0',
-        '2025-10-26 20:10:33.000000'
-    ),
-    (
-        'c0921547-b322-4e61-a210-2622336258c6',
-        '2025-10-13 08:33:53.000000'
-    ),
-    (
-        'c0946d46-72c9-4b4e-94e6-a4559323ae33',
-        '2025-10-08 14:49:16.000000'
-    ),
-    (
-        'c0a9f60c-89f9-422c-b439-462f346941c9',
-        '2025-11-06 15:29:11.000000'
-    ),
-    (
-        'c0d5185c-a1c7-406c-95b2-e49ff3af95c4',
-        '2025-11-06 18:14:04.000000'
-    ),
-    (
-        'c0dd7d6c-3004-4558-91b8-087452474d07',
-        '2025-11-06 18:55:39.000000'
-    ),
-    (
-        'c0fd871d-3e63-48cb-9217-02dba6e4d4c1',
-        '2025-11-08 18:59:27.000000'
-    ),
-    (
-        'c18d364a-bf64-4819-a6a9-d9706aea1228',
-        '2025-10-08 09:45:53.000000'
-    ),
-    (
-        'c1daa7fe-f324-4987-9045-02724fb5c03b',
-        '2025-10-24 20:13:24.000000'
-    ),
-    (
-        'c2046503-cd01-46db-9b88-9f63ebf6d3d7',
-        '2025-11-06 18:22:58.000000'
-    ),
-    (
-        'c22e792b-6f66-4b97-85bd-52b1c4163c55',
-        '2025-11-08 09:10:32.000000'
-    ),
-    (
-        'c28ead58-369a-4e4c-b9d1-499986a99010',
-        '2025-10-27 10:33:27.000000'
-    ),
-    (
-        'c2933fd7-ecf2-4a84-8e94-39ff414ba3ff',
-        '2025-11-06 18:30:42.000000'
-    ),
-    (
-        'c295c57c-39a1-452f-ac09-0a03359f2954',
-        '2025-10-08 09:45:48.000000'
-    ),
-    (
-        'c2a00fd1-c521-415b-901f-c9adae329430',
-        '2025-11-08 10:17:46.000000'
-    ),
-    (
-        'c2adde74-7ac7-4dc6-9e0b-91ab40386de1',
-        '2025-11-08 10:23:49.000000'
-    ),
-    (
-        'c2d0c295-0a78-4491-ba31-66f1828db8a0',
-        '2025-10-26 17:11:44.000000'
-    ),
-    (
-        'c2ef8205-d6a9-46ab-b1c7-d9285f23837f',
-        '2025-10-24 20:14:04.000000'
-    ),
-    (
-        'c3009c5a-691b-40f2-bfab-30fcc1166e02',
-        '2025-11-06 16:21:42.000000'
-    ),
-    (
-        'c339bc26-b584-481b-b586-163df2be5f14',
-        '2025-11-08 09:58:03.000000'
-    ),
-    (
-        'c381aab7-6eed-4345-9e13-3da9f5c4d75b',
-        '2025-10-15 14:09:19.000000'
-    ),
-    (
-        'c389f9b3-c085-41e3-ae09-8771b8b64ac8',
-        '2025-10-14 14:54:53.000000'
-    ),
-    (
-        'c3a23d69-d613-48ca-926f-3a4dbec9ac47',
-        '2025-10-26 17:57:45.000000'
-    ),
-    (
-        'c3d5520d-390b-4428-a6b6-07e4ae26acb2',
-        '2025-10-15 14:13:49.000000'
-    ),
-    (
-        'c4134bf8-49b9-4c68-9807-373f95b82f31',
-        '2025-11-08 10:19:12.000000'
-    ),
-    (
-        'c41fc1ab-61c6-4ae9-8fe3-b2d05e05d805',
-        '2025-10-10 14:18:30.000000'
-    ),
-    (
-        'c4217435-2081-4e90-9340-dc448a8e1b89',
-        '2025-11-08 08:56:21.000000'
-    ),
-    (
-        'c47b92c9-d8ac-477a-ad74-ecafc15a3d00',
-        '2025-11-08 17:14:35.000000'
-    ),
-    (
-        'c49858c3-ccbb-4b51-a88a-f9f77bf88a01',
-        '2025-10-08 10:52:47.000000'
-    ),
-    (
-        'c49a4d68-89c4-4378-9e4e-225c722e1c86',
-        '2025-11-02 17:55:41.000000'
-    ),
-    (
-        'c4a1e385-6be6-4d31-a207-b5a617c855d0',
-        '2025-11-06 18:15:36.000000'
-    ),
-    (
-        'c4ad92ac-127c-409f-86f9-ea371791d5a7',
-        '2025-10-14 14:04:39.000000'
-    ),
-    (
-        'c4bd9a83-cd6f-4f27-9a83-ae3706bc6b17',
-        '2025-11-08 19:24:46.000000'
-    ),
-    (
-        'c4ed3e3b-d51b-45e4-9702-6720aefd931c',
-        '2025-10-10 10:37:42.000000'
-    ),
-    (
-        'c528421e-5702-42d7-842d-7c0ccb53198b',
-        '2025-11-06 16:19:04.000000'
-    ),
-    (
-        'c5365013-bcd3-40a6-8e36-de2661950412',
-        '2025-10-24 20:56:09.000000'
-    ),
-    (
-        'c553e1d2-a48a-41d2-bc31-579f1100eaec',
-        '2025-11-08 17:54:12.000000'
-    ),
-    (
-        'c5731212-d437-4f9b-96d4-54d6a658d645',
-        '2025-10-09 14:37:29.000000'
-    ),
-    (
-        'c57e552b-1de9-4290-a739-739a1ba1d951',
-        '2025-10-10 14:22:22.000000'
-    ),
-    (
-        'c597eddf-2c12-40ff-b1bf-8cc0efc51472',
-        '2025-10-30 16:20:33.000000'
-    ),
-    (
-        'c5eef477-6077-4b5e-a8a7-0b67594efea3',
-        '2025-11-06 18:18:22.000000'
-    ),
-    (
-        'c62c06a6-67a6-4e00-b57b-fb86d44ec130',
-        '2025-10-26 10:10:20.000000'
-    ),
-    (
-        'c7255cb4-246e-47e2-b757-27797d491e7a',
-        '2025-10-14 07:44:14.000000'
-    ),
-    (
-        'c7766bb4-1d7e-48cc-8669-9cea535e53c6',
-        '2025-11-08 09:43:43.000000'
-    ),
-    (
-        'c78464ba-ee90-4aa7-9927-91df48d8265c',
-        '2025-11-08 17:48:02.000000'
-    ),
-    (
-        'c7a4fab0-c4c1-46a2-a45a-6c7b6b80126f',
-        '2025-10-24 20:12:19.000000'
-    ),
-    (
-        'c8a3da43-7f04-4765-9393-54267fbfe032',
-        '2025-11-08 09:17:20.000000'
-    ),
-    (
-        'c8b2e4ed-4e1d-48a8-9db7-8bc82b7cafad',
-        '2025-10-14 14:57:32.000000'
-    ),
-    (
-        'c8e42efc-0b7c-465e-84bf-a0a1f96ed675',
-        '2025-10-15 14:17:26.000000'
-    ),
-    (
-        'c8f79a10-83fa-4edb-8120-78dd3330f52c',
-        '2025-10-26 19:50:29.000000'
-    ),
-    (
-        'c93cd24b-b462-4ed7-9bd9-84e6b0faf683',
-        '2025-10-31 16:20:10.000000'
-    ),
-    (
-        'c9d8086e-4f9f-43b1-832f-6114f144058b',
-        '2025-10-08 09:45:30.000000'
-    ),
-    (
-        'c9e9f3cb-f5ab-4b14-8bcd-0d45e7c95381',
-        '2025-10-26 19:09:03.000000'
-    ),
-    (
-        'ca17a5c2-1036-41fb-9593-4af1e186f6de',
-        '2025-10-26 20:14:32.000000'
-    ),
-    (
-        'ca2d89ca-eb5a-41bc-a409-a09a7fae3e46',
-        '2025-11-06 16:15:40.000000'
-    ),
-    (
-        'caf5e663-ff00-483f-87d7-b41f76e7bc5a',
-        '2025-10-11 12:18:38.000000'
-    ),
-    (
-        'cb1891a7-e4c8-40b0-b026-8828f4920874',
-        '2025-11-08 10:23:42.000000'
-    ),
-    (
-        'cb3934bb-8f47-4a5f-b821-d1c9b2f55eff',
-        '2025-10-14 14:33:56.000000'
-    ),
-    (
-        'cb4f0eba-1a63-4b85-b299-d8d80b8452fe',
-        '2025-11-02 17:52:40.000000'
-    ),
-    (
-        'cb785330-bc79-4503-8e06-381fab515893',
-        '2025-11-08 09:40:03.000000'
-    ),
-    (
-        'cbb5dd7f-d52b-4de5-ada4-fd0c31a2e344',
-        '2025-10-09 11:54:18.000000'
-    ),
-    (
-        'cbbece35-74d1-44b4-822a-4af0ebf211cd',
-        '2025-10-13 14:19:52.000000'
-    ),
-    (
-        'cbf0a0ed-5760-4f6e-8b85-319216cfa369',
-        '2025-11-08 08:58:18.000000'
-    ),
-    (
-        'cc20746c-3f29-4463-9023-5e1942096dc1',
-        '2025-11-08 10:17:36.000000'
-    ),
-    (
-        'cc37a622-3c72-472d-859a-2e253b0f7a4e',
-        '2025-10-26 21:37:35.000000'
-    ),
-    (
-        'cc4a1f67-0c16-44fe-9c27-2b751f0d9c3f',
-        '2025-10-24 20:57:49.000000'
-    ),
-    (
-        'cc8848a9-629f-4909-963f-645cddad269e',
-        '2025-10-08 10:56:47.000000'
-    ),
-    (
-        'cc91a9ce-195c-4f0d-a3fb-b79f084fcf79',
-        '2025-10-08 10:03:50.000000'
-    ),
-    (
-        'cca5d42a-0646-4fa9-9b47-4bcc45667b05',
-        '2025-11-06 16:14:45.000000'
-    ),
-    (
-        'cca5e317-81f5-4491-873d-21367ad45c03',
-        '2025-11-06 17:45:41.000000'
-    ),
-    (
-        'cce874f1-2e5c-44c3-932c-f9a8328bb4c6',
-        '2025-11-06 17:56:47.000000'
-    ),
-    (
-        'cd001e0c-73c4-4a7b-9924-e70d4bd53f7b',
-        '2025-10-24 21:05:03.000000'
-    ),
-    (
-        'cd32bc02-4bc4-455f-93e7-777125c2c3cd',
-        '2025-10-27 10:26:23.000000'
-    ),
-    (
-        'cd3af695-bb36-4d30-bde9-191552cf2cf2',
-        '2025-11-06 18:50:04.000000'
-    ),
-    (
-        'cd695ed7-1163-4f35-8309-97d56a0d0ca8',
-        '2025-11-08 19:00:42.000000'
-    ),
-    (
-        'cd727a45-37ba-4fa4-b52f-ad60fde3749b',
-        '2025-11-08 18:57:19.000000'
-    ),
-    (
-        'cdc2bbaa-b969-48a3-85d2-28b2e1842da3',
-        '2025-11-06 18:55:19.000000'
-    ),
-    (
-        'cdc4425a-1e02-4267-8469-780aa348e76b',
-        '2025-11-06 15:29:48.000000'
-    ),
-    (
-        'cdc75832-b4d2-48c1-aa65-526fa5bf919c',
-        '2025-10-26 20:40:55.000000'
-    ),
-    (
-        'cdf507aa-17f5-4870-9c58-8deb56903e2a',
-        '2025-10-09 19:56:05.000000'
-    ),
-    (
-        'ce08e59d-a8d3-4b98-87a5-f907e0d862d7',
-        '2025-11-08 19:00:52.000000'
-    ),
-    (
-        'ce12b734-3581-41d1-8983-67530ff382fd',
-        '2025-11-08 19:00:43.000000'
-    ),
-    (
-        'ce38783d-ded9-4842-9f97-ba0b9cec53a5',
-        '2025-10-10 14:49:25.000000'
-    ),
-    (
-        'ce7bc7b5-312d-4380-bac8-f35105bca2d6',
-        '2025-11-08 09:41:16.000000'
-    ),
-    (
-        'ce894d95-97aa-46e5-88dd-426b3c4644ec',
-        '2025-11-06 18:15:38.000000'
-    ),
-    (
-        'ce9ccd7e-25dc-4550-8cae-5b4d0ccbb324',
-        '2025-11-06 17:56:52.000000'
-    ),
-    (
-        'ced98840-f048-4ed5-a481-1eb38e7ccb4d',
-        '2025-11-06 15:03:52.000000'
-    ),
-    (
-        'cef092d3-0f00-456e-a95a-2ece735e47b7',
-        '2025-10-09 09:48:33.000000'
-    ),
-    (
-        'cf0e79c2-cdba-482d-a0a4-87c56c0d2c5f',
-        '2025-10-15 14:08:13.000000'
-    ),
-    (
-        'cf221692-ee68-43a7-939f-01da4076455d',
-        '2025-11-06 16:22:30.000000'
-    ),
-    (
-        'cf3024e9-f558-4917-8eb1-65cf959b8a0e',
-        '2025-10-11 12:18:52.000000'
-    ),
-    (
-        'cf5db333-612f-4696-8294-ff047b7b0df2',
-        '2025-11-06 17:45:59.000000'
-    ),
-    (
-        'cfadbd33-0170-429b-b159-eaae12b32352',
-        '2025-11-02 17:52:22.000000'
-    ),
-    (
-        'cfd1a575-5c81-440d-8772-fe193cdd244e',
-        '2025-10-08 10:08:07.000000'
-    ),
-    (
-        'cff93069-9725-4581-918f-deb3f03c923f',
-        '2025-10-24 20:55:58.000000'
-    ),
-    (
-        'd03593ad-aa25-4316-b475-32a28f1d0511',
-        '2025-11-06 18:14:56.000000'
-    ),
-    (
-        'd03f8fbc-76c4-4618-a5dd-e8b7fb95cbc5',
-        '2025-10-26 16:33:01.000000'
-    ),
-    (
-        'd0564650-6197-49cd-a677-61950d3c5665',
-        '2025-11-06 18:18:10.000000'
-    ),
-    (
-        'd06c6d45-aa94-4125-8543-bdf406fd082b',
-        '2025-10-08 10:10:41.000000'
-    ),
-    (
-        'd076a6be-5560-4ee1-ab57-4b0e704b1c06',
-        '2025-10-26 21:37:31.000000'
-    ),
-    (
-        'd07816f8-e88b-418e-8c28-49b35662bcd3',
-        '2025-11-08 10:04:06.000000'
-    ),
-    (
-        'd099f0e1-703a-4cde-a960-4af53fa2a812',
-        '2025-11-08 18:41:48.000000'
-    ),
-    (
-        'd0c761e9-43b2-49de-8fb3-ecf8edbe2a0f',
-        '2025-11-06 18:15:47.000000'
-    ),
-    (
-        'd0f3a150-821a-4bf1-8552-b750a0114103',
-        '2025-10-26 19:27:15.000000'
-    ),
-    (
-        'd1028aa1-0fc6-4bcd-9aec-289508f8df28',
-        '2025-10-27 10:29:29.000000'
-    ),
-    (
-        'd1123131-b0f5-4166-9e67-c283dc09afc4',
-        '2025-10-10 14:18:56.000000'
-    ),
-    (
-        'd14ab7f2-53ee-4515-b5d1-028956947c89',
-        '2025-11-08 09:10:31.000000'
-    ),
-    (
-        'd1e174fd-9d6d-4ce4-a0c6-1ad7c005b6d8',
-        '2025-11-08 17:42:50.000000'
-    ),
-    (
-        'd249864d-4b33-48d7-899d-06ebed90bb10',
-        '2025-11-08 10:06:22.000000'
-    ),
-    (
-        'd2720fc3-2841-482d-9c16-e71a8b8f4696',
-        '2025-11-07 16:42:05.000000'
-    ),
-    (
-        'd2a89ad2-eaf1-4fc4-90c6-ee9f40c7e642',
-        '2025-11-06 15:59:45.000000'
-    ),
-    (
-        'd2cba87e-1057-4c9c-aa19-2ef05a3ba1a9',
-        '2025-11-08 09:48:18.000000'
-    ),
-    (
-        'd2d0ad2b-67e9-4ec3-93e9-bb3e6397f3c4',
-        '2025-11-08 17:50:37.000000'
-    ),
-    (
-        'd2eba93f-3281-449b-8e98-64d6738cf946',
-        '2025-10-08 15:01:17.000000'
-    ),
-    (
-        'd3383b30-e481-4842-a090-ef37af0214ec',
-        '2025-10-26 17:53:46.000000'
-    ),
-    (
-        'd34bb1e2-2a9f-426d-9368-7bd7423ba41a',
-        '2025-11-08 10:04:11.000000'
-    ),
-    (
-        'd35ec381-f458-4f35-b5bd-39f5084adef1',
-        '2025-10-26 20:14:26.000000'
-    ),
-    (
-        'd3a5d391-f206-4cb3-85c2-33d65e6b9c4e',
-        '2025-10-26 20:33:43.000000'
-    ),
-    (
-        'd3c8d068-6e4b-4a00-92e4-daa918eb4407',
-        '2025-10-27 09:39:03.000000'
-    ),
-    (
-        'd44e9258-2131-4226-bb38-d44a5996bbf0',
-        '2025-11-08 10:22:45.000000'
-    ),
-    (
-        'd4535ac2-cf60-4746-8f2b-2a287945347b',
-        '2025-11-06 16:18:18.000000'
-    ),
-    (
-        'd466e382-c847-4373-8ebf-108b54107749',
-        '2025-10-26 19:39:12.000000'
-    ),
-    (
-        'd48a130c-8aa2-4b20-ac51-43a71c3da753',
-        '2025-10-27 08:31:54.000000'
-    ),
-    (
-        'd490f12e-08e7-4baf-a8eb-0fe37b96027f',
-        '2025-10-26 19:58:43.000000'
-    ),
-    (
-        'd4a18311-4056-42a7-886f-bd56d8f7e789',
-        '2025-11-02 17:48:14.000000'
-    ),
-    (
-        'd4a6d7a0-6452-4f4c-8f91-a54e5422012b',
-        '2025-11-08 09:41:08.000000'
-    ),
-    (
-        'd4c5c1c7-ba2d-4260-b183-e2d14d00a12c',
-        '2025-10-26 16:43:38.000000'
-    ),
-    (
-        'd4c679ce-2600-442e-ac54-dd5d94c2cbb7',
-        '2025-11-08 09:48:34.000000'
-    ),
-    (
-        'd576075b-c835-4357-bfe6-5438ba7da752',
-        '2025-10-24 21:02:10.000000'
-    ),
-    (
-        'd5dde40f-4037-4f7f-8054-7074ff952dfb',
-        '2025-11-06 17:45:31.000000'
-    ),
-    (
-        'd605d22a-a4c6-48e4-8802-7102d1c2e7bf',
-        '2025-11-06 18:18:00.000000'
-    ),
-    (
-        'd619b954-1dd7-4764-bfb9-6b8b26b27af8',
-        '2025-10-10 13:54:31.000000'
-    ),
-    (
-        'd637db96-2266-46a6-bc47-4f70130d643c',
-        '2025-10-26 20:40:58.000000'
-    ),
-    (
-        'd66d19d0-cb24-42b7-8c9e-b305b7dfb152',
-        '2025-11-06 16:19:08.000000'
-    ),
-    (
-        'd682ea01-bfa6-42f3-8c7a-42f91351ffdd',
-        '2025-11-08 10:22:18.000000'
-    ),
-    (
-        'd6ed3f32-e7ec-4315-955b-195499155c1d',
-        '2025-11-08 10:08:20.000000'
-    ),
-    (
-        'd7227c94-ab08-48b1-a37c-7d4ed7c9ee26',
-        '2025-11-06 17:39:38.000000'
-    ),
-    (
-        'd73fde87-da3b-4cd7-a785-9366c44b962e',
-        '2025-10-10 14:16:47.000000'
-    ),
-    (
-        'd7485832-fd2c-4565-8688-14bc663962bb',
-        '2025-11-02 17:56:04.000000'
-    ),
-    (
-        'd7678d45-6a72-449e-be71-f4e585d8c9cc',
-        '2025-10-06 15:49:20.000000'
-    ),
-    (
-        'd817b391-64fd-4547-9e97-ed69e7e35223',
-        '2025-10-26 17:01:38.000000'
-    ),
-    (
-        'd84749da-e0d1-4b74-ab2f-b777c94e9689',
-        '2025-11-08 10:04:09.000000'
-    ),
-    (
-        'd8a2f7ee-5f03-43d4-8814-27001ddc9751',
-        '2025-10-26 16:45:06.000000'
-    ),
-    (
-        'd8c1f3b7-a936-4304-baff-c98b7fcf66de',
-        '2025-10-09 15:02:31.000000'
-    ),
-    (
-        'd8e45652-f521-472d-b177-35627fc57566',
-        '2025-10-27 08:20:16.000000'
-    ),
-    (
-        'd9b44957-d8fe-4d96-914a-995f13116c3a',
-        '2025-10-26 19:24:48.000000'
-    ),
-    (
-        'd9f389a1-381d-4bc5-a0c3-03e9acad4505',
-        '2025-10-24 20:40:07.000000'
-    ),
-    (
-        'da4b023e-654d-4646-98d9-2ae12ba930c3',
-        '2025-11-06 18:15:50.000000'
-    ),
-    (
-        'da6c9b98-327e-4f2d-88b1-08596fa113ee',
-        '2025-11-06 17:09:28.000000'
-    ),
-    (
-        'da6ddf57-1880-4b16-a022-58cf7ac9a7e4',
-        '2025-11-08 09:50:31.000000'
-    ),
-    (
-        'da73bcc9-aa6b-4988-b18b-2dc640e319e1',
-        '2025-10-09 11:44:33.000000'
-    ),
-    (
-        'da9c6fbc-6f68-4311-b6fc-1042d1c3b903',
-        '2025-10-26 20:09:18.000000'
-    ),
-    (
-        'daa16b4b-13cc-401d-83ee-9a2d101533e6',
-        '2025-11-08 19:24:28.000000'
-    ),
-    (
-        'dac35831-d443-47af-b45e-c25ce5d55855',
-        '2025-11-08 19:56:39.000000'
-    ),
-    (
-        'dae8d102-9ec4-4af7-8ec1-f003a109c10c',
-        '2025-10-24 20:45:05.000000'
-    ),
-    (
-        'dafbb0e4-f544-4a8f-91fe-073c25374012',
-        '2025-11-08 17:46:12.000000'
-    ),
-    (
-        'db18187a-419e-402a-a466-7110577a7dfe',
-        '2025-11-08 09:06:23.000000'
-    ),
-    (
-        'db415042-f148-407a-9867-c7b9c7ae4ae9',
-        '2025-10-26 17:53:44.000000'
-    ),
-    (
-        'db5a59f4-6ae9-4286-9851-6b060821f5f2',
-        '2025-10-15 14:13:26.000000'
-    ),
-    (
-        'db61d90c-5830-4f72-9b18-fca179097586',
-        '2025-10-27 09:01:18.000000'
-    ),
-    (
-        'dc13359b-4a7a-45f7-a2ab-92fbea3ce75b',
-        '2025-11-08 08:58:31.000000'
-    ),
-    (
-        'dc143257-23db-4abe-a4bf-5f38d9477b64',
-        '2025-10-11 08:25:42.000000'
-    ),
-    (
-        'dc759094-48ae-4d43-a8b8-e3cb0586d3fc',
-        '2025-11-08 17:50:39.000000'
-    ),
-    (
-        'dca8bd09-fabb-4b7f-8b80-638decd65e83',
-        '2025-11-08 17:31:33.000000'
-    ),
-    (
-        'dcd6ad00-7e08-412d-9ca4-295cdb564e16',
-        '2025-11-06 18:55:17.000000'
-    ),
-    (
-        'dce2c2d0-59fa-4d1a-bbbb-8c229b461ba1',
-        '2025-10-27 10:31:23.000000'
-    ),
-    (
-        'dcf054ed-3fd4-4006-9515-055bdb0590d2',
-        '2025-10-14 14:56:22.000000'
-    ),
-    (
-        'dcfb90db-86c5-4cd3-babd-e1b5360dc9e1',
-        '2025-11-08 09:23:44.000000'
-    ),
-    (
-        'dd019dce-e818-4d02-a44d-e59afaa68ae0',
-        '2025-11-06 15:33:32.000000'
-    ),
-    (
-        'dd2de746-6abc-4d8f-88f4-a7da97f5f229',
-        '2025-10-27 10:25:05.000000'
-    ),
-    (
-        'dd783a90-e7de-4aca-b82f-c8c3244ca7e0',
-        '2025-11-08 09:12:50.000000'
-    ),
-    (
-        'dd8efb88-1fc9-4ee9-95e6-1ea921905728',
-        '2025-11-08 17:36:32.000000'
-    ),
-    (
-        'dd9884ba-f79c-47ec-85af-39c8d547deaf',
-        '2025-11-06 16:21:43.000000'
-    ),
-    (
-        'dda180cf-5ad9-49fc-9e3e-0d85d4d551a5',
-        '2025-11-07 15:15:29.000000'
-    ),
-    (
-        'ddb0e25a-7408-4deb-bcfc-a434a74b3964',
-        '2025-10-26 17:41:31.000000'
-    ),
-    (
-        'ddb87e3d-125c-4ee7-ac62-e5e048bb8870',
-        '2025-11-08 10:21:55.000000'
-    ),
-    (
-        'de0662b8-8898-406c-a1a8-53937f1caecd',
-        '2025-11-08 18:41:28.000000'
-    ),
-    (
-        'de1bacdd-dd13-4fdf-8aa9-dab5b259b2c2',
-        '2025-10-26 21:37:39.000000'
-    ),
-    (
-        'de355885-9505-4003-9c09-9f87d12b1ef4',
-        '2025-10-08 12:49:32.000000'
-    ),
-    (
-        'def15450-b65f-4ec4-86d8-50a9840658b5',
-        '2025-10-10 11:30:48.000000'
-    ),
-    (
-        'defb1070-37ed-41ed-bb05-a34c9a78e9cd',
-        '2025-10-08 14:43:16.000000'
-    ),
-    (
-        'df032924-b6a5-4afa-bb16-6d5e2dde52e3',
-        '2025-11-02 17:56:32.000000'
-    ),
-    (
-        'df1c46a1-ccbc-45f7-8c7b-bce505dc5c78',
-        '2025-11-06 17:47:06.000000'
-    ),
-    (
-        'df261f3c-25e5-4328-9ed8-ff61f9cff8e1',
-        '2025-11-06 16:00:03.000000'
-    ),
-    (
-        'df938591-aef0-47d6-a30c-1365aabba91e',
-        '2025-11-06 15:29:31.000000'
-    ),
-    (
-        'df957746-cfe1-4059-8b13-e7e11a4aaf5d',
-        '2025-11-08 10:06:20.000000'
-    ),
-    (
-        'df98f540-2b69-4c37-b3fa-9d4c5987dfd6',
-        '2025-10-09 15:01:53.000000'
-    ),
-    (
-        'dfccc55d-dd8d-4dde-8818-ba4368bebc26',
-        '2025-11-06 16:48:00.000000'
-    ),
-    (
-        'e05215cc-4efe-48a0-9e63-6d16f46f2710',
-        '2025-10-14 14:53:59.000000'
-    ),
-    (
-        'e08a3524-28c9-4106-a98c-99b2a9e3e4a6',
-        '2025-10-14 08:06:00.000000'
-    ),
-    (
-        'e0b86d38-43d8-4464-8eeb-518e992d9cc0',
-        '2025-11-06 17:44:09.000000'
-    ),
-    (
-        'e0d95b43-45db-4c27-9aac-c98234b1459c',
-        '2025-10-15 14:13:58.000000'
-    ),
-    (
-        'e0dd1368-7e0e-4a8c-97be-55910a7b9894',
-        '2025-11-08 17:31:48.000000'
-    ),
-    (
-        'e0f84d52-8736-480b-a32d-79d7e75fbaf2',
-        '2025-10-26 17:04:32.000000'
-    ),
-    (
-        'e1082659-4b23-42a8-8024-1a8ba731fe49',
-        '2025-11-08 19:01:19.000000'
-    ),
-    (
-        'e10e8250-d6b7-4db0-926c-e92658a3682c',
-        '2025-10-31 16:21:19.000000'
-    ),
-    (
-        'e1126e0e-20a6-4625-a7cb-9b2078e9e9cb',
-        '2025-11-08 19:25:53.000000'
-    ),
-    (
-        'e13a7899-a226-4977-ad00-c6a8e3702179',
-        '2025-10-10 15:48:41.000000'
-    ),
-    (
-        'e1400513-4a68-4fca-a2ed-987c45a9995f',
-        '2025-11-06 18:55:30.000000'
-    ),
-    (
-        'e182f232-3995-40d7-89cf-48a33c4a55cd',
-        '2025-11-02 17:55:55.000000'
-    ),
-    (
-        'e1a8fc88-af5c-4a3d-bdc3-f1ca2644da83',
-        '2025-11-07 16:38:46.000000'
-    ),
-    (
-        'e1b38d93-9105-4b0b-b8f0-ce89088f6542',
-        '2025-10-24 20:56:20.000000'
-    ),
-    (
-        'e1b92e43-de99-4145-8404-2540333b7161',
-        '2025-10-11 12:18:31.000000'
-    ),
-    (
-        'e291c5fb-861e-4327-859f-3d4d530b3ab9',
-        '2025-10-14 08:08:23.000000'
-    ),
-    (
-        'e2a5ae32-47b5-45b2-9e34-d0cabec78097',
-        '2025-10-27 10:14:56.000000'
-    ),
-    (
-        'e31dbd13-3e03-4b02-9e33-001fa9f819d3',
-        '2025-11-06 18:11:48.000000'
-    ),
-    (
-        'e356456f-f385-4bf3-8f61-798a05d9ec2d',
-        '2025-11-08 17:31:37.000000'
-    ),
-    (
-        'e38e60cd-628d-4d3c-9822-41d970622525',
-        '2025-10-10 09:26:27.000000'
-    ),
-    (
-        'e39fb571-9159-417b-b024-703b1717e18f',
-        '2025-11-06 16:19:23.000000'
-    ),
-    (
-        'e3a60a0c-7ec5-49c5-93ac-467168cf69cc',
-        '2025-10-26 19:28:11.000000'
-    ),
-    (
-        'e3cea62b-12b2-4064-9c6e-4e197ac66666',
-        '2025-11-07 17:36:12.000000'
-    ),
-    (
-        'e3e0fe1b-823d-401b-87a6-7465c7660c4f',
-        '2025-10-26 19:09:16.000000'
-    ),
-    (
-        'e3effc4a-1c12-4e4a-82fd-e4f74453a379',
-        '2025-11-08 10:08:58.000000'
-    ),
-    (
-        'e42e001f-419e-46be-906e-7a683e0847c8',
-        '2025-11-06 17:36:24.000000'
-    ),
-    (
-        'e44c74da-f503-40e0-825b-c4bdf008810a',
-        '2025-10-31 16:20:05.000000'
-    ),
-    (
-        'e4a8d204-2ec7-4b49-afd0-d77c513cc4e2',
-        '2025-11-02 17:42:46.000000'
-    ),
-    (
-        'e4df82e0-7a08-4432-8ade-20114cfaf6df',
-        '2025-10-26 20:34:51.000000'
-    ),
-    (
-        'e4eeeea1-5b2d-4edc-ac67-a4120b87b587',
-        '2025-11-06 18:19:27.000000'
-    ),
-    (
-        'e4f1f76e-d6d8-4424-85db-84c2d1ffe7f8',
-        '2025-11-06 16:47:22.000000'
-    ),
-    (
-        'e50c851a-22eb-4c48-b62e-5bbf277c3d35',
-        '2025-10-31 16:20:01.000000'
-    ),
-    (
-        'e51a28ae-c4a9-4de7-a972-06d9f8e0a717',
-        '2025-11-02 17:46:32.000000'
-    ),
-    (
-        'e58e9cb7-99d4-45d6-ae09-d2ae2ff77a08',
-        '2025-10-27 09:32:23.000000'
-    ),
-    (
-        'e59edea9-f5b3-4fda-9ee0-e5145c69a13f',
-        '2025-11-08 19:24:46.000000'
-    ),
-    (
-        'e5a7cbbe-feda-4d71-bd5e-69910dc8cde3',
-        '2025-10-26 17:56:11.000000'
-    ),
-    (
-        'e5af6175-51e5-4d52-921a-806cdf3aca1f',
-        '2025-11-08 09:48:07.000000'
-    ),
-    (
-        'e677365f-b471-48c7-95ab-83c0fd7540ec',
-        '2025-10-26 21:38:16.000000'
-    ),
-    (
-        'e6ba0b5c-4ee4-4b78-8356-2d1e4a54acfc',
-        '2025-10-27 08:31:42.000000'
-    ),
-    (
-        'e6e8bc50-e976-43e7-88b4-29b75256841f',
-        '2025-11-08 10:20:27.000000'
-    ),
-    (
-        'e74a861f-3a61-4ea3-9f5b-54ad73afdfb5',
-        '2025-11-08 09:39:59.000000'
-    ),
-    (
-        'e79ac018-f5e3-4e8b-b14c-d25187ddfcc9',
-        '2025-11-06 16:19:19.000000'
-    ),
-    (
-        'e7a66674-2e8d-4891-b117-c6420089fd82',
-        '2025-11-06 18:13:05.000000'
-    ),
-    (
-        'e855703b-b019-49ec-a77c-681b23e20867',
-        '2025-11-08 10:08:46.000000'
-    ),
-    (
-        'e88284c8-8e1c-40a6-bc7c-7550630cc94e',
-        '2025-11-07 19:50:54.000000'
-    ),
-    (
-        'e89a3fbb-fdf9-4909-8245-5b91d2b1e43e',
-        '2025-11-08 09:24:02.000000'
-    ),
-    (
-        'e89c468a-ae94-41a2-af2b-d33b9133f457',
-        '2025-10-13 09:35:49.000000'
-    ),
-    (
-        'e8e1e6e1-d4db-4328-82ce-0b027b21713e',
-        '2025-10-14 08:08:25.000000'
-    ),
-    (
-        'e964ab16-8ec1-40f5-84ac-856878d323db',
-        '2025-11-08 09:05:09.000000'
-    ),
-    (
-        'e9a4e14f-2e33-4fba-a3c1-071f9b062033',
-        '2025-11-06 18:02:16.000000'
-    ),
-    (
-        'e9ba86b2-cfbf-4426-9aed-30bc24e3b76f',
-        '2025-11-06 18:49:36.000000'
-    ),
-    (
-        'e9bedbae-bc1f-4e2b-8ebc-a79ef8c01060',
-        '2025-11-02 17:55:46.000000'
-    ),
-    (
-        'e9ee6ea3-59e5-4080-b060-0b06d9e285ed',
-        '2025-11-07 17:41:47.000000'
-    ),
-    (
-        'ea0d62a8-2c43-4d6a-a5dd-8d789ae59408',
-        '2025-10-26 16:44:59.000000'
-    ),
-    (
-        'ea1e24d6-20d5-48da-b2d7-141b546449ff',
-        '2025-10-24 21:02:59.000000'
-    ),
-    (
-        'ea1eaa51-f435-4249-948e-7cdacd887293',
-        '2025-11-07 15:21:17.000000'
-    ),
-    (
-        'ea60ab39-4d6c-4649-983b-105128e9070c',
-        '2025-10-27 10:29:41.000000'
-    ),
-    (
-        'eab0e08d-fcc2-4ae0-865a-5eb5d8ffac85',
-        '2025-11-08 10:04:10.000000'
-    ),
-    (
-        'eab202bc-7f01-435e-93de-6ca83d26a5b3',
-        '2025-11-08 17:31:38.000000'
-    ),
-    (
-        'eb04a3ed-6612-4e31-affa-b8b4a542ac07',
-        '2025-11-08 10:23:22.000000'
-    ),
-    (
-        'eb1a99eb-70e8-484c-a9c0-cada004ea8a5',
-        '2025-10-14 14:18:39.000000'
-    ),
-    (
-        'eb4542d0-d989-493b-9cbd-9389f1dd995b',
-        '2025-10-10 15:50:08.000000'
-    ),
-    (
-        'eb47acf7-ab38-4bd8-a6d3-4c6079c97333',
-        '2025-10-26 20:00:40.000000'
-    ),
-    (
-        'eb60703c-dbc0-4cbe-b25a-72e4396bc656',
-        '2025-10-14 14:04:47.000000'
-    ),
-    (
-        'eb67203e-9777-4983-9e0a-e352066a6b1d',
-        '2025-11-08 17:50:36.000000'
-    ),
-    (
-        'eb6fa8da-8f70-4f0e-9704-82790219296d',
-        '2025-10-27 09:30:18.000000'
-    ),
-    (
-        'eb80fc5f-5291-44cf-ab7b-a589739f2771',
-        '2025-11-08 09:44:19.000000'
-    ),
-    (
-        'ebdb1559-153a-4a85-8d48-19b85ead66ff',
-        '2025-10-08 13:29:18.000000'
-    ),
-    (
-        'ec079cba-c247-433b-bc2b-f7e5ce3aaeb2',
-        '2025-10-27 10:25:06.000000'
-    ),
-    (
-        'ec55f0e5-2088-44b9-9545-1abbb8a7133b',
-        '2025-11-06 18:15:36.000000'
-    ),
-    (
-        'ec6647f2-e0f8-41ca-b55c-073228a1e4ea',
-        '2025-10-15 14:14:03.000000'
-    ),
-    (
-        'ec832341-2689-4238-9a07-780681fb2718',
-        '2025-11-08 09:24:10.000000'
-    ),
-    (
-        'ecbcde6a-52ae-4c93-a59b-470a6ef713d7',
-        '2025-11-06 17:44:10.000000'
-    ),
-    (
-        'ece330da-8d0a-48e9-86d0-4c98c6b9cdb4',
-        '2025-10-31 16:20:04.000000'
-    ),
-    (
-        'ece58e55-479d-4dd0-9638-7c7d634955c1',
-        '2025-11-08 18:56:16.000000'
-    ),
-    (
-        'ed829f66-7438-4b42-9274-0865c9d4518a',
-        '2025-10-26 16:41:49.000000'
-    ),
-    (
-        'ed9da48b-5cf2-4673-a276-aa4260a4e039',
-        '2025-10-23 22:06:38.000000'
-    ),
-    (
-        'edc27cd5-2904-4776-bc3f-e3043b57cced',
-        '2025-11-08 08:56:54.000000'
-    ),
-    (
-        'edc291e5-b5d4-4d30-a4e6-cccd2aa55b37',
-        '2025-10-13 08:23:28.000000'
-    ),
-    (
-        'edfecc5e-5732-4333-8f41-04885b8dfa3c',
-        '2025-11-08 09:59:50.000000'
-    ),
-    (
-        'ee002b1b-a2a3-4d04-bb69-03c1816b3015',
-        '2025-11-06 18:15:53.000000'
-    ),
-    (
-        'ee3c0047-181d-441c-9ff1-70519c8675e1',
-        '2025-10-26 20:14:32.000000'
-    ),
-    (
-        'ee4ec712-f576-4418-9827-94d2b7bf4be1',
-        '2025-11-06 16:21:33.000000'
-    ),
-    (
-        'ee5be943-7718-4a3a-8beb-4a5605e8535f',
-        '2025-11-08 18:58:11.000000'
-    ),
-    (
-        'ee67d555-8f75-4d2f-98cf-44707553a153',
-        '2025-10-27 09:34:30.000000'
-    ),
-    (
-        'ee6ed344-c325-4ef3-9192-3c4ea6cb2c98',
-        '2025-11-06 18:30:38.000000'
-    ),
-    (
-        'ee82eb6d-d831-4a56-bb70-8716bb09c28e',
-        '2025-11-02 17:56:26.000000'
-    ),
-    (
-        'eea115f6-8df9-41d8-b577-9faa688a7ed1',
-        '2025-10-26 20:00:57.000000'
-    ),
-    (
-        'eeb9feaa-e66e-4f0f-89bb-46e627bbb006',
-        '2025-11-08 08:57:20.000000'
-    ),
-    (
-        'eec09470-7bb1-4e91-8872-1f903785b462',
-        '2025-11-08 10:19:59.000000'
-    ),
-    (
-        'eeec6f07-b9c8-4cc3-9072-4126a28fa4bb',
-        '2025-11-08 10:03:58.000000'
-    ),
-    (
-        'eff5198e-9f0b-4abd-9df1-98f32e7abdf9',
-        '2025-11-08 09:57:52.000000'
-    ),
-    (
-        'f006392d-02c5-42ef-a46b-cdfed23bcf7c',
-        '2025-11-06 18:24:25.000000'
-    ),
-    (
-        'f04b6274-ffa7-4377-96c6-77a92695af96',
-        '2025-11-08 18:56:37.000000'
-    ),
-    (
-        'f05ae4c8-a9bd-4603-a1d9-ff8987b065ab',
-        '2025-11-07 16:03:16.000000'
-    ),
-    (
-        'f0775081-21d2-4e80-9f4b-7320ef1caa5e',
-        '2025-10-11 14:23:51.000000'
-    ),
-    (
-        'f090b53d-1ca5-487c-808b-80794364b361',
-        '2025-11-08 17:14:27.000000'
-    ),
-    (
-        'f0ae465c-80d9-4e44-8e21-db0926d026d8',
-        '2025-11-08 10:04:02.000000'
-    ),
-    (
-        'f0bd08d6-71ca-4135-a668-e5e11cbdf316',
-        '2025-10-14 08:12:36.000000'
-    ),
-    (
-        'f0d9e33a-1ecd-40d7-b16f-ae7a22874aad',
-        '2025-10-26 19:59:23.000000'
-    ),
-    (
-        'f108bc01-f815-4d8c-9c58-3d9177ad861e',
-        '2025-11-08 18:41:55.000000'
-    ),
-    (
-        'f10fa209-4608-477a-8afe-9e3b25445e68',
-        '2025-10-08 14:43:03.000000'
-    ),
-    (
-        'f11e3320-79c6-46c6-a4e3-381b567fd9d3',
-        '2025-11-06 17:39:31.000000'
-    ),
-    (
-        'f12b1009-9ebf-404b-93f7-8f811546c57f',
-        '2025-11-06 18:11:40.000000'
-    ),
-    (
-        'f14dbb75-acd6-4913-9960-18e010280b02',
-        '2025-11-08 09:39:58.000000'
-    ),
-    (
-        'f182ed59-ad6b-4a93-8012-de8a725f978a',
-        '2025-10-26 16:29:03.000000'
-    ),
-    (
-        'f1fb6f39-a212-44d5-aa68-944b4bf585e9',
-        '2025-10-24 21:01:59.000000'
-    ),
-    (
-        'f20be215-cda7-4769-9c9e-23ef8179397d',
-        '2025-10-14 14:54:40.000000'
-    ),
-    (
-        'f228b52a-ded6-4597-a88e-1b6d2c6a582f',
-        '2025-11-07 15:21:21.000000'
-    ),
-    (
-        'f24ecc95-b683-400a-bc31-c0688b36fe7a',
-        '2025-10-26 20:13:50.000000'
-    ),
-    (
-        'f29ddfa5-fe92-43f9-a03f-595bf2e6df8a',
-        '2025-11-08 09:49:07.000000'
-    ),
-    (
-        'f2a6883a-4f33-40f5-9974-198c8df6bda3',
-        '2025-10-10 14:21:19.000000'
-    ),
-    (
-        'f2b038bd-454e-4a89-9a11-80b801a1b18b',
-        '2025-10-10 15:45:52.000000'
-    ),
-    (
-        'f2ddfc01-7ec9-4b98-9d7d-5923e612528c',
-        '2025-10-27 10:23:31.000000'
-    ),
-    (
-        'f302e0e1-5c63-4802-b719-a0a58df2902c',
-        '2025-10-31 16:21:25.000000'
-    ),
-    (
-        'f3188df6-e1e4-49d6-9533-71ea5c287c8c',
-        '2025-10-11 14:23:43.000000'
-    ),
-    (
-        'f3693ad8-bd8a-4a26-8a0f-364f3e939d81',
-        '2025-10-09 09:48:43.000000'
-    ),
-    (
-        'f36a46ac-8a06-4d1b-930a-cd3651c3c8a7',
-        '2025-10-14 14:50:32.000000'
-    ),
-    (
-        'f37634b9-fa6d-46d4-b9c0-19ccd5996be0',
-        '2025-10-24 20:45:42.000000'
-    ),
-    (
-        'f393c639-e8fb-4277-aea1-35f1c35482b5',
-        '2025-10-26 21:39:37.000000'
-    ),
-    (
-        'f3a78ff2-8660-4e4f-a3f9-4c3bef97314d',
-        '2025-11-08 10:21:55.000000'
-    ),
-    (
-        'f4264718-8b16-44c0-8d70-e540514c46cd',
-        '2025-10-26 10:32:46.000000'
-    ),
-    (
-        'f503370c-0bcf-4029-b11b-b12d199c03e5',
-        '2025-10-08 10:04:57.000000'
-    ),
-    (
-        'f50b79a4-c87d-4324-9ab6-bfafe2456442',
-        '2025-11-08 10:20:25.000000'
-    ),
-    (
-        'f5189670-bfb2-4439-87b1-bc3f6b18c59f',
-        '2025-10-26 19:18:09.000000'
-    ),
-    (
-        'f55c88e8-98e2-4b18-837d-8cdd428be107',
-        '2025-10-10 10:09:39.000000'
-    ),
-    (
-        'f5746a26-3fee-4205-9c56-2759ec783ec1',
-        '2025-10-08 14:49:50.000000'
-    ),
-    (
-        'f594b6de-c67f-4960-bf5a-70d33b63bbc6',
-        '2025-10-26 17:25:41.000000'
-    ),
-    (
-        'f5bdc32d-c450-4007-8ae6-f6cc40f81f5e',
-        '2025-10-24 20:49:37.000000'
-    ),
-    (
-        'f628e51f-2045-467d-b348-0bd161eef8d9',
-        '2025-11-06 18:55:44.000000'
-    ),
-    (
-        'f63e85a4-5324-410d-8c6e-98be79d6e399',
-        '2025-09-30 10:23:34.000000'
-    ),
-    (
-        'f698bc91-262c-46e6-a74b-8db564e12c8a',
-        '2025-11-06 18:22:40.000000'
-    ),
-    (
-        'f6b4750f-3b95-4243-9120-f6f9b7355f09',
-        '2025-11-08 10:06:36.000000'
-    ),
-    (
-        'f6b7082c-08c2-4765-b67f-c31c76ae9c55',
-        '2025-10-26 19:54:08.000000'
-    ),
-    (
-        'f6e5cab1-31d6-451b-a5c5-ce218dc634ec',
-        '2025-11-08 10:19:18.000000'
-    ),
-    (
-        'f6eca3c2-794c-4c2a-9d07-1822387988a5',
-        '2025-11-08 08:58:33.000000'
-    ),
-    (
-        'f6f5e473-4030-446b-a763-51b4ff2188a8',
-        '2025-10-24 20:46:35.000000'
-    ),
-    (
-        'f7057db2-26a2-4fc3-b2af-773291976dde',
-        '2025-10-10 14:01:11.000000'
-    ),
-    (
-        'f712aee9-2bd1-4826-814d-2bb0a1f4eac5',
-        '2025-10-26 20:34:03.000000'
-    ),
-    (
-        'f71665fc-b70c-46a8-b139-f860f3b6a249',
-        '2025-10-23 19:58:02.000000'
-    ),
-    (
-        'f783ae77-1ce6-4431-b3da-001e727b9fe7',
-        '2025-11-06 19:05:00.000000'
-    ),
-    (
-        'f7b23c65-2737-496f-aa83-17c67650542f',
-        '2025-10-27 10:31:29.000000'
-    ),
-    (
-        'f7cea540-76fe-4304-9ca8-e30a3dd4e6b8',
-        '2025-10-24 21:36:00.000000'
-    ),
-    (
-        'f7f9f6ad-a3e0-4920-9efd-e8a00fcb6a0e',
-        '2025-10-14 08:08:14.000000'
-    ),
-    (
-        'f7fb8acd-b967-4425-93ef-e7b55dae023e',
-        '2025-11-08 09:41:17.000000'
-    ),
-    (
-        'f8e9a9bb-f4c4-4e8b-b1b6-45c1c80c5bac',
-        '2025-11-08 19:24:41.000000'
-    ),
-    (
-        'f8f9de54-7218-49bc-85f1-ba5e9e74db86',
-        '2025-10-14 07:13:33.000000'
-    ),
-    (
-        'f905967c-62f8-4cfb-945e-4e854385037f',
-        '2025-11-08 09:58:01.000000'
-    ),
-    (
-        'f913e0b6-4897-449b-a884-786b30837911',
-        '2025-10-24 20:58:21.000000'
-    ),
-    (
-        'f92ee942-7eca-4e9c-a494-b9e83ff79bec',
-        '2025-11-06 17:45:59.000000'
-    ),
-    (
-        'f976cac8-fc99-42ce-bf68-86f2906f8ae8',
-        '2025-11-06 17:44:05.000000'
-    ),
-    (
-        'f98e75dc-f36a-4301-ac23-3e6d18f6b3d2',
-        '2025-10-11 11:01:31.000000'
-    ),
-    (
-        'f9d5325c-b9eb-422a-b65e-721c9fe1623d',
-        '2025-10-26 20:10:39.000000'
-    ),
-    (
-        'f9e189f3-b79a-4f30-8456-b40a897863b4',
-        '2025-10-26 10:38:26.000000'
-    ),
-    (
-        'f9e636a8-f076-4a69-9f79-44d39c3f2a01',
-        '2025-11-08 18:58:23.000000'
-    ),
-    (
-        'f9ede8b0-0fcc-415c-b74d-4adb068d5df1',
-        '2025-11-06 15:25:24.000000'
-    ),
-    (
-        'fa3f1c04-ebdd-4fad-9bca-c1a790295d95',
-        '2025-10-13 08:46:06.000000'
-    ),
-    (
-        'fa4ee2ec-777c-41a2-a162-013a2d58ba68',
-        '2025-11-08 10:23:53.000000'
-    ),
-    (
-        'faaf9a59-5336-49c1-b406-760faaf5cd8f',
-        '2025-10-26 16:43:38.000000'
-    ),
-    (
-        'faeec917-c1b7-4c8e-94df-7b0db19b73bc',
-        '2025-10-26 10:10:50.000000'
-    ),
-    (
-        'fb08649c-73d4-4d79-93e7-9d198216a5fb',
-        '2025-11-06 16:00:03.000000'
-    ),
-    (
-        'fb150b41-0366-40b4-8f9b-a28521b65f0f',
-        '2025-11-08 10:19:24.000000'
-    ),
-    (
-        'fb56abca-ec39-439d-b3e1-070f9ba3ec4e',
-        '2025-11-08 10:22:04.000000'
-    ),
-    (
-        'fb66f2e9-2474-4022-a86d-bde62bdbadc1',
-        '2025-11-08 18:41:53.000000'
-    ),
-    (
-        'fb6905cd-a7cc-4dfd-90d6-4507a5196d37',
-        '2025-10-26 20:00:48.000000'
-    ),
-    (
-        'fb7119d0-446d-451e-852b-9b5ef2d8cba9',
-        '2025-10-15 14:07:45.000000'
-    ),
-    (
-        'fbb779fc-c7dd-448f-8ac5-4412ca0a6f92',
-        '2025-11-06 16:09:57.000000'
-    ),
-    (
-        'fbbfb38e-25a0-40a3-86c7-39587d6a612e',
-        '2025-10-15 13:47:42.000000'
-    ),
-    (
-        'fbdde355-a803-41ac-bde5-01502dc14ac6',
-        '2025-11-08 09:57:49.000000'
-    ),
-    (
-        'fbfecc72-dbb5-45fd-8c70-6c086e7b0a92',
-        '2025-10-14 07:50:00.000000'
-    ),
-    (
-        'fc08d39a-5014-47d0-ad55-0911cecaa4c2',
-        '2025-10-24 20:40:08.000000'
-    ),
-    (
-        'fc561248-9667-484f-b1c4-1dea7403320b',
-        '2025-10-27 08:32:52.000000'
-    ),
-    (
-        'fc8ccc4a-c0c4-43f1-ab4b-4b068fcf6cf3',
-        '2025-10-14 07:35:27.000000'
-    ),
-    (
-        'fc924c69-c12a-4a0f-9766-0207dc57bfd3',
-        '2025-10-26 20:14:29.000000'
-    ),
-    (
-        'fcc665e9-d7c3-4f39-9d08-ebf17167e551',
-        '2025-10-08 15:06:30.000000'
-    ),
-    (
-        'fcfc96b4-bca6-4414-a99e-63941ad8e05e',
-        '2025-10-15 14:10:35.000000'
-    ),
-    (
-        'fd1f6c71-222b-4a73-ae82-b79416c7954b',
-        '2025-11-07 15:14:04.000000'
-    ),
-    (
-        'fd56fd53-e83c-4014-8086-d61eca3fb0eb',
-        '2025-10-08 15:26:58.000000'
-    ),
-    (
-        'fd5e9f93-20ab-43b7-910d-8145ef2bb2cc',
-        '2025-10-08 14:46:13.000000'
-    ),
-    (
-        'fd834765-64ef-4133-9704-69cc587c5c58',
-        '2025-10-27 09:58:28.000000'
-    ),
-    (
-        'fd9bbcf9-1185-4c17-ab19-8d22cea774b4',
-        '2025-10-26 19:59:18.000000'
-    ),
-    (
-        'fdfa9a56-abf5-464b-a7f7-76d392ba858f',
-        '2025-11-08 10:03:40.000000'
-    ),
-    (
-        'fe0bdc03-33cb-4630-942c-104215538a2d',
-        '2025-10-26 17:56:06.000000'
-    ),
-    (
-        'fe8a7775-09ca-45a9-ad05-051fa9f88780',
-        '2025-11-08 18:56:41.000000'
-    ),
-    (
-        'fe8f9dfd-a78d-4cd1-8f5f-1c78136813b6',
-        '2025-10-26 19:50:33.000000'
-    ),
-    (
-        'ff3807f5-aacb-4490-9dcd-f16404620d43',
-        '2025-10-13 08:36:54.000000'
-    ),
-    (
-        'ff66538a-3ac3-4a1d-89e3-adbe67f47fb2',
-        '2025-10-10 08:40:41.000000'
-    ),
-    (
-        'ff99b9a9-1967-43e1-b65e-bdf27b17afce',
-        '2025-11-06 18:19:08.000000'
-    ),
-    (
-        'ffe55aca-435b-4262-bcea-c4ee091d8cae',
-        '2025-11-08 09:24:24.000000'
+        'ffe351e3-06b5-4bcd-ae26-c44017428db8',
+        '2025-11-27 09:09:36.000000'
     );
 /*!40000 ALTER TABLE `invalidate_token` ENABLE KEYS */
 ;
@@ -6757,6 +2196,7 @@ CREATE TABLE `invoice` (
     `check_in_date` date DEFAULT NULL,
     `check_out_date` date DEFAULT NULL,
     `created_at` datetime(6) DEFAULT NULL,
+    `is_delete` int NOT NULL,
     `payment` int DEFAULT NULL,
     `status` int DEFAULT NULL,
     `total_amount` double DEFAULT NULL,
@@ -6767,7 +2207,7 @@ CREATE TABLE `invoice` (
     KEY `FKe7mop857we1ou3wh7hanv5gsf` (`userid`),
     CONSTRAINT `FK61x26kfmspdd735ij5hgoo6so` FOREIGN KEY (`roomid`) REFERENCES `room` (`room_id`),
     CONSTRAINT `FKe7mop857we1ou3wh7hanv5gsf` FOREIGN KEY (`userid`) REFERENCES `user` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */
 ;
 
@@ -6782,47 +2222,423 @@ INSERT INTO
     `invoice`
 VALUES (
         1,
-        '2025-09-25',
-        '2025-09-28',
-        '2025-09-24 03:44:17.189137',
-        1,
+        '2025-01-05',
+        '2025-01-07',
+        '2025-01-04 10:12:34.000000',
         0,
-        450,
         1,
-        1
-    ),
-    (
-        2,
-        '2025-10-23',
-        '2025-10-24',
-        '2025-10-23 20:57:49.295086',
         3,
-        2,
         200000,
-        52,
-        502
+        11,
+        30
+    ),
+    (
+        2,
+        '2025-02-10',
+        '2025-02-12',
+        '2025-02-09 11:45:12.000000',
+        0,
+        3,
+        2,
+        350000,
+        12,
+        31
     ),
     (
         3,
-        '2025-10-26',
-        '2025-10-27',
-        '2025-10-26 10:43:28.281174',
-        1,
+        '2025-01-15',
+        '2025-01-17',
+        '2025-01-14 10:07:04.000000',
         0,
-        200,
-        2,
-        303
+        1,
+        3,
+        150000,
+        13,
+        32
     ),
     (
         4,
-        '2025-11-06',
-        '2025-11-07',
-        '2025-11-06 17:20:13.611752',
-        1,
+        '2025-03-20',
+        '2025-03-22',
+        '2025-03-19 14:22:55.000000',
         0,
+        3,
+        1,
+        280000,
+        14,
+        33
+    ),
+    (
+        5,
+        '2025-04-25',
+        '2025-04-27',
+        '2025-04-24 08:55:11.000000',
+        0,
+        1,
+        3,
+        160000,
+        15,
+        34
+    ),
+    (
+        6,
+        '2025-01-07',
+        '2025-01-09',
+        '2025-01-06 12:10:45.000000',
+        0,
+        3,
+        3,
+        300000,
+        16,
+        35
+    ),
+    (
+        7,
+        '2025-02-14',
+        '2025-02-16',
+        '2025-02-13 09:30:22.000000',
+        0,
+        1,
+        3,
+        255000,
+        17,
+        36
+    ),
+    (
+        8,
+        '2025-03-18',
+        '2025-03-20',
+        '2025-03-17 10:05:17.000000',
+        0,
+        3,
+        2,
+        180000,
+        18,
+        37
+    ),
+    (
+        9,
+        '2025-04-12',
+        '2025-04-14',
+        '2025-04-11 15:33:44.000000',
+        0,
+        1,
+        3,
+        300000,
+        19,
+        38
+    ),
+    (
+        10,
+        '2025-02-22',
+        '2025-02-24',
+        '2025-02-21 16:12:12.000000',
+        0,
+        3,
+        2,
+        395000,
+        20,
+        39
+    ),
+    (
+        11,
+        '2025-05-03',
+        '2025-05-05',
+        '2025-05-02 13:45:33.000000',
+        0,
+        1,
+        3,
+        220000,
+        21,
+        40
+    ),
+    (
+        12,
+        '2025-06-08',
+        '2025-06-10',
+        '2025-06-07 09:50:18.000000',
+        0,
+        3,
+        3,
+        180000,
+        22,
+        41
+    ),
+    (
+        13,
+        '2025-07-12',
+        '2025-07-14',
+        '2025-07-11 11:05:59.000000',
+        0,
+        1,
+        3,
+        30000,
+        23,
+        42
+    ),
+    (
+        14,
+        '2025-08-18',
+        '2025-08-20',
+        '2025-08-17 10:15:12.000000',
+        0,
+        3,
+        3,
+        195000,
+        24,
+        43
+    ),
+    (
+        15,
+        '2025-09-05',
+        '2025-09-07',
+        '2025-09-04 08:42:07.000000',
+        0,
+        1,
+        3,
+        250000,
+        25,
+        44
+    ),
+    (
+        16,
+        '2025-10-10',
+        '2025-10-12',
+        '2025-10-09 14:20:33.000000',
+        0,
+        3,
+        3,
+        175000,
+        26,
+        45
+    ),
+    (
+        17,
+        '2025-05-15',
+        '2025-05-17',
+        '2025-05-14 09:12:44.000000',
+        0,
+        1,
+        1,
+        210000,
+        27,
+        46
+    ),
+    (
+        18,
+        '2025-06-20',
+        '2025-06-22',
+        '2025-06-19 16:17:51.000000',
+        0,
+        3,
+        1,
         320000,
-        102,
-        502
+        28,
+        47
+    ),
+    (
+        19,
+        '2025-07-25',
+        '2025-07-27',
+        '2025-07-24 10:42:33.000000',
+        0,
+        1,
+        3,
+        150000,
+        29,
+        48
+    ),
+    (
+        20,
+        '2025-08-30',
+        '2025-09-01',
+        '2025-08-29 12:30:18.000000',
+        0,
+        3,
+        3,
+        280000,
+        30,
+        49
+    ),
+    (
+        21,
+        '2025-09-12',
+        '2025-09-14',
+        '2025-09-11 09:55:11.000000',
+        0,
+        1,
+        3,
+        160000,
+        31,
+        50
+    ),
+    (
+        22,
+        '2025-10-05',
+        '2025-10-07',
+        '2025-10-04 10:22:44.000000',
+        0,
+        3,
+        2,
+        300000,
+        32,
+        30
+    ),
+    (
+        23,
+        '2025-06-15',
+        '2025-06-17',
+        '2025-06-14 14:18:09.000000',
+        0,
+        1,
+        1,
+        255000,
+        33,
+        31
+    ),
+    (
+        24,
+        '2025-07-20',
+        '2025-07-22',
+        '2025-07-19 11:33:22.000000',
+        0,
+        3,
+        2,
+        180000,
+        34,
+        32
+    ),
+    (
+        25,
+        '2025-08-25',
+        '2025-08-27',
+        '2025-08-24 13:55:44.000000',
+        0,
+        1,
+        1,
+        30000,
+        35,
+        33
+    ),
+    (
+        26,
+        '2025-11-01',
+        '2025-11-03',
+        '2025-11-01 08:45:17.000000',
+        0,
+        3,
+        1,
+        195000,
+        36,
+        34
+    ),
+    (
+        27,
+        '2025-11-03',
+        '2025-11-05',
+        '2025-11-03 10:12:33.000000',
+        0,
+        1,
+        3,
+        250000,
+        37,
+        35
+    ),
+    (
+        28,
+        '2025-11-05',
+        '2025-11-07',
+        '2025-11-05 09:22:18.000000',
+        0,
+        3,
+        2,
+        175000,
+        38,
+        36
+    ),
+    (
+        29,
+        '2025-11-10',
+        '2025-11-12',
+        '2025-11-09 12:15:59.000000',
+        0,
+        1,
+        1,
+        210000,
+        39,
+        37
+    ),
+    (
+        30,
+        '2025-11-12',
+        '2025-11-14',
+        '2025-11-11 11:45:33.000000',
+        0,
+        3,
+        3,
+        320000,
+        40,
+        38
+    ),
+    (
+        31,
+        '2025-11-15',
+        '2025-11-17',
+        '2025-11-14 10:30:12.000000',
+        0,
+        1,
+        3,
+        150000,
+        41,
+        39
+    ),
+    (
+        32,
+        '2025-11-17',
+        '2025-11-19',
+        '2025-11-16 09:12:44.000000',
+        0,
+        3,
+        2,
+        280000,
+        42,
+        40
+    ),
+    (
+        33,
+        '2025-11-20',
+        '2025-11-22',
+        '2025-11-19 14:55:18.000000',
+        0,
+        1,
+        1,
+        160000,
+        43,
+        41
+    ),
+    (
+        34,
+        '2025-11-23',
+        '2025-11-25',
+        '2025-11-22 10:42:33.000000',
+        0,
+        3,
+        3,
+        300000,
+        44,
+        42
+    ),
+    (
+        35,
+        '2025-11-26',
+        '2025-11-28',
+        '2025-11-25 11:12:44.000000',
+        0,
+        1,
+        3,
+        255000,
+        45,
+        43
     );
 /*!40000 ALTER TABLE `invoice` ENABLE KEYS */
 ;
@@ -6848,7 +2664,7 @@ CREATE TABLE `message` (
     KEY `FKcnj2qaf5yc36v2f90jw2ipl9b` (`sender_id`),
     CONSTRAINT `FK86f0kc2mt26ifwupnivu6v8oa` FOREIGN KEY (`receiver_id`) REFERENCES `user` (`id`),
     CONSTRAINT `FKcnj2qaf5yc36v2f90jw2ipl9b` FOREIGN KEY (`sender_id`) REFERENCES `user` (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 70 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */
 ;
 
@@ -6863,486 +2679,31 @@ INSERT INTO
     `message`
 VALUES (
         1,
-        'xin chào bạn có phong không',
-        '2025-09-29 02:44:55.498295',
+        'xin chào bạn còn phong khách sạn không',
+        '2025-11-27 04:02:57.605931',
         2,
-        1
+        52
     ),
     (
         2,
-        'tôi có',
-        '2025-09-29 02:45:11.965761',
-        1,
+        'còn',
+        '2025-11-27 04:03:05.057029',
+        52,
         2
     ),
     (
         3,
-        'kệ bạn',
-        '2025-09-29 02:45:24.468893',
+        'Xin chào',
+        '2025-11-27 04:03:41.908671',
         2,
-        1
+        53
     ),
     (
         4,
-        'alo',
-        '2025-09-29 02:45:43.301774',
-        1,
-        52
-    ),
-    (
-        5,
-        'Xin chao',
-        '2025-09-30 09:25:27.174880',
-        1,
-        52
-    ),
-    (
-        6,
-        'ai đó',
-        '2025-10-25 18:53:41.088632',
+        'xin chào tôi là admin',
+        '2025-11-27 04:04:37.461471',
         2,
         1
-    ),
-    (
-        7,
-        'Xin chao',
-        '2025-10-25 18:55:51.880951',
-        1,
-        2
-    ),
-    (
-        8,
-        'helo',
-        '2025-10-25 19:01:05.160198',
-        52,
-        1
-    ),
-    (
-        9,
-        'Bạn có khỏe không',
-        '2025-10-25 19:02:42.460325',
-        52,
-        1
-    ),
-    (
-        10,
-        'tôi hào nè',
-        '2025-10-25 19:07:35.225348',
-        52,
-        1
-    ),
-    (
-        11,
-        'chào gì',
-        '2025-10-25 19:09:16.760236',
-        2,
-        1
-    ),
-    (
-        12,
-        'bạn là ai',
-        '2025-10-25 19:14:00.231291',
-        2,
-        1
-    ),
-    (
-        13,
-        'tôi không quen',
-        '2025-10-25 19:14:09.904048',
-        2,
-        1
-    ),
-    (
-        14,
-        'bạn biết tôi chứ',
-        '2025-10-25 19:15:00.178953',
-        2,
-        1
-    ),
-    (
-        15,
-        'helo bạn',
-        '2025-10-25 19:18:01.547803',
-        52,
-        1
-    ),
-    (
-        16,
-        'sao nó không lên đầu',
-        '2025-10-25 19:39:20.194889',
-        52,
-        1
-    ),
-    (
-        17,
-        'xin chào',
-        '2025-10-25 20:23:18.041872',
-        2,
-        1
-    ),
-    (
-        18,
-        'bạn khỏe chứ',
-        '2025-10-25 20:23:30.517389',
-        2,
-        1
-    ),
-    (
-        19,
-        'tôi hào nè',
-        '2025-10-25 20:24:06.889199',
-        2,
-        1
-    ),
-    (
-        20,
-        'alo',
-        '2025-10-25 20:24:18.409435',
-        2,
-        1
-    ),
-    (
-        21,
-        'bạn khỏe không',
-        '2025-10-25 21:23:53.298376',
-        52,
-        1
-    ),
-    (
-        22,
-        'helo',
-        '2025-10-25 21:24:28.879692',
-        2,
-        1
-    ),
-    (
-        23,
-        'chào',
-        '2025-10-25 21:25:21.244104',
-        2,
-        1
-    ),
-    (
-        24,
-        'alo',
-        '2025-10-25 21:27:54.556278',
-        2,
-        1
-    ),
-    (
-        25,
-        'xin chào',
-        '2025-10-25 21:28:05.220319',
-        52,
-        1
-    ),
-    (
-        26,
-        'bạn có đặt khách sạn không',
-        '2025-10-25 21:30:53.429477',
-        2,
-        1
-    ),
-    (
-        27,
-        'Admin khỏe không',
-        '2025-10-25 21:36:00.443985',
-        1,
-        352
-    ),
-    (
-        28,
-        'Khỏe',
-        '2025-10-25 21:37:45.186924',
-        52,
-        1
-    ),
-    (
-        29,
-        'Admin khỏe không',
-        '2025-10-25 21:38:07.975107',
-        1,
-        2
-    ),
-    (
-        30,
-        'Admin khỏe không',
-        '2025-10-26 09:03:15.768215',
-        1,
-        502
-    ),
-    (
-        31,
-        'Khoe lam',
-        '2025-10-26 09:03:33.986874',
-        502,
-        1
-    ),
-    (
-        32,
-        'Em chao admin',
-        '2025-10-26 09:14:28.659194',
-        1,
-        502
-    ),
-    (
-        33,
-        'helo admin',
-        '2025-10-26 09:15:31.111829',
-        1,
-        502
-    ),
-    (
-        34,
-        'helo em',
-        '2025-10-26 09:15:38.557662',
-        502,
-        1
-    ),
-    (
-        35,
-        'test thu',
-        '2025-10-26 09:16:02.498098',
-        1,
-        502
-    ),
-    (
-        36,
-        'hôm nay là 1 ngày đẹp',
-        '2025-10-26 09:21:34.668442',
-        502,
-        1
-    ),
-    (
-        37,
-        'khách sạn giá bao nhiêu',
-        '2025-10-26 09:22:41.219212',
-        1,
-        502
-    ),
-    (
-        38,
-        '5 xị',
-        '2025-10-26 09:22:47.663844',
-        502,
-        1
-    ),
-    (
-        39,
-        'tiện nghi sạch sẽ',
-        '2025-10-26 09:23:10.775786',
-        502,
-        1
-    ),
-    (
-        40,
-        'nhận được tin nhắn chưa',
-        '2025-10-26 09:28:57.824595',
-        502,
-        1
-    ),
-    (
-        41,
-        'alo nhận được chưa',
-        '2025-10-26 09:30:18.234466',
-        502,
-        1
-    ),
-    (
-        42,
-        'chưa nhận được liền à',
-        '2025-10-26 09:32:23.083924',
-        502,
-        1
-    ),
-    (
-        43,
-        'chưa nhận được',
-        '2025-10-26 09:34:20.515777',
-        1,
-        502
-    ),
-    (
-        44,
-        'rồi h nhận chưa',
-        '2025-10-26 09:34:30.514375',
-        502,
-        1
-    ),
-    (
-        45,
-        'alo',
-        '2025-10-26 09:36:30.121065',
-        502,
-        1
-    ),
-    (
-        46,
-        'chắc nhận được rồi nhỉ',
-        '2025-10-26 09:37:18.518106',
-        502,
-        1
-    ),
-    (
-        47,
-        'alo',
-        '2025-10-26 09:38:41.887667',
-        1,
-        502
-    ),
-    (
-        48,
-        'alo',
-        '2025-10-26 09:38:47.557606',
-        502,
-        1
-    ),
-    (
-        49,
-        'nhận được rồi à',
-        '2025-10-26 09:39:02.852252',
-        502,
-        1
-    ),
-    (
-        50,
-        'đúng rồi',
-        '2025-10-26 09:52:31.345102',
-        1,
-        502
-    ),
-    (
-        51,
-        'vậy thì mừng quá',
-        '2025-10-26 09:52:39.655165',
-        502,
-        1
-    ),
-    (
-        52,
-        'aloalo',
-        '2025-10-26 09:56:01.971247',
-        502,
-        1
-    ),
-    (
-        53,
-        'alo',
-        '2025-10-26 09:58:43.594336',
-        502,
-        502
-    ),
-    (
-        54,
-        'alo',
-        '2025-10-26 10:05:37.395441',
-        1,
-        502
-    ),
-    (
-        55,
-        'alo ban',
-        '2025-10-26 10:22:48.666684',
-        502,
-        1
-    ),
-    (
-        56,
-        'alo',
-        '2025-10-26 10:25:58.910363',
-        1,
-        502
-    ),
-    (
-        57,
-        'alo ',
-        '2025-10-26 10:26:04.821392',
-        502,
-        1
-    ),
-    (
-        58,
-        'alo',
-        '2025-10-26 10:33:27.568153',
-        502,
-        1
-    ),
-    (
-        59,
-        'helo admin',
-        '2025-10-26 10:34:50.391968',
-        1,
-        303
-    ),
-    (
-        60,
-        'helo',
-        '2025-10-30 16:04:44.847619',
-        303,
-        1
-    ),
-    (
-        61,
-        'alo',
-        '2025-10-30 16:05:43.096786',
-        1,
-        303
-    ),
-    (
-        62,
-        'lô gì',
-        '2025-10-30 16:05:55.787866',
-        303,
-        1
-    ),
-    (
-        63,
-        'có phòng nào trống không',
-        '2025-10-30 16:06:28.399390',
-        1,
-        303
-    ),
-    (
-        64,
-        'alo',
-        '2025-10-30 16:06:58.250931',
-        1,
-        502
-    ),
-    (
-        65,
-        'alo',
-        '2025-11-01 17:21:36.558338',
-        502,
-        1
-    ),
-    (
-        66,
-        'alo',
-        '2025-11-01 17:55:50.272284',
-        52,
-        502
-    ),
-    (
-        67,
-        'bạn có nhu cầu đặt phòng không',
-        '2025-11-05 18:22:28.658099',
-        502,
-        1
-    ),
-    (
-        68,
-        'còn á bạn ơi',
-        '2025-11-07 20:00:49.826320',
-        303,
-        1
-    ),
-    (
-        69,
-        'alo',
-        '2025-11-07 20:04:54.461745',
-        1,
-        502
     );
 /*!40000 ALTER TABLE `message` ENABLE KEYS */
 ;
@@ -7450,19 +2811,16 @@ CREATE TABLE `review` (
     `create_at` datetime(6) DEFAULT NULL,
     `feedback` varchar(255) DEFAULT NULL,
     `star` int NOT NULL,
-    `hotel_hotel_id` int DEFAULT NULL,
-    `user_id` int DEFAULT NULL,
     `hotel_id` int DEFAULT NULL,
     `invoice_id` int DEFAULT NULL,
+    `user_id` int DEFAULT NULL,
     PRIMARY KEY (`id`),
-    KEY `FKsla20i6hr9xp4i0i3ml72wmw2` (`hotel_hotel_id`),
-    KEY `FKiyf57dy48lyiftdrf7y87rnxi` (`user_id`),
     KEY `FKi0ly7ivbh8ijdgoi7cwtuoavt` (`hotel_id`),
     KEY `FK9jndgnmv1a90phdj54j012l57` (`invoice_id`),
+    KEY `FKiyf57dy48lyiftdrf7y87rnxi` (`user_id`),
     CONSTRAINT `FK9jndgnmv1a90phdj54j012l57` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`),
     CONSTRAINT `FKi0ly7ivbh8ijdgoi7cwtuoavt` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`hotel_id`),
-    CONSTRAINT `FKiyf57dy48lyiftdrf7y87rnxi` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-    CONSTRAINT `FKsla20i6hr9xp4i0i3ml72wmw2` FOREIGN KEY (`hotel_hotel_id`) REFERENCES `hotel` (`hotel_id`)
+    CONSTRAINT `FKiyf57dy48lyiftdrf7y87rnxi` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */
 ;
@@ -7478,43 +2836,84 @@ INSERT INTO
     `review`
 VALUES (
         1,
-        '2025-09-26 13:02:50.959409',
-        'Khách sạn rất sạch sẽ, nhân viên thân thiện.',
-        5,
-        1,
-        1,
-        NULL,
-        NULL
+        '2025-11-27 10:55:08.653804',
+        'hay tuyệt vời',
+        3,
+        2,
+        23,
+        31
     ),
     (
         2,
-        '2025-09-26 13:03:42.674152',
-        'Nhân viên quá tệ.',
+        '2025-11-27 10:55:22.898563',
+        'tuyệt vời ông mặt trời\n',
+        4,
         2,
-        1,
         2,
-        NULL,
-        NULL
+        31
     ),
     (
-        52,
-        '2025-11-05 15:25:58.671273',
-        'tôi vừa có trải nghiệm tuyệt vời',
-        5,
-        NULL,
-        1,
-        1,
-        1
+        3,
+        '2025-11-27 10:56:42.284820',
+        'view đẹp phong cảnh tốt',
+        4,
+        2,
+        3,
+        32
     ),
     (
-        102,
-        '2025-11-05 18:22:58.264445',
-        'hay xịn và vip',
+        4,
+        '2025-11-27 10:56:50.878295',
+        'chất đấy người ae',
+        4,
+        2,
+        24,
+        32
+    ),
+    (
         5,
-        NULL,
-        1,
-        1,
-        1
+        '2025-11-27 10:57:39.438583',
+        'hay và tuyệt vời',
+        4,
+        2,
+        4,
+        33
+    ),
+    (
+        6,
+        '2025-11-27 10:57:58.671288',
+        'tôi ưa thích cảnh đẹp',
+        4,
+        2,
+        25,
+        33
+    ),
+    (
+        7,
+        '2025-11-27 10:58:46.810516',
+        'thật là tuyệt vời',
+        4,
+        2,
+        7,
+        36
+    ),
+    (
+        8,
+        '2025-11-27 10:58:54.574231',
+        'đỉnh cao khách sạn',
+        5,
+        2,
+        28,
+        36
+    ),
+    (
+        9,
+        '2025-11-27 11:09:57.674557',
+        'xịn xò nha',
+        4,
+        2,
+        29,
+        37
     );
 /*!40000 ALTER TABLE `review` ENABLE KEYS */
 ;
@@ -7542,7 +2941,7 @@ CREATE TABLE `review_seq` (
 LOCK TABLES `review_seq` WRITE;
 /*!40000 ALTER TABLE `review_seq` DISABLE KEYS */
 ;
-INSERT INTO `review_seq` VALUES (201);
+INSERT INTO `review_seq` VALUES (1);
 /*!40000 ALTER TABLE `review_seq` ENABLE KEYS */
 ;
 UNLOCK TABLES;
@@ -7634,6 +3033,7 @@ VALUES ('ADMIN', 'ADD_HOTEL'),
     ('ROOM', 'ADD_ROOM'),
     ('ADMIN', 'ADMIN_STATISTIC'),
     ('CHAT', 'CHAT'),
+    ('USER', 'CHAT'),
     (
         'CUSTOMER',
         'CUSTOMER_STATISTIC'
@@ -7674,16 +3074,16 @@ DROP TABLE IF EXISTS `room`;
 CREATE TABLE `room` (
     `room_id` int NOT NULL,
     `bed_count` int NOT NULL,
-    `room_capacity` int DEFAULT NULL,
+    `bed_room_count` int NOT NULL,
+    `room_area` double NOT NULL,
+    `room_capacity` int NOT NULL,
     `room_create_at` datetime(6) DEFAULT NULL,
     `room_name` varchar(255) NOT NULL,
     `room_price` double NOT NULL,
     `room_type` varchar(255) DEFAULT NULL,
     `room_update_at` datetime(6) DEFAULT NULL,
-    `status` int DEFAULT NULL,
+    `status` int NOT NULL,
     `hotelid` int DEFAULT NULL,
-    `bed_room_count` int NOT NULL,
-    `room_area` double NOT NULL,
     PRIMARY KEY (`room_id`),
     KEY `FK7bt2oc7b3h1cqba9crblkx1c4` (`hotelid`),
     CONSTRAINT `FK7bt2oc7b3h1cqba9crblkx1c4` FOREIGN KEY (`hotelid`) REFERENCES `hotel` (`hotel_id`)
@@ -7702,73 +3102,4707 @@ INSERT INTO
     `room`
 VALUES (
         1,
-        1,
         2,
-        '2025-09-24 03:28:08.417989',
-        'Deluxe Room 101',
-        150,
-        'King Room',
-        '2025-09-24 03:44:28.029632',
-        1,
-        1,
+        2,
+        45,
+        2,
+        '2025-01-04 10:22:51.000000',
+        'Royal Deluxe Room 101',
+        150000,
+        'Presidential Suite',
+        '2025-01-05 12:31:14.000000',
         0,
-        0
+        1
     ),
     (
         2,
         1,
+        1,
+        55,
         2,
-        '2025-10-23 20:38:25.788511',
-        'Deluxe Room 102',
-        200,
-        'King',
-        '2025-10-23 20:38:25.789511',
-        1,
-        1,
+        '2025-01-06 08:11:12.000000',
+        'Grand King Room 102',
+        180000,
+        'Suite',
+        '2025-01-07 14:49:58.000000',
         0,
-        0
+        1
+    ),
+    (
+        3,
+        3,
+        2,
+        70,
+        3,
+        '2025-01-08 09:32:45.000000',
+        'Executive Vip Suite 103',
+        250000,
+        'Premium Deluxe',
+        '2025-01-08 15:18:22.000000',
+        0,
+        1
+    ),
+    (
+        4,
+        2,
+        1,
+        40,
+        2,
+        '2025-01-10 11:25:37.000000',
+        'Premium Standard Room 104',
+        120000,
+        'Royal Suite',
+        '2025-01-11 10:20:45.000000',
+        0,
+        1
+    ),
+    (
+        5,
+        4,
+        3,
+        85,
+        4,
+        '2025-01-12 13:15:22.000000',
+        'Luxury King Room 105',
+        210000,
+        'King',
+        '2025-01-13 09:44:32.000000',
+        0,
+        1
+    ),
+    (
+        6,
+        1,
+        1,
+        35,
+        1,
+        '2025-01-14 08:41:17.000000',
+        'Elegant Standard Room 106',
+        110000,
+        'Deluxe',
+        '2025-01-14 16:21:11.000000',
+        0,
+        1
+    ),
+    (
+        7,
+        2,
+        1,
+        50,
+        2,
+        '2025-01-15 10:28:49.000000',
+        'Classic Deluxe Room 107',
+        140000,
+        'Vip',
+        '2025-01-16 14:16:28.000000',
+        0,
+        1
+    ),
+    (
+        8,
+        3,
+        2,
+        90,
+        3,
+        '2025-01-17 09:54:05.000000',
+        'Imperial Vip Suite 108',
+        260000,
+        'Standard',
+        '2025-01-17 18:22:40.000000',
+        0,
+        1
+    ),
+    (
+        9,
+        1,
+        1,
+        32,
+        1,
+        '2025-01-18 07:45:16.000000',
+        'Serenity Standard Room 109',
+        100000,
+        'Superior',
+        '2025-01-18 19:11:55.000000',
+        0,
+        1
+    ),
+    (
+        10,
+        2,
+        2,
+        60,
+        2,
+        '2025-01-20 11:44:29.000000',
+        'Prestige King Room 110',
+        190000,
+        'Presidential Suite',
+        '2025-01-20 21:33:12.000000',
+        0,
+        1
+    ),
+    (
+        11,
+        3,
+        2,
+        95,
+        3,
+        '2025-01-21 10:29:56.000000',
+        'Diamond Vip Room 201',
+        280000,
+        'Suite',
+        '2025-11-27 10:19:40.725848',
+        1,
+        2
+    ),
+    (
+        12,
+        1,
+        1,
+        48,
+        1,
+        '2025-01-22 08:10:44.000000',
+        'Elegant Deluxe Room 202',
+        160000,
+        'Premium Deluxe',
+        '2025-11-27 10:19:55.688084',
+        1,
+        2
+    ),
+    (
+        13,
+        2,
+        1,
+        38,
+        2,
+        '2025-01-23 09:33:21.000000',
+        'Premium Standard Room 203',
+        115000,
+        'Royal Suite',
+        '2025-11-27 10:20:23.562124',
+        0,
+        2
+    ),
+    (
+        14,
+        4,
+        3,
+        100,
+        4,
+        '2025-01-24 12:41:36.000000',
+        'Royal Vip Suite 204',
+        300000,
+        'Standard',
+        '2025-11-27 10:20:01.552577',
+        1,
+        2
+    ),
+    (
+        15,
+        2,
+        1,
+        58,
+        2,
+        '2025-01-25 09:17:44.000000',
+        'Modern King Room 205',
+        175000,
+        'Deluxe',
+        '2025-01-25 18:44:33.000000',
+        0,
+        2
+    ),
+    (
+        16,
+        1,
+        1,
+        33,
+        1,
+        '2025-01-26 13:45:22.000000',
+        'Cozy Standard Room 206',
+        105000,
+        'Single Room',
+        '2025-11-27 09:34:54.106794',
+        0,
+        2
+    ),
+    (
+        17,
+        3,
+        2,
+        72,
+        3,
+        '2025-01-27 11:40:08.000000',
+        'Luxury Deluxe Room 207',
+        170000,
+        'Standard',
+        '2025-01-27 22:10:18.000000',
+        0,
+        2
+    ),
+    (
+        18,
+        2,
+        2,
+        88,
+        2,
+        '2025-01-28 10:15:19.000000',
+        'Magnolia Vip Suite 208',
+        255000,
+        'Superior',
+        '2025-11-27 10:20:47.869119',
+        1,
+        2
+    ),
+    (
+        19,
+        1,
+        1,
+        57,
+        1,
+        '2025-01-29 07:50:41.000000',
+        'Premium King Room 209',
+        185000,
+        'Presidential Suite',
+        '2025-11-27 09:35:28.881018',
+        0,
+        2
+    ),
+    (
+        20,
+        4,
+        3,
+        78,
+        4,
+        '2025-01-30 12:58:14.000000',
+        'Imperial Deluxe Room 210',
+        165000,
+        'Executive Suite',
+        '2025-11-27 09:35:44.315783',
+        0,
+        2
+    ),
+    (
+        21,
+        2,
+        2,
+        45,
+        2,
+        '2025-10-05 10:12:45.000000',
+        'Deluxe Room 201',
+        320000,
+        'Presidential Suite',
+        '2025-10-05 10:52:12.000000',
+        0,
+        2
+    ),
+    (
+        22,
+        1,
+        1,
+        35,
+        1,
+        '2025-10-06 09:33:21.000000',
+        'Standard Room 202',
+        180000,
+        'Suite',
+        '2025-11-27 10:20:30.898751',
+        1,
+        2
+    ),
+    (
+        23,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-06 14:22:18.000000',
+        'King Room 203',
+        410000,
+        'Premium Deluxe',
+        '2025-10-06 15:40:01.000000',
+        0,
+        2
+    ),
+    (
+        24,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-07 12:19:55.000000',
+        'Vip Room 204',
+        480000,
+        'Royal Suite',
+        '2025-10-07 13:52:30.000000',
+        0,
+        2
+    ),
+    (
+        25,
+        4,
+        3,
+        55,
+        3,
+        '2025-10-07 17:10:33.000000',
+        'Deluxe Room 205',
+        350000,
+        'Suite',
+        '2025-11-27 09:37:07.189982',
+        0,
+        2
+    ),
+    (
+        26,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-08 08:44:12.000000',
+        'Standard Room 206',
+        200000,
+        'Deluxe',
+        '2025-10-08 09:21:42.000000',
+        0,
+        2
+    ),
+    (
+        27,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-08 13:11:39.000000',
+        'King Room 207',
+        395000,
+        'Royal Suite',
+        '2025-11-27 09:38:39.434716',
+        0,
+        2
+    ),
+    (
+        28,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-09 10:33:25.000000',
+        'Vip Room 208',
+        470000,
+        'Standard',
+        '2025-10-09 10:59:14.000000',
+        0,
+        2
+    ),
+    (
+        29,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-09 16:12:08.000000',
+        'Deluxe Room 209',
+        330000,
+        'Superior',
+        '2025-10-09 17:33:19.000000',
+        0,
+        2
+    ),
+    (
+        30,
+        3,
+        2,
+        38,
+        2,
+        '2025-10-10 09:55:42.000000',
+        'Standard Room 210',
+        190000,
+        'Presidential Suite',
+        '2025-10-10 11:01:22.000000',
+        0,
+        2
+    ),
+    (
+        31,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-10 13:30:59.000000',
+        'King Room 211',
+        420000,
+        'Suite',
+        '2025-10-10 14:42:55.000000',
+        0,
+        2
+    ),
+    (
+        32,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-11 09:29:26.000000',
+        'Vip Room 212',
+        500000,
+        'Premium Deluxe',
+        '2025-10-11 10:15:48.000000',
+        0,
+        2
+    ),
+    (
+        33,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-11 15:41:33.000000',
+        'Deluxe Room 213',
+        310000,
+        'Royal Suite',
+        '2025-10-11 16:52:05.000000',
+        0,
+        2
+    ),
+    (
+        34,
+        3,
+        3,
+        37,
+        3,
+        '2025-10-12 11:26:40.000000',
+        'Standard Room 214',
+        170000,
+        'Deluxe',
+        '2025-11-27 09:40:11.165408',
+        0,
+        2
+    ),
+    (
+        35,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-12 17:03:22.000000',
+        'King Room 215',
+        405000,
+        'Deluxe',
+        '2025-10-12 18:17:11.000000',
+        0,
+        2
+    ),
+    (
+        36,
+        1,
+        1,
+        80,
+        1,
+        '2025-10-13 09:14:55.000000',
+        'Vip Room 216',
+        490000,
+        'Single Room',
+        '2025-11-27 09:40:41.070293',
+        0,
+        2
+    ),
+    (
+        37,
+        4,
+        3,
+        58,
+        4,
+        '2025-10-13 15:55:28.000000',
+        'Deluxe Room 217',
+        345000,
+        'Standard',
+        '2025-10-13 16:47:19.000000',
+        0,
+        2
+    ),
+    (
+        38,
+        2,
+        2,
+        36,
+        2,
+        '2025-10-14 08:40:12.000000',
+        'Standard Room 218',
+        160000,
+        'Superior',
+        '2025-10-14 09:23:14.000000',
+        0,
+        2
+    ),
+    (
+        39,
+        3,
+        3,
+        68,
+        3,
+        '2025-10-14 14:18:59.000000',
+        'King Room 219',
+        415000,
+        'Presidential Suite',
+        '2025-10-14 15:09:33.000000',
+        0,
+        2
+    ),
+    (
+        40,
+        1,
+        1,
+        82,
+        1,
+        '2025-10-15 09:53:47.000000',
+        'Vip Room 220',
+        510000,
+        'Suite',
+        '2025-10-15 10:48:26.000000',
+        0,
+        2
+    ),
+    (
+        41,
+        4,
+        3,
+        57,
+        3,
+        '2025-10-15 16:22:10.000000',
+        'Deluxe Room 221',
+        360000,
+        'Premium Deluxe',
+        '2025-10-15 17:35:44.000000',
+        0,
+        2
+    ),
+    (
+        42,
+        2,
+        2,
+        39,
+        2,
+        '2025-10-16 10:32:15.000000',
+        'Standard Room 222',
+        175000,
+        'Royal Suite',
+        '2025-10-16 11:28:19.000000',
+        0,
+        2
+    ),
+    (
+        43,
+        3,
+        2,
+        63,
+        2,
+        '2025-10-16 17:40:09.000000',
+        'King Room 223',
+        400000,
+        'Superior',
+        '2025-11-27 09:41:55.166058',
+        0,
+        2
+    ),
+    (
+        44,
+        1,
+        1,
+        77,
+        1,
+        '2025-10-17 08:29:44.000000',
+        'Vip Room 224',
+        495000,
+        'Vip',
+        '2025-10-17 09:14:37.000000',
+        0,
+        2
+    ),
+    (
+        45,
+        4,
+        3,
+        52,
+        4,
+        '2025-10-17 14:55:33.000000',
+        'Deluxe Room 225',
+        340000,
+        'Deluxe',
+        '2025-10-17 15:40:52.000000',
+        0,
+        2
+    ),
+    (
+        46,
+        2,
+        2,
+        45,
+        2,
+        '2025-10-04 09:12:15.000000',
+        'Deluxe Room 301',
+        55000,
+        'Presidential Suite',
+        '2025-10-04 10:15:22.000000',
+        0,
+        2
+    ),
+    (
+        47,
+        1,
+        1,
+        35,
+        1,
+        '2025-10-04 11:33:42.000000',
+        'Standard Room 302',
+        30000,
+        'Suite',
+        '2025-11-27 10:21:12.368068',
+        1,
+        2
+    ),
+    (
+        48,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-05 08:44:22.000000',
+        'King Room 303',
+        62000,
+        'Premium Deluxe',
+        '2025-10-05 09:50:15.000000',
+        0,
+        2
+    ),
+    (
+        49,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-05 14:12:08.000000',
+        'Vip Room 304',
+        64000,
+        'Royal Suite',
+        '2025-10-05 15:20:33.000000',
+        0,
+        2
+    ),
+    (
+        50,
+        4,
+        3,
+        55,
+        3,
+        '2025-10-06 09:05:44.000000',
+        'Deluxe Room 305',
+        60000,
+        'King',
+        '2025-10-06 09:50:21.000000',
+        0,
+        2
+    ),
+    (
+        51,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-06 11:22:11.000000',
+        'Standard Room 306',
+        32000,
+        'Deluxe',
+        '2025-10-06 12:10:33.000000',
+        0,
+        2
     ),
     (
         52,
-        1,
-        2,
-        '2025-10-23 20:49:23.885657',
-        'Deluxe Room 103',
-        200000,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-07 08:55:44.000000',
+        'King Room 307',
+        63000,
         'Vip',
-        '2025-10-23 20:49:23.885657',
-        1,
-        1,
+        '2025-10-07 09:42:12.000000',
         0,
-        0
+        2
+    ),
+    (
+        53,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-07 14:11:22.000000',
+        'Vip Room 308',
+        65000,
+        'Standard',
+        '2025-10-07 14:59:55.000000',
+        0,
+        2
+    ),
+    (
+        54,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-08 09:33:12.000000',
+        'Deluxe Room 309',
+        58000,
+        'Superior',
+        '2025-10-08 10:20:41.000000',
+        0,
+        2
+    ),
+    (
+        55,
+        3,
+        2,
+        38,
+        2,
+        '2025-10-08 15:12:08.000000',
+        'Standard Room 310',
+        30000,
+        'Presidential Suite',
+        '2025-10-08 16:01:22.000000',
+        0,
+        2
+    ),
+    (
+        56,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-09 08:44:55.000000',
+        'King Room 311',
+        62000,
+        'Suite',
+        '2025-10-09 09:42:55.000000',
+        0,
+        2
+    ),
+    (
+        57,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-09 14:12:22.000000',
+        'Vip Room 312',
+        64500,
+        'Premium Deluxe',
+        '2025-10-09 15:11:33.000000',
+        0,
+        3
+    ),
+    (
+        58,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-10 09:21:33.000000',
+        'Deluxe Room 313',
+        59000,
+        'Royal Suite',
+        '2025-10-10 10:15:05.000000',
+        0,
+        3
+    ),
+    (
+        59,
+        3,
+        3,
+        37,
+        3,
+        '2025-10-10 15:11:40.000000',
+        'Standard Room 314',
+        31000,
+        'King',
+        '2025-10-10 16:01:33.000000',
+        0,
+        3
+    ),
+    (
+        60,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-11 08:44:22.000000',
+        'King Room 315',
+        61500,
+        'Deluxe',
+        '2025-10-11 09:42:12.000000',
+        0,
+        3
+    ),
+    (
+        61,
+        1,
+        1,
+        80,
+        1,
+        '2025-10-11 14:12:55.000000',
+        'Vip Room 316',
+        65000,
+        'Vip',
+        '2025-10-11 15:31:29.000000',
+        0,
+        3
+    ),
+    (
+        62,
+        4,
+        3,
+        58,
+        4,
+        '2025-10-12 08:55:28.000000',
+        'Deluxe Room 317',
+        60000,
+        'Standard',
+        '2025-10-12 09:47:19.000000',
+        0,
+        3
+    ),
+    (
+        63,
+        2,
+        2,
+        36,
+        2,
+        '2025-10-12 14:40:12.000000',
+        'Standard Room 318',
+        32000,
+        'Superior',
+        '2025-10-12 15:23:14.000000',
+        0,
+        3
+    ),
+    (
+        64,
+        2,
+        2,
+        45,
+        2,
+        '2025-10-05 09:10:15.000000',
+        'Deluxe Room 401',
+        300000,
+        'Presidential Suite',
+        '2025-10-05 10:12:22.000000',
+        0,
+        3
+    ),
+    (
+        65,
+        1,
+        1,
+        35,
+        1,
+        '2025-10-05 11:25:33.000000',
+        'Standard Room 402',
+        320000,
+        'Suite',
+        '2025-10-05 12:10:55.000000',
+        0,
+        3
+    ),
+    (
+        66,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-06 08:44:22.000000',
+        'King Room 403',
+        340000,
+        'Premium Deluxe',
+        '2025-10-06 09:50:10.000000',
+        0,
+        3
+    ),
+    (
+        67,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-06 14:12:08.000000',
+        'Vip Room 404',
+        345000,
+        'Royal Suite',
+        '2025-10-06 15:20:33.000000',
+        0,
+        3
+    ),
+    (
+        68,
+        4,
+        3,
+        55,
+        3,
+        '2025-10-07 09:05:44.000000',
+        'Deluxe Room 405',
+        330000,
+        'King',
+        '2025-10-07 09:50:21.000000',
+        0,
+        3
+    ),
+    (
+        69,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-07 11:22:11.000000',
+        'Standard Room 406',
+        310000,
+        'Deluxe',
+        '2025-10-07 12:10:33.000000',
+        0,
+        3
+    ),
+    (
+        70,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-08 08:55:44.000000',
+        'King Room 407',
+        335000,
+        'Vip',
+        '2025-10-08 09:42:12.000000',
+        0,
+        4
+    ),
+    (
+        71,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-08 14:11:22.000000',
+        'Vip Room 408',
+        345000,
+        'Standard',
+        '2025-10-08 14:59:55.000000',
+        0,
+        4
+    ),
+    (
+        72,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-09 09:33:12.000000',
+        'Deluxe Room 409',
+        320000,
+        'Superior',
+        '2025-10-09 10:20:41.000000',
+        0,
+        4
+    ),
+    (
+        73,
+        3,
+        2,
+        38,
+        2,
+        '2025-10-09 15:12:08.000000',
+        'Standard Room 410',
+        300000,
+        'Presidential Suite',
+        '2025-10-09 16:01:22.000000',
+        0,
+        4
+    ),
+    (
+        74,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-10 08:44:55.000000',
+        'King Room 411',
+        340000,
+        'Suite',
+        '2025-10-10 09:42:55.000000',
+        0,
+        4
+    ),
+    (
+        75,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-10 14:12:22.000000',
+        'Vip Room 412',
+        345000,
+        'Premium Deluxe',
+        '2025-10-10 15:11:33.000000',
+        0,
+        4
+    ),
+    (
+        76,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-11 09:21:33.000000',
+        'Deluxe Room 413',
+        325000,
+        'Royal Suite',
+        '2025-10-11 10:15:05.000000',
+        0,
+        4
+    ),
+    (
+        77,
+        3,
+        3,
+        37,
+        3,
+        '2025-10-11 15:11:40.000000',
+        'Standard Room 414',
+        310000,
+        'King',
+        '2025-10-11 16:01:33.000000',
+        0,
+        4
+    ),
+    (
+        78,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-12 08:44:22.000000',
+        'King Room 415',
+        335000,
+        'Deluxe',
+        '2025-10-12 09:42:12.000000',
+        0,
+        4
+    ),
+    (
+        79,
+        1,
+        1,
+        80,
+        1,
+        '2025-10-12 14:12:55.000000',
+        'Vip Room 416',
+        345000,
+        'Vip',
+        '2025-10-12 15:31:29.000000',
+        0,
+        4
+    ),
+    (
+        80,
+        4,
+        3,
+        58,
+        4,
+        '2025-10-13 08:55:28.000000',
+        'Deluxe Room 417',
+        330000,
+        'Standard',
+        '2025-10-13 09:47:19.000000',
+        0,
+        4
+    ),
+    (
+        81,
+        2,
+        2,
+        36,
+        2,
+        '2025-10-13 14:40:12.000000',
+        'Standard Room 418',
+        315000,
+        'Superior',
+        '2025-10-13 15:23:14.000000',
+        0,
+        4
+    ),
+    (
+        82,
+        3,
+        3,
+        68,
+        3,
+        '2025-10-14 09:33:12.000000',
+        'King Room 419',
+        340000,
+        'Presidential Suite',
+        '2025-10-14 10:20:41.000000',
+        0,
+        4
+    ),
+    (
+        83,
+        2,
+        2,
+        72,
+        2,
+        '2025-10-14 15:12:08.000000',
+        'Vip Room 420',
+        345000,
+        'Suite',
+        '2025-10-14 16:01:22.000000',
+        0,
+        4
+    ),
+    (
+        84,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-15 08:44:55.000000',
+        'Deluxe Room 421',
+        320000,
+        'Premium Deluxe',
+        '2025-10-15 09:42:55.000000',
+        0,
+        4
+    ),
+    (
+        85,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-15 14:12:22.000000',
+        'Standard Room 422',
+        300000,
+        'Royal Suite',
+        '2025-10-15 15:11:33.000000',
+        0,
+        4
+    ),
+    (
+        86,
+        2,
+        2,
+        45,
+        2,
+        '2025-10-07 09:10:15.000000',
+        'Deluxe Room 501',
+        300000,
+        'Presidential Suite',
+        '2025-10-07 10:12:22.000000',
+        0,
+        5
+    ),
+    (
+        87,
+        1,
+        1,
+        35,
+        1,
+        '2025-10-07 11:25:33.000000',
+        'Standard Room 502',
+        310000,
+        'Presidential Suite',
+        '2025-10-07 12:10:55.000000',
+        0,
+        5
+    ),
+    (
+        88,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-08 08:44:22.000000',
+        'King Room 503',
+        320000,
+        'Presidential Suite',
+        '2025-10-08 09:50:10.000000',
+        0,
+        5
+    ),
+    (
+        89,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-08 14:12:08.000000',
+        'Vip Room 504',
+        325000,
+        'Royal Suite',
+        '2025-10-08 15:20:33.000000',
+        0,
+        5
+    ),
+    (
+        90,
+        4,
+        3,
+        55,
+        3,
+        '2025-10-09 09:05:44.000000',
+        'Deluxe Room 505',
+        310000,
+        'Royal Suite',
+        '2025-10-09 09:50:21.000000',
+        0,
+        5
+    ),
+    (
+        91,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-09 11:22:11.000000',
+        'Standard Room 506',
+        305000,
+        'Royal Suite',
+        '2025-10-09 12:10:33.000000',
+        0,
+        5
+    ),
+    (
+        92,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-10 08:55:44.000000',
+        'King Room 507',
+        320000,
+        'Suite',
+        '2025-10-10 09:42:12.000000',
+        0,
+        5
+    ),
+    (
+        93,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-10 14:11:22.000000',
+        'Vip Room 508',
+        325000,
+        'Suite',
+        '2025-10-10 14:59:55.000000',
+        0,
+        5
+    ),
+    (
+        94,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-11 09:33:12.000000',
+        'Deluxe Room 509',
+        310000,
+        'Suite',
+        '2025-10-11 10:20:41.000000',
+        0,
+        5
+    ),
+    (
+        95,
+        3,
+        2,
+        38,
+        2,
+        '2025-10-11 15:12:08.000000',
+        'Standard Room 510',
+        300000,
+        'Premium Deluxe',
+        '2025-10-11 16:01:22.000000',
+        0,
+        5
+    ),
+    (
+        96,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-12 08:44:55.000000',
+        'King Room 511',
+        320000,
+        'Premium Deluxe',
+        '2025-10-12 09:42:55.000000',
+        0,
+        5
+    ),
+    (
+        97,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-12 14:12:22.000000',
+        'Vip Room 512',
+        325000,
+        'Premium Deluxe',
+        '2025-10-12 15:11:33.000000',
+        0,
+        5
+    ),
+    (
+        98,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-13 09:21:33.000000',
+        'Deluxe Room 513',
+        310000,
+        'Deluxe',
+        '2025-10-13 10:15:05.000000',
+        0,
+        5
+    ),
+    (
+        99,
+        3,
+        3,
+        37,
+        3,
+        '2025-10-13 15:11:40.000000',
+        'Standard Room 514',
+        300000,
+        'Deluxe',
+        '2025-10-13 16:01:33.000000',
+        0,
+        5
+    ),
+    (
+        100,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-14 08:44:22.000000',
+        'King Room 515',
+        320000,
+        'Deluxe',
+        '2025-10-14 09:42:12.000000',
+        0,
+        5
+    ),
+    (
+        101,
+        1,
+        1,
+        80,
+        1,
+        '2025-10-14 14:12:55.000000',
+        'Vip Room 516',
+        325000,
+        'Deluxe',
+        '2025-10-14 15:31:29.000000',
+        0,
+        5
     ),
     (
         102,
         4,
-        1,
-        '2025-10-30 16:13:34.953330',
-        'HotelVip 101',
-        320000,
-        'Vip',
-        '2025-10-30 16:13:34.953330',
-        1,
-        1,
+        3,
+        58,
+        4,
+        '2025-10-15 08:55:28.000000',
+        'Deluxe Room 517',
+        310000,
+        'King',
+        '2025-10-15 09:47:19.000000',
+        0,
+        5
+    ),
+    (
+        103,
         2,
-        40
+        2,
+        36,
+        2,
+        '2025-10-15 14:40:12.000000',
+        'Standard Room 518',
+        305000,
+        'King',
+        '2025-10-15 15:23:14.000000',
+        0,
+        5
+    ),
+    (
+        104,
+        3,
+        3,
+        68,
+        3,
+        '2025-10-16 09:33:12.000000',
+        'King Room 519',
+        320000,
+        'King',
+        '2025-10-16 10:20:41.000000',
+        0,
+        5
+    ),
+    (
+        105,
+        2,
+        2,
+        72,
+        2,
+        '2025-10-16 15:12:08.000000',
+        'Vip Room 520',
+        325000,
+        'King',
+        '2025-10-16 16:01:22.000000',
+        0,
+        6
+    ),
+    (
+        106,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-17 08:44:55.000000',
+        'Deluxe Room 521',
+        310000,
+        'Superior',
+        '2025-10-17 09:42:55.000000',
+        0,
+        6
+    ),
+    (
+        107,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-17 14:12:22.000000',
+        'Standard Room 522',
+        300000,
+        'Superior',
+        '2025-10-17 15:11:33.000000',
+        0,
+        6
+    ),
+    (
+        108,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-18 09:21:33.000000',
+        'King Room 523',
+        320000,
+        'Superior',
+        '2025-10-18 10:15:05.000000',
+        0,
+        6
+    ),
+    (
+        109,
+        2,
+        2,
+        72,
+        2,
+        '2025-10-18 15:11:40.000000',
+        'Vip Room 524',
+        325000,
+        'Vip',
+        '2025-10-18 16:01:33.000000',
+        0,
+        6
+    ),
+    (
+        110,
+        1,
+        1,
+        45,
+        1,
+        '2025-10-19 08:44:22.000000',
+        'Deluxe Room 525',
+        310000,
+        'Vip',
+        '2025-10-19 09:42:12.000000',
+        0,
+        6
+    ),
+    (
+        111,
+        2,
+        2,
+        38,
+        2,
+        '2025-10-19 14:12:55.000000',
+        'Standard Room 526',
+        305000,
+        'Vip',
+        '2025-10-19 15:31:29.000000',
+        0,
+        6
+    ),
+    (
+        112,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-20 08:55:28.000000',
+        'King Room 527',
+        320000,
+        'Standard',
+        '2025-10-20 09:47:19.000000',
+        0,
+        6
+    ),
+    (
+        113,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-20 14:40:12.000000',
+        'Vip Room 528',
+        325000,
+        'Standard',
+        '2025-10-20 15:23:14.000000',
+        0,
+        6
+    ),
+    (
+        114,
+        2,
+        2,
+        45,
+        2,
+        '2025-10-07 12:30:10.000000',
+        'Deluxe Room 601',
+        300000,
+        'Presidential Suite',
+        '2025-10-07 13:22:15.000000',
+        0,
+        6
+    ),
+    (
+        115,
+        1,
+        1,
+        35,
+        1,
+        '2025-10-07 14:15:22.000000',
+        'Standard Room 602',
+        290000,
+        'Royal Suite',
+        '2025-10-07 15:10:33.000000',
+        0,
+        6
+    ),
+    (
+        116,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-08 09:10:44.000000',
+        'King Room 603',
+        305000,
+        'Suite',
+        '2025-10-08 10:20:11.000000',
+        0,
+        6
+    ),
+    (
+        117,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-08 11:45:33.000000',
+        'Vip Room 604',
+        308000,
+        'Premium Deluxe',
+        '2025-10-08 12:50:22.000000',
+        0,
+        6
+    ),
+    (
+        118,
+        4,
+        3,
+        55,
+        3,
+        '2025-10-08 14:22:11.000000',
+        'Deluxe Room 605',
+        300000,
+        'Deluxe',
+        '2025-10-08 15:10:44.000000',
+        0,
+        6
+    ),
+    (
+        119,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-09 08:44:22.000000',
+        'Standard Room 606',
+        295000,
+        'King',
+        '2025-10-09 09:35:10.000000',
+        0,
+        6
+    ),
+    (
+        120,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-09 11:22:33.000000',
+        'King Room 607',
+        305000,
+        'Superior',
+        '2025-10-09 12:15:22.000000',
+        0,
+        6
+    ),
+    (
+        121,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-09 14:12:08.000000',
+        'Vip Room 608',
+        308000,
+        'Vip',
+        '2025-10-09 15:00:44.000000',
+        0,
+        6
+    ),
+    (
+        122,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-10 08:55:22.000000',
+        'Deluxe Room 609',
+        300000,
+        'Standard',
+        '2025-10-10 09:42:33.000000',
+        0,
+        6
+    ),
+    (
+        123,
+        3,
+        2,
+        38,
+        2,
+        '2025-10-10 11:33:11.000000',
+        'Standard Room 610',
+        290000,
+        'Presidential Suite',
+        '2025-10-10 12:22:44.000000',
+        0,
+        6
+    ),
+    (
+        124,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-10 14:40:22.000000',
+        'King Room 611',
+        305000,
+        'Royal Suite',
+        '2025-10-10 15:30:11.000000',
+        0,
+        6
+    ),
+    (
+        125,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-11 08:44:55.000000',
+        'Vip Room 612',
+        308000,
+        'Suite',
+        '2025-10-11 09:42:22.000000',
+        0,
+        6
+    ),
+    (
+        126,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-11 14:12:33.000000',
+        'Deluxe Room 613',
+        300000,
+        'Premium Deluxe',
+        '2025-10-11 15:11:44.000000',
+        0,
+        6
+    ),
+    (
+        127,
+        3,
+        3,
+        37,
+        3,
+        '2025-10-12 08:55:44.000000',
+        'Standard Room 614',
+        295000,
+        'Deluxe',
+        '2025-10-12 09:50:22.000000',
+        0,
+        6
+    ),
+    (
+        128,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-12 14:40:12.000000',
+        'King Room 615',
+        305000,
+        'Superior',
+        '2025-10-12 15:20:33.000000',
+        0,
+        6
+    ),
+    (
+        129,
+        2,
+        2,
+        45,
+        2,
+        '2025-10-09 08:22:11.000000',
+        'Presidential Suite 701',
+        400000,
+        'Presidential Suite',
+        '2025-10-09 09:10:22.000000',
+        0,
+        7
+    ),
+    (
+        130,
+        1,
+        1,
+        38,
+        1,
+        '2025-10-09 10:11:33.000000',
+        'Suite 702',
+        390000,
+        'Suite',
+        '2025-10-09 11:05:44.000000',
+        0,
+        7
+    ),
+    (
+        131,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-09 12:22:11.000000',
+        'Premium Deluxe 703',
+        410000,
+        'Premium Deluxe',
+        '2025-10-09 13:15:22.000000',
+        0,
+        7
+    ),
+    (
+        132,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-09 14:33:22.000000',
+        'Royal Suite 704',
+        405000,
+        'Royal Suite',
+        '2025-10-09 15:20:33.000000',
+        0,
+        7
+    ),
+    (
+        133,
+        4,
+        3,
+        50,
+        3,
+        '2025-10-10 08:44:11.000000',
+        'King 705',
+        355000,
+        'King',
+        '2025-10-10 09:30:22.000000',
+        0,
+        7
+    ),
+    (
+        134,
+        2,
+        2,
+        42,
+        2,
+        '2025-10-10 10:50:44.000000',
+        'Deluxe 706',
+        350000,
+        'Deluxe',
+        '2025-10-10 11:40:33.000000',
+        0,
+        7
+    ),
+    (
+        135,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-10 12:22:11.000000',
+        'Vip 707',
+        352000,
+        'Vip',
+        '2025-10-10 13:15:22.000000',
+        0,
+        7
+    ),
+    (
+        136,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-10 14:11:33.000000',
+        'Standard 708',
+        340000,
+        'Standard',
+        '2025-10-10 15:00:44.000000',
+        0,
+        7
+    ),
+    (
+        137,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-11 08:22:11.000000',
+        'Superior 709',
+        360000,
+        'Superior',
+        '2025-10-11 09:10:22.000000',
+        0,
+        7
+    ),
+    (
+        138,
+        3,
+        2,
+        40,
+        2,
+        '2025-10-11 10:33:22.000000',
+        'Presidential Suite 710',
+        400000,
+        'Presidential Suite',
+        '2025-10-11 11:25:33.000000',
+        0,
+        7
+    ),
+    (
+        139,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-11 12:44:11.000000',
+        'Suite 711',
+        390000,
+        'Suite',
+        '2025-10-11 13:30:22.000000',
+        0,
+        7
+    ),
+    (
+        140,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-11 14:22:33.000000',
+        'Premium Deluxe 712',
+        410000,
+        'Premium Deluxe',
+        '2025-10-11 15:10:44.000000',
+        0,
+        7
+    ),
+    (
+        141,
+        2,
+        2,
+        52,
+        2,
+        '2025-10-12 08:10:11.000000',
+        'Royal Suite 713',
+        405000,
+        'Royal Suite',
+        '2025-10-12 09:00:22.000000',
+        0,
+        7
+    ),
+    (
+        142,
+        3,
+        3,
+        39,
+        3,
+        '2025-10-12 10:11:33.000000',
+        'King 714',
+        355000,
+        'King',
+        '2025-10-12 11:05:44.000000',
+        0,
+        7
+    ),
+    (
+        143,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-12 12:22:11.000000',
+        'Deluxe 715',
+        350000,
+        'Deluxe',
+        '2025-10-12 13:15:22.000000',
+        0,
+        7
+    ),
+    (
+        144,
+        1,
+        1,
+        77,
+        1,
+        '2025-10-12 14:33:22.000000',
+        'Vip 716',
+        352000,
+        'Vip',
+        '2025-10-12 15:20:33.000000',
+        0,
+        7
+    ),
+    (
+        145,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-13 08:44:11.000000',
+        'Standard 717',
+        340000,
+        'Standard',
+        '2025-10-13 09:30:22.000000',
+        0,
+        7
+    ),
+    (
+        146,
+        3,
+        3,
+        41,
+        3,
+        '2025-10-13 10:50:44.000000',
+        'Superior 718',
+        360000,
+        'Superior',
+        '2025-10-13 11:40:33.000000',
+        0,
+        7
+    ),
+    (
+        147,
+        4,
+        3,
+        68,
+        3,
+        '2025-10-13 12:22:11.000000',
+        'Presidential Suite 719',
+        400000,
+        'Presidential Suite',
+        '2025-10-13 13:15:22.000000',
+        0,
+        7
+    ),
+    (
+        148,
+        2,
+        2,
+        56,
+        2,
+        '2025-10-13 14:11:33.000000',
+        'Suite 720',
+        390000,
+        'Suite',
+        '2025-10-13 15:00:44.000000',
+        0,
+        7
+    ),
+    (
+        149,
+        1,
+        1,
+        49,
+        1,
+        '2025-10-14 08:22:11.000000',
+        'Premium Deluxe 721',
+        410000,
+        'Premium Deluxe',
+        '2025-10-14 09:10:22.000000',
+        0,
+        7
+    ),
+    (
+        150,
+        2,
+        2,
+        42,
+        2,
+        '2025-10-14 10:33:22.000000',
+        'Royal Suite 722',
+        405000,
+        'Royal Suite',
+        '2025-10-14 11:25:33.000000',
+        0,
+        7
+    ),
+    (
+        151,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-14 12:44:11.000000',
+        'King 723',
+        355000,
+        'King',
+        '2025-10-14 13:30:22.000000',
+        0,
+        7
     ),
     (
         152,
+        2,
+        2,
+        58,
+        2,
+        '2025-10-14 14:22:33.000000',
+        'Deluxe 724',
+        350000,
+        'Deluxe',
+        '2025-10-14 15:10:44.000000',
+        0,
+        7
+    ),
+    (
+        153,
         1,
         1,
-        '2025-11-05 15:08:14.218442',
-        'Hotel Vip 103',
-        30,
+        47,
+        1,
+        '2025-10-15 08:10:11.000000',
+        'Vip 725',
+        352000,
         'Vip',
-        '2025-11-05 15:08:14.218442',
+        '2025-10-15 09:00:22.000000',
+        0,
+        8
+    ),
+    (
+        154,
+        2,
+        2,
+        40,
+        2,
+        '2025-10-15 10:11:33.000000',
+        'Standard 726',
+        340000,
+        'Standard',
+        '2025-10-15 11:05:44.000000',
+        0,
+        8
+    ),
+    (
+        155,
+        3,
+        3,
+        70,
+        3,
+        '2025-10-15 12:22:11.000000',
+        'Superior 727',
+        360000,
+        'Superior',
+        '2025-10-15 13:15:22.000000',
+        0,
+        8
+    ),
+    (
+        156,
+        4,
+        3,
+        75,
+        4,
+        '2025-10-15 14:33:22.000000',
+        'Presidential Suite 728',
+        400000,
+        'Presidential Suite',
+        '2025-10-15 15:20:33.000000',
+        0,
+        8
+    ),
+    (
+        157,
+        2,
+        2,
+        53,
+        2,
+        '2025-10-16 08:44:11.000000',
+        'Suite 729',
+        390000,
+        'Suite',
+        '2025-10-16 09:30:22.000000',
+        0,
+        8
+    ),
+    (
+        158,
+        3,
+        3,
+        41,
+        3,
+        '2025-10-16 10:50:44.000000',
+        'Premium Deluxe 730',
+        410000,
+        'Premium Deluxe',
+        '2025-10-16 11:40:33.000000',
+        0,
+        8
+    ),
+    (
+        159,
+        2,
+        2,
+        45,
+        2,
+        '2025-10-01 08:22:11.000000',
+        'Presidential Suite 801',
+        400000,
+        'Presidential Suite',
+        '2025-10-01 09:10:22.000000',
+        0,
+        8
+    ),
+    (
+        160,
         1,
         1,
+        38,
         1,
-        100
+        '2025-10-01 10:11:33.000000',
+        'Suite 802',
+        390000,
+        'Suite',
+        '2025-10-01 11:05:44.000000',
+        0,
+        8
+    ),
+    (
+        161,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-01 12:22:11.000000',
+        'Premium Deluxe 803',
+        410000,
+        'Premium Deluxe',
+        '2025-10-01 13:15:22.000000',
+        0,
+        8
+    ),
+    (
+        162,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-01 14:33:22.000000',
+        'Royal Suite 804',
+        405000,
+        'Royal Suite',
+        '2025-10-01 15:20:33.000000',
+        0,
+        8
+    ),
+    (
+        163,
+        4,
+        3,
+        50,
+        3,
+        '2025-10-02 08:44:11.000000',
+        'King 805',
+        355000,
+        'King',
+        '2025-10-02 09:30:22.000000',
+        0,
+        8
+    ),
+    (
+        164,
+        2,
+        2,
+        42,
+        2,
+        '2025-10-02 10:50:44.000000',
+        'Deluxe 806',
+        350000,
+        'Deluxe',
+        '2025-10-02 11:40:33.000000',
+        0,
+        8
+    ),
+    (
+        165,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-02 12:22:11.000000',
+        'Vip 807',
+        352000,
+        'Vip',
+        '2025-10-02 13:15:22.000000',
+        0,
+        8
+    ),
+    (
+        166,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-02 14:11:33.000000',
+        'Standard 808',
+        340000,
+        'Standard',
+        '2025-10-02 15:00:44.000000',
+        0,
+        8
+    ),
+    (
+        167,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-03 08:22:11.000000',
+        'Superior 809',
+        360000,
+        'Superior',
+        '2025-10-03 09:10:22.000000',
+        0,
+        8
+    ),
+    (
+        168,
+        3,
+        2,
+        40,
+        2,
+        '2025-10-03 10:33:22.000000',
+        'Presidential Suite 810',
+        400000,
+        'Presidential Suite',
+        '2025-10-03 11:25:33.000000',
+        0,
+        8
+    ),
+    (
+        169,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-03 12:44:11.000000',
+        'Suite 811',
+        390000,
+        'Suite',
+        '2025-10-03 13:30:22.000000',
+        0,
+        8
+    ),
+    (
+        170,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-03 14:22:33.000000',
+        'Premium Deluxe 812',
+        410000,
+        'Premium Deluxe',
+        '2025-10-03 15:10:44.000000',
+        0,
+        8
+    ),
+    (
+        171,
+        2,
+        2,
+        52,
+        2,
+        '2025-10-04 08:10:11.000000',
+        'Royal Suite 813',
+        405000,
+        'Royal Suite',
+        '2025-10-04 09:00:22.000000',
+        0,
+        8
+    ),
+    (
+        172,
+        3,
+        3,
+        39,
+        3,
+        '2025-10-04 10:11:33.000000',
+        'King 814',
+        355000,
+        'King',
+        '2025-10-04 11:05:44.000000',
+        0,
+        8
+    ),
+    (
+        173,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-04 12:22:11.000000',
+        'Deluxe 815',
+        350000,
+        'Deluxe',
+        '2025-10-04 13:15:22.000000',
+        0,
+        8
+    ),
+    (
+        174,
+        1,
+        1,
+        77,
+        1,
+        '2025-10-04 14:33:22.000000',
+        'Vip 816',
+        352000,
+        'Vip',
+        '2025-10-04 15:20:33.000000',
+        0,
+        8
+    ),
+    (
+        175,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-05 08:44:11.000000',
+        'Standard 817',
+        340000,
+        'Standard',
+        '2025-10-05 09:30:22.000000',
+        0,
+        8
+    ),
+    (
+        176,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-02 17:00:11.000000',
+        'Presidential Suite 901',
+        400000,
+        'Presidential Suite',
+        '2025-10-02 17:50:22.000000',
+        0,
+        9
+    ),
+    (
+        177,
+        1,
+        1,
+        40,
+        1,
+        '2025-10-02 18:10:33.000000',
+        'Suite 902',
+        390000,
+        'Suite',
+        '2025-10-02 19:05:44.000000',
+        0,
+        9
+    ),
+    (
+        178,
+        3,
+        3,
+        60,
+        3,
+        '2025-10-02 20:22:11.000000',
+        'Premium Deluxe 903',
+        410000,
+        'Premium Deluxe',
+        '2025-10-02 21:15:22.000000',
+        0,
+        9
+    ),
+    (
+        179,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-03 08:33:22.000000',
+        'Royal Suite 904',
+        405000,
+        'Royal Suite',
+        '2025-10-03 09:20:33.000000',
+        0,
+        9
+    ),
+    (
+        180,
+        4,
+        3,
+        50,
+        3,
+        '2025-10-03 10:44:11.000000',
+        'King 905',
+        355000,
+        'King',
+        '2025-10-03 11:30:22.000000',
+        0,
+        9
+    ),
+    (
+        181,
+        2,
+        2,
+        42,
+        2,
+        '2025-10-03 12:50:44.000000',
+        'Deluxe 906',
+        350000,
+        'Deluxe',
+        '2025-10-03 13:40:33.000000',
+        0,
+        9
+    ),
+    (
+        182,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-03 14:22:11.000000',
+        'Vip 907',
+        352000,
+        'Vip',
+        '2025-10-03 15:15:22.000000',
+        0,
+        9
+    ),
+    (
+        183,
+        1,
+        1,
+        75,
+        1,
+        '2025-10-03 16:11:33.000000',
+        'Standard 908',
+        340000,
+        'Standard',
+        '2025-10-03 17:00:44.000000',
+        0,
+        9
+    ),
+    (
+        184,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-04 08:22:11.000000',
+        'Superior 909',
+        360000,
+        'Superior',
+        '2025-10-04 09:10:22.000000',
+        0,
+        9
+    ),
+    (
+        185,
+        3,
+        2,
+        40,
+        2,
+        '2025-10-04 10:33:22.000000',
+        'Presidential Suite 910',
+        400000,
+        'Presidential Suite',
+        '2025-10-04 11:25:33.000000',
+        0,
+        9
+    ),
+    (
+        186,
+        4,
+        3,
+        70,
+        4,
+        '2025-10-04 12:44:11.000000',
+        'Suite 911',
+        390000,
+        'Suite',
+        '2025-10-04 13:30:22.000000',
+        0,
+        9
+    ),
+    (
+        187,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-04 14:22:33.000000',
+        'Premium Deluxe 912',
+        410000,
+        'Premium Deluxe',
+        '2025-10-04 15:10:44.000000',
+        0,
+        9
+    ),
+    (
+        188,
+        2,
+        2,
+        52,
+        2,
+        '2025-10-05 08:10:11.000000',
+        'Royal Suite 913',
+        405000,
+        'Royal Suite',
+        '2025-10-05 09:00:22.000000',
+        0,
+        9
+    ),
+    (
+        189,
+        3,
+        3,
+        39,
+        3,
+        '2025-10-05 10:11:33.000000',
+        'King 914',
+        355000,
+        'King',
+        '2025-10-05 11:05:44.000000',
+        0,
+        9
+    ),
+    (
+        190,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-05 12:22:11.000000',
+        'Deluxe 915',
+        350000,
+        'Deluxe',
+        '2025-10-05 13:15:22.000000',
+        0,
+        9
+    ),
+    (
+        191,
+        1,
+        1,
+        77,
+        1,
+        '2025-10-05 14:33:22.000000',
+        'Vip 916',
+        352000,
+        'Vip',
+        '2025-10-05 15:20:33.000000',
+        0,
+        9
+    ),
+    (
+        192,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-06 08:44:11.000000',
+        'Standard 917',
+        340000,
+        'Standard',
+        '2025-10-06 09:30:22.000000',
+        0,
+        9
+    ),
+    (
+        193,
+        3,
+        3,
+        42,
+        3,
+        '2025-10-06 10:50:44.000000',
+        'Superior 918',
+        360000,
+        'Superior',
+        '2025-10-06 11:40:33.000000',
+        0,
+        9
+    ),
+    (
+        194,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-06 12:22:11.000000',
+        'Presidential Suite 919',
+        400000,
+        'Presidential Suite',
+        '2025-10-06 13:15:22.000000',
+        0,
+        9
+    ),
+    (
+        195,
+        1,
+        1,
+        78,
+        1,
+        '2025-10-06 14:33:22.000000',
+        'Suite 920',
+        390000,
+        'Suite',
+        '2025-10-06 15:20:33.000000',
+        0,
+        9
+    ),
+    (
+        196,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-07 08:44:11.000000',
+        'Premium Deluxe 921',
+        410000,
+        'Premium Deluxe',
+        '2025-10-07 09:30:22.000000',
+        0,
+        9
+    ),
+    (
+        197,
+        3,
+        3,
+        42,
+        3,
+        '2025-10-07 10:50:44.000000',
+        'Royal Suite 922',
+        405000,
+        'Royal Suite',
+        '2025-10-07 11:40:33.000000',
+        0,
+        9
+    ),
+    (
+        198,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-07 12:22:11.000000',
+        'King 923',
+        355000,
+        'King',
+        '2025-10-07 13:15:22.000000',
+        0,
+        9
+    ),
+    (
+        199,
+        1,
+        1,
+        77,
+        1,
+        '2025-10-07 14:33:22.000000',
+        'Deluxe 924',
+        350000,
+        'Deluxe',
+        '2025-10-07 15:20:33.000000',
+        0,
+        9
+    ),
+    (
+        200,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-08 08:44:11.000000',
+        'Vip 925',
+        352000,
+        'Vip',
+        '2025-10-08 09:30:22.000000',
+        0,
+        9
+    ),
+    (
+        201,
+        3,
+        3,
+        42,
+        3,
+        '2025-10-08 10:50:44.000000',
+        'Standard 926',
+        340000,
+        'Standard',
+        '2025-10-08 11:40:33.000000',
+        0,
+        9
+    ),
+    (
+        202,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-08 12:22:11.000000',
+        'Superior 927',
+        360000,
+        'Superior',
+        '2025-10-08 13:15:22.000000',
+        0,
+        9
+    ),
+    (
+        203,
+        2,
+        1,
+        55,
+        2,
+        '2025-10-03 16:00:11.000000',
+        'Presidential Suite 1001',
+        400000,
+        'Presidential Suite',
+        '2025-10-03 16:50:22.000000',
+        0,
+        10
+    ),
+    (
+        204,
+        1,
+        2,
+        42,
+        1,
+        '2025-10-03 17:10:33.000000',
+        'Suite 1002',
+        390000,
+        'Suite',
+        '2025-10-03 18:05:44.000000',
+        0,
+        10
+    ),
+    (
+        205,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-03 19:22:11.000000',
+        'Premium Deluxe 1003',
+        410000,
+        'Premium Deluxe',
+        '2025-10-03 20:15:22.000000',
+        0,
+        10
+    ),
+    (
+        206,
+        2,
+        4,
+        60,
+        2,
+        '2025-10-04 08:33:22.000000',
+        'Royal Suite 1004',
+        405000,
+        'Royal Suite',
+        '2025-10-04 09:20:33.000000',
+        0,
+        10
+    ),
+    (
+        207,
+        4,
+        5,
+        50,
+        3,
+        '2025-10-04 10:44:11.000000',
+        'King 1005',
+        355000,
+        'King',
+        '2025-10-04 11:30:22.000000',
+        0,
+        10
+    ),
+    (
+        208,
+        2,
+        6,
+        45,
+        2,
+        '2025-10-04 12:50:44.000000',
+        'Deluxe 1006',
+        350000,
+        'Deluxe',
+        '2025-10-04 13:40:33.000000',
+        0,
+        10
+    ),
+    (
+        209,
+        3,
+        7,
+        70,
+        3,
+        '2025-10-04 14:22:11.000000',
+        'Vip 1007',
+        352000,
+        'Vip',
+        '2025-10-04 15:15:22.000000',
+        0,
+        10
+    ),
+    (
+        210,
+        1,
+        8,
+        75,
+        1,
+        '2025-10-04 16:11:33.000000',
+        'Standard 1008',
+        340000,
+        'Standard',
+        '2025-10-04 17:00:44.000000',
+        0,
+        10
+    ),
+    (
+        211,
+        2,
+        9,
+        52,
+        2,
+        '2025-10-05 08:22:11.000000',
+        'Superior 1009',
+        360000,
+        'Superior',
+        '2025-10-05 09:10:22.000000',
+        0,
+        10
+    ),
+    (
+        212,
+        3,
+        1,
+        48,
+        2,
+        '2025-10-05 10:33:22.000000',
+        'Presidential Suite 1010',
+        400000,
+        'Presidential Suite',
+        '2025-10-05 11:25:33.000000',
+        0,
+        10
+    ),
+    (
+        213,
+        4,
+        2,
+        80,
+        4,
+        '2025-10-05 12:44:11.000000',
+        'Suite 1011',
+        390000,
+        'Suite',
+        '2025-10-05 13:30:22.000000',
+        0,
+        10
+    ),
+    (
+        214,
+        1,
+        3,
+        70,
+        1,
+        '2025-10-05 14:22:33.000000',
+        'Premium Deluxe 1012',
+        410000,
+        'Premium Deluxe',
+        '2025-10-05 15:10:44.000000',
+        0,
+        10
+    ),
+    (
+        215,
+        2,
+        4,
+        55,
+        2,
+        '2025-10-06 08:10:11.000000',
+        'Royal Suite 1013',
+        405000,
+        'Royal Suite',
+        '2025-10-06 09:00:22.000000',
+        0,
+        10
+    ),
+    (
+        216,
+        3,
+        5,
+        48,
+        3,
+        '2025-10-06 10:11:33.000000',
+        'King 1014',
+        355000,
+        'King',
+        '2025-10-06 11:05:44.000000',
+        0,
+        10
+    ),
+    (
+        217,
+        2,
+        6,
+        65,
+        2,
+        '2025-10-06 12:22:11.000000',
+        'Deluxe 1015',
+        350000,
+        'Deluxe',
+        '2025-10-06 13:15:22.000000',
+        0,
+        10
+    ),
+    (
+        218,
+        1,
+        7,
+        72,
+        1,
+        '2025-10-06 14:33:22.000000',
+        'Vip 1016',
+        352000,
+        'Vip',
+        '2025-10-06 15:20:33.000000',
+        0,
+        10
+    ),
+    (
+        219,
+        2,
+        8,
+        60,
+        2,
+        '2025-10-07 08:44:11.000000',
+        'Standard 1017',
+        340000,
+        'Standard',
+        '2025-10-07 09:30:22.000000',
+        0,
+        10
+    ),
+    (
+        220,
+        3,
+        9,
+        50,
+        3,
+        '2025-10-07 10:50:44.000000',
+        'Superior 1018',
+        360000,
+        'Superior',
+        '2025-10-07 11:40:33.000000',
+        0,
+        10
+    ),
+    (
+        221,
+        2,
+        1,
+        68,
+        2,
+        '2025-10-07 12:22:11.000000',
+        'Presidential Suite 1019',
+        400000,
+        'Presidential Suite',
+        '2025-10-07 13:15:22.000000',
+        0,
+        10
+    ),
+    (
+        222,
+        1,
+        2,
+        75,
+        1,
+        '2025-10-07 14:33:22.000000',
+        'Suite 1020',
+        390000,
+        'Suite',
+        '2025-10-07 15:20:33.000000',
+        0,
+        10
+    ),
+    (
+        223,
+        2,
+        3,
+        55,
+        2,
+        '2025-10-08 08:44:11.000000',
+        'Premium Deluxe 1021',
+        410000,
+        'Premium Deluxe',
+        '2025-10-08 09:30:22.000000',
+        0,
+        10
+    ),
+    (
+        224,
+        2,
+        2,
+        50,
+        2,
+        '2025-10-04 09:00:11.000000',
+        'Deluxe Room 1101',
+        300000,
+        'Deluxe',
+        '2025-10-04 10:00:22.000000',
+        0,
+        11
+    ),
+    (
+        225,
+        1,
+        1,
+        42,
+        1,
+        '2025-10-04 10:22:33.000000',
+        'Standard Room 1102',
+        290000,
+        'Standard',
+        '2025-10-04 11:15:44.000000',
+        0,
+        11
+    ),
+    (
+        226,
+        3,
+        3,
+        60,
+        2,
+        '2025-10-04 11:44:11.000000',
+        'King Room 1103',
+        305000,
+        'King',
+        '2025-10-04 12:30:22.000000',
+        0,
+        11
+    ),
+    (
+        227,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-04 13:10:22.000000',
+        'Vip Room 1104',
+        300000,
+        'Premium Deluxe',
+        '2025-10-04 14:05:33.000000',
+        0,
+        11
+    ),
+    (
+        228,
+        1,
+        1,
+        52,
+        1,
+        '2025-10-04 14:22:11.000000',
+        'Deluxe Room 1105',
+        300000,
+        'Deluxe',
+        '2025-10-04 15:10:22.000000',
+        0,
+        11
+    ),
+    (
+        229,
+        3,
+        3,
+        48,
+        3,
+        '2025-10-04 15:33:44.000000',
+        'Standard Room 1106',
+        290000,
+        'Standard',
+        '2025-10-04 16:20:33.000000',
+        0,
+        11
+    ),
+    (
+        230,
+        2,
+        2,
+        65,
+        2,
+        '2025-10-04 16:44:11.000000',
+        'King Room 1107',
+        305000,
+        'King',
+        '2025-10-04 17:30:22.000000',
+        0,
+        11
+    ),
+    (
+        231,
+        1,
+        1,
+        70,
+        1,
+        '2025-10-04 17:50:22.000000',
+        'Vip Room 1108',
+        300000,
+        'Vip',
+        '2025-10-04 18:40:33.000000',
+        0,
+        11
+    ),
+    (
+        232,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-05 08:10:11.000000',
+        'Deluxe Room 1109',
+        300000,
+        'Deluxe',
+        '2025-10-05 09:00:22.000000',
+        0,
+        11
+    ),
+    (
+        233,
+        3,
+        2,
+        50,
+        2,
+        '2025-10-05 09:22:33.000000',
+        'Standard Room 1110',
+        290000,
+        'Standard',
+        '2025-10-05 10:15:44.000000',
+        0,
+        11
+    ),
+    (
+        234,
+        2,
+        3,
+        60,
+        3,
+        '2025-10-05 10:44:11.000000',
+        'King Room 1111',
+        305000,
+        'Royal Suite',
+        '2025-10-05 11:30:22.000000',
+        0,
+        11
+    ),
+    (
+        235,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-05 11:50:22.000000',
+        'Vip Room 1112',
+        300000,
+        'Vip',
+        '2025-10-05 12:40:33.000000',
+        0,
+        11
+    ),
+    (
+        236,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-04 10:00:11.000000',
+        'Deluxe Room 1201',
+        320000,
+        'Deluxe',
+        '2025-10-04 11:00:22.000000',
+        0,
+        11
+    ),
+    (
+        237,
+        1,
+        1,
+        48,
+        1,
+        '2025-10-04 11:15:33.000000',
+        'Standard Room 1202',
+        310000,
+        'Standard',
+        '2025-10-04 12:10:44.000000',
+        0,
+        11
+    ),
+    (
+        238,
+        3,
+        3,
+        60,
+        2,
+        '2025-10-04 12:30:11.000000',
+        'King Room 1203',
+        330000,
+        'King',
+        '2025-10-04 13:20:22.000000',
+        0,
+        11
+    ),
+    (
+        239,
+        2,
+        2,
+        65,
+        2,
+        '2025-10-04 13:40:11.000000',
+        'Vip Room 1204',
+        325000,
+        'Presidential Suite',
+        '2025-10-04 14:30:22.000000',
+        0,
+        11
+    ),
+    (
+        240,
+        1,
+        1,
+        52,
+        1,
+        '2025-10-04 14:50:33.000000',
+        'Deluxe Room 1205',
+        320000,
+        'Deluxe',
+        '2025-10-04 15:40:44.000000',
+        0,
+        11
+    ),
+    (
+        241,
+        3,
+        3,
+        58,
+        3,
+        '2025-10-04 15:55:11.000000',
+        'Standard Room 1206',
+        310000,
+        'Standard',
+        '2025-10-04 16:50:22.000000',
+        0,
+        11
+    ),
+    (
+        242,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-04 17:05:33.000000',
+        'King Room 1207',
+        330000,
+        'King',
+        '2025-10-04 18:00:44.000000',
+        0,
+        11
+    ),
+    (
+        243,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-04 18:10:11.000000',
+        'Vip Room 1208',
+        325000,
+        'Suite',
+        '2025-10-04 19:00:22.000000',
+        0,
+        11
+    ),
+    (
+        244,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-05 08:10:11.000000',
+        'Deluxe Room 1209',
+        320000,
+        'Deluxe',
+        '2025-10-05 09:00:22.000000',
+        0,
+        12
+    ),
+    (
+        245,
+        3,
+        2,
+        50,
+        2,
+        '2025-10-05 09:22:33.000000',
+        'Standard Room 1210',
+        310000,
+        'Standard',
+        '2025-10-05 10:15:44.000000',
+        0,
+        12
+    ),
+    (
+        246,
+        2,
+        3,
+        60,
+        3,
+        '2025-10-05 10:44:11.000000',
+        'King Room 1211',
+        330000,
+        'King',
+        '2025-10-05 11:30:22.000000',
+        0,
+        12
+    ),
+    (
+        247,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-05 11:50:22.000000',
+        'Vip Room 1212',
+        325000,
+        'Vip',
+        '2025-10-05 12:40:33.000000',
+        0,
+        12
+    ),
+    (
+        248,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-05 12:50:11.000000',
+        'Deluxe Room 1213',
+        320000,
+        'Deluxe',
+        '2025-10-05 13:40:22.000000',
+        0,
+        12
+    ),
+    (
+        249,
+        1,
+        1,
+        48,
+        2,
+        '2025-10-05 13:50:33.000000',
+        'Standard Room 1214',
+        310000,
+        'Standard',
+        '2025-10-05 14:40:44.000000',
+        0,
+        12
+    ),
+    (
+        250,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-05 14:50:11.000000',
+        'King Room 1215',
+        330000,
+        'King',
+        '2025-10-05 15:30:22.000000',
+        0,
+        12
+    ),
+    (
+        251,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-05 15:40:11.000000',
+        'Vip Room 1216',
+        325000,
+        'Vip',
+        '2025-10-05 16:30:22.000000',
+        0,
+        12
+    ),
+    (
+        252,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-05 16:40:11.000000',
+        'Deluxe Room 1217',
+        320000,
+        'Deluxe',
+        '2025-10-05 17:30:22.000000',
+        0,
+        12
+    ),
+    (
+        253,
+        2,
+        2,
+        52,
+        2,
+        '2025-10-05 17:40:11.000000',
+        'Standard Room 1218',
+        310000,
+        'Standard',
+        '2025-10-05 18:30:22.000000',
+        0,
+        12
+    ),
+    (
+        254,
+        3,
+        3,
+        60,
+        2,
+        '2025-10-06 08:10:11.000000',
+        'King Room 1219',
+        330000,
+        'King',
+        '2025-10-06 09:00:22.000000',
+        0,
+        12
+    ),
+    (
+        255,
+        2,
+        2,
+        58,
+        3,
+        '2025-10-06 09:10:11.000000',
+        'Vip Room 1220',
+        325000,
+        'Vip',
+        '2025-10-06 10:00:22.000000',
+        0,
+        12
+    ),
+    (
+        256,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-06 10:10:11.000000',
+        'Deluxe Room 1221',
+        320000,
+        'Deluxe',
+        '2025-10-06 11:00:22.000000',
+        0,
+        12
+    ),
+    (
+        257,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-06 11:10:11.000000',
+        'Standard Room 1222',
+        310000,
+        'Standard',
+        '2025-10-06 12:00:22.000000',
+        0,
+        12
+    ),
+    (
+        258,
+        3,
+        3,
+        65,
+        2,
+        '2025-10-06 12:10:11.000000',
+        'King Room 1223',
+        330000,
+        'King',
+        '2025-10-06 13:00:22.000000',
+        0,
+        12
+    ),
+    (
+        259,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-06 13:10:11.000000',
+        'Vip Room 1224',
+        325000,
+        'Vip',
+        '2025-10-06 14:00:22.000000',
+        0,
+        12
+    ),
+    (
+        260,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-06 14:10:11.000000',
+        'Deluxe Room 1225',
+        320000,
+        'Deluxe',
+        '2025-10-06 15:00:22.000000',
+        0,
+        12
+    ),
+    (
+        261,
+        2,
+        2,
+        60,
+        3,
+        '2025-10-06 15:10:11.000000',
+        'Standard Room 1226',
+        310000,
+        'Standard',
+        '2025-10-06 16:00:22.000000',
+        0,
+        12
+    ),
+    (
+        262,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-05 12:00:11.000000',
+        'Deluxe Room 1301',
+        420000,
+        'Deluxe',
+        '2025-10-05 13:00:22.000000',
+        0,
+        12
+    ),
+    (
+        263,
+        1,
+        1,
+        48,
+        1,
+        '2025-10-05 13:15:33.000000',
+        'Standard Room 1302',
+        400000,
+        'Standard',
+        '2025-10-05 14:10:44.000000',
+        0,
+        12
+    ),
+    (
+        264,
+        3,
+        3,
+        60,
+        2,
+        '2025-10-05 14:30:11.000000',
+        'King Room 1303',
+        430000,
+        'King',
+        '2025-10-05 15:20:22.000000',
+        0,
+        12
+    ),
+    (
+        265,
+        2,
+        2,
+        65,
+        2,
+        '2025-10-05 15:40:11.000000',
+        'Vip Room 1304',
+        425000,
+        'Standard',
+        '2025-10-05 16:30:22.000000',
+        0,
+        12
+    ),
+    (
+        266,
+        1,
+        1,
+        52,
+        1,
+        '2025-10-05 16:50:33.000000',
+        'Deluxe Room 1305',
+        420000,
+        'Deluxe',
+        '2025-10-05 17:40:44.000000',
+        0,
+        12
+    ),
+    (
+        267,
+        3,
+        3,
+        58,
+        3,
+        '2025-10-05 17:55:11.000000',
+        'Standard Room 1306',
+        400000,
+        'Standard',
+        '2025-10-05 18:50:22.000000',
+        0,
+        12
+    ),
+    (
+        268,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-05 19:05:33.000000',
+        'King Room 1307',
+        430000,
+        'King',
+        '2025-10-05 20:00:44.000000',
+        0,
+        12
+    ),
+    (
+        269,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-05 20:10:11.000000',
+        'Vip Room 1308',
+        425000,
+        'Suite',
+        '2025-10-05 21:00:22.000000',
+        0,
+        12
+    ),
+    (
+        270,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-06 08:10:11.000000',
+        'Deluxe Room 1309',
+        420000,
+        'Deluxe',
+        '2025-10-06 09:00:22.000000',
+        0,
+        13
+    ),
+    (
+        271,
+        3,
+        2,
+        50,
+        2,
+        '2025-10-06 09:22:33.000000',
+        'Standard Room 1310',
+        400000,
+        'Standard',
+        '2025-10-06 10:15:44.000000',
+        0,
+        13
+    ),
+    (
+        272,
+        2,
+        3,
+        60,
+        3,
+        '2025-10-06 10:44:11.000000',
+        'King Room 1311',
+        430000,
+        'King',
+        '2025-10-06 11:30:22.000000',
+        0,
+        13
+    ),
+    (
+        273,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-06 11:50:22.000000',
+        'Vip Room 1312',
+        425000,
+        'Vip',
+        '2025-10-06 12:40:33.000000',
+        0,
+        13
+    ),
+    (
+        274,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-06 12:50:11.000000',
+        'Deluxe Room 1313',
+        420000,
+        'Deluxe',
+        '2025-10-06 13:40:22.000000',
+        0,
+        13
+    ),
+    (
+        275,
+        1,
+        1,
+        48,
+        2,
+        '2025-10-06 13:50:33.000000',
+        'Standard Room 1314',
+        400000,
+        'Standard',
+        '2025-10-06 14:40:44.000000',
+        0,
+        13
+    ),
+    (
+        276,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-06 14:50:11.000000',
+        'King Room 1315',
+        430000,
+        'King',
+        '2025-10-06 15:30:22.000000',
+        0,
+        13
+    ),
+    (
+        277,
+        2,
+        2,
+        70,
+        2,
+        '2025-10-06 15:40:11.000000',
+        'Vip Room 1316',
+        425000,
+        'Vip',
+        '2025-10-06 16:30:22.000000',
+        0,
+        13
+    ),
+    (
+        278,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-06 16:40:11.000000',
+        'Deluxe Room 1317',
+        420000,
+        'Deluxe',
+        '2025-10-06 17:30:22.000000',
+        0,
+        13
+    ),
+    (
+        279,
+        2,
+        2,
+        52,
+        2,
+        '2025-10-06 17:40:11.000000',
+        'Standard Room 1318',
+        400000,
+        'Standard',
+        '2025-10-06 18:30:22.000000',
+        0,
+        13
+    ),
+    (
+        280,
+        3,
+        3,
+        60,
+        2,
+        '2025-10-06 18:40:11.000000',
+        'King Room 1319',
+        430000,
+        'King',
+        '2025-10-06 19:30:22.000000',
+        0,
+        13
+    ),
+    (
+        281,
+        2,
+        2,
+        58,
+        3,
+        '2025-10-06 19:40:11.000000',
+        'Vip Room 1320',
+        425000,
+        'Vip',
+        '2025-10-06 20:30:22.000000',
+        0,
+        13
+    ),
+    (
+        282,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-06 20:40:11.000000',
+        'Deluxe Room 1321',
+        420000,
+        'Deluxe',
+        '2025-10-06 21:30:22.000000',
+        0,
+        13
+    ),
+    (
+        283,
+        2,
+        2,
+        48,
+        2,
+        '2025-10-06 21:40:11.000000',
+        'Standard Room 1322',
+        400000,
+        'Standard',
+        '2025-10-06 22:30:22.000000',
+        0,
+        13
+    ),
+    (
+        284,
+        3,
+        3,
+        65,
+        2,
+        '2025-10-07 08:10:11.000000',
+        'King Room 1323',
+        430000,
+        'King',
+        '2025-10-07 09:00:22.000000',
+        0,
+        13
+    ),
+    (
+        285,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-07 09:10:11.000000',
+        'Vip Room 1324',
+        425000,
+        'Vip',
+        '2025-10-07 10:00:22.000000',
+        0,
+        13
+    ),
+    (
+        286,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-07 10:10:11.000000',
+        'Deluxe Room 1325',
+        420000,
+        'Deluxe',
+        '2025-10-07 11:00:22.000000',
+        0,
+        13
+    ),
+    (
+        287,
+        2,
+        2,
+        60,
+        3,
+        '2025-10-07 11:10:11.000000',
+        'Standard Room 1326',
+        400000,
+        'Standard',
+        '2025-10-07 12:00:22.000000',
+        0,
+        13
+    ),
+    (
+        288,
+        3,
+        3,
+        65,
+        2,
+        '2025-10-07 12:10:11.000000',
+        'King Room 1327',
+        430000,
+        'King',
+        '2025-10-07 13:00:22.000000',
+        0,
+        13
+    ),
+    (
+        289,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-07 13:10:11.000000',
+        'Vip Room 1328',
+        425000,
+        'Vip',
+        '2025-10-07 14:00:22.000000',
+        0,
+        13
+    ),
+    (
+        290,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-07 14:10:11.000000',
+        'Deluxe Room 1329',
+        420000,
+        'Deluxe',
+        '2025-10-07 15:00:22.000000',
+        0,
+        13
+    ),
+    (
+        291,
+        2,
+        2,
+        60,
+        3,
+        '2025-10-07 15:10:11.000000',
+        'Standard Room 1330',
+        400000,
+        'Standard',
+        '2025-10-07 16:00:22.000000',
+        0,
+        13
+    ),
+    (
+        292,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-06 10:15:11.000000',
+        'Deluxe Room 1401',
+        290000,
+        'Deluxe',
+        '2025-10-06 11:00:22.000000',
+        0,
+        14
+    ),
+    (
+        293,
+        1,
+        1,
+        48,
+        1,
+        '2025-10-06 11:10:33.000000',
+        'Standard Room 1402',
+        280000,
+        'Standard',
+        '2025-10-06 12:00:44.000000',
+        0,
+        14
+    ),
+    (
+        294,
+        3,
+        3,
+        60,
+        2,
+        '2025-10-06 12:15:11.000000',
+        'King Room 1403',
+        295000,
+        'King',
+        '2025-10-06 13:00:22.000000',
+        0,
+        14
+    ),
+    (
+        295,
+        2,
+        2,
+        65,
+        2,
+        '2025-10-06 13:15:11.000000',
+        'Vip Room 1404',
+        292000,
+        'Vip',
+        '2025-10-06 14:00:22.000000',
+        0,
+        14
+    ),
+    (
+        296,
+        1,
+        1,
+        52,
+        1,
+        '2025-10-06 14:15:33.000000',
+        'Deluxe Room 1405',
+        290000,
+        'Deluxe',
+        '2025-10-06 15:00:44.000000',
+        0,
+        14
+    ),
+    (
+        297,
+        3,
+        3,
+        58,
+        3,
+        '2025-10-06 15:15:11.000000',
+        'Standard Room 1406',
+        280000,
+        'Standard',
+        '2025-10-06 16:00:22.000000',
+        0,
+        14
+    ),
+    (
+        298,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-06 16:15:11.000000',
+        'King Room 1407',
+        295000,
+        'King',
+        '2025-10-06 17:00:22.000000',
+        0,
+        14
+    ),
+    (
+        299,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-06 17:15:11.000000',
+        'Vip Room 1408',
+        292000,
+        'Vip',
+        '2025-10-06 18:00:22.000000',
+        0,
+        14
+    ),
+    (
+        300,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-06 18:15:11.000000',
+        'Deluxe Room 1409',
+        290000,
+        'Deluxe',
+        '2025-10-06 19:00:22.000000',
+        0,
+        14
+    ),
+    (
+        301,
+        3,
+        2,
+        50,
+        2,
+        '2025-10-06 19:15:11.000000',
+        'Standard Room 1410',
+        280000,
+        'Standard',
+        '2025-10-06 20:00:22.000000',
+        0,
+        14
+    ),
+    (
+        302,
+        2,
+        3,
+        60,
+        3,
+        '2025-10-06 20:15:11.000000',
+        'King Room 1411',
+        295000,
+        'King',
+        '2025-10-06 21:00:22.000000',
+        0,
+        14
+    ),
+    (
+        303,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-06 21:15:11.000000',
+        'Vip Room 1412',
+        292000,
+        'Vip',
+        '2025-10-06 22:00:22.000000',
+        0,
+        14
+    ),
+    (
+        304,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-07 08:10:11.000000',
+        'Deluxe Room 1413',
+        290000,
+        'Deluxe',
+        '2025-10-07 09:00:22.000000',
+        0,
+        14
+    ),
+    (
+        305,
+        1,
+        1,
+        48,
+        2,
+        '2025-10-07 09:10:11.000000',
+        'Standard Room 1414',
+        280000,
+        'Standard',
+        '2025-10-07 10:00:22.000000',
+        0,
+        14
+    ),
+    (
+        306,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-07 10:10:11.000000',
+        'King Room 1415',
+        295000,
+        'King',
+        '2025-10-07 11:00:22.000000',
+        0,
+        14
+    ),
+    (
+        307,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-07 11:10:11.000000',
+        'Vip Room 1416',
+        292000,
+        'Vip',
+        '2025-10-07 12:00:22.000000',
+        0,
+        14
+    ),
+    (
+        308,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-07 12:15:11.000000',
+        'Deluxe Room 1501',
+        500000,
+        'Deluxe',
+        '2025-10-07 13:00:22.000000',
+        0,
+        14
+    ),
+    (
+        309,
+        1,
+        1,
+        48,
+        1,
+        '2025-10-07 13:15:33.000000',
+        'Standard Room 1502',
+        480000,
+        'Standard',
+        '2025-10-07 14:00:44.000000',
+        0,
+        14
+    ),
+    (
+        310,
+        3,
+        3,
+        60,
+        2,
+        '2025-10-07 14:15:11.000000',
+        'King Room 1503',
+        510000,
+        'King',
+        '2025-10-07 15:00:22.000000',
+        0,
+        14
+    ),
+    (
+        311,
+        2,
+        2,
+        65,
+        2,
+        '2025-10-07 15:15:11.000000',
+        'Vip Room 1504',
+        505000,
+        'Vip',
+        '2025-10-07 16:00:22.000000',
+        0,
+        14
+    ),
+    (
+        312,
+        1,
+        1,
+        52,
+        1,
+        '2025-10-07 16:15:33.000000',
+        'Deluxe Room 1505',
+        500000,
+        'Deluxe',
+        '2025-10-07 17:00:44.000000',
+        0,
+        14
+    ),
+    (
+        313,
+        3,
+        3,
+        58,
+        3,
+        '2025-10-07 17:15:11.000000',
+        'Standard Room 1506',
+        480000,
+        'Standard',
+        '2025-10-07 18:00:22.000000',
+        0,
+        14
+    ),
+    (
+        314,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-07 18:15:11.000000',
+        'King Room 1507',
+        510000,
+        'King',
+        '2025-10-07 19:00:22.000000',
+        0,
+        14
+    ),
+    (
+        315,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-07 19:15:11.000000',
+        'Vip Room 1508',
+        505000,
+        'Vip',
+        '2025-10-07 20:00:22.000000',
+        0,
+        14
+    ),
+    (
+        316,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-07 20:15:11.000000',
+        'Deluxe Room 1509',
+        500000,
+        'Deluxe',
+        '2025-10-07 21:00:22.000000',
+        0,
+        15
+    ),
+    (
+        317,
+        3,
+        2,
+        50,
+        2,
+        '2025-10-07 21:15:11.000000',
+        'Standard Room 1510',
+        480000,
+        'Standard',
+        '2025-10-07 22:00:22.000000',
+        0,
+        15
+    ),
+    (
+        318,
+        2,
+        3,
+        60,
+        3,
+        '2025-10-08 08:15:11.000000',
+        'King Room 1511',
+        510000,
+        'King',
+        '2025-10-08 09:00:22.000000',
+        0,
+        15
+    ),
+    (
+        319,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-08 09:15:11.000000',
+        'Vip Room 1512',
+        505000,
+        'Vip',
+        '2025-10-08 10:00:22.000000',
+        0,
+        15
+    ),
+    (
+        320,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-08 10:15:11.000000',
+        'Deluxe Room 1513',
+        500000,
+        'Deluxe',
+        '2025-10-08 11:00:22.000000',
+        0,
+        15
+    ),
+    (
+        321,
+        1,
+        1,
+        48,
+        2,
+        '2025-10-08 11:15:11.000000',
+        'Standard Room 1514',
+        480000,
+        'Standard',
+        '2025-10-08 12:00:22.000000',
+        0,
+        15
+    ),
+    (
+        322,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-08 12:15:11.000000',
+        'King Room 1515',
+        510000,
+        'King',
+        '2025-10-08 13:00:22.000000',
+        0,
+        15
+    ),
+    (
+        323,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-08 13:15:11.000000',
+        'Vip Room 1516',
+        505000,
+        'Vip',
+        '2025-10-08 14:00:22.000000',
+        0,
+        15
+    ),
+    (
+        324,
+        1,
+        1,
+        52,
+        1,
+        '2025-10-08 14:15:11.000000',
+        'Deluxe Room 1517',
+        500000,
+        'Deluxe',
+        '2025-10-08 15:00:22.000000',
+        0,
+        15
+    ),
+    (
+        325,
+        3,
+        2,
+        55,
+        2,
+        '2025-10-08 15:15:11.000000',
+        'Standard Room 1518',
+        480000,
+        'Standard',
+        '2025-10-08 16:00:22.000000',
+        0,
+        15
+    ),
+    (
+        326,
+        2,
+        2,
+        62,
+        2,
+        '2025-10-08 16:15:11.000000',
+        'King Room 1519',
+        510000,
+        'King',
+        '2025-10-08 17:00:22.000000',
+        0,
+        15
+    ),
+    (
+        327,
+        1,
+        1,
+        50,
+        1,
+        '2025-10-08 17:15:11.000000',
+        'Vip Room 1520',
+        505000,
+        'Vip',
+        '2025-10-08 18:00:22.000000',
+        0,
+        15
+    ),
+    (
+        328,
+        2,
+        2,
+        55,
+        2,
+        '2025-10-08 18:15:11.000000',
+        'Deluxe Room 1521',
+        500000,
+        'Deluxe',
+        '2025-10-08 19:00:22.000000',
+        0,
+        15
+    ),
+    (
+        329,
+        3,
+        2,
+        50,
+        2,
+        '2025-10-08 19:15:11.000000',
+        'Standard Room 1522',
+        480000,
+        'Standard',
+        '2025-10-08 20:00:22.000000',
+        0,
+        15
+    ),
+    (
+        330,
+        2,
+        3,
+        60,
+        3,
+        '2025-10-08 20:15:11.000000',
+        'King Room 1523',
+        510000,
+        'King',
+        '2025-10-08 21:00:22.000000',
+        0,
+        15
+    ),
+    (
+        331,
+        1,
+        1,
+        55,
+        1,
+        '2025-10-08 21:15:11.000000',
+        'Vip Room 1524',
+        505000,
+        'Vip',
+        '2025-10-08 22:00:22.000000',
+        0,
+        15
+    ),
+    (
+        332,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-09 08:15:11.000000',
+        'Deluxe Room 1525',
+        500000,
+        'Deluxe',
+        '2025-10-09 09:00:22.000000',
+        0,
+        15
+    ),
+    (
+        333,
+        1,
+        1,
+        48,
+        2,
+        '2025-10-09 09:15:11.000000',
+        'Standard Room 1526',
+        480000,
+        'Standard',
+        '2025-10-09 10:00:22.000000',
+        0,
+        15
+    ),
+    (
+        334,
+        3,
+        3,
+        65,
+        3,
+        '2025-10-09 10:15:11.000000',
+        'King Room 1527',
+        510000,
+        'King',
+        '2025-10-09 11:00:22.000000',
+        0,
+        15
+    ),
+    (
+        335,
+        2,
+        2,
+        60,
+        2,
+        '2025-10-09 11:15:11.000000',
+        'Vip Room 1528',
+        505000,
+        'Vip',
+        '2025-10-09 12:00:22.000000',
+        0,
+        15
+    ),
+    (
+        336,
+        1,
+        1,
+        52,
+        1,
+        '2025-10-09 12:15:11.000000',
+        'Deluxe Room 1529',
+        500000,
+        'Deluxe',
+        '2025-10-09 13:00:22.000000',
+        0,
+        15
     );
 /*!40000 ALTER TABLE `room` ENABLE KEYS */
 ;
@@ -7796,7 +7830,7 @@ CREATE TABLE `room_seq` (
 LOCK TABLES `room_seq` WRITE;
 /*!40000 ALTER TABLE `room_seq` DISABLE KEYS */
 ;
-INSERT INTO `room_seq` VALUES (251);
+INSERT INTO `room_seq` VALUES (1);
 /*!40000 ALTER TABLE `room_seq` ENABLE KEYS */
 ;
 UNLOCK TABLES;
@@ -7817,13 +7851,17 @@ CREATE TABLE `user` (
     `date_of_birth` date DEFAULT NULL,
     `email` varchar(255) DEFAULT NULL,
     `first_name` varchar(255) DEFAULT NULL,
+    `is_delete` int NOT NULL,
     `last_name` varchar(255) DEFAULT NULL,
     `password` varchar(255) DEFAULT NULL,
     `phone` varchar(255) DEFAULT NULL,
+    `provider` enum(
+        'FACEBOOK',
+        'GOOGLE',
+        'LOCATION'
+    ) DEFAULT NULL,
     `status` int NOT NULL,
     `update_at` datetime(6) DEFAULT NULL,
-    `provider` enum('FACEBOOK', 'GOOGLE', 'LOCAL') DEFAULT NULL,
-    `is_delete` int NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */
@@ -7840,228 +7878,783 @@ INSERT INTO
     `user`
 VALUES (
         1,
-        'https://res.cloudinary.com/dm2gmucce/image/upload/v1761228488/avatar/umavxfmzhqfhbhitkdnp.jpg',
-        '2025-09-24 02:32:50.185341',
-        '1995-05-04',
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764166707/avatar/ld68v8l1tceftl0hxp03.jpg',
+        '2025-11-26 18:05:57.948775',
+        '2005-07-27',
         'admin@gmail.com',
         'Quản Trị',
-        'Viên',
-        '$2a$10$/f.j7105866owXQJGEiukO..kwRZbbgwwZKtB.JVimmeAAHf2BGdi',
-        '097840726',
         0,
-        '2025-11-07 17:37:06.133169',
+        'Viên',
+        '$2a$10$FgrFlyvvvhxXkqNys9G2uOopgo0SR6WPzBrDdkqXmzD4Ch6HdLG7S',
+        '0905676889',
         NULL,
-        0
+        0,
+        '2025-11-27 03:44:50.479907'
     ),
     (
         2,
-        'https://example.com/avatar.jpg',
-        '2025-09-24 02:46:45.420966',
-        '1995-05-10',
-        'user1@gmail.com',
-        'Hao',
-        'Nhật',
-        '$2a$10$3M5LnNWRXFndWgHDd81EouZETrO9LXblZ3qdY1Y5SykBH4DXC3vfO',
-        '0912345678',
-        1,
-        '2025-11-07 17:46:12.224800',
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764174597/avatar/yrowrgn4gjzyzkcq0qzf.jpg',
+        '2025-11-26 23:16:36.602039',
+        '1994-09-26',
+        'customer1@gmail.com',
+        'John',
+        0,
+        'Smith',
+        '$2a$10$cJohes0uxGoi1R4O3gs0neL/rqGbFASF8GfDWjofIDAclvcx6X2PG',
+        '09056768895',
         NULL,
-        0
+        0,
+        '2025-11-26 23:29:58.015626'
+    ),
+    (
+        3,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764174753/avatar/dgcnebl5uqetrq6zd3jp.jpg',
+        '2025-11-26 23:31:34.073381',
+        '1979-04-12',
+        'customer2@gmail.com',
+        'Elon',
+        0,
+        'Musk',
+        '$2a$10$un43yeY1K/xHr7eXB3ZLYer0mcRnV4N.hGZeiG.urT7PzuulTaRQC',
+        '0955676889',
+        NULL,
+        0,
+        '2025-11-26 23:32:33.827152'
+    ),
+    (
+        4,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764174938/avatar/b97midndwssqz6decgpr.jpg',
+        '2025-11-26 23:35:00.264401',
+        '1988-05-26',
+        'customer3@gmail.com',
+        'Nick',
+        0,
+        'Hy',
+        '$2a$10$RQQ9PhcfySx1dKrCPKGn2eaRG2tVqVYki3zKeqTWarSM.KGCm6jFe',
+        '0842557232',
+        NULL,
+        0,
+        '2025-11-27 00:24:16.033463'
+    ),
+    (
+        5,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764175038/avatar/wx4uwwiecjhyez2dlpds.jpg',
+        '2025-11-26 23:36:04.623737',
+        '2000-06-14',
+        'customer4@gmail.com',
+        'John',
+        0,
+        'Wick',
+        '$2a$10$IHM2nl1SaHlMxpMFQN71DOPCDdvq9UWNaY6niRADTWAON45qZVcya',
+        '0126312976',
+        NULL,
+        0,
+        '2025-11-26 23:37:19.169881'
+    ),
+    (
+        6,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764175132/avatar/frdbrpoa6fstyr8m09q8.jpg',
+        '2025-11-26 23:37:48.312084',
+        '1988-03-08',
+        'customer5@gmail.com',
+        'Mike',
+        0,
+        'Smith',
+        '$2a$10$znoIcwScvPNhBUJXAB1HYOVnmhIHVzM6fcBngpjoddz721j6jNCSe',
+        '077487597',
+        NULL,
+        0,
+        '2025-11-26 23:38:53.598559'
+    ),
+    (
+        7,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764175443/avatar/q5pz34ms4btqtgsiz1u2.jpg',
+        '2025-11-26 23:39:53.262327',
+        '1960-03-11',
+        'customer6@gmail.com',
+        'Satya',
+        0,
+        'Nadella',
+        '$2a$10$ucDq10XPjZQput2T2h8t7uHeMPUL4qPX.Dv8NyO22G1T0CPdyVpra',
+        '060922143',
+        NULL,
+        0,
+        '2025-11-26 23:44:03.462377'
+    ),
+    (
+        8,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764175543/avatar/emmjhlflfgwqdzlymowv.jpg',
+        '2025-11-26 23:39:53.266780',
+        '1958-06-05',
+        'customer7@gmail.com',
+        'Jeff',
+        0,
+        'Bezos',
+        '$2a$10$8yt.a7R1JexWJpvcBhCEj.S1UWvpOiisfRB8Ysg1xCShLDlT0kg/K',
+        '097923516',
+        NULL,
+        0,
+        '2025-11-26 23:45:43.347353'
+    ),
+    (
+        9,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764175619/avatar/fncelrxjkfwpqeqgnr8p.jpg',
+        '2025-11-26 23:46:22.863576',
+        '1955-07-22',
+        'customer8@gmail.com',
+        'Bill',
+        0,
+        'Gate',
+        '$2a$10$JoB.50Czz54yLJUZzXrTTuC6ftVK99ZftWwzK0Ziko6MubQ5eIxx.',
+        '011642896',
+        NULL,
+        0,
+        '2025-11-26 23:46:59.220365'
+    ),
+    (
+        10,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764175688/avatar/xceerlavckzq8bzcbkpf.jpg',
+        '2025-11-26 23:47:22.648590',
+        '1967-12-08',
+        'customer9@gmail.com',
+        'Shark',
+        0,
+        'Bình',
+        '$2a$10$Y4F6MF.sd5iRH.RcyV5q0eXh9pEMyviAnk4eBPJQ26Gnjh8Y.EGze',
+        '0506739852',
+        NULL,
+        0,
+        '2025-11-26 23:48:08.490951'
+    ),
+    (
+        11,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764176017/avatar/vlduwd2ibssqd1ksfhcf.jpg',
+        '2025-11-26 23:53:01.305863',
+        '1981-02-21',
+        'customer10@gmail.com',
+        'Jensen',
+        0,
+        'Huang',
+        '$2a$10$9veoIxygYorPMsPUk569BeE9NZMJyu/c3enZxXtVUS9IdHOKPLK2q',
+        '0112548454',
+        NULL,
+        0,
+        '2025-11-26 23:53:38.145083'
+    ),
+    (
+        12,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764176163/avatar/zsa5qqhyozt1gquwljxf.jpg',
+        '2025-11-26 23:55:27.764379',
+        '1979-05-04',
+        'customer11@gmail.com',
+        'Trấn',
+        0,
+        'Thành',
+        '$2a$10$8sIbYx0kIXW4zm4w.ZmDTuRsQpRiLcJ27AhRybXwjAxiVm0Z/yhPS',
+        '0775238765',
+        NULL,
+        0,
+        '2025-11-26 23:56:03.454565'
+    ),
+    (
+        13,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764176282/avatar/okhga8jreaiapsdwbt3k.jpg',
+        '2025-11-26 23:56:29.239456',
+        '1989-09-18',
+        'customer12@gmail.com',
+        'Sơn',
+        0,
+        'Tùng',
+        '$2a$10$nj/ZO37zBT4uDRC46VnZd.Tuscxo9cfajgm36K2Ynpqto4Wgjoi0i',
+        '0439057583',
+        NULL,
+        0,
+        '2025-11-26 23:58:02.323497'
+    ),
+    (
+        14,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764176398/avatar/aigp6fc5esvmj4wdhhq5.jpg',
+        '2025-11-26 23:56:29.244645',
+        '1986-07-07',
+        'customer13@gmail.com',
+        'Văn',
+        0,
+        'Khoa',
+        '$2a$10$qChzc2R7QuvpT80.ZeF5SOUQeHLJCX1ARr9CdB7guAj1ar3zREXLy',
+        '0565689891',
+        NULL,
+        0,
+        '2025-11-26 23:59:58.903856'
+    ),
+    (
+        15,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764176489/avatar/jbyai3sxbs21vyqaplsg.jpg',
+        '2025-11-26 23:58:34.819222',
+        '1985-11-13',
+        'customer14@gmail.com',
+        'Châu',
+        0,
+        'Bùi',
+        '$2a$10$2mlscjhB93VlQlcchBD5Helx9Q6feie4UawPmfwQUObUQR5QRmPEK',
+        '0874556132',
+        NULL,
+        0,
+        '2025-11-27 00:01:30.101650'
+    ),
+    (
+        16,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177330/avatar/cypsqrwtaak3nzc9snag.jpg',
+        '2025-11-27 00:08:34.741717',
+        '1977-04-23',
+        'customer15@gmail.com',
+        'Phan Mạnh',
+        0,
+        'Quỳnh',
+        '$2a$10$KGgJY.6kcu1NGEyiG.Crw.AYIdWorfaNy1gLJNHmxfDqYo6K6SS3m',
+        '0905613434',
+        NULL,
+        0,
+        '2025-11-27 00:15:30.932692'
+    ),
+    (
+        17,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177381/avatar/kabgiwyxf4cvh4kifr3y.jpg',
+        '2025-11-27 00:09:19.532111',
+        '1994-07-15',
+        'customer16@gmail.com',
+        'Trung',
+        0,
+        'Thành',
+        '$2a$10$DEKke4h0UphKN5pAiYIAf.UrQ3c2VjbpXxMzggmJZkC/Hupx3oNfK',
+        '0332154678',
+        NULL,
+        0,
+        '2025-11-27 00:16:21.602151'
+    ),
+    (
+        18,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177522/avatar/rbhuwxyfpukakscpv49p.jpg',
+        '2025-11-27 00:10:01.738560',
+        '1992-08-06',
+        'customer17@gmail.com',
+        'Phước',
+        0,
+        'Thịnh',
+        '$2a$10$pSuU2ZUfc..mx4ljI.xsTONHa2G1kUsGnRQ..FXaw2Ejf5f7uW33C',
+        '0905676889',
+        NULL,
+        0,
+        '2025-11-27 00:18:42.449281'
+    ),
+    (
+        19,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177967/avatar/zyosul0qzynp5ukkjoym.jpg',
+        '2025-11-27 00:10:01.747086',
+        '1977-02-01',
+        'customer23@gmail.com',
+        'Hòa',
+        0,
+        'Minzy',
+        '$2a$10$/.zwIrlSycQ2pv4hVzKW/OPlxl8LMReUnGNGLucCCVvCS8WbZSlmu',
+        '0444510922',
+        NULL,
+        0,
+        '2025-11-27 00:26:07.552791'
+    ),
+    (
+        20,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177577/avatar/bf9kgje1h9kfdt6lep2r.jpg',
+        '2025-11-27 00:10:47.768357',
+        '1981-07-27',
+        'customer18@gmail.com',
+        'Mỹ',
+        0,
+        'Tâm',
+        '$2a$10$OVuV4PnCST9JP7g.gWqkZ.tsaWbHs.3CxRBqPljx/Jr3bSm7d2W5e',
+        '0329883721',
+        NULL,
+        0,
+        '2025-11-27 00:19:38.098832'
+    ),
+    (
+        21,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177623/avatar/jt4grhgnivj9r2quaqiy.jpg',
+        '2025-11-27 00:11:04.920395',
+        '1885-11-17',
+        'customer19@gmail.com',
+        'Đông',
+        0,
+        'Nhi',
+        '$2a$10$n2gCWofxlZv9pf1d0WWtmOKmZg.AMFPMDd/Ud3Eg1Puv3nnAWywLO',
+        '0934886709',
+        NULL,
+        0,
+        '2025-11-27 00:20:24.017712'
+    ),
+    (
+        22,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177678/avatar/agnvq190ibydmlfcqudd.jpg',
+        '2025-11-27 00:12:21.955615',
+        '1985-06-16',
+        'customer20@gmail.com',
+        'Nguyễn Khoa',
+        0,
+        'Tóc Tiên',
+        '$2a$10$vX/8DnHbAK0u6/bOdMhMN.Yux3nk2fySY1IxzHCFpJrqrk8bVsoLi',
+        '0154676889',
+        NULL,
+        0,
+        '2025-11-27 00:21:19.078840'
+    ),
+    (
+        23,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177717/avatar/or0egbl5ajpbjpnu1dsn.jpg',
+        '2025-11-27 00:13:01.652166',
+        '1975-07-31',
+        'customer21@gmail.com',
+        'Hà Anh',
+        0,
+        'Tuấn',
+        '$2a$10$J/wwpTNxsOPoAFaNCgaLNuGmx2dw06XM.17BM7C77A.Yjz6a0FiBy',
+        '0905676821',
+        NULL,
+        0,
+        '2025-11-27 00:21:58.264008'
+    ),
+    (
+        24,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764177774/avatar/dis7f3kfmyhlknzsqkoc.jpg',
+        '2025-11-27 00:13:41.432201',
+        '1995-02-22',
+        'customer22@gmail.com',
+        'Nguyễn Hoàng',
+        0,
+        'Dũng',
+        '$2a$10$tPuiylbZIPiEjjjIjNxYBO0b7/IzQeaY/Mavm9Q0i4okhsN406CWG',
+        '0326737834',
+        NULL,
+        0,
+        '2025-11-27 00:22:54.871092'
+    ),
+    (
+        25,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764178391/avatar/b8behxqpsoluzhvl06zl.jpg',
+        '2025-11-27 00:28:07.394394',
+        '2000-03-21',
+        'customer24@gmail.com',
+        'Khoai',
+        0,
+        'Lang Thang',
+        '$2a$10$0eX.63Y6yQGqmX3h/gzr5.f5fRQADbv/gZYYkaoUru1r9gLCIE.pe',
+        '0454876972',
+        NULL,
+        0,
+        '2025-11-27 00:33:12.140377'
+    ),
+    (
+        26,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764178446/avatar/jmedwge3nonbmkscfmi0.jpg',
+        '2025-11-27 00:29:08.874608',
+        '1988-02-03',
+        'customer25@gmail.com',
+        'Nguyễn Công',
+        0,
+        'Phượng',
+        '$2a$10$aoaNZNPAOoGUmVTeuMUaLOHxlHu.seac2HYg/pWS50NIebXCp.jPO',
+        '0865676889',
+        NULL,
+        0,
+        '2025-11-27 00:34:06.987548'
+    ),
+    (
+        27,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764178488/avatar/owlgn6udd4kimtdpstgy.jpg',
+        '2025-11-27 00:29:52.836138',
+        '1977-03-21',
+        'customer26@gmail.com',
+        'Đặng',
+        0,
+        'Văn Lâm',
+        '$2a$10$2w45h3G4BvE7KKSVeeWKFu4wf7L2EYIXmAiKVSbBSMeCjN.nUlqkK',
+        '0993287124',
+        NULL,
+        0,
+        '2025-11-27 00:34:49.198103'
+    ),
+    (
+        28,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764178548/avatar/e8fqhtxneekpiwjyetqj.jpg',
+        '2025-11-27 00:30:59.544747',
+        '1962-06-16',
+        'customer27@gmail.com',
+        'Phạm Nhật',
+        0,
+        'Vượng',
+        '$2a$10$IP/SgX4Yio8/OpLaybGj.uZdoZc/e/pnKrevLE34Ni0Yvv2cdTKZ6',
+        '0536489960',
+        NULL,
+        0,
+        '2025-11-27 00:35:49.101618'
+    ),
+    (
+        29,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764178804/avatar/pjaucoc7pnoz1enqpscb.jpg',
+        '2025-11-27 00:31:52.637339',
+        '1996-02-09',
+        'customer28@gmail.com',
+        'James',
+        0,
+        'PaterSon',
+        '$2a$10$narZEZzUKdDg2lRaOmaB5OT7eoKAD.XLxELKNKkNc0IqbPXZv./uK',
+        '0992375688',
+        NULL,
+        0,
+        '2025-11-27 00:40:04.569646'
+    ),
+    (
+        30,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764179024/avatar/i4hc1ewuje9xdyjxpfmd.jpg',
+        '2025-11-27 00:41:50.626405',
+        '1959-03-13',
+        'customer29@gmail.com',
+        'Steven',
+        0,
+        'Spilberg',
+        '$2a$10$2rLfhxyo.Q1tjGB9xEgvlOVo1ioabTMPR/OdOYHt8gPyAhXKHeEhG',
+        '0778321798',
+        NULL,
+        0,
+        '2025-11-27 00:43:45.141588'
+    ),
+    (
+        31,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764179764/avatar/xvmw5pokrd5imewbbch2.jpg',
+        '2025-11-27 00:44:16.661039',
+        '2005-04-22',
+        'user1@gmail.com',
+        'Ngô Thanh',
+        0,
+        'Hiếu',
+        '$2a$10$cjOQyD1hdaFl/NwdoIXEXuut3j7JCLcBQCEpD0a3Ks67yrKcGSyuq',
+        '0884167989',
+        NULL,
+        0,
+        '2025-11-27 00:56:04.389003'
+    ),
+    (
+        32,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764179819/avatar/wbqwymlewpdph4orgzj7.jpg',
+        '2025-11-27 00:44:41.872267',
+        '2005-07-11',
+        'user2@gmail.com',
+        'Trần Thế',
+        0,
+        'Hùng',
+        '$2a$10$W65QRGHUo1cEpzZdun//guCG2z1DDzWXBuEkntbIQNSQmeYvxuM12',
+        '0676898324',
+        NULL,
+        0,
+        '2025-11-27 00:57:00.159257'
+    ),
+    (
+        33,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764179857/avatar/rcqi1ce4vwc414efx2ws.jpg',
+        '2025-11-27 00:44:58.911828',
+        '2005-05-21',
+        'user3@gmail.com',
+        'Hoàng Anh',
+        0,
+        'Huy',
+        '$2a$10$qKsjwOokIXKZPPfMbOstbOEgAFTRrWcxPKgEVl0ZL.z3/nTPEOnAm',
+        '0334776456',
+        NULL,
+        0,
+        '2025-11-27 00:57:37.826487'
+    ),
+    (
+        34,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764179892/avatar/x403ol4qnoib3f13oqbk.jpg',
+        '2025-11-27 00:45:34.589680',
+        '0005-05-22',
+        'user4@gmail.com',
+        'Nguyễn Nhật',
+        0,
+        'Hào',
+        '$2a$10$nTCwOCLG7MwMu6uFyuWnk.FzDub8H7cETJtrs00p6MAsyTgJumCTq',
+        '0221646587',
+        NULL,
+        0,
+        '2025-11-27 00:58:12.759892'
+    ),
+    (
+        35,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764179958/avatar/r6bqfmlxq6rtd0wopqnn.jpg',
+        '2025-11-27 00:45:57.368866',
+        '2005-04-14',
+        'user5@gmail.com',
+        'Nguyễn Anh',
+        0,
+        'Quân',
+        '$2a$10$rMiDMKuT.ZpNXKiHvSiBleSUuoscE4vQPGwl9cNc7EFuuNr0AYEPe',
+        '0445886789',
+        NULL,
+        0,
+        '2025-11-27 00:59:19.447140'
+    ),
+    (
+        36,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180011/avatar/qoywsfm3juhg4misijep.jpg',
+        '2025-11-27 00:46:11.289134',
+        '2005-06-21',
+        'user6@gmail.com',
+        'Lý Tấn',
+        0,
+        'Thành',
+        '$2a$10$zau76S9yEh3GBQOzLr9oSuICIkRpOMrVqioHeATFkPCG8r5srGGQO',
+        '0977789213',
+        NULL,
+        0,
+        '2025-11-27 01:00:12.106911'
+    ),
+    (
+        37,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180285/avatar/ffqlykvwmcpi8xptophy.jpg',
+        '2025-11-27 00:46:25.073601',
+        '2005-04-27',
+        'user7@gmail.com',
+        'Nguyễn Duy',
+        0,
+        'Thành',
+        '$2a$10$DPNe2NhCBRMKgNX9im6SXOzkCN7BDvzGJyR80i6Z4JeYpVl6ACvzm',
+        '0876567210',
+        NULL,
+        0,
+        '2025-11-27 01:04:46.087453'
+    ),
+    (
+        38,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180353/avatar/brekl4ptbartzuggy4pp.jpg',
+        '2025-11-27 00:46:43.654880',
+        '2005-01-11',
+        'user8@gmail.com',
+        'Tạ Hữu',
+        0,
+        'Thành',
+        '$2a$10$28k1NGUtsEn2rby6mhGxte6KIMbsOTbDu0dEBPvgwrInfkQc0kg3K',
+        '0455789214',
+        NULL,
+        0,
+        '2025-11-27 01:05:54.768657'
+    ),
+    (
+        39,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180397/avatar/p4jc4xijzfejxiy9vtdg.jpg',
+        '2025-11-27 00:47:05.802336',
+        '2005-04-03',
+        'user9@gmail.com',
+        'Nguyễn Đăng',
+        0,
+        'Đoàn',
+        '$2a$10$VIjy0iL3Mz/Jj6aJKj8ASOxM88jzSDtanFKEYkdjEb6LGC8JE7J8W',
+        '088543687',
+        NULL,
+        0,
+        '2025-11-27 01:15:00.221528'
+    ),
+    (
+        40,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180434/avatar/z8dyyqquurcoxyi1gpow.jpg',
+        '2025-11-27 00:47:24.271634',
+        '2004-12-12',
+        'user10@gmail.com',
+        'Nguyễn Phương',
+        0,
+        'Nguyên',
+        '$2a$10$dzA5PKC4EhJfxb/jQgXXHusgjEMZ3085P1WG9II8ghhCrH9DbmZXC',
+        '0799232467',
+        NULL,
+        0,
+        '2025-11-27 01:07:14.858921'
+    ),
+    (
+        41,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180471/avatar/a0gml2fgmzyidp0vk5zx.jpg',
+        '2025-11-27 00:51:27.977161',
+        '2005-04-03',
+        'user11@gmail.com',
+        'Huỳnh Xuân',
+        0,
+        'Thiện',
+        '$2a$10$ztP0flWFhm9q1jn1B8I5JOPTt2BhlBNJl5gnEtG4Z6Co4OW3wLF2i',
+        '099756221',
+        NULL,
+        0,
+        '2025-11-27 01:07:51.714801'
+    ),
+    (
+        42,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180509/avatar/sxnhpwvkatxuiki4m8sb.jpg',
+        '2025-11-27 00:51:51.675245',
+        '2005-04-23',
+        'user12@gmail.com',
+        'Phạm Nguyễn',
+        0,
+        'Phú Thành',
+        '$2a$10$Tf1o1EvW07M1nUJTktp3S.V49qNSJQy/SJEDoqDm7p2PFE1TMvlM2',
+        '022366709',
+        NULL,
+        0,
+        '2025-11-27 01:08:30.283209'
+    ),
+    (
+        43,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180550/avatar/mk0eqikb1cm37prx5lsz.jpg',
+        '2025-11-27 00:52:12.592244',
+        '2005-07-26',
+        'user13@gmail.com',
+        'Nguyễn Toàn',
+        0,
+        'Thắng',
+        '$2a$10$/lCPyFn.lj9Wb2qCPvj/CeBwLbTKV2L78N7I4suXvTKL84zbeSVXq',
+        '0477849886',
+        NULL,
+        0,
+        '2025-11-27 01:09:11.064721'
+    ),
+    (
+        44,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180589/avatar/o0p7kjnhdaxzn7ligpkp.jpg',
+        '2025-11-27 00:52:25.677410',
+        '2004-03-13',
+        'user14@gmail.com',
+        'Nguyễn Văn',
+        0,
+        'Triển',
+        '$2a$10$xaCi3I5R9Wc.QX/O8QupC.1gj5W2OAMfBiEh60e7oNfVkbDKUJs/W',
+        '0556224556',
+        NULL,
+        0,
+        '2025-11-27 01:09:49.900982'
+    ),
+    (
+        45,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180642/avatar/kjlkvtffe0jcrxqubh37.jpg',
+        '2025-11-27 00:52:40.319907',
+        '2005-04-12',
+        'user15@gmail.com',
+        'Nguyễn Ngọc',
+        0,
+        'Thiện',
+        '$2a$10$Mxb3xPbymytLX8SqUpjygOAqbHzyrd1wQ93nCvnlYl333UWlXb9t.',
+        '0989565332',
+        NULL,
+        0,
+        '2025-11-27 01:10:42.680464'
+    ),
+    (
+        46,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180682/avatar/usdaz4ckukq8upsiillg.jpg',
+        '2025-11-27 00:53:08.108876',
+        '2005-08-07',
+        'user16@gmail.com',
+        'Phạm Thị',
+        0,
+        'Yến Nhi',
+        '$2a$10$Xlanysgj7AU1cuKwNoBtmuOKrNgRb6yx.SN6WQkXZwzwBxIybQlwC',
+        '0886405522',
+        NULL,
+        0,
+        '2025-11-27 01:11:22.685387'
+    ),
+    (
+        47,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180743/avatar/yep6xeuohxk92mkqp571.jpg',
+        '2025-11-27 00:53:21.453404',
+        '2005-10-11',
+        'user17@gmail.com',
+        'Dương Xuân',
+        0,
+        'Ánh',
+        '$2a$10$avjZ3J4cVmlxEDJyW6WfT.QW9N8vVwsE43GVvXkRKw/Q/tG4zktmu',
+        '0865798514',
+        NULL,
+        0,
+        '2025-11-27 01:12:24.163328'
+    ),
+    (
+        48,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180782/avatar/croiuzjrtur7mtkerrsb.jpg',
+        '2025-11-27 00:53:40.380699',
+        '2005-03-27',
+        'user18@gmail.com',
+        'Mai Trần Khánh',
+        0,
+        'An',
+        '$2a$10$gQWhguWwXtwyiojm9huTAO3cANgGAYdWJiMK.KI4LSQyF92cjDg7u',
+        '0887447809',
+        NULL,
+        0,
+        '2025-11-27 01:13:03.220215'
+    ),
+    (
+        49,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180815/avatar/jqvetbhytyjn08lkvmbx.jpg',
+        '2025-11-27 00:54:07.828350',
+        '2005-04-22',
+        'user19@gmail.com',
+        'Nguyễn Tấn',
+        0,
+        'Lộc',
+        '$2a$10$GLS9DScQpdCsGhlOnqB9uuOiZv7DrsD16wmpSuNcna12B12704ggW',
+        '0993456608',
+        NULL,
+        0,
+        '2025-11-27 01:13:35.817890'
+    ),
+    (
+        50,
+        'https://res.cloudinary.com/dcmko66fp/image/upload/v1764180861/avatar/wxtnhzqcdytxazkwllre.jpg',
+        '2025-11-27 00:55:02.050608',
+        '2005-05-11',
+        'user20@gmail.com',
+        'Nguyễn Minh',
+        0,
+        'Thành',
+        '$2a$10$cNT08H0pBnMWOXMe0e6igOuBHe0yXKdZF4cwinXWUgLyMgx5RVF4i',
+        '0872213557',
+        NULL,
+        0,
+        '2025-11-27 01:14:21.924270'
     ),
     (
         52,
+        'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1989549268251908&height=50&width=50&ext=1766808036&hash=AT9rDKpuqwPnVf63qcjI-tl2',
+        '2025-11-27 04:00:56.094277',
         NULL,
-        '2025-09-24 03:42:09.805677',
-        NULL,
-        'user2@gmail.com',
-        'Thanh',
-        'Huynh',
-        '$2a$10$s9cfyEnZAtM5rlVktuYNAOjpJxdYex0/zl2syHKGrg7b.1ci52Yja',
-        NULL,
-        1,
-        '2025-10-10 14:26:59.985306',
-        NULL,
-        0
-    ),
-    (
-        102,
-        NULL,
-        '2025-09-25 06:20:36.853156',
-        NULL,
-        'ahuy@gmail.com',
-        'Anh',
-        'Huy',
-        '$2a$10$edILExKvrlaawtDA5r76Pu4UGXStyVRTe5HtVfsSRjvh3IJA4TrDe',
-        NULL,
+        'facebook_1989549268251908@example.com',
+        'Nguyễn Nhật ',
         0,
-        '2025-10-23 15:29:40.647567',
-        NULL,
-        0
-    ),
-    (
-        103,
-        NULL,
-        '2025-09-25 06:23:33.416965',
-        NULL,
-        'anthony@gmail.com',
-        'Anthony',
-        'Nguyen',
-        '$2a$10$2SvUy0zYvjC2XXFZhisj7OixkP4vJH4grh53Mp2sZyt35F/Cbs4nq',
-        NULL,
-        0,
-        '2025-09-25 06:23:33.417965',
-        NULL,
-        0
-    ),
-    (
-        104,
-        NULL,
-        '2025-09-25 06:29:38.288898',
-        NULL,
-        'nhathao@gmail.com',
-        'Nguyen Nhat',
-        'Hao',
-        '$2a$10$8f8ywoNq/0gRSoYdMnl/lOYmDMDTdgrms/2MZJwam.abkFkx0MuBW',
-        NULL,
-        0,
-        '2025-09-25 06:29:38.288898',
-        NULL,
-        0
-    ),
-    (
-        105,
-        NULL,
-        '2025-09-25 06:34:45.224199',
-        NULL,
-        'daikazhieu@gmail.com',
-        'Thanh',
-        'Hieu',
-        '$2a$10$.VaqY3vxaT7xyLqpM5wAeeARvLh0si3WbmkmiyhrDJcwsHAljZud6',
-        NULL,
-        0,
-        '2025-11-07 18:58:33.488778',
-        NULL,
-        1
-    ),
-    (
-        152,
-        NULL,
-        '2025-09-25 06:39:51.609304',
-        NULL,
-        'hung@gmail.com',
-        'Trần Thế',
-        'Hùng',
-        '$2a$10$CXgHCV0XBfk9lhz/WYkJLOoXePuDeL3YyRnkOTCL54LduKYmTGfYS',
-        NULL,
-        0,
-        '2025-09-25 06:39:51.609304',
-        NULL,
-        0
-    ),
-    (
-        202,
-        NULL,
-        '2025-10-07 13:40:33.722117',
-        NULL,
-        'phu123@gmail.com',
-        'Phu',
-        'Dien',
-        '$2a$10$dStEv/nljcZBdbadqO4EQedaFgIb0nXOXfFAguOFr154m2twvndYK',
-        NULL,
-        0,
-        '2025-10-07 13:40:33.722905',
-        NULL,
-        0
-    ),
-    (
-        303,
-        'https://lh3.googleusercontent.com/a/ACg8ocLA7AOA6VoMh6cW_CfCmje9CC_u28dNLY8ujtZM94grJqX_7sA=s96-c',
-        '2025-10-08 20:11:59.298411',
-        '2025-10-01',
-        'hao362k5@gmail.com',
         'Hào',
-        'Nguyễn Nhật',
         NULL,
         '',
+        'FACEBOOK',
         0,
-        '2025-10-23 15:26:33.478812',
-        'GOOGLE',
-        0
+        '2025-11-27 04:01:10.101192'
     ),
     (
-        352,
-        'https://lh3.googleusercontent.com/a/ACg8ocKFSVAwr70RuAM7H1pPDgpmjGXnXS4QKzfekpD7fRSmZ9W5ug=s96-c',
-        '2025-10-09 13:54:30.239275',
+        53,
+        'https://lh3.googleusercontent.com/a/ACg8ocLA7AOA6VoMh6cW_CfCmje9CC_u28dNLY8ujtZM94grJqX_7sA=s96-c',
+        '2025-11-27 04:03:13.528562',
         NULL,
-        'hao362kk5@gmail.com',
+        'hao362k5@gmail.com',
+        'Hào',
+        0,
         'Nguyễn',
-        'Khéo',
         NULL,
-        NULL,
-        0,
-        '2025-11-07 18:58:11.591837',
+        '',
         'GOOGLE',
-        1
-    ),
-    (
-        502,
-        'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1989549268251908&height=50&width=50&ext=1762654279&hash=AT9Ob4fYpFQSTrxxhCeU6hvq',
-        '2025-10-10 09:11:27.478571',
-        NULL,
-        'facebook@example.com',
-        'Nguyễn Nhật Test',
-        'Hào test',
-        NULL,
-        '03265637210',
         0,
-        '2025-11-07 20:04:27.472132',
-        NULL,
-        0
-    ),
-    (
-        552,
-        NULL,
-        '2025-10-12 18:22:43.419061',
-        NULL,
-        'ais123@gmail.com',
-        'Cam',
-        'Dao',
-        '$2a$10$pIp88jphDajXklrB/njG0uodOjOdhVaHiUFjqK3D/jjkX3aH3lbHG',
-        NULL,
-        0,
-        '2025-11-07 18:57:27.905518',
-        NULL,
-        1
-    ),
-    (
-        602,
-        NULL,
-        '2025-10-12 18:42:31.629319',
-        NULL,
-        'hao@gmail.com',
-        'Luka',
-        'Ka',
-        '$2a$10$vdSJcAeI3EqGeRStzI23VOfqCNqHeVW5DWn5X1VRscJzv0ONU6uJ2',
-        NULL,
-        0,
-        '2025-11-07 19:00:52.935928',
-        NULL,
-        1
-    ),
-    (
-        652,
-        NULL,
-        '2025-10-25 22:25:11.227629',
-        NULL,
-        'ais124@gmail.com',
-        'Cam',
-        'Dao',
-        '$2a$10$t3ilPaOk0UYy7jJK5E7mGuHK8mUiY/.x7EDeisQu7NzHBRctLylOm',
-        NULL,
-        0,
-        '2025-11-07 19:24:46.452883',
-        NULL,
-        1
+        '2025-11-27 04:03:25.631151'
     );
 /*!40000 ALTER TABLE `user` ENABLE KEYS */
 ;
@@ -8099,28 +8692,208 @@ INSERT INTO
 VALUES (1, 'ADMIN'),
     (1, 'CHAT'),
     (2, 'CHAT'),
-    (502, 'CHAT'),
+    (3, 'CHAT'),
+    (4, 'CHAT'),
+    (5, 'CHAT'),
+    (6, 'CHAT'),
+    (7, 'CHAT'),
+    (8, 'CHAT'),
+    (9, 'CHAT'),
+    (10, 'CHAT'),
+    (11, 'CHAT'),
+    (12, 'CHAT'),
+    (13, 'CHAT'),
+    (14, 'CHAT'),
+    (15, 'CHAT'),
+    (16, 'CHAT'),
+    (17, 'CHAT'),
+    (18, 'CHAT'),
+    (19, 'CHAT'),
+    (20, 'CHAT'),
+    (21, 'CHAT'),
+    (22, 'CHAT'),
+    (23, 'CHAT'),
+    (24, 'CHAT'),
+    (25, 'CHAT'),
+    (26, 'CHAT'),
+    (27, 'CHAT'),
+    (28, 'CHAT'),
+    (29, 'CHAT'),
+    (30, 'CHAT'),
     (1, 'CUSTOMER'),
     (2, 'CUSTOMER'),
+    (3, 'CUSTOMER'),
+    (4, 'CUSTOMER'),
+    (5, 'CUSTOMER'),
+    (6, 'CUSTOMER'),
+    (7, 'CUSTOMER'),
+    (8, 'CUSTOMER'),
+    (9, 'CUSTOMER'),
+    (10, 'CUSTOMER'),
+    (11, 'CUSTOMER'),
+    (12, 'CUSTOMER'),
+    (13, 'CUSTOMER'),
+    (14, 'CUSTOMER'),
+    (15, 'CUSTOMER'),
+    (16, 'CUSTOMER'),
+    (17, 'CUSTOMER'),
+    (18, 'CUSTOMER'),
+    (19, 'CUSTOMER'),
+    (20, 'CUSTOMER'),
+    (21, 'CUSTOMER'),
+    (22, 'CUSTOMER'),
+    (23, 'CUSTOMER'),
+    (24, 'CUSTOMER'),
+    (25, 'CUSTOMER'),
+    (26, 'CUSTOMER'),
+    (27, 'CUSTOMER'),
+    (28, 'CUSTOMER'),
+    (29, 'CUSTOMER'),
+    (30, 'CUSTOMER'),
     (1, 'HOTEL'),
+    (2, 'HOTEL'),
+    (3, 'HOTEL'),
+    (4, 'HOTEL'),
+    (5, 'HOTEL'),
+    (6, 'HOTEL'),
+    (7, 'HOTEL'),
+    (8, 'HOTEL'),
+    (9, 'HOTEL'),
+    (10, 'HOTEL'),
+    (11, 'HOTEL'),
+    (12, 'HOTEL'),
+    (13, 'HOTEL'),
+    (14, 'HOTEL'),
+    (15, 'HOTEL'),
+    (16, 'HOTEL'),
+    (17, 'HOTEL'),
+    (18, 'HOTEL'),
+    (19, 'HOTEL'),
+    (20, 'HOTEL'),
+    (21, 'HOTEL'),
+    (22, 'HOTEL'),
+    (23, 'HOTEL'),
+    (24, 'HOTEL'),
+    (25, 'HOTEL'),
+    (26, 'HOTEL'),
+    (27, 'HOTEL'),
+    (28, 'HOTEL'),
+    (29, 'HOTEL'),
+    (30, 'HOTEL'),
     (1, 'INVOICE'),
     (1, 'INVOICE_(2)'),
+    (2, 'INVOICE_(2)'),
+    (3, 'INVOICE_(2)'),
+    (4, 'INVOICE_(2)'),
+    (5, 'INVOICE_(2)'),
+    (6, 'INVOICE_(2)'),
+    (7, 'INVOICE_(2)'),
+    (8, 'INVOICE_(2)'),
+    (9, 'INVOICE_(2)'),
+    (10, 'INVOICE_(2)'),
+    (11, 'INVOICE_(2)'),
+    (12, 'INVOICE_(2)'),
+    (13, 'INVOICE_(2)'),
+    (14, 'INVOICE_(2)'),
+    (15, 'INVOICE_(2)'),
+    (16, 'INVOICE_(2)'),
+    (17, 'INVOICE_(2)'),
+    (18, 'INVOICE_(2)'),
+    (19, 'INVOICE_(2)'),
+    (20, 'INVOICE_(2)'),
+    (21, 'INVOICE_(2)'),
+    (22, 'INVOICE_(2)'),
+    (23, 'INVOICE_(2)'),
+    (24, 'INVOICE_(2)'),
+    (25, 'INVOICE_(2)'),
+    (26, 'INVOICE_(2)'),
+    (27, 'INVOICE_(2)'),
+    (28, 'INVOICE_(2)'),
+    (29, 'INVOICE_(2)'),
+    (30, 'INVOICE_(2)'),
     (1, 'ROLE'),
     (1, 'ROOM'),
+    (2, 'ROOM'),
+    (3, 'ROOM'),
+    (4, 'ROOM'),
+    (5, 'ROOM'),
+    (6, 'ROOM'),
+    (7, 'ROOM'),
+    (8, 'ROOM'),
+    (9, 'ROOM'),
+    (10, 'ROOM'),
+    (11, 'ROOM'),
+    (12, 'ROOM'),
+    (13, 'ROOM'),
+    (14, 'ROOM'),
+    (15, 'ROOM'),
+    (16, 'ROOM'),
+    (17, 'ROOM'),
+    (18, 'ROOM'),
+    (19, 'ROOM'),
+    (20, 'ROOM'),
+    (21, 'ROOM'),
+    (22, 'ROOM'),
+    (23, 'ROOM'),
+    (24, 'ROOM'),
+    (25, 'ROOM'),
+    (26, 'ROOM'),
+    (27, 'ROOM'),
+    (28, 'ROOM'),
+    (29, 'ROOM'),
+    (30, 'ROOM'),
     (1, 'USER'),
+    (2, 'USER'),
+    (3, 'USER'),
+    (4, 'USER'),
+    (5, 'USER'),
+    (6, 'USER'),
+    (7, 'USER'),
+    (8, 'USER'),
+    (9, 'USER'),
+    (10, 'USER'),
+    (11, 'USER'),
+    (12, 'USER'),
+    (13, 'USER'),
+    (14, 'USER'),
+    (15, 'USER'),
+    (16, 'USER'),
+    (17, 'USER'),
+    (18, 'USER'),
+    (19, 'USER'),
+    (20, 'USER'),
+    (21, 'USER'),
+    (22, 'USER'),
+    (23, 'USER'),
+    (24, 'USER'),
+    (25, 'USER'),
+    (26, 'USER'),
+    (27, 'USER'),
+    (28, 'USER'),
+    (29, 'USER'),
+    (30, 'USER'),
+    (31, 'USER'),
+    (32, 'USER'),
+    (33, 'USER'),
+    (34, 'USER'),
+    (35, 'USER'),
+    (36, 'USER'),
+    (37, 'USER'),
+    (38, 'USER'),
+    (39, 'USER'),
+    (40, 'USER'),
+    (41, 'USER'),
+    (42, 'USER'),
+    (43, 'USER'),
+    (44, 'USER'),
+    (45, 'USER'),
+    (46, 'USER'),
+    (47, 'USER'),
+    (48, 'USER'),
+    (49, 'USER'),
+    (50, 'USER'),
     (52, 'USER'),
-    (102, 'USER'),
-    (103, 'USER'),
-    (104, 'USER'),
-    (105, 'USER'),
-    (152, 'USER'),
-    (202, 'USER'),
-    (303, 'USER'),
-    (352, 'USER'),
-    (502, 'USER'),
-    (552, 'USER'),
-    (602, 'USER'),
-    (652, 'USER');
+    (53, 'USER');
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */
 ;
 UNLOCK TABLES;
@@ -8147,7 +8920,7 @@ CREATE TABLE `user_seq` (
 LOCK TABLES `user_seq` WRITE;
 /*!40000 ALTER TABLE `user_seq` DISABLE KEYS */
 ;
-INSERT INTO `user_seq` VALUES (751);
+INSERT INTO `user_seq` VALUES (151);
 /*!40000 ALTER TABLE `user_seq` ENABLE KEYS */
 ;
 UNLOCK TABLES;
@@ -8169,4 +8942,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */
 ;
 
--- Dump completed on 2025-11-08 10:59:24
+-- Dump completed on 2025-11-27 11:40:55
